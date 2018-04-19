@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="API_CLASS_3">
+        <item>/auth/alipay/info</item>
+        <item>/auth/pay/barrage</item>
+        <item>/auth/pay/bindAlipay</item>
+        <item>/auth/pay/bindWeixinPay</item>
+        <item>/auth/pay/cash</item>
+        <item>/auth/pay/cash/awardExp</item>
+        <item>/auth/pay/cash/awardHots</item>
+        <item>/auth/pay/cash/shartProfit</item>
+        <item>/auth/pay/charge</item>
+        <item>/auth/pay/charge/finish</item>
+        <item>/auth/pay/charge/v2</item>
+        <item>/auth/pay/exchange</item>
+        <item>/auth/pay/giftPayment</item>
+        <item>/auth/pay/rate</item>
+        <item>/auth/pay/status</item>
+        <item>/auth/redpack/info</item>
+        <item>/auth/redpack/recives</item>
+        <item>/auth/redpack/rob</item>
+        <item>/auth/redpack/send</item>
+        <item>/auth/user/authBindPhone</item>
+        <item>/auth/user/bindAccount</item>
+        <item>/auth/user/bindPhone</item>
+        <item>/auth/user/bindStatus</item>
+        <item>/auth/user/doAuth</item>
+        <item>/auth/user/setAuthInfo</item>
+        <item>/auth/user/setPwd</item>
+        <item>/auth/user/unBindPhone</item>
+        <item>/auth/user/unBindThird</item>
+        <item>/auth/user/verifPwd</item>
+        <item>/auth/user/verifyCode</item>
+        <item>/auth/user/zmxy/call</item>
+        <item>/auth/user/zmxy/genCertUrl</item>
+        <item>/login</item>
+        <item>/loginPwd</item>
+        <item>/pay/charge/query</item>
+        <item>/pay/exchangeRule</item>
+        <item>/pay/getCoinRule</item>
+        <item>/pay/more/charge</item>
+        <item>/verifyCode</item>
+    </string-array>
+</resources>

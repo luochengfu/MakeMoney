@@ -1,0 +1,109 @@
+apply plugin: 'com.android.application'
+
+android {
+
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    defaultConfig {
+        applicationId "com.tudouni.makemoney"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        multiDexEnabled true
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file('tudouni.jks')
+            storePassword "tudouni"
+            keyAlias "1.0"
+            keyPassword "tudouni"
+        }
+
+        release {
+            storeFile file('tudouni.jks')
+            storePassword "tudouni"
+            keyAlias "1.0"
+            keyPassword "tudouni"
+        }
+
+    }
+    buildTypes {
+        release {
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            jniDebuggable false
+            minifyEnabled false
+
+            signingConfig signingConfigs.release
+        }
+
+        debug {
+            shrinkResources false
+            jniDebuggable false
+            minifyEnabled false
+            signingConfig signingConfigs.release
+        }
+
+        uat {
+            initWith release      //拷贝release的配置
+            debuggable true
+        }
+
+        applicationVariants.all { variant ->
+            if (variant.buildType.name == 'release') {
+                variant.outputs.all { output ->
+                    if (!variant.buildType.isDebuggable()) {
+                        def oldName = output.outputFile.name
+                        def fileName = "release-${defaultConfig.versionName}-${releaseTime()}-${variant.productFlavors[0].name}.apk"
+                        outputFileName = output.outputFile.name.replace(oldName, fileName)
+                    }
+                }
+            } else if (variant.buildType.name == 'uat') {
+                variant.outputs.all { output ->
+                    if (!variant.buildType.isDebuggable()) {
+                        def oldName = output.outputFile.name
+                        def fileName = "release-${defaultConfig.versionName}-${releaseTime()}-${variant.productFlavors[0].name}.apk"
+                        outputFileName = output.outputFile.name.replace(oldName, fileName)
+                    }
+                }
+            }
+        }
+    }
+
+    flavorDimensions("minApi")
+    productFlavors {
+        doubo {}
+        productFlavors.all { flavor ->
+            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+        }
+    }
+    buildToolsVersion '26.0.2'
+}
+
+static def releaseTime() {
+    return new Date().format("yy-MM-dd", TimeZone.getTimeZone("UCT"))
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:25.2.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+
+    compile 'com.squareup.okhttp3:okhttp:3.9.0'
+    compile 'com.lzy.net:okgo:2.1.4'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'io.reactivex.rxjava2:rxjava:2.0.4'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+
+    //友盟SDK集成
+    compile 'com.umeng.sdk:common:latest.integration'
+    compile 'com.umeng.sdk:analytics:latest.integration'
+
+}
