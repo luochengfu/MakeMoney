@@ -11,13 +11,24 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         multiDexEnabled true
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "cedcea9b2ba677d77d2060c6", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+        ]
     }
+
 
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
 
-/*    signingConfigs {
+    signingConfigs {
         debug {
             storeFile file('tudouni.jks')
             storePassword "tudouni"
@@ -32,7 +43,7 @@ android {
             keyPassword "tudouni"
         }
 
-    }*/
+    }
     buildTypes {
         release {
             shrinkResources false
@@ -106,10 +117,13 @@ dependencies {
     compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
-    compile  'com.android.support:recyclerview-v7:25.2.0'
+    compile 'com.android.support:recyclerview-v7:25.2.0'
 
     //友盟SDK集成
     compile 'com.umeng.sdk:common:latest.integration'
     compile 'com.umeng.sdk:analytics:latest.integration'
+    //极光推送
+    compile 'cn.jiguang.sdk:jpush:3.1.1'  // 此处以JPush 3.1.1 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.1.9'  // 此处以JCore 1.1.9 版本为例。
 
 }
