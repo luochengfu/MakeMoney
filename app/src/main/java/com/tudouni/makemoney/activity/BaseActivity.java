@@ -21,7 +21,7 @@ import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.utils.AutoHideKeyboard;
 import com.tudouni.makemoney.utils.MeizuSmartBarUtils;
 import com.tudouni.makemoney.utils.ToastUtil;
-import com.tudouni.makemoney.utils.ViewAnnotationUtil;
+import com.tudouni.makemoney.utils.base.ViewAnnotationUtil;
 import com.tudouni.makemoney.view.CenterLoadingView;
 import com.umeng.analytics.MobclickAgent;
 import java.lang.reflect.Field;

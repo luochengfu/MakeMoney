@@ -1,7 +1,9 @@
-package com.tudouni.makemoney.utils;
+package com.tudouni.makemoney.utils.base;
 
 import android.view.View;
 import android.view.View.OnClickListener;
+
+import com.tudouni.makemoney.utils.InjectView;
 
 import java.lang.reflect.Field;
 

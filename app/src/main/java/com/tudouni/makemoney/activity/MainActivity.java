@@ -2,7 +2,6 @@ package com.tudouni.makemoney.activity;
 
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -11,19 +10,18 @@ import android.view.animation.ScaleAnimation;
 import android.widget.RelativeLayout;
 
 import com.tudouni.makemoney.R;
-import com.tudouni.makemoney.fragment.MainTabFourFragment;
 import com.tudouni.makemoney.fragment.MainTabOneFragment;
 import com.tudouni.makemoney.fragment.MainTabThreeFragment;
 import com.tudouni.makemoney.fragment.MainTabTwoFragment;
+import com.tudouni.makemoney.fragment.MineFragment;
 import com.umeng.analytics.MobclickAgent;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener
-{
+public class MainActivity extends BaseActivity implements View.OnClickListener {
     private RelativeLayout tab1, tab2, tab3, tab4;
     private MainTabOneFragment mTabOne;
     private MainTabTwoFragment mTabTwo;
     private MainTabThreeFragment mTabThree;
-    private MainTabFourFragment mTabFour;
+    private MineFragment mTabMine;
     //  Fragment事务
     private FragmentTransaction mTransaction = null;
 
@@ -47,7 +45,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener
         mTabOne = new MainTabOneFragment();
         mTabTwo = new MainTabTwoFragment();
         mTabThree = new MainTabThreeFragment();
-        mTabFour = new MainTabFourFragment();
+        mTabMine = new MineFragment();
 
         tab1.setOnClickListener(this);
         tab2.setOnClickListener(this);
@@ -101,11 +99,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener
                 }
                 break;
             case 3: //我的
-                if (mTabFour != null) {
-                    if (!mTabFour.isAdded()) {
-                        mTransaction.add(R.id.content, mTabFour);
+                if (mTabMine != null) {
+                    if (!mTabMine.isAdded()) {
+                        mTransaction.add(R.id.content, mTabMine);
                     }
-                    mTransaction.show(mTabFour);
+                    mTransaction.show(mTabMine);
                     addSelection(3);
                 }
                 break;
@@ -120,8 +118,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener
      *
      * @param transaction 用于对Fragment执行操作的事务
      */
-    private void hideFragments(FragmentTransaction transaction)
-    {
+    private void hideFragments(FragmentTransaction transaction) {
         if (mTabOne != null) {
             transaction.hide(mTabOne);
         }
@@ -131,13 +128,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener
         if (mTabThree != null) {
             transaction.hide(mTabThree);
         }
-        if (mTabFour != null) {
-            transaction.hide(mTabFour);
+        if (mTabMine != null) {
+            transaction.hide(mTabMine);
         }
     }
 
-    private void addSelection(int index)
-    {
+    private void addSelection(int index) {
         AnimationSet animationSet = new AnimationSet(true);
         ScaleAnimation scaleAnimation = new ScaleAnimation(1, 1.1f, 1, 1.1f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
@@ -187,19 +183,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tab1://主页
-                MobclickAgent.onEvent(this,"hp_live");
+                MobclickAgent.onEvent(this, "hp_live");
                 setTabSelection(0);
                 break;
             case R.id.tab2://商城
-                MobclickAgent.onEvent(this,"hp_mall");
+                MobclickAgent.onEvent(this, "hp_mall");
                 setTabSelection(1);
                 break;
             case R.id.tab3://关注
-                MobclickAgent.onEvent(this,"hp_focus");
+                MobclickAgent.onEvent(this, "hp_focus");
                 setTabSelection(2);
                 break;
             case R.id.tab4://我的
-                MobclickAgent.onEvent(this,"hp_me");
+                MobclickAgent.onEvent(this, "hp_me");
                 setTabSelection(3);
                 break;
         }

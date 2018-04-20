@@ -8,7 +8,6 @@ import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.security.DouBoInterfaceLevel;
 import com.tudouni.makemoney.network.security.SecurityComponents;
 import com.tudouni.makemoney.utils.Constants;
-import com.tudouni.makemoney.utils.DeviceInfor;
 import com.tudouni.makemoney.utils.TuDouLogUtils;
 import com.tudouni.makemoney.utils.base.AppUtils;
 

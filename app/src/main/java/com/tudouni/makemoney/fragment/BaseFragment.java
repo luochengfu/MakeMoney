@@ -19,7 +19,7 @@ import com.trello.rxlifecycle.RxLifecycle;
 import com.tudouni.makemoney.utils.AutoHideKeyboard;
 import com.tudouni.makemoney.utils.LoadingUtils;
 import com.tudouni.makemoney.utils.ToastUtil;
-import com.tudouni.makemoney.utils.ViewAnnotationUtil;
+import com.tudouni.makemoney.utils.base.ViewAnnotationUtil;
 import com.tudouni.makemoney.utils.base.BaseViewHelper;
 import com.tudouni.makemoney.utils.base.IFragmentHelper;
 

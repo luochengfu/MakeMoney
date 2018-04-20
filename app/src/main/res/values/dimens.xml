@@ -9,4 +9,12 @@
     <dimen name="text_size_16">16sp</dimen>
     <dimen name="text_size_18">18sp</dimen>
     <dimen name="text_size_20">20sp</dimen>
+
+
+    <!--我的界面相应尺寸-->
+    <dimen name="default_user_view_height">45dp</dimen>
+    <dimen name="user_view_middle_height">70dp</dimen>
+    <dimen name="default_user_margen">10dp</dimen>
+
+    <dimen name="dp_10">10dp</dimen>
 </resources>

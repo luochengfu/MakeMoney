@@ -5,4 +5,12 @@
     <color name="colorAccent">#FF4081</color>
     <color name="color_EEEEEE">#EEEEEE</color>
     <color name="color_212121">#212121</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#333333</color>
+    <color name="gray">#666666</color>
+    <color name="gray02">#999999</color>
+    <color name="gray04">#EBE5E5</color>
+    <color name="sys_click_Bg">#e6e6e6</color>
+    <color name="yellowColor">#FCCF00</color>
 </resources>

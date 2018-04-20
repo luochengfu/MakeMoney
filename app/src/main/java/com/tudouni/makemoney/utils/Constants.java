@@ -27,6 +27,9 @@ public class Constants {
     public final static String DEVICE_MODEL = android.os.Build.MODEL;
     public final static String OS_TYPE = android.os.Build.MANUFACTURER;
     public final static String OS_VERSION = android.os.Build.VERSION.RELEASE;
+    public static final String BASE_PRE = "tudouni://tudouni/";
+
+    public static final String SETTING = BASE_PRE + "setting";
 
 
 }

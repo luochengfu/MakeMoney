@@ -74,6 +74,4 @@ public class DeviceInfor {
         }
         return uuid;
     }
-
-
 }
