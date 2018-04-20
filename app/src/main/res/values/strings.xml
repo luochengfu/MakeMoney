@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MakeMoney</string>
+    <string name="shop_main_tab1">商城</string>
+    <string name="shop_main_tab2">品类</string>
+    <string name="shop_main_tab3">发现</string>
+    <string name="shop_main_tab4">我的</string>
 </resources>
