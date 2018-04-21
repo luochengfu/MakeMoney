@@ -20,6 +20,7 @@ android {
                 JPUSH_PKGNAME: applicationId,
                 JPUSH_APPKEY : "cedcea9b2ba677d77d2060c6", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+                qqappid      : "1106781729",
         ]
     }
 
@@ -30,16 +31,16 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file('tudouni.jks')
+            storeFile file('makemoney.jks')
             storePassword "tudouni"
-            keyAlias "1.0"
+            keyAlias "key2"
             keyPassword "tudouni"
         }
 
         release {
-            storeFile file('tudouni.jks')
+            storeFile file('makemoney.jks')
             storePassword "tudouni"
-            keyAlias "1.0"
+            keyAlias "key2"
             keyPassword "tudouni"
         }
 
@@ -123,6 +124,10 @@ dependencies {
     //友盟SDK集成
     compile 'com.umeng.sdk:common:latest.integration'
     compile 'com.umeng.sdk:analytics:latest.integration'
+
+    compile 'com.umeng.sdk:share-core:latest.integration'
+    compile 'com.umeng.sdk:share-qq:latest.integration'
+    compile 'com.umeng.sdk:share-wechat:latest.integration'
     //极光推送
     compile 'cn.jiguang.sdk:jpush:3.1.1'  // 此处以JPush 3.1.1 版本为例。
     compile 'cn.jiguang.sdk:jcore:1.1.9'  // 此处以JCore 1.1.9 版本为例。

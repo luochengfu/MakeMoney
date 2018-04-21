@@ -3,7 +3,7 @@
 //import android.content.Context;
 //import android.text.TextUtils;
 //import android.util.Log;
-//import android.widget.Toast;
+//import android.com.tudouni.makemoney.widget.Toast;
 //
 //import com.alibaba.wireless.security.jaq.JAQException;
 //import com.alibaba.wireless.security.jaq.avmp.IJAQAVMPSignComponent;

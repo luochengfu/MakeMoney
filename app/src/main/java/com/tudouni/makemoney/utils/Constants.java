@@ -1,5 +1,6 @@
 package com.tudouni.makemoney.utils;
 
+import com.tudouni.makemoney.network.NetConfig;
 import com.tudouni.makemoney.utils.base.AppUtils;
 
 /**
@@ -31,5 +32,7 @@ public class Constants {
 
     public static final String SETTING = BASE_PRE + "setting";
 
+
+    public static final String BASE_H5_URL = NetConfig.getBaseTuDouNiH5Url();
 
 }

@@ -32,6 +32,10 @@
     public static ** valueOf(java.lang.String);
 }
 
+-keep public class com.tudouni.makemoney.R$*{
+public static final int *;
+}
+
 #极光推送
 -dontoptimize
 -dontpreverify

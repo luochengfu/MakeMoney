@@ -22,6 +22,7 @@ import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.base.ViewAnnotationUtil;
 import com.tudouni.makemoney.utils.base.BaseViewHelper;
 import com.tudouni.makemoney.utils.base.IFragmentHelper;
+import com.umeng.analytics.MobclickAgent;
 
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
@@ -41,11 +42,19 @@ public abstract class BaseFragment extends Fragment implements FragmentLifecycle
     protected Handler mHandler = new Handler();
     private boolean isOnResumeCalled;
 
-    /** 初始化视图 */
+    /**
+     * 初始化视图
+     */
     protected abstract int getContentView();
-    /** 初始化布局 */
+
+    /**
+     * 初始化布局
+     */
     protected abstract void initView(View view);
-    /** 初始化数据 */
+
+    /**
+     * 初始化数据
+     */
     protected abstract void initData();
 
     @Override
@@ -54,7 +63,7 @@ public abstract class BaseFragment extends Fragment implements FragmentLifecycle
         lifecycleSubject.onNext(FragmentEvent.ATTACH);
     }
 
-    protected View getLayoutView(){
+    protected View getLayoutView() {
         return null;
     }
 
@@ -71,13 +80,13 @@ public abstract class BaseFragment extends Fragment implements FragmentLifecycle
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.e("BaseFragment","oncreateview  " + this.getClass().getSimpleName());
+        Log.e("BaseFragment", "oncreateview  " + this.getClass().getSimpleName());
         if (this.mContentView == null) {
             this.mContentView = createContentView(getContentView());
             initView(this.mContentView);
             initData();
             AutoHideKeyboard.init(getActivity());
-        }else{
+        } else {
             ViewGroup parent = (ViewGroup) this.mContentView.getParent();
             if (parent != null) {
                 parent.removeView(this.mContentView);
@@ -104,6 +113,7 @@ public abstract class BaseFragment extends Fragment implements FragmentLifecycle
 
     @Override
     public void onResume() {
+        MobclickAgent.onResume(getContext());
         filterOnResume();
         super.onResume();
         lifecycleSubject.onNext(FragmentEvent.RESUME);
@@ -112,6 +122,7 @@ public abstract class BaseFragment extends Fragment implements FragmentLifecycle
 
     @Override
     public void onPause() {
+        MobclickAgent.onPause(getContext());
         resetOnResume();
         lifecycleSubject.onNext(FragmentEvent.PAUSE);
         if (mFragmentHelper != null) mFragmentHelper.onPause(this);
@@ -146,7 +157,7 @@ public abstract class BaseFragment extends Fragment implements FragmentLifecycle
     }
 
     @NonNull
-    public View getView(){
+    public View getView() {
         return mContentView;
     }
 
@@ -172,7 +183,7 @@ public abstract class BaseFragment extends Fragment implements FragmentLifecycle
         dialogUtils.dismissLoading();
     }
 
-    public Context getContext(){
+    public Context getContext() {
         return getActivity();
     }
 
@@ -210,7 +221,7 @@ public abstract class BaseFragment extends Fragment implements FragmentLifecycle
     /**
      * 过滤onResume调用，如果已经调用过，不再重复调用。否则调用onFragResume();
      */
-    private void filterOnResume(){
+    private void filterOnResume() {
         if (!isOnResumeCalled) {
             onFragResume();
             isOnResumeCalled = true;
@@ -220,11 +231,10 @@ public abstract class BaseFragment extends Fragment implements FragmentLifecycle
     /**
      * 在页面不可见后，重置onResume的调用状态。并调用onFragPause();
      */
-    private void resetOnResume(){
+    private void resetOnResume() {
         onFragPause();
         isOnResumeCalled = false;
     }
-
 
 
     @Override
@@ -240,7 +250,7 @@ public abstract class BaseFragment extends Fragment implements FragmentLifecycle
     /**
      * Fragment onResume
      */
-    protected void onFragResume(){
+    protected void onFragResume() {
 
     }
 
@@ -248,7 +258,7 @@ public abstract class BaseFragment extends Fragment implements FragmentLifecycle
     /**
      * Fragment onPause
      */
-    protected void onFragPause(){
+    protected void onFragPause() {
 
     }
 }

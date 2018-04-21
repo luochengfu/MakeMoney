@@ -24,6 +24,7 @@ import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.base.ViewAnnotationUtil;
 import com.tudouni.makemoney.view.CenterLoadingView;
 import com.umeng.analytics.MobclickAgent;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 

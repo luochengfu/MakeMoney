@@ -1,5 +1,6 @@
 package com.tudouni.makemoney.utils;
 
+import android.content.Context;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -26,7 +27,7 @@ public class ToastUtil {
         }
         if (toast == null) {  //保证不重复弹出
             if (text.length() < 10) {
-                toast = Toast.makeText(BaseViewHelper.getInstance().getApplicationContext(),text, Toast.LENGTH_SHORT);
+                toast = Toast.makeText(BaseViewHelper.getInstance().getApplicationContext(), text, Toast.LENGTH_SHORT);
             } else {
                 toast = Toast.makeText(BaseViewHelper.getInstance().getApplicationContext(), text, Toast.LENGTH_LONG);
             }
@@ -39,6 +40,21 @@ public class ToastUtil {
 
     public static void show(@StringRes int resId) {
         show(BaseViewHelper.getInstance().getApplicationContext().getString(resId));
+    }
+
+    public static void show(Context context, String message) {
+        if (context == null) {
+            return;
+        }
+        if (TextUtils.isEmpty(message)) {
+            return;
+        }
+        if (toast == null) {
+            toast = Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_SHORT);
+        } else {
+            toast.setText(message);
+        }
+        toast.show();
     }
 
 }

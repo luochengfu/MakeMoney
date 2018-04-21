@@ -13,4 +13,6 @@
     <color name="gray04">#EBE5E5</color>
     <color name="sys_click_Bg">#e6e6e6</color>
     <color name="yellowColor">#FCCF00</color>
+    <color name="trans">#00000000</color>
+    <color name="black80">#212121</color>
 </resources>

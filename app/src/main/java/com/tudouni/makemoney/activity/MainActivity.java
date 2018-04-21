@@ -1,8 +1,14 @@
 package com.tudouni.makemoney.activity;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.content.PermissionChecker;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -15,8 +21,13 @@ import com.tudouni.makemoney.fragment.MainTabThreeFragment;
 import com.tudouni.makemoney.fragment.MainTabTwoFragment;
 import com.tudouni.makemoney.fragment.MineFragment;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.UMShareAPI;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
+
+    //权限码请求code
+    private final int PERMISSION_REQUEST_CODE = 123;
+    private final int PERMISSION_REQUEST_CODE_VIDEO = 124;
     private RelativeLayout tab1, tab2, tab3, tab4;
     private MainTabOneFragment mTabOne;
     private MainTabTwoFragment mTabTwo;
@@ -25,13 +36,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     //  Fragment事务
     private FragmentTransaction mTransaction = null;
 
+    private final String[] permissionManifest = {
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    };
+    private final int[] noPermissionTip = {
+            R.string.no_read_phone_state_permission,
+            R.string.no_write_external_storage_permission,
+            R.string.no_read_external_storage_permission
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initView();
         initDatas();
+        initPermissions();
     }
 
     private void initView() {
@@ -199,5 +221,43 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 setTabSelection(3);
                 break;
         }
+    }
+
+    /**
+     * 初始化权限
+     */
+    private void initPermissions() {
+        if (!permissionCheck()) {
+            if (Build.VERSION.SDK_INT >= 23) {
+                ActivityCompat.requestPermissions(this, permissionManifest,
+                        PERMISSION_REQUEST_CODE);
+            }
+        }
+    }
+
+    /**
+     * 权限检查（适配6.0以上手机）
+     */
+    private boolean permissionCheck() {
+        int permissionCheck = PackageManager.PERMISSION_GRANTED;
+        String permission;
+        for (int i = 0; i < permissionManifest.length; i++) {
+            permission = permissionManifest[i];
+            if (PermissionChecker.checkSelfPermission(this, permission)
+                    != PackageManager.PERMISSION_GRANTED) {
+                permissionCheck = PackageManager.PERMISSION_DENIED;
+            }
+        }
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
 }
