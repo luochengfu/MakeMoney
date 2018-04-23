@@ -74,7 +74,7 @@ public class GoodCategoryFragment extends BaseFragment {
         mCategoryBinding.rvCategories.setAdapter(mNameAdapter);
         mNameAdapter.setOnItemClickListener((position, itemData) -> {
             //一级品类Item被点击
-            mHeaderImageBinding.setImageUrl(itemData.getImgUrl());
+            mHeaderImageBinding.setImageUrl(itemData.getCategorys().get(0).getImgUrl());
             mGoodListAdapter.replaceData(itemData.getCategorys());
         });
     }
