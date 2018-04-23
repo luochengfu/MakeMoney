@@ -34,5 +34,6 @@ public class Constants {
 
 
     public static final String BASE_H5_URL = NetConfig.getBaseTuDouNiH5Url();
+    public static final String INVISIT_POSTER = BASE_PRE + "invisitPoster";
 
 }

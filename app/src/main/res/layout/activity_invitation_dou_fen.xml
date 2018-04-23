@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ptr="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.doubo.framework.widget.MyTitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ptr:middleText="邀请豆粉" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="#FFE58E"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的邀请码："
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_invitation_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1147"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/bt_copy_invitation_code"
+            android:layout_width="50dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:background="@drawable/bg_copy_invitation_code"
+            android:text="复制"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="分享专属海报，新用户可免邀请码注册，关系自动绑定"
+        android:textColor="#808080"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/im_potatoes"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="15dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal" />
+    <!--分享模块-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginBottom="@dimen/dp_22"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bt_share_link"
+            android:layout_width="137dp"
+            android:layout_height="41dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:background="@drawable/bg_circle_share_link"
+            android:text="分享邀请链接"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/bt_share_poster"
+            android:layout_width="137dp"
+            android:layout_height="41dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:background="@drawable/bg_circle_share_poster"
+            android:text="分享专属海报"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+    <!--绑定的用户信息-->
+    <LinearLayout
+        android:id="@+id/ly_invitation_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_22"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已绑定用户"
+            android:textColor="@color/gray"
+            android:textSize="13sp" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_picture"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="ID "
+            android:textColor="@color/gray"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_inv_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="111111"
+            android:textColor="@color/gray"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="2017-12-12"
+            android:textColor="@color/gray"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

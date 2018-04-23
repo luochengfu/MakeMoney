@@ -78,7 +78,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                setTabSelection(0);
+                setTabSelection(3);
             }
         });
     }

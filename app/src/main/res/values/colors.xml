@@ -15,4 +15,6 @@
     <color name="yellowColor">#FCCF00</color>
     <color name="trans">#00000000</color>
     <color name="black80">#212121</color>
+    <color name="blue">#ff298ecb</color>
+    <color name="transparent">#00000000</color>
 </resources>

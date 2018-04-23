@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="MyTitleBar">
+        <attr name="leftText" format="reference|string" />
+        <attr name="middleText" format="reference|string" />
+        <attr name="rightText" format="reference|string" />
+        <attr name="rightVisible" format="boolean" />
+        <attr name="leftVisible" format="boolean" />
+        <attr name="showStatusBar" format="boolean" />
+        <attr name="leftIcon" format="reference" />
+        <attr name="rightIcon" format="reference" />
+        <attr name="rightIconTwo" format="reference" />
+        <attr name="rightBackground" format="reference" />
+        <attr name="middleTextColor" format="reference" />
+        <attr name="rightTextColor" format="reference" />
+        <attr name="rightTextSize" format="dimension" />
+        <attr name="background" format="reference" />
+        <attr name="statusBarBackgroundColor" format="reference" />
+        <attr name="showDividerLine" format="boolean" />
+    </declare-styleable>
+
+</resources>
+
+

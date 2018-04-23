@@ -185,10 +185,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 //            case R.id.ly_invitation_code: //绑定邀请码
 //                ForwardUtils.target(getActivity(), Constant.BINDING_INVITATION);
 //                break;
-//            case R.id.ly_invitation_douyou: //邀请豆友一起玩
-//                statisticsType = "me_intogether";
-//                ForwardUtils.target(getActivity(), Constant.INVISIT_POSTER);
-//                break;
+            case R.id.ly_invitation_douyou: //邀请豆友一起玩
+                statisticsType = "me_intogether";
+                ForwardUtils.target(getActivity(), Constants.INVISIT_POSTER);
+                break;
 //            case R.id.ly_mine_shop: //商城收益
 //            case R.id.ly_tv_balance: //商城余额
 //                statisticsType = "me_balance";
