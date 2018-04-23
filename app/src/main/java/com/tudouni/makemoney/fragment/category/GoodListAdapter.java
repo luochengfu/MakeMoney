@@ -7,7 +7,6 @@ import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.databinding.ItemGoodGridBinding;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.myApplication.MyApplication;
-import com.tudouni.makemoney.utils.TDLog;
 import com.tudouni.makemoney.view.BaseRecyclerViewBindingAdapter;
 
 public class GoodListAdapter extends BaseRecyclerViewBindingAdapter<Category> {

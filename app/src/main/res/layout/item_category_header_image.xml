@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="imageUrl"
+            type="String" />
+    </data>
+
     <ImageView
         android:id="@+id/iv_banner"
         android:layout_width="match_parent"
-        android:layout_height="120dp" />
+        android:layout_height="120dp"
+        app:loadImage="@{imageUrl}" />
 
 </layout>

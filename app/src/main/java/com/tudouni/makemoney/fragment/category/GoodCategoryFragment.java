@@ -5,13 +5,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
+import com.tudouni.makemoney.BR;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.databinding.FragmentGoodCategoryBinding;
 import com.tudouni.makemoney.databinding.ItemCategoryHeaderImageBinding;
 import com.tudouni.makemoney.fragment.BaseFragment;
 import com.tudouni.makemoney.model.Category;
-import com.tudouni.makemoney.utils.TDLog;
-import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
 import com.tudouni.makemoney.viewModel.GoodCategoryViewModel;
 
 import java.util.List;
@@ -75,6 +74,7 @@ public class GoodCategoryFragment extends BaseFragment {
         mCategoryBinding.rvCategories.setAdapter(mNameAdapter);
         mNameAdapter.setOnItemClickListener((position, itemData) -> {
             //一级品类Item被点击
+            mHeaderImageBinding.setImageUrl(itemData.getImgUrl());
             mGoodListAdapter.replaceData(itemData.getCategorys());
         });
     }
@@ -106,9 +106,4 @@ public class GoodCategoryFragment extends BaseFragment {
         void onFailure();
     }
 
-    @Override
-    protected void onFragResume() {
-        getData();
-        super.onFragResume();
-    }
 }
