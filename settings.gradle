@@ -1,1 +1,1 @@
-include ':app', ':qrcodemodel'
+include ':app','QrCodeModel:PicturePicker','QrCodeModel:ZXing','QrCodeModel:UCrop'

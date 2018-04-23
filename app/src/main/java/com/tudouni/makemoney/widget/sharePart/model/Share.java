@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.utils.Constants;
+import com.tudouni.makemoney.utils.TuDouLogUtils;
 
 import java.io.Serializable;
 import java.net.URLEncoder;
@@ -179,6 +180,11 @@ public class Share implements Serializable {
      * @return
      */
     public static String getShareInviteUrl() {
-        return MyApplication.appConfig.getmInviteShareQcodeDomain() + SHARE_INVITE;
+        try {
+            return MyApplication.appConfig.getmInviteShareQcodeDomain() + SHARE_INVITE;
+        } catch (Exception e) {
+            TuDouLogUtils.e("Share", "Get Share Url Error：" + e.getMessage());
+            return Constants.BASE_H5_URL + "/";
+        }
     }
 }
