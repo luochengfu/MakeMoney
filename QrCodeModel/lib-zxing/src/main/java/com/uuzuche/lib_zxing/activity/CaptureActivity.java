@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.uuzuche.lib_zxing.R;
 
@@ -15,7 +17,7 @@ import com.uuzuche.lib_zxing.R;
  */
 public class CaptureActivity extends AppCompatActivity {
 
-
+    private LinearLayout loading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -24,6 +26,7 @@ public class CaptureActivity extends AppCompatActivity {
         CaptureFragment captureFragment = new CaptureFragment();
         captureFragment.setAnalyzeCallback(analyzeCallback);
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_zxing_container, captureFragment).commit();
+        initView();
         captureFragment.setCameraInitCallBack(new CaptureFragment.CameraInitCallBack() {
             @Override
             public void callBack(Exception e) {
@@ -35,6 +38,22 @@ public class CaptureActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void initView() {
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CaptureActivity.this.finish();
+            }
+        });
+        findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                initDialogOpenAvatar();
+            }
+        });
+        loading = (LinearLayout) findViewById(R.id.loading);
     }
 
     /**
