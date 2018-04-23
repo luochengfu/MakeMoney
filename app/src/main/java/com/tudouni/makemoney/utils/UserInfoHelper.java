@@ -43,6 +43,7 @@ public class UserInfoHelper {
         editor.putBoolean("closeCommon",user.getCloseCommon());
         editor.putString("bindPhoneStatus",user.getBindPhoneStatus());
         editor.putString("unionid",user.getUnionid());
+        editor.putString("pwd",user.getPwd());
 
         editor.commit();
     }
@@ -84,6 +85,7 @@ public class UserInfoHelper {
         }
         mUser.setBindPhoneStatus(sharedPreferences.getString("bindPhoneStatus",""));
         mUser.setUnionid(sharedPreferences.getString("unionid",""));
+        mUser.setBindPhoneStatus(sharedPreferences.getString("pwd",""));
         return mUser;
     }
 
@@ -131,7 +133,9 @@ public class UserInfoHelper {
         editor.putString("officialStatus","");
         editor.putString("dynamicCount","");
         editor.putString("unionid","");
+        editor.putString("pwd","");
         editor.commit();
+
     }
 
 }

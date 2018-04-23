@@ -3,8 +3,11 @@ package com.tudouni.makemoney.utils;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.tudouni.makemoney.activity.AccountSecurityActivity;
 import com.tudouni.makemoney.activity.FaceToFaceActivity;
 import com.tudouni.makemoney.activity.InvitationDouFenActivity;
+import com.tudouni.makemoney.activity.LoginActivity;
+import com.tudouni.makemoney.activity.SettingActivity;
 
 /**
  * Created by ZhangPeng on 2018/4/20.
@@ -27,6 +30,16 @@ public class ForwardUtils {
                 Intent intent = new Intent(oriActivity, InvitationDouFenActivity.class);
                 intent.putExtra("code", code);
                 toIntent(oriActivity, url, intent);
+            } else if (url.startsWith(Constants.SETTING)) {
+                Intent intent = new Intent(oriActivity, SettingActivity.class);
+                toIntent(oriActivity, url, intent);
+            } else if (url.startsWith(Constants.ACCOUNT_SECURITY)) {
+                Intent intent = new Intent(oriActivity, AccountSecurityActivity.class);
+                toIntent(oriActivity, url, intent);
+            } else if (url.startsWith(Constants.LOGIN)) {
+                Intent intent = new Intent(oriActivity, LoginActivity.class);
+                toIntent(oriActivity, url, intent);
+                oriActivity.finish();
             }
 
         } catch (Exception e) {

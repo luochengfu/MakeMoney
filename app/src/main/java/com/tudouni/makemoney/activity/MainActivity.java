@@ -14,14 +14,24 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.fragment.MainTabOneFragment;
 import com.tudouni.makemoney.fragment.MainTabThreeFragment;
 import com.tudouni.makemoney.fragment.GoodCategoryFragment;
 import com.tudouni.makemoney.fragment.MineFragment;
+import com.tudouni.makemoney.model.LogOut;
+import com.tudouni.makemoney.myApplication.MyApplication;
+import com.tudouni.makemoney.utils.Constants;
+import com.tudouni.makemoney.utils.ForwardUtils;
+import com.tudouni.makemoney.view.Tip_dialog;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMShareAPI;
+
+import org.simple.eventbus.EventBus;
+import org.simple.eventbus.Subscriber;
+import org.simple.eventbus.ThreadMode;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -33,6 +43,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private GoodCategoryFragment mTabTwo;
     private MainTabThreeFragment mTabThree;
     private MineFragment mTabMine;
+    private long lastTipTimeMills = 0L;
     //  Fragment事务
     private FragmentTransaction mTransaction = null;
 
@@ -58,6 +69,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initView();
         initDatas();
         initPermissions();
+        EventBus.getDefault().register(this);
     }
 
     private void initView() {
@@ -85,6 +97,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 setTabSelection(3);
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     /**
@@ -203,6 +221,50 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             tab2.setSelected(false);
             tab3.setSelected(false);
         }
+    }
+
+    @Subscriber(tag = "clear", mode = ThreadMode.MAIN)
+    private void logout(final LogOut logout) {
+        if (logout.getShowDialog()) {
+            Tip_dialog confirmDialog = new Tip_dialog(MyApplication.sCurrActivity, logout.getMsg(), false);
+            confirmDialog.setLinstener(new Tip_dialog.BtnClickLinstener() {
+
+                @Override
+                public void clickOk() {
+                    doLogOut();
+                }
+
+                @Override
+                public void clickCancel() {
+
+                }
+            });
+            confirmDialog.show();
+        } else {
+            doLogOut();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() - lastTipTimeMills > 1000) {
+            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            lastTipTimeMills = System.currentTimeMillis();
+        } else {
+            finish();
+        }
+    }
+
+    /**
+     * 退出登录
+     */
+    private void doLogOut() {
+        try {
+            MyApplication.logout();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        ForwardUtils.target(this, Constants.LOGIN);
     }
 
     @Override

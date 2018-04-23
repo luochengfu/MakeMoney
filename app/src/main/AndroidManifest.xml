@@ -77,8 +77,29 @@
             android:theme="@style/FullTheme" />
 
         <activity
+            android:name=".activity.SettingActivity"
+            android:label="设置"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".activity.AccountSecurityActivity"
+            android:label="账号安全"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".activity.TelLoginActivity"
+            android:label="手机登录"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+
+        <activity
             android:name=".activity.PwdActivity"
             android:label="个人-设置登录密码"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.ModifyPasswordActivity"
+            android:label="个人-修改密码"
             android:screenOrientation="portrait" />
 
         <meta-data

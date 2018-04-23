@@ -1,6 +1,9 @@
 package com.tudouni.makemoney.network;
 
+import com.tudouni.makemoney.model.AliAuth;
 import com.tudouni.makemoney.model.AppConfig;
+import com.tudouni.makemoney.model.BindInfo;
+import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.network.rx.BaseObserver;
@@ -18,6 +21,20 @@ public class CommonScene extends RetrofitUtils {
         setSubscribe(commonApi.getMsgCode(phone), observer);
     }
 
+    public static void getVerifCode(String phone, BaseObserver<String> observer) {
+        setSubscribe(commonApi.getVerifCode(phone), observer);
+    }
+
+    /**
+     * 重置密码获取验证码
+     */
+    public static void getPasswordCode(String phone, BaseObserver<String> observer) {
+        setSubscribe(commonApi.getPasswordCode(phone), observer);
+    }
+
+    /**
+     * 验证码登录
+     */
     public static void telCodeLogin(String phone, String code, String model, String brand, BaseObserver<User> observer) {
         setSubscribe(commonApi.telCodeLogin(phone, code, model, brand), observer);
     }
@@ -33,4 +50,96 @@ public class CommonScene extends RetrofitUtils {
     public static void getGoodList(BaseObserver<List<Category>> observer){
         setSubscribe(commonApi.getGoodList(),observer);
     }
+
+    /**
+     * 绑定手机号
+     */
+    public static void bindPhone(String phone, String code, String model, String brand, BaseObserver<User> observer) {
+        setSubscribe(commonApi.bindPhone(phone,code,model,brand), observer);
+    }
+
+    /**
+     * 绑定新手机号
+     */
+    public static void bindPhone2(String phone, String code, String model, String brand, String verifyToken, BaseObserver<User> observer) {
+        setSubscribe(commonApi.bindPhone2(phone,code,model,brand,verifyToken), observer);
+    }
+
+    /**
+     * 解除原手机号
+     */
+    public static void verifcodeChange(String phone, String code, String model, String brand, BaseObserver<User> observer) {
+        setSubscribe(commonApi.verifcodeChange(phone,code,model,brand), observer);
+    }
+
+    /**
+     * 找回密码
+     */
+    public static void findPassword(String phone, String code, String model, String brand, BaseObserver<User> observer) {
+        setSubscribe(commonApi.findPassword(phone,code,model,brand), observer);
+    }
+
+    /**
+     * 新用户注册绑定手机号
+     */
+    public static void bindNewPhone(String phone, String code, String model, String brand,String handleToken, BaseObserver<User> observer) {
+        setSubscribe(commonApi.bindNewPhone(phone,code,model,brand,handleToken), observer);
+    }
+
+    /**
+     * 获取用户数据接口
+     */
+    public static void getUserInfo(BaseObserver<User> observer) {
+        setSubscribe(commonApi.getUserInfo(), observer);
+    }
+
+    /**
+     * 用户绑定信息
+     */
+    public static void accountBind(BaseObserver<BindInfo> observer){
+        setSubscribe(commonApi.accountBind(), observer);
+    }
+
+    /**
+     * 是否已经绑定
+     */
+    public static void payStatus(BaseObserver<PayBindingInfo> observer) {
+        setSubscribe(commonApi.payStatus(),observer);
+    }
+
+    /**
+     * 第三方账号解绑
+     */
+    public static void unbindThree(String acessToken,String openid,String platform, BaseObserver<String> observer) {
+        setSubscribe(commonApi.unbindThree(acessToken,openid,platform),observer);
+    }
+
+    /**
+     * 第三方账号绑定
+     */
+    public static void bindAccount(String code,String openid,String platform, BaseObserver<String> observer) {
+        setSubscribe(commonApi.bindAccount(code,openid,platform),observer);
+    }
+
+    /**
+     * 阿里认证
+     */
+    public static void aliAuth(BaseObserver<AliAuth> observer) {
+        setSubscribe(commonApi.aliAuth(),observer);
+    }
+
+    /**
+     * 修改密码
+     */
+    public static void verifyPassword(String password, BaseObserver<String> observer) {
+        setSubscribe(commonApi.verifyPassword(password),observer);
+    }
+
+    /**
+     * 密码登录
+     */
+    public static void passwordLogin(String user, String password,String model, String brand,BaseObserver<User> observer) {
+        setSubscribe(commonApi.passwordLogin(user,password,model,brand),observer);
+    }
+
 }

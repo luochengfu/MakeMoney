@@ -5,7 +5,7 @@
     android:background="#f4f5f9"
     android:orientation="vertical">
 
-    <com.doubo.framework.widget.MyTitleBar
+    <com.tudouni.makemoney.view.MyTitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -28,12 +28,12 @@
 
         <ImageView
             android:id="@+id/password_look_iv"
-            android:layout_width="25dp"
+            android:layout_width="20dp"
             android:layout_height="50dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="12dp"
-            android:scaleType="center"
+            android:scaleType="centerInside"
             android:src="@mipmap/password_look" />
 
         <EditText
@@ -76,12 +76,12 @@
 
         <ImageView
             android:id="@+id/password_comfirm_look_iv"
-            android:layout_width="25dp"
+            android:layout_width="20dp"
             android:layout_height="50dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="12dp"
-            android:scaleType="center"
+            android:scaleType="centerInside"
             android:src="@mipmap/password_look" />
 
         <EditText
