@@ -1,32 +1,24 @@
-//package com.tudouni.makemoney.network.security;
-//
-//import android.content.Context;
-//import android.text.TextUtils;
-//import android.util.Log;
-//import android.com.tudouni.makemoney.widget.Toast;
-//
-//import com.alibaba.wireless.security.jaq.JAQException;
-//import com.alibaba.wireless.security.jaq.avmp.IJAQAVMPSignComponent;
-//import com.alibaba.wireless.security.open.SecurityGuardManager;
-//import com.alibaba.wireless.security.open.avmp.IAVMPGenericComponent;
-//import com.doubozhibo.tudouni.App;
-//
-//import java.io.UnsupportedEncodingException;
-//import java.security.MessageDigest;
-//import java.security.NoSuchAlgorithmException;
-//import java.util.HashMap;
-//
-///**
-// * 移动安全
-// * Created by ZhangPeng on 2018/1/8.
-// */
-//
-//public class MobileSecurity {
+package com.tudouni.makemoney.network.security;
+
+import android.content.Context;
+import android.text.TextUtils;
+
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+
+/**
+ * 移动安全
+ * Created by ZhangPeng on 2018/1/8.
+ */
+
+public class MobileSecurity {
 //    private IAVMPGenericComponent.IAVMPGenericInstance instance = null;
 //    private static IJAQAVMPSignComponent jaqVMPComp = null;
-//    private static int VMP_SIGN_WITH_EXTERNAL_WUA = 3;
-//    private static String TAG = "MobileSecurity";
-//
+    private static int VMP_SIGN_WITH_EXTERNAL_WUA = 3;
+    private static String TAG = "MobileSecurity";
+
 //    /**
 //     * 保证线程同步，调用AVMP的接口全局请只初始化一次即可，避免反复初始化造成不必要的开销。
 //     *
@@ -81,7 +73,7 @@
 //        toast.show();
 //        Log.d(TAG, content);
 //    }
-//
+
 //    /**
 //     * 测试签名数据
 //     *
@@ -97,36 +89,36 @@
 //            Log.d(TAG, "avmp sign failed");
 //        }
 //    }
-//
-//    public static String md5(String string) {
-//        if (TextUtils.isEmpty(string)) {
-//            return "";
-//        }
-//        MessageDigest md5 = null;
-//        try {
-//            md5 = MessageDigest.getInstance("MD5");
-//            byte[] bytes = md5.digest(string.getBytes());
-//            String result = "";
-//            for (byte b : bytes) {
-//                String temp = Integer.toHexString(b & 0xff);
-//                if (temp.length() == 1) {
-//                    temp = "0" + temp;
-//                }
-//                result += temp;
-//            }
-//            return result;
-//        } catch (NoSuchAlgorithmException e) {
-//            e.printStackTrace();
-//        }
-//        return "";
-//    }
-//
-//    /**
-//     * 将元数据通过处理后反馈给登录接口
-//     * @param context
-//     * @param rawData 原始数据
-//     * @return
-//     */
+
+    public static String md5(String string) {
+        if (TextUtils.isEmpty(string)) {
+            return "";
+        }
+        MessageDigest md5 = null;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+            byte[] bytes = md5.digest(string.getBytes());
+            String result = "";
+            for (byte b : bytes) {
+                String temp = Integer.toHexString(b & 0xff);
+                if (temp.length() == 1) {
+                    temp = "0" + temp;
+                }
+                result += temp;
+            }
+            return result;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    /**
+     * 将元数据通过处理后反馈给登录接口
+     * @param context
+     * @param rawData 原始数据
+     * @return
+     */
 //    public static HashMap<String, String> toEncryptedData(Context context, String rawData) {
 //        HashMap<String, String> dataMap = new HashMap<>();
 //        try {
@@ -143,4 +135,4 @@
 //        }
 //        return dataMap;
 //    }
-//}
+}

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f4f5f9"
+    android:orientation="vertical">
+
+    <com.tudouni.makemoney.view.MyTitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:middleText="修改登录密码" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ffffff">
+
+        <TextView
+            android:id="@+id/tv_confirm"
+            style="@style/black_15_style"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:gravity="center"
+            android:text="@string/password_login" />
+
+        <ImageView
+            android:id="@+id/password_look_iv"
+            android:layout_width="20dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/password_look" />
+
+        <EditText
+            android:id="@+id/comfirm_pasword_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/password_look_iv"
+            android:layout_toRightOf="@id/tv_confirm"
+            android:background="@android:color/white"
+            android:hint="@string/password_login_input_hint"
+            android:inputType="textPassword"
+            android:lines="1"
+            android:maxLength="16"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_commit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/yanzheng_bg_selector"
+        android:gravity="center"
+        android:text="@string/next_step"
+        android:textColor="@color/color_999999"
+        android:textSize="15sp" />
+
+</LinearLayout>

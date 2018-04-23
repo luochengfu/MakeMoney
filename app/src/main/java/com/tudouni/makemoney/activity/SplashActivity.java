@@ -55,15 +55,14 @@ public class SplashActivity extends Activity {
     }
 
     private void nextPage() {
-        /*if (null != MyApplication.getLoginUser() && CommonUtil.isNetworkAvailable(mContext)) {
+        if (null != MyApplication.getLoginUser() && CommonUtil.isNetworkAvailable(mContext)) {
             startActivity(new Intent(SplashActivity.this,MainActivity.class));
             finish();
         } else {  //跳转到登录
             startActivity(new Intent(SplashActivity.this,LoginActivity.class));
             finish();
             return;
-        }*/
-        startActivity(new Intent(SplashActivity.this,MainActivity.class));
+        }
     }
 
     public static Intent createIntent(Context context) {

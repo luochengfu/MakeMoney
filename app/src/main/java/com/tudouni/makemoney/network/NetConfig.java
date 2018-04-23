@@ -16,10 +16,24 @@ import com.tudouni.makemoney.utils.base.ACache;
  */
 public class NetConfig {
 
-    public static final String MSG_CODE = "/getVerifCode";
-    public static final String TEL_LOGIN = "/login";
-    public static final String SETPWD = "/auth/user/setPwd";
+    public static final String MSG_CODE = "/shop/getVerifCode";
+    public static final String TEL_LOGIN = "/shop/login";
+    public static final String SETPWD = "/shop/auth/user/setPwd";
     public static final String CONFIG = "/config";
+    public static final String BINDPHONE = "/shop/auth/user/bindPhone";
+    public static final String VERIFCODE_CHANGE = "/shop/auth/user/verifyCode";
+    public static final String BINDPHONE2 = "/shop/auth/user/bindPhone_V2";
+    public static final String BIND_NEW_PHONE = "/shop/login/thirdPartySNS/bindingPhone";
+    public static final String VERIFCODE = "/auth/user/getVerifCode";
+    public static final String PASSWORD_MSG_CODE = "/shop/user/getVerifCode";
+    public static final String GETUSERINFO = "/auth/user/info";
+    public static final String ACCOUNT_BIND = "/shop/auth/user/bindStatus";
+    public static final String PAY_STATUS = "/shop/auth/pay/status";
+    public static final String UNBUNDTHREE = "/auth/user/unBindThird";
+    public static final String BINDACCCOUNT = "/auth/user/bindAccount";
+    public static final String ALIAUTH = "/auth/alipay/info";
+    public static final String VERIFPWD = "/shop/auth/user/verifPwd";
+    public static final String USERNAME_PASSWOED_LOGIN = "/shop/loginPwd";
     public static final String GOOD_LIST = "/shop/goodsCategory/list";
 
     /**

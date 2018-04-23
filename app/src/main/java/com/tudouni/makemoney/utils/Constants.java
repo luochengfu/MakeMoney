@@ -30,11 +30,15 @@ public class Constants {
     public final static String OS_VERSION = android.os.Build.VERSION.RELEASE;
     public static final String BASE_PRE = "tudouni://tudouni/";
     public static final String SETTING = BASE_PRE + "setting";
+    public static final String LOGIN = BASE_PRE + "login";
 
 
     public static final String BASE_H5_URL = NetConfig.getBaseTuDouNiH5Url();
     public static final String INVISIT_POSTER = BASE_PRE + "invisitPoster";
     public static final String SHARE_INVISTOR = BASE_H5_URL + "/tudouni/html/invistor.html";
+    public static final String ACCOUNT_SECURITY = BASE_PRE + "sefaty";
+    public static final String ABOUTUS = BASE_H5_URL + "/tudouni/html/contact.html";
+    public static final String CONTACTUS = BASE_H5_URL + "/tudouni/html/contact.html";
     public static final String BINDING_FACE_TO_FACE = BASE_PRE + "binding_face_to_face";
 
 }

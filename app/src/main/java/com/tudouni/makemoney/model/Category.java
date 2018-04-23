@@ -1,5 +1,7 @@
 package com.tudouni.makemoney.model;
 
+import android.databinding.Observable;
+
 import java.util.List;
 
 public class Category {

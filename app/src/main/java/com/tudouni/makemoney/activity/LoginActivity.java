@@ -36,7 +36,12 @@ import com.tudouni.makemoney.view.CenterLoadingView;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -195,7 +200,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.tv_commit:
                 if(mLoginModeStatus == 1) {
-//                    passwordSubmit();
+                    passwordSubmit();
                     statisticsType = "lg_shaclick";
                 } else if(mLoginModeStatus == 2) {
                     codeSubmit();
@@ -203,9 +208,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 }
                 break;
             case R.id.loss_password_tv:
-//                Intent intent = new Intent(LoginActivity.this, TelLoginActivity.class);
-//                intent.putExtra("type", "3");
-//                startActivity(intent);
+                Intent intent = new Intent(LoginActivity.this, TelLoginActivity.class);
+                intent.putExtra("type", "3");
+                startActivity(intent);
                 break;
         }
 
@@ -259,58 +264,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 }
             }
         });
-
-        final Map<String, String> params = new HashMap<String, String>();
-        //加密原有的签名数据
-
-        /*String rawData = "phone:" + phone + "&code:" + code;
-        HashMap<String, String> encryptedDataMap = MobileSecurity.toEncryptedData(this, rawData);
-        if (encryptedDataMap != null) {
-            params.put("rawData", encryptedDataMap.get("rawData"));
-            params.put("sign", encryptedDataMap.get("sign"));
-            params.put("douboFingerPrint", encryptedDataMap.get("douboFingerPrint"));
-        }*/
-        /*params.put("phone", phone);
-        params.put("code", code);
-        params.put("model", Build.MODEL);
-        params.put("brand", Build.BRAND);
-
-        RequestUtils.sendPostRequest(Api.TEL_LOGIN, params, ApiClass.API_CLASS_3, new ResponseCallBack<User>() {
-
-            @Override
-            public void onSuccess(User user) {
-                super.onSuccess(user);
-
-                if (null != loadingDialog) {
-                    loadingDialog.dismiss();
-                }
-                if ("0".equals(user.getPwd())) {//没有设置登录密码
-                    Intent intent1 = new Intent(LoginActivity.this, PwdActivity.class);
-                    intent1.putExtra("type", "1");
-                    intent1.putExtra("user", user);
-                    startActivity(intent1);
-                }else {//设置了登录密码
-                    saveLoginInfo(user);
-                    startActivityForResult(SplashActivity.createIntent(mContext),0x200);
-                    finish();
-                }
-            }
-
-            @Override
-            public void onFailure(ServiceException e) {
-                super.onFailure(e);
-                if (null != loadingDialog) {
-                    loadingDialog.dismiss();
-                }
-            }
-        });*/
     }
 
 
     /**
      * 密码登录
      */
-   /* private void passwordSubmit() {
+    private void passwordSubmit() {
         String userName = mPhoneNumberInput.getText().toString();
         String password = mPasswrodInput.getText().toString();
 
@@ -329,42 +289,32 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         }
         loadingDialog.setTitle("登录中");
         loadingDialog.show();
-        //加密原有的签名数据
-        String rawData = "user:" + userName + "&password:" + password;
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("user", userName);
-        params.put("password", password);
-        params.put("model", Build.MODEL);
-        params.put("brand", Build.BRAND);
-        HashMap<String, String> encryptedDataMap = MobileSecurity.toEncryptedData(this, rawData);
-        if (encryptedDataMap != null) {
-            params.put("rawData", encryptedDataMap.get("rawData"));
-            params.put("sign", encryptedDataMap.get("sign"));
-            params.put("douboFingerPrint", encryptedDataMap.get("douboFingerPrint"));
-        }
-        RequestUtils.sendPostRequest(Api.USERNAME_PASSWOED_LOGIN, params, ApiClass.API_CLASS_3, new ResponseCallBack<User>() {
 
+        CommonScene.passwordLogin(userName, password, Build.MODEL, Build.BRAND, new BaseObserver<User>() {
             @Override
-            public void onSuccess(User user) {
-                super.onSuccess(user);
-                App.saveLoginUser(user);
+            public void OnSuccess(User user) {
+                MyApplication.saveLoginUser(user);
                 if (null != loadingDialog) {
                     loadingDialog.dismiss();
                 }
                 saveLoginInfo(user);
+                Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+
                 startActivityForResult(SplashActivity.createIntent(mContext),0x200);
                 finish();
             }
 
             @Override
-            public void onFailure(ServiceException e) {
-                super.onFailure(e);
+            public void OnFail(int code, String err) {
+                super.OnFail(code, err);
                 if (null != loadingDialog) {
                     loadingDialog.dismiss();
                 }
             }
         });
-    }*/
+    }
 
     /**
      * 点击切换
