@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.doubo.framework.widget.MyTitleBar
+    <com.tudouni.makemoney.view.MyTitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
             android:textColor="@color/gray"
             android:textSize="13sp" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/iv_picture"
             android:layout_width="32dp"
             android:layout_height="32dp"

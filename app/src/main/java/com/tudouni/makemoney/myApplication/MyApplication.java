@@ -4,7 +4,10 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.tudouni.makemoney.model.AppConfig;
 import com.tudouni.makemoney.model.User;
+import com.tudouni.makemoney.network.CommonScene;
+import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.UserInfoHelper;
 import com.tudouni.makemoney.utils.base.BaseFrameworkInit;
 import com.tudouni.makemoney.utils.base.IBaseRequirement;
@@ -26,6 +29,7 @@ public class MyApplication extends BaseApplication {
     private static MyApplication sContext;
     private static User mLoginUser;
     public static String mNewUserClipPhone = "";
+    public static AppConfig appConfig;
 
 
     @Override
@@ -40,8 +44,24 @@ public class MyApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        initConfig();
         initJPush();
         initUmeng();
+    }
+
+    private void initConfig() {
+        CommonScene.getConfig(new BaseObserver<AppConfig>() {
+            @Override
+            public void OnSuccess(AppConfig appConfig) {
+                if (appConfig != null)
+                    MyApplication.appConfig = appConfig;
+            }
+
+            @Override
+            public void OnFail(int code, String err) {
+                super.OnFail(code, err);
+            }
+        });
     }
 
     private void initJPush() {

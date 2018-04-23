@@ -12,7 +12,7 @@ import com.tudouni.makemoney.activity.InvitationDouFenActivity;
 public class ForwardUtils {
     public static void target(Activity oriActivity, String url) {
         try {
-            if (url.startsWith(Constants.INVISIT_POSTER)) {
+            if (url.startsWith(Constants.INVISIT_POSTER)) {//分享海报界面
                 String code = null;
                 try {
                     code = ((url.substring(url.indexOf("?") + 1, url.indexOf("&"))).split("="))[1];

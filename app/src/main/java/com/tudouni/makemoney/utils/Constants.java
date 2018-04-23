@@ -29,11 +29,11 @@ public class Constants {
     public final static String OS_TYPE = android.os.Build.MANUFACTURER;
     public final static String OS_VERSION = android.os.Build.VERSION.RELEASE;
     public static final String BASE_PRE = "tudouni://tudouni/";
-
     public static final String SETTING = BASE_PRE + "setting";
 
 
     public static final String BASE_H5_URL = NetConfig.getBaseTuDouNiH5Url();
     public static final String INVISIT_POSTER = BASE_PRE + "invisitPoster";
+    public static final String SHARE_INVISTOR = BASE_H5_URL + "/tudouni/html/invistor.html";
 
 }

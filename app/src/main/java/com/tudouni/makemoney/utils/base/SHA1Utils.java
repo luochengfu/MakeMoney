@@ -1,4 +1,4 @@
-package com.doubo.framework.utils.secururity;
+package com.tudouni.makemoney.utils.base;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
