@@ -9,6 +9,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.tudouni.makemoney.R;
+
 
 /**
  * 通用弹出提示
