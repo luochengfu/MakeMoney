@@ -30,6 +30,11 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- 用于申请获取蓝牙信息进行室内定位 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
         android:name=".myApplication.MyApplication"
@@ -57,12 +62,13 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
-        <!-- =========================APP中的 Activity End========================= -->
-        <!-- =========================友盟集成 Start========================= -->
-        <!--=========================APP中的 Activity End=========================-->
-        <!--=========================友盟集成 Start=========================-->
-        android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.FaceToFaceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme_yellow" />
 
+        <!-- =========================APP中的 Activity End========================= -->
+        <!--=========================友盟集成 Start=========================-->
         <activity
             android:name=".activity.LoginActivity"
             android:label="登录"

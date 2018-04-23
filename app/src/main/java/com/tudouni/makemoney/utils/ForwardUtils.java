@@ -3,6 +3,7 @@ package com.tudouni.makemoney.utils;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.tudouni.makemoney.activity.FaceToFaceActivity;
 import com.tudouni.makemoney.activity.InvitationDouFenActivity;
 
 /**
@@ -12,7 +13,10 @@ import com.tudouni.makemoney.activity.InvitationDouFenActivity;
 public class ForwardUtils {
     public static void target(Activity oriActivity, String url) {
         try {
-            if (url.startsWith(Constants.INVISIT_POSTER)) {//分享海报界面
+            if (url.startsWith(Constants.BINDING_FACE_TO_FACE)) {//面对面绑定
+                Intent intent = new Intent(oriActivity, FaceToFaceActivity.class);
+                toIntent(oriActivity, url, intent);
+            } else if (url.startsWith(Constants.INVISIT_POSTER)) {//分享海报界面
                 String code = null;
                 try {
                     code = ((url.substring(url.indexOf("?") + 1, url.indexOf("&"))).split("="))[1];

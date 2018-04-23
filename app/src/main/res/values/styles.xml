@@ -163,4 +163,18 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <style name="black_14_style">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black80</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="AppTheme_yellow" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/yellowColor</item>
+        <item name="colorPrimaryDark">@color/yellowColor</item>
+        <item name="colorAccent">@color/yellowColor</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
 </resources>

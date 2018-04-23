@@ -37,11 +37,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private FragmentTransaction mTransaction = null;
 
     private final String[] permissionManifest = {
+            Manifest.permission.CAMERA,
+            Manifest.permission.RECORD_AUDIO,
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE
     };
     private final int[] noPermissionTip = {
+            R.string.no_camera_permission,
+            R.string.no_record_audio_permission,
             R.string.no_read_phone_state_permission,
             R.string.no_write_external_storage_permission,
             R.string.no_read_external_storage_permission

@@ -224,10 +224,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 //            case R.id.ly_share_qq:
 //                doShare(view.getId());
 //                break;
-//            case R.id.ly_share_face_to_face://面对面
-//                statisticsType = "me_inf2f";
-//                ForwardUtils.target(getActivity(), Constant.BINDING_FACE_TO_FACE);
-//                break;
+            case R.id.ly_share_face_to_face://面对面
+                statisticsType = "me_inf2f";
+                ForwardUtils.target(getActivity(), Constants.BINDING_FACE_TO_FACE);
+                break;
 //            case R.id.ly_mine_invitation://我的邀请
 //                statisticsType = "me_inviate";
 //                intent = new Intent(getActivity(), FreeShopActivity.class);

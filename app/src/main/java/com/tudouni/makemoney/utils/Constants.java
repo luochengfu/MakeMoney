@@ -35,5 +35,6 @@ public class Constants {
     public static final String BASE_H5_URL = NetConfig.getBaseTuDouNiH5Url();
     public static final String INVISIT_POSTER = BASE_PRE + "invisitPoster";
     public static final String SHARE_INVISTOR = BASE_H5_URL + "/tudouni/html/invistor.html";
+    public static final String BINDING_FACE_TO_FACE = BASE_PRE + "binding_face_to_face";
 
 }

@@ -1,1 +1,1 @@
-include ':app','QrCodeModel:PicturePicker','QrCodeModel:ZXing','QrCodeModel:UCrop'
+include ':app','QrCodeModel:lib-zxing'

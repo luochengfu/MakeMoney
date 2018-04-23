@@ -14,6 +14,7 @@ import com.tudouni.makemoney.utils.base.IBaseRequirement;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -48,6 +49,7 @@ public class MyApplication extends BaseApplication {
         initConfig();
         initJPush();
         initUmeng();
+        ZXingLibrary.initDisplayOpinion(this);
     }
 
     private void initConfig() {
