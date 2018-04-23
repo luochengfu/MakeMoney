@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f4f5f9"
+    android:orientation="vertical">
+
+    <com.doubo.framework.widget.MyTitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ffffff">
+
+        <TextView
+            android:id="@+id/tv_login_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:text="登录密码"
+            android:textColor="@color/color_333333"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/password_look_iv"
+            android:layout_width="25dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:scaleType="center"
+            android:src="@mipmap/password_look" />
+
+        <EditText
+            android:id="@+id/et_psw"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/password_look_iv"
+            android:layout_toRightOf="@id/tv_login_pwd"
+            android:background="@android:color/white"
+            android:hint="请设置新的登录密码"
+            android:inputType="textPassword"
+            android:maxLength="16"
+            android:paddingLeft="8dp"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:background="@color/color_e9e9e9" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ffffff">
+
+        <TextView
+            android:id="@+id/tv_confirm"
+            style="@style/black_15_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:text="确认密码" />
+
+        <ImageView
+            android:id="@+id/password_comfirm_look_iv"
+            android:layout_width="25dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:scaleType="center"
+            android:src="@mipmap/password_look" />
+
+        <EditText
+            android:id="@+id/et_confirm_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/password_comfirm_look_iv"
+            android:layout_toRightOf="@id/tv_confirm"
+            android:background="@android:color/white"
+            android:hint="请再输入一遍"
+            android:inputType="textPassword"
+            android:lines="1"
+            android:maxLength="16"
+            android:paddingLeft="8dp"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_commit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/yanzheng_bg_selector"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/color_999999"
+        android:textSize="15sp" />
+</LinearLayout>
