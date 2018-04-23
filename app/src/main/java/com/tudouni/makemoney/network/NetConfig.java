@@ -20,6 +20,7 @@ public class NetConfig {
     public static final String TEL_LOGIN = "/login";
     public static final String SETPWD = "/auth/user/setPwd";
     public static final String CONFIG = "/config";
+    public static final String GOOD_LIST = "/shop/goodsCategory/list";
 
     /**
      * 网络环境名称数组
@@ -83,6 +84,7 @@ public class NetConfig {
     private static final int ENVIRONMENT_DEFAULT = BuildConfig.DEBUG ? 1 : 0;
 
     private static final String[] SHOPPING_BASE_URLS = {"http://uat-static-shop.tudouni.doubozhibo.com", "http://uat-static-shop.tudouni.doubozhibo.com"};
+
 
     /**
      * 获取网络环境index

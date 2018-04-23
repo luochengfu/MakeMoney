@@ -1,8 +1,11 @@
 package com.tudouni.makemoney.network;
 
 import com.tudouni.makemoney.model.AppConfig;
+import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.network.rx.BaseObserver;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2018/4/20 0020.
@@ -25,5 +28,9 @@ public class CommonScene extends RetrofitUtils {
 
     public static void getConfig(BaseObserver<AppConfig> observer) {
         setSubscribe(commonApi.getConfig(), observer);
+    }
+
+    public static void getGoodList(BaseObserver<List<Category>> observer){
+        setSubscribe(commonApi.getGoodList(),observer);
     }
 }

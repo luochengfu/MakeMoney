@@ -4,12 +4,18 @@ import android.databinding.DataBindingUtil;
 import android.view.View;
 import com.tudouni.makemoney.databinding.FragmentGoodCategoryBinding;
 import com.tudouni.makemoney.R;
+import com.tudouni.makemoney.viewModel.GoodCategoryViewModel;
 
 /**
- * Created by Administrator on 2018/4/20 0020.
+ *  品类
+ *  Jaron.Wu
+ *     2018/4/23
  */
 
 public class GoodCategoryFragment extends BaseFragment {
+
+    private FragmentGoodCategoryBinding mCategoryBinding;
+
     @Override
     protected int getContentView() {
         return 0;
@@ -17,8 +23,10 @@ public class GoodCategoryFragment extends BaseFragment {
 
     @Override
     protected View getLayoutView() {
-        FragmentGoodCategoryBinding  categoryBinding = DataBindingUtil.inflate(getActivity().getLayoutInflater(),R.layout.fragment_good_category,null,false);
-        return categoryBinding.getRoot();
+        mCategoryBinding = DataBindingUtil.inflate(getActivity().getLayoutInflater(), R.layout.fragment_good_category,null,false);
+        GoodCategoryViewModel categoryViewModel = new GoodCategoryViewModel();
+        categoryViewModel.getGoodList();
+        return mCategoryBinding.getRoot();
     }
 
     @Override

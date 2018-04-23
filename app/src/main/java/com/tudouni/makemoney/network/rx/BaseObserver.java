@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.tudouni.makemoney.network.Result;
 import com.tudouni.makemoney.network.exception.NetWorkExceptionConvert;
+import com.tudouni.makemoney.utils.TDLog;
 import com.tudouni.makemoney.utils.ToastUtil;
 
 import io.reactivex.Observer;
@@ -43,8 +44,8 @@ public abstract class BaseObserver<T> implements Observer<Result<T>> {
         /*if (BuildConfig.DEBUG) {
             e.printStackTrace();
         }*/
+        TDLog.e("TuDouNi_" + e.getMessage());
         OnFail(5001, NetWorkExceptionConvert.exceptionConvert(e).getMsg());
-        Log.e("", "TuDouNi_" + e.getMessage());
     }
 
 

@@ -1,7 +1,10 @@
 package com.tudouni.makemoney.network;
 
 import com.tudouni.makemoney.model.AppConfig;
+import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.model.User;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -36,4 +39,10 @@ public interface CommonApi {
     @FormUrlEncoded
     @POST(NetConfig.SETPWD)
     Observable<Result<String>> setPWD(@Field("password") String password);
+
+
+
+    @POST(NetConfig.GOOD_LIST)
+    Observable<Result<List<Category>>> getGoodList();
+
 }

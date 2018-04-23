@@ -129,6 +129,9 @@ dependencies {
     compile 'com.umeng.sdk:share-core:latest.integration'
     compile 'com.umeng.sdk:share-qq:latest.integration'
     compile 'com.umeng.sdk:share-wechat:latest.integration'
+    //RecyclerView
+    compile 'com.github.jdsjlzx:LRecyclerView:1.5.0'
+
     //极光推送
     // 此处以JPush 3.1.1 版本为例。
     compile 'cn.jiguang.sdk:jpush:3.1.1'
