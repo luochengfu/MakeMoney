@@ -38,14 +38,14 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file('makemoney.jks')
+            storeFile file('../makemoney.jks')
             storePassword "tudouni"
             keyAlias "key2"
             keyPassword "tudouni"
         }
 
         release {
-            storeFile file('makemoney.jks')
+            storeFile file('../makemoney.jks')
             storePassword "tudouni"
             keyAlias "key2"
             keyPassword "tudouni"
