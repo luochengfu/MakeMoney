@@ -37,7 +37,6 @@ public class PwdActivity extends BaseActivity implements View.OnClickListener {
     private String mToken;
     private User mUser;//设置密码保存用户信息
     private boolean mLookStatus = false, mComfirmLookStatus = false;
-
     private MyTitleBar title_bar;
 
     @Override
@@ -63,6 +62,7 @@ public class PwdActivity extends BaseActivity implements View.OnClickListener {
         et_confirm_pwd = (EditText) findViewById(R.id.et_confirm_pwd);
         passwordLookIcon = (ImageView) findViewById(R.id.password_look_iv);
         passwordComfirmLookIcon = (ImageView) findViewById(R.id.password_comfirm_look_iv);
+        title_bar = (MyTitleBar) findViewById(R.id.title_bar);
     }
 
     private void initData() {

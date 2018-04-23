@@ -1,7 +1,10 @@
 package com.tudouni.makemoney.network;
 
+import com.tudouni.makemoney.model.AliAuth;
 import com.tudouni.makemoney.model.AppConfig;
 import com.tudouni.makemoney.model.Category;
+import com.tudouni.makemoney.model.BindInfo;
+import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.User;
 
 import java.util.List;
@@ -28,6 +31,14 @@ public interface CommonApi {
     @POST(NetConfig.MSG_CODE)
     Observable<Result<String>> getMsgCode(@Field("phone") String phone);
 
+    @FormUrlEncoded
+    @POST(NetConfig.VERIFCODE)
+    Observable<Result<String>> getVerifCode(@Field("phone") String phone);
+
+    @FormUrlEncoded
+    @POST(NetConfig.PASSWORD_MSG_CODE)
+    Observable<Result<String>> getPasswordCode(@Field("phone") String phone);
+
 
     @FormUrlEncoded
     @POST(NetConfig.TEL_LOGIN)
@@ -45,4 +56,76 @@ public interface CommonApi {
     @POST(NetConfig.GOOD_LIST)
     Observable<Result<List<Category>>> getGoodList();
 
+
+    @FormUrlEncoded
+    @POST(NetConfig.BINDPHONE)
+    Observable<Result<User>> bindPhone(@Field("phone") String phone,
+                                          @Field("code") String code,
+                                          @Field("model") String model,
+                                          @Field("brand") String brand);
+
+    @FormUrlEncoded
+    @POST(NetConfig.BINDPHONE2)
+    Observable<Result<User>> bindPhone2(@Field("phone") String phone,
+                                       @Field("code") String code,
+                                       @Field("model") String model,
+                                       @Field("brand") String brand,
+                                        @Field("verifyToken") String verifyToken);
+
+    @FormUrlEncoded
+    @POST(NetConfig.VERIFCODE_CHANGE)
+    Observable<Result<User>> verifcodeChange(@Field("phone") String phone,
+                                       @Field("code") String code,
+                                       @Field("model") String model,
+                                       @Field("brand") String brand);
+
+    @FormUrlEncoded
+    @POST(NetConfig.TEL_LOGIN)
+    Observable<Result<User>> findPassword(@Field("phone") String phone,
+                                             @Field("code") String code,
+                                             @Field("model") String model,
+                                             @Field("brand") String brand);
+
+    @FormUrlEncoded
+    @POST(NetConfig.BIND_NEW_PHONE)
+    Observable<Result<User>> bindNewPhone(@Field("phone") String phone,
+                                        @Field("code") String code,
+                                        @Field("model") String model,
+                                        @Field("brand") String brand,
+                                        @Field("handleToken") String handleToken);
+
+    @POST(NetConfig.GETUSERINFO)
+    Observable<Result<User>> getUserInfo();
+
+    @POST(NetConfig.ACCOUNT_BIND)
+    Observable<Result<BindInfo>> accountBind();
+
+    @POST(NetConfig.PAY_STATUS)
+    Observable<Result<PayBindingInfo>> payStatus();
+
+    @FormUrlEncoded
+    @POST(NetConfig.UNBUNDTHREE)
+    Observable<Result<String>> unbindThree(@Field("acessToken") String acessToken,
+                                          @Field("openid") String openid,
+                                          @Field("platform") String platform);
+
+    @FormUrlEncoded
+    @POST(NetConfig.BINDACCCOUNT)
+    Observable<Result<String>> bindAccount(@Field("code") String code,
+                                           @Field("openid") String openid,
+                                           @Field("platform") String platform);
+
+    @POST(NetConfig.ALIAUTH)
+    Observable<Result<AliAuth>> aliAuth();
+
+    @FormUrlEncoded
+    @POST(NetConfig.VERIFPWD)
+    Observable<Result<String>> verifyPassword(@Field("password") String password);
+
+    @FormUrlEncoded
+    @POST(NetConfig.USERNAME_PASSWOED_LOGIN)
+    Observable<Result<User>> passwordLogin(@Field("user") String user,
+                                           @Field("password") String password,
+                                           @Field("model") String model,
+                                             @Field("brand") String brand);
 }

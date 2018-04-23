@@ -1,6 +1,9 @@
 package com.tudouni.makemoney.myApplication;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -8,12 +11,16 @@ import com.tudouni.makemoney.model.AppConfig;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseObserver;
+import com.tudouni.makemoney.utils.DBLifecycleHandler;
 import com.tudouni.makemoney.utils.UserInfoHelper;
 import com.tudouni.makemoney.utils.base.BaseFrameworkInit;
 import com.tudouni.makemoney.utils.base.IBaseRequirement;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -30,6 +37,7 @@ public class MyApplication extends BaseApplication {
     private static User mLoginUser;
     public static String mNewUserClipPhone = "";
     public static AppConfig appConfig;
+    public static Activity sCurrActivity = null;
 
 
     @Override
@@ -48,6 +56,8 @@ public class MyApplication extends BaseApplication {
         initConfig();
         initJPush();
         initUmeng();
+        ZXingLibrary.initDisplayOpinion(this);
+        registerActivityLifecycleCallbacks();
     }
 
     private void initConfig() {
@@ -90,8 +100,32 @@ public class MyApplication extends BaseApplication {
     }
 
     public static void saveLoginUser(User user) {
+        if(null == user)
+            return;
         mLoginUser = user;
         UserInfoHelper.saveUserDatas(sContext, user);
+    }
+
+    /**
+     * activity 生命周期监听
+     */
+    private void registerActivityLifecycleCallbacks() {
+        registerActivityLifecycleCallbacks(new DBLifecycleHandler() {
+            @Override
+            public void onActivityResumed(Activity activity) {
+                super.onActivityResumed(activity);
+
+//                popGoodSerachWindow(activity);
+                sCurrActivity = activity;
+
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+                super.onActivityPaused(activity);
+
+            }
+        });
     }
 
     public static User getLoginUser() {
@@ -103,5 +137,10 @@ public class MyApplication extends BaseApplication {
         }
 
         return mLoginUser;
+    }
+
+    public static void logout() {
+        mLoginUser = null;
+        UserInfoHelper.clearLoginUser(sContext);
     }
 }

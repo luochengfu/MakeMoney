@@ -39,14 +39,14 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file('../makemoney.jks')
+            storeFile file('makemoney.jks')
             storePassword "tudouni"
             keyAlias "key2"
             keyPassword "tudouni"
         }
 
         release {
-            storeFile file('../makemoney.jks')
+            storeFile file('makemoney.jks')
             storePassword "tudouni"
             keyAlias "key2"
             keyPassword "tudouni"
@@ -127,6 +127,7 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     compile 'com.android.support:recyclerview-v7:25.2.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+
     //友盟SDK集成
     compile 'com.umeng.sdk:common:latest.integration'
     compile 'com.umeng.sdk:analytics:latest.integration'
@@ -136,11 +137,12 @@ dependencies {
     //RecyclerView
     compile 'com.github.jdsjlzx:LRecyclerView:1.5.0'
 
+    compile 'org.simple:androideventbus:1.0.5.1'
     //极光推送
-    compile 'cn.jiguang.sdk:jpush:3.1.1'
     // 此处以JPush 3.1.1 版本为例。
-    compile 'cn.jiguang.sdk:jcore:1.1.9'
+    compile 'cn.jiguang.sdk:jpush:3.1.1'
     // 此处以JCore 1.1.9 版本为例。
-    implementation project(':QrCodeModel:PicturePicker')
-    implementation project(':QrCodeModel:ZXing')
+    compile 'cn.jiguang.sdk:jcore:1.1.9'
+
+    compile project(path: ':QrCodeModel:lib-zxing')
 }

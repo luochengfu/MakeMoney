@@ -6,8 +6,10 @@ import android.text.TextUtils;
 
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.security.DouBoInterfaceLevel;
+import com.tudouni.makemoney.network.security.MobileSecurity;
 import com.tudouni.makemoney.network.security.SecurityComponents;
 import com.tudouni.makemoney.utils.Constants;
+import com.tudouni.makemoney.utils.DeviceInfor;
 import com.tudouni.makemoney.utils.TuDouLogUtils;
 import com.tudouni.makemoney.utils.base.AppUtils;
 import com.tudouni.makemoney.utils.base.SHA1Utils;
@@ -172,16 +174,16 @@ public class NetInterceptor implements Interceptor {
             mRequestBodyMap.put("osVersion", Constants.OS_VERSION);
         if (!mRequestBodyMap.containsKey("seqId") || TextUtils.isEmpty(mRequestBodyMap.get("seqId")))
             mRequestBodyMap.put("seqId", String.valueOf(System.currentTimeMillis()));
-//        if ((!mRequestBodyMap.containsKey("douboFingerPrint")) || TextUtils.isEmpty(mRequestBodyMap.get("douboFingerPrint")))
-//            mRequestBodyMap.put("douboFingerPrint", MobileSecurity.md5(DeviceInfor.getDeviceId(App.getContext())));
+        if ((!mRequestBodyMap.containsKey("douboFingerPrint")) || TextUtils.isEmpty(mRequestBodyMap.get("douboFingerPrint")))
+            mRequestBodyMap.put("douboFingerPrint", MobileSecurity.md5(DeviceInfor.getDeviceId(MyApplication.getContext())));
 //        if (App.sLocal != null) {
 //            mRequestBodyMap.put("city", App.sLocal.getCity());
 //            mRequestBodyMap.put("province", App.sLocal.getProvince());
 //        }
-//        if (null != App.getLoginUser()) {
-//            mRequestBodyMap.put("uid", App.getLoginUser().getUid());
-//            mRequestBodyMap.put("token", App.getLoginUser().getToken());
-//        }
+        if (null != MyApplication.getLoginUser()) {
+            mRequestBodyMap.put("uid", MyApplication.getLoginUser().getUid());
+            mRequestBodyMap.put("token", MyApplication.getLoginUser().getToken());
+        }
     }
 
     private void concatParams(StringBuilder sb, FormBody.Builder newFormBody, TreeMap<String, String> param_map) {

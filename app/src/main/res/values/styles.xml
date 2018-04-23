@@ -66,6 +66,60 @@
         <item name="android:paddingRight">10dp</item>
     </style>
 
+    <style name="tab_black_16_style">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+    <style name="gray_12_style">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="hint_14_style">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/color_BDBDBD</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="black_bold_14_style">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/black80</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="black_13_style">
+        <item name="android:textSize">13dp</item>
+        <item name="android:textColor">@color/black80</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="blue_14_style">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/color_26A5FF</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="loading_dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/dialog_load_bg</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="base_dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+
     <!-- 我的 Item -->
     <style name="mine_item">
         <item name="android:textSize">@dimen/text_size_14</item>
@@ -161,6 +215,20 @@
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/color_333333</item>
         <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="black_14_style">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black80</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="AppTheme_yellow" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/yellowColor</item>
+        <item name="colorPrimaryDark">@color/yellowColor</item>
+        <item name="colorAccent">@color/yellowColor</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
 </resources>
