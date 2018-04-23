@@ -22,11 +22,18 @@ android {
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
                 qqappid      : "1106781729",
         ]
+
+
     }
 
 
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     signingConfigs {
