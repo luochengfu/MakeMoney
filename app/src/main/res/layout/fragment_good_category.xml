@@ -33,12 +33,18 @@
             android:layout_height="match_parent">
             
             <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_categories"
                 android:layout_width="90dp"
                 android:layout_height="match_parent"/>
 
             <View
                 android:layout_width="1px"
                 android:background="#e5e5e5"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_good"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
             
         </LinearLayout>
