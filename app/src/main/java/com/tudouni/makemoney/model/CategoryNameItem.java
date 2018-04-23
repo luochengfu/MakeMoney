@@ -1,14 +1,7 @@
 package com.tudouni.makemoney.model;
 
-import android.databinding.BaseObservable;
-import android.databinding.Bindable;
-
-import com.tudouni.makemoney.BR;
-
-public class CategoryNameItem extends BaseObservable{
-    @Bindable
+public class CategoryNameItem{
     private String name;
-    @Bindable
     private boolean selected;
 
     public CategoryNameItem(){}
@@ -23,7 +16,6 @@ public class CategoryNameItem extends BaseObservable{
 
     public void setName(String name) {
         this.name = name;
-        notifyPropertyChanged(BR.name);
     }
 
     public boolean isSelected() {
@@ -32,7 +24,6 @@ public class CategoryNameItem extends BaseObservable{
 
     public void setSelected(boolean selected) {
         this.selected = selected;
-        notifyPropertyChanged(BR.selected);
     }
 
     @Override

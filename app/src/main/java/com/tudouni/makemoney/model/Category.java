@@ -1,14 +1,28 @@
 package com.tudouni.makemoney.model;
 
-import android.databinding.Observable;
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
+import com.tudouni.makemoney.BR;
 
 import java.util.List;
 
-public class Category {
+public class Category extends BaseObservable {
     private String imgUrl;
     private String id;
     private String name;
     private List<Category> categorys;
+    @Bindable
+    private boolean selected;
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+        notifyPropertyChanged(BR.selected);
+    }
 
     public String getImgUrl() {
         return imgUrl;

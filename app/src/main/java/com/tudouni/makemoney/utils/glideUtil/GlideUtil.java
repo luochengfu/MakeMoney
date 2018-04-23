@@ -1,6 +1,7 @@
 package com.tudouni.makemoney.utils.glideUtil;
 
 import android.content.Context;
+import android.databinding.BindingAdapter;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -36,6 +37,23 @@ public class GlideUtil {
                 .bitmapTransform(new GlideCircleTransform(context))
                 .into(imageView);
     }
+
+    public void loadImage(Context context, String url, ImageView imageView, int defaultImg) {
+        Glide.with(context)
+                .load(url)
+                .error(defaultImg)
+                .fallback(defaultImg)
+                .crossFade()
+                .into(imageView);
+    }
+
+
+    @BindingAdapter("loadImage")
+    public static void bindImage(ImageView imageView,String url){
+        Glide.with(imageView.getContext()).load(url).crossFade().into(imageView);
+    }
+
+
 
 
 }
