@@ -50,6 +50,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
@@ -57,6 +58,22 @@
 
         <!-- =========================APP中的 Activity End========================= -->
         <!-- =========================友盟集成 Start========================= -->
+        <!--=========================APP中的 Activity End=========================-->
+        <!--=========================友盟集成 Start=========================-->
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".activity.LoginActivity"
+            android:label="登录"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullTheme" />
+
+        <activity
+            android:name=".activity.PwdActivity"
+            android:label="个人-设置登录密码"
+            android:screenOrientation="portrait" />
+
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5adaa9d5f43e4860300001e9" />

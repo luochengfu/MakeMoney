@@ -20,6 +20,42 @@
         <attr name="showDividerLine" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="SlidingTabLayout">
+        <attr name="highlightTextColor" format="color|reference" />
+        <attr name="highTextBackground" format="reference" />
+        <attr name="normalTextColor" format="color|reference" />
+        <attr name="dividerLineColor" format="color|reference" />
+        <attr name="shadowLineColor" format="color|reference" />
+        <attr name="shadowLineWrapperOffset" format="dimension" />
+        <attr name="shadowLineFillParent" format="boolean" />
+        <attr name="showShadowLine" format="boolean" />
+        <attr name="titleTextSize" format="dimension" />
+        <attr name="useScrollView" format="boolean" />
+        <attr name="layoutBackground" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="InputCounter">
+        <attr name="input_max_count" format="integer"/>
+        <attr name="edit_text_color" format="color"/>
+        <attr name="edit_text_size" format="dimension"/>
+        <attr name="edit_text_padding" format="dimension"/>
+        <attr name="edit_text_hint" format="string"/>
+        <attr name="label_text_size" format="dimension"/>
+        <attr name="label_text_color" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="EmptyDataView">
+        <attr name="emptyImage" format="reference" />
+        <attr name="emptyText" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="DragBubbleView">
+        <attr name="bubbleRadius" format="dimension" />
+        <attr name="bubbleColor" format="color" />
+        <attr name="text" format="string" />
+        <attr name="textSize" format="dimension" />
+        <attr name="textColor" format="color" />
+    </declare-styleable>
 </resources>
 
 

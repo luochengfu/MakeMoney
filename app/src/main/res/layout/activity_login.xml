@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/newbackgourdim" />
+
+    <Button
+        android:id="@+id/btn_net_env"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:text="网络环境：生产\n(测试用，正式会删除)"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/tudouni_login_buttom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/color_999999_13_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="0dp"
+            android:gravity="center"
+            android:text="其他登录方式" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <!--QQ-->
+            <ImageView
+                android:id="@+id/iv_QqLogin"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:gravity="center_horizontal"
+                android:scaleType="fitCenter"
+                android:padding="10dp"
+                android:layout_weight="1"
+                android:src="@mipmap/landing_page_qq" />
+
+            <!--微信-->
+            <ImageView
+                android:id="@+id/iv_WechatLogin"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:scaleType="fitCenter"
+                android:padding="10dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:src="@mipmap/landing_page_wechat" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/xy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="登录即表示同意《服务协议》"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="18dp"
+            android:textColor="@color/color_999999"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tudouni_login_buttom"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/tdnlogo"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:orientation="vertical"
+                android:background="@drawable/circle_border_shape">
+
+                <include
+                    layout="@layout/tel_login"/>
+
+                <include
+                    layout="@layout/password_login_child_layout"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_commit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/login_button_selector"
+                android:gravity="center"
+                android:text="@string/login"
+                android:textColor="@color/color_999999"
+                android:textSize="15sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp">
+
+                <TextView
+                    android:id="@+id/loss_password_tv"
+                    style="@style/color_999999_13_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="10dp"
+                    android:paddingRight="13dp"
+                    android:visibility="gone"
+                    android:text="@string/lossPasswordhint" />
+
+                <TextView
+                    android:id="@+id/login_mode_change_view"
+                    style="@style/color_999999_13_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/tudouni_password_login_change" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

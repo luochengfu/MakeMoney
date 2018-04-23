@@ -16,6 +16,10 @@ import com.tudouni.makemoney.utils.base.ACache;
  */
 public class NetConfig {
 
+    public static final String MSG_CODE = "/getVerifCode";
+    public static final String TEL_LOGIN = "/login";
+    public static final String SETPWD = "/auth/user/setPwd";
+
     /**
      * 网络环境名称数组
      */
@@ -86,11 +90,6 @@ public class NetConfig {
         if ("release".equals(BuildConfig.BUILD_TYPE)) {
             return 0;
         }
-//        SharedPreferences sp = App.getContext().getSharedPreferences("NetConfig", Context.MODE_PRIVATE);
-//        int environment = sp.getInt("NetEnvironment", ENVIRONMENT_DEFAULT);
-//        if (environment < 0 || environment >= ENVIRONMENT_NAMES.length) {
-//            environment = ENVIRONMENT_DEFAULT;
-//        }
 
         int environment = ENVIRONMENT_DEFAULT;
         if (!TextUtils.isEmpty(ACache.getInstance().getAsString("NetEnvironment"))) {
@@ -103,10 +102,6 @@ public class NetConfig {
      * 设置网络环境
      */
     public static void setEnvironment(int environment) {
-//        SharedPreferences.Editor editor = App.getContext().getSharedPreferences("NetConfig", Context.MODE_PRIVATE).edit();
-//        editor.putInt("NetEnvironment", environment);
-//        editor.commit();
-
         ACache.getInstance().put("NetEnvironment", String.valueOf(environment));
     }
 
