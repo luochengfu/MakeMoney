@@ -18,7 +18,7 @@ import android.widget.RelativeLayout;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.fragment.MainTabOneFragment;
 import com.tudouni.makemoney.fragment.MainTabThreeFragment;
-import com.tudouni.makemoney.fragment.MainTabTwoFragment;
+import com.tudouni.makemoney.fragment.GoodCategoryFragment;
 import com.tudouni.makemoney.fragment.MineFragment;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMShareAPI;
@@ -30,7 +30,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private final int PERMISSION_REQUEST_CODE_VIDEO = 124;
     private RelativeLayout tab1, tab2, tab3, tab4;
     private MainTabOneFragment mTabOne;
-    private MainTabTwoFragment mTabTwo;
+    private GoodCategoryFragment mTabTwo;
     private MainTabThreeFragment mTabThree;
     private MineFragment mTabMine;
     //  Fragment事务
@@ -65,7 +65,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private void initDatas() {
         mTabOne = new MainTabOneFragment();
-        mTabTwo = new MainTabTwoFragment();
+        mTabTwo = new GoodCategoryFragment();
         mTabThree = new MainTabThreeFragment();
         mTabMine = new MineFragment();
 
