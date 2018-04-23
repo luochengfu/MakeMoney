@@ -1,0 +1,41 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion project.compileSdkVersion
+    buildToolsVersion project.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion project.minSdkVersion
+        targetSdkVersion project.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            jniDebuggable false
+            minifyEnabled false
+
+            /*signingConfig signingConfigs.release*/
+        }
+
+        debug {
+            shrinkResources false
+            jniDebuggable false
+            minifyEnabled false
+            /*signingConfig signingConfigs.release*/
+        }
+
+        uat {
+            initWith release      //拷贝release的配置
+            debuggable true
+        }
+    }
+
+    buildToolsVersion '26.0.2'
+}
+
+dependencies {
+    implementation project(':QrCodeModel:UCrop')
+}

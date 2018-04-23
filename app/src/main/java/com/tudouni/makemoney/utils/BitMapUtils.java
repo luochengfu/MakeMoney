@@ -20,6 +20,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
 
+import com.uuzuche.lib_zxing.activity.CodeUtils;
+
 
 /**
  * Created by ZhangPeng on 2018/4/8.
@@ -35,7 +37,7 @@ public class BitMapUtils {
      * @param frontBitmap 盖在上面的位图
      * @return
      */
-    public static Bitmap mergeBitmap(Bitmap backBitmap, Bitmap frontBitmap) {
+    public static Bitmap mergeBitmap(Context context, Bitmap backBitmap, Bitmap frontBitmap) {
 
         if (backBitmap == null || backBitmap.isRecycled()
                 || frontBitmap == null || frontBitmap.isRecycled()) {
@@ -44,10 +46,10 @@ public class BitMapUtils {
         }
         Bitmap bitmap = backBitmap.copy(Bitmap.Config.ARGB_8888, true);
         int size = backBitmap.getWidth() / 3;
-        if (size > frontBitmap.getWidth())
-            size = frontBitmap.getWidth();
+//        if (size > frontBitmap.getWidth())
+//            size = frontBitmap.getWidth();
         Canvas canvas = new Canvas(bitmap);
-        int top = backBitmap.getHeight() - ScreenUtils.dp2px(MyApplication.getContext(), 40) - size - 2;
+        int top = backBitmap.getHeight() - ScreenUtils.dp2px(context, 180) - size - 2;
         int left = (backBitmap.getWidth() - size) / 2 - 2;
         Rect baseRect = new Rect(left, top, left + size, top + size);
         canvas.drawBitmap(frontBitmap, null, baseRect, null);
@@ -68,10 +70,11 @@ public class BitMapUtils {
         int mar = ScreenUtils.dp2px(context, 40);
         int w = ScreenUtils.getScreenWidth(context) - mar * 2;
         try {
-            mesg = String.format(Share.getShareInviteUrl(), MyApplication.getLoginUser().getInvistCode(), URLEncoder.encode(MyApplication.getLoginUser().getNickName(), "utf-8"), MyApplication.getLoginUser().getUnionid());
-//            qrCodeBitmap = CodeUtils.createImage(mesg, w / 2, w / 2, null);
+//            mesg = String.format(Share.getShareInviteUrl(), MyApplication.getLoginUser().getInvistCode(), URLEncoder.encode(MyApplication.getLoginUser().getNickName(), "utf-8"), MyApplication.getLoginUser().getUnionid());
+            mesg = String.format(Share.getShareInviteUrl(), "-3333333", URLEncoder.encode("鹏哥测试", "utf-8"), "-333333");
+            qrCodeBitmap = CodeUtils.createImage(mesg, w / 2, w / 2, null);
             potatoesBitMapBg = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_potatoes_bg);
-            mPotatoesBitmap = BitMapUtils.mergeBitmap(potatoesBitMapBg, qrCodeBitmap);
+            mPotatoesBitmap = BitMapUtils.mergeBitmap(context, potatoesBitMapBg, qrCodeBitmap);
         } catch (Exception e) {
             TuDouLogUtils.e(TAG, "生成海报出错 e:" + e.getMessage());
         } finally {

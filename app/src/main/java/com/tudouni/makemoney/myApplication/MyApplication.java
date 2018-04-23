@@ -44,6 +44,7 @@ public class MyApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        this.sContext = this;
         initConfig();
         initJPush();
         initUmeng();
@@ -65,7 +66,6 @@ public class MyApplication extends BaseApplication {
     }
 
     private void initJPush() {
-        sContext = this;
         JPushInterface.setDebugMode(false);
         JPushInterface.init(this);
     }

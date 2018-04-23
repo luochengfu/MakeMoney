@@ -25,18 +25,11 @@ android {
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
                 qqappid      : "1106781729",
         ]
-
-
     }
 
 
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     signingConfigs {
@@ -140,5 +133,6 @@ dependencies {
     // 此处以JPush 3.1.1 版本为例。
     compile 'cn.jiguang.sdk:jcore:1.1.9'
     // 此处以JCore 1.1.9 版本为例。
-//    implementation project(':qrcodemodel')
+    implementation project(':QrCodeModel:PicturePicker')
+    implementation project(':QrCodeModel:ZXing')
 }
