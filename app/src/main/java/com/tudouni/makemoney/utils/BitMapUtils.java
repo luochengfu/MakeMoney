@@ -19,7 +19,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
-import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 
 /**
@@ -70,7 +69,7 @@ public class BitMapUtils {
         int w = ScreenUtils.getScreenWidth(context) - mar * 2;
         try {
             mesg = String.format(Share.getShareInviteUrl(), MyApplication.getLoginUser().getInvistCode(), URLEncoder.encode(MyApplication.getLoginUser().getNickName(), "utf-8"), MyApplication.getLoginUser().getUnionid());
-            qrCodeBitmap = CodeUtils.createImage(mesg, w / 2, w / 2, null);
+//            qrCodeBitmap = CodeUtils.createImage(mesg, w / 2, w / 2, null);
             potatoesBitMapBg = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_potatoes_bg);
             mPotatoesBitmap = BitMapUtils.mergeBitmap(potatoesBitMapBg, qrCodeBitmap);
         } catch (Exception e) {
