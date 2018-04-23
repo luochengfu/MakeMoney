@@ -18,7 +18,7 @@ import android.widget.RelativeLayout;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.fragment.MainTabOneFragment;
 import com.tudouni.makemoney.fragment.MainTabThreeFragment;
-import com.tudouni.makemoney.fragment.GoodCategoryFragment;
+import com.tudouni.makemoney.fragment.category.GoodCategoryFragment;
 import com.tudouni.makemoney.fragment.MineFragment;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMShareAPI;
