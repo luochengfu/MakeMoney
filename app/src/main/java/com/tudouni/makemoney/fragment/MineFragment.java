@@ -14,14 +14,21 @@ import com.bumptech.glide.Glide;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.utils.BitMapUtils;
+import com.tudouni.makemoney.utils.CommonUtil;
 import com.tudouni.makemoney.utils.Constants;
 import com.tudouni.makemoney.utils.ForwardUtils;
 import com.tudouni.makemoney.utils.InjectView;
+import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.TuDouLogUtils;
 import com.tudouni.makemoney.utils.TuDouTextUtil;
 import com.tudouni.makemoney.utils.base.ACache;
 import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
+import com.tudouni.makemoney.widget.callBack.ApiCallback;
+import com.tudouni.makemoney.widget.callBack.ServiceException;
+import com.tudouni.makemoney.widget.sharePart.ShareUtil;
+import com.tudouni.makemoney.widget.sharePart.model.Share;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 
 /**
@@ -219,11 +226,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 //                statisticsType = "me_grade";
 //                ForwardUtils.target(getActivity(), Constant.h5_mall_grade + para);
 //                break;
-//            case R.id.ly_share_wx:
-//            case R.id.ly_share_weixin_circle:
-//            case R.id.ly_share_qq:
-//                doShare(view.getId());
-//                break;
+            case R.id.ly_share_wx:
+            case R.id.ly_share_weixin_circle:
+            case R.id.ly_share_qq:
+                doShare(view.getId());
+                break;
             case R.id.ly_share_face_to_face://面对面
                 statisticsType = "me_inf2f";
                 ForwardUtils.target(getActivity(), Constants.BINDING_FACE_TO_FACE);
@@ -340,37 +347,37 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             type = (viewId == R.id.ly_share_wx) ? "me_inwx" : "me_infriend";
         MobclickAgent.onEvent(getContext(), type);
 
-//        SHARE_MEDIA platform = SHARE_MEDIA.QQ;
-//        if (viewId == R.id.ly_share_wx || viewId == R.id.ly_share_weixin_circle) {
-//            type = (viewId == R.id.ly_share_wx) ? "me_inwx" : "me_infriend";
-//            if (!CommonUtil.isWXInstall(getActivity())) {
-//                ToastUtil.show(getActivity(), "请安装微信客户端");
-//                return;
-//            }
-//            platform = (viewId == R.id.ly_share_wx) ? SHARE_MEDIA.WEIXIN : SHARE_MEDIA.WEIXIN_CIRCLE;
-//        }
-//        if (viewId == R.id.ly_share_qq) {
-//            if (!CommonUtil.isWXInstall(getActivity())) {
-//                ToastUtil.show(getActivity(), "请安装微信客户端");
-//                return;
-//            }
-//        }
-//        if (mPotatoesBitmap != null && !mPotatoesBitmap.isRecycled())
-//            mPotatoesBitmap.recycle();
-//        mPotatoesBitmap = BitMapUtils.createPotatoesBitMap(getContext());
-//        Share mShare = Share.obtain(Share.Type.IMAGE_POTATOES, mPotatoesBitmap);
-//        CommonHelper.shareURL2(getActivity(), true, platform, mShare, new ApiCallback<Share>() {
-//            @Override
-//            public void onSuccess(Share data) {
-//                ToastUtils.showToast(getActivity(), "分享成功");
-//            }
-//
-//            @Override
-//            public void onFailure(ServiceException e) {
-//                super.onFailure(e);
-//                ToastUtils.showToast(getActivity(), "分享失败");
-//            }
-//        });
+        SHARE_MEDIA platform = SHARE_MEDIA.QQ;
+        if (viewId == R.id.ly_share_wx || viewId == R.id.ly_share_weixin_circle) {
+            type = (viewId == R.id.ly_share_wx) ? "me_inwx" : "me_infriend";
+            if (!CommonUtil.isWXInstall(getActivity())) {
+                ToastUtil.show(getActivity(), "请安装微信客户端");
+                return;
+            }
+            platform = (viewId == R.id.ly_share_wx) ? SHARE_MEDIA.WEIXIN : SHARE_MEDIA.WEIXIN_CIRCLE;
+        }
+        if (viewId == R.id.ly_share_qq) {
+            if (!CommonUtil.isWXInstall(getActivity())) {
+                ToastUtil.show(getActivity(), "请安装微信客户端");
+                return;
+            }
+        }
+        if (mPotatoesBitmap != null && !mPotatoesBitmap.isRecycled())
+            mPotatoesBitmap.recycle();
+        mPotatoesBitmap = BitMapUtils.createPotatoesBitMap(getContext());
+        Share mShare = Share.obtain(Share.Type.IMAGE_POTATOES, mPotatoesBitmap);
+        ShareUtil.shareURL2(getActivity(), true, platform, mShare, new ApiCallback<Share>() {
+            @Override
+            public void onSuccess(Share data) {
+                ToastUtil.show(getActivity(), "分享成功");
+            }
+
+            @Override
+            public void onFailure(ServiceException e) {
+                super.onFailure(e);
+                ToastUtil.show(getActivity(), "分享失败");
+            }
+        });
     }
 
 //    private void saveLoginInfo(User2 user) {

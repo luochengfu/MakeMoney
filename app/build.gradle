@@ -60,14 +60,14 @@ android {
             jniDebuggable false
             minifyEnabled false
 
-            /*signingConfig signingConfigs.release*/
+            signingConfig signingConfigs.release
         }
 
         debug {
             shrinkResources false
             jniDebuggable false
             minifyEnabled false
-            /*signingConfig signingConfigs.release*/
+            signingConfig signingConfigs.release
         }
 
         uat {
@@ -128,22 +128,21 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     compile 'com.android.support:recyclerview-v7:25.2.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-
     //友盟SDK集成
     compile 'com.umeng.sdk:common:latest.integration'
     compile 'com.umeng.sdk:analytics:latest.integration'
-    compile 'com.umeng.sdk:share-core:latest.integration'
-    compile 'com.umeng.sdk:share-qq:latest.integration'
-    compile 'com.umeng.sdk:share-wechat:latest.integration'
     //RecyclerView
     compile 'com.github.jdsjlzx:LRecyclerView:1.5.0'
-
     compile 'org.simple:androideventbus:1.0.5.1'
     //极光推送
     // 此处以JPush 3.1.1 版本为例。
     compile 'cn.jiguang.sdk:jpush:3.1.1'
     // 此处以JCore 1.1.9 版本为例。
     compile 'cn.jiguang.sdk:jcore:1.1.9'
-
     compile project(path: ':QrCodeModel:lib-zxing')
+    implementation files('libs/umeng-debug-1.0.0.jar')
+    implementation files('libs/umeng-share-core-6.9.1.jar')
+    implementation files('libs/umeng-share-QQ-simplify-6.9.1.jar')
+    implementation files('libs/umeng-share-wechat-simplify-6.9.1.jar')
+    implementation files('libs/umeng-sharetool-6.9.1.jar')
 }
