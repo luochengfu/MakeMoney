@@ -38,7 +38,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/MyAppTheme">
+        android:theme="@style/MyAppTheme"
+        tools:replace="android:icon, android:theme,android:name,android:allowBackup">
 
         <!-- =========================APP中的 Activity Start========================= -->
         <activity
@@ -60,7 +61,7 @@
         <!-- =========================友盟集成 Start========================= -->
         <!--=========================APP中的 Activity End=========================-->
         <!--=========================友盟集成 Start=========================-->
-            android:screenOrientation="portrait"/>
+        android:screenOrientation="portrait"/>
 
         <activity
             android:name=".activity.LoginActivity"

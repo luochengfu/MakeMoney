@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tudouni.makemoney.R;
+import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.utils.BitMapUtils;
 import com.tudouni.makemoney.utils.DialogUtils;
 import com.tudouni.makemoney.utils.ForwardUtils;
@@ -58,7 +59,7 @@ public class InvitationDouFenActivity extends BaseActivity implements View.OnCli
 
     private void initData() {
         mInvitationCode = getIntent().getStringExtra("code");
-//        mInvitationCode = (TextUtils.isEmpty(mInvitationCode)) ? (App.getLoginUser().getInvistCode()) : (mInvitationCode);
+        mInvitationCode = (TextUtils.isEmpty(mInvitationCode)) ? (MyApplication.getLoginUser().getInvistCode()) : (mInvitationCode);
         mInvitationCode = (TextUtils.isEmpty(mInvitationCode)) ? ("333333333") : (mInvitationCode);
     }
 

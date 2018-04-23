@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.text.TextUtils;
 
 
+import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.utils.Constants;
 
 import java.io.Serializable;
@@ -170,5 +171,14 @@ public class Share implements Serializable {
         Share share = new Share(SHARE_TITLE, "土豆泥", null, null, null);
         share.setMinePotatoes(bitmap);
         return share;
+    }
+
+    /**
+     * 获取分享邀请的的地址
+     *
+     * @return
+     */
+    public static String getShareInviteUrl() {
+        return MyApplication.appConfig.getmInviteShareQcodeDomain() + SHARE_INVITE;
     }
 }

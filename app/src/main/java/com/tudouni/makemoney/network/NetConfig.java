@@ -19,6 +19,7 @@ public class NetConfig {
     public static final String MSG_CODE = "/getVerifCode";
     public static final String TEL_LOGIN = "/login";
     public static final String SETPWD = "/auth/user/setPwd";
+    public static final String CONFIG = "/config";
 
     /**
      * 网络环境名称数组

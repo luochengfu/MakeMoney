@@ -13,11 +13,13 @@ import android.util.Log;
 
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.myApplication.MyApplication;
+import com.tudouni.makemoney.widget.sharePart.model.Share;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 
 /**
@@ -66,23 +68,23 @@ public class BitMapUtils {
         String mesg = "";
         int mar = ScreenUtils.dp2px(context, 40);
         int w = ScreenUtils.getScreenWidth(context) - mar * 2;
-//        try {
-//            mesg = String.format(Share.getShareInviteUrl(), App.getLoginUser().getInvistCode(), URLEncoder.encode(App.getLoginUser().getNickName(), "utf-8"), App.getLoginUser().getUnionid());
-//            qrCodeBitmap = CodeUtils.createImage(mesg, w / 2, w / 2, null);
-//            potatoesBitMapBg = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_potatoes_bg);
-//            mPotatoesBitmap = BitMapUtils.mergeBitmap(potatoesBitMapBg, qrCodeBitmap);
-//        } catch (Exception e) {
-//            TuDouLogUtils.e(TAG, "生成海报出错 e:" + e.getMessage());
-//        } finally {
-//            try {
-//                if (qrCodeBitmap != null && !qrCodeBitmap.isRecycled())
-//                    qrCodeBitmap.recycle();
-//                if (potatoesBitMapBg != null && !potatoesBitMapBg.isRecycled())
-//                    potatoesBitMapBg.recycle();
-//            } catch (Exception e) {
-//                TuDouLogUtils.e(TAG, "海报分享图片报错");
-//            }
-//        }
+        try {
+            mesg = String.format(Share.getShareInviteUrl(), MyApplication.getLoginUser().getInvistCode(), URLEncoder.encode(MyApplication.getLoginUser().getNickName(), "utf-8"), MyApplication.getLoginUser().getUnionid());
+            qrCodeBitmap = CodeUtils.createImage(mesg, w / 2, w / 2, null);
+            potatoesBitMapBg = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_potatoes_bg);
+            mPotatoesBitmap = BitMapUtils.mergeBitmap(potatoesBitMapBg, qrCodeBitmap);
+        } catch (Exception e) {
+            TuDouLogUtils.e(TAG, "生成海报出错 e:" + e.getMessage());
+        } finally {
+            try {
+                if (qrCodeBitmap != null && !qrCodeBitmap.isRecycled())
+                    qrCodeBitmap.recycle();
+                if (potatoesBitMapBg != null && !potatoesBitMapBg.isRecycled())
+                    potatoesBitMapBg.recycle();
+            } catch (Exception e) {
+                TuDouLogUtils.e(TAG, "海报分享图片报错");
+            }
+        }
         return mPotatoesBitmap;
     }
 

@@ -10,6 +10,7 @@ import com.tudouni.makemoney.network.security.SecurityComponents;
 import com.tudouni.makemoney.utils.Constants;
 import com.tudouni.makemoney.utils.TuDouLogUtils;
 import com.tudouni.makemoney.utils.base.AppUtils;
+import com.tudouni.makemoney.utils.base.SHA1Utils;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -45,7 +46,7 @@ public class NetInterceptor implements Interceptor {
             urlStr = urlStr.replace(NetConfig.getBaseUrl(), NetConfig.getBaseGameUrl());
         }
         oldRequest = oldRequest.newBuilder().url(urlStr).build();
-        boolean isClass3 = DouBoInterfaceLevel.newInstance().isClass3(urlStr);//判断接口等级
+//        boolean isClass3 = DouBoInterfaceLevel.newInstance().isClass3(urlStr);//判断接口等级
         Request.Builder requestBuilder;
         if (!NetworkStateDetection.isNetworkAvailable(MyApplication.getContext().getApplicationContext()))
             requestBuilder = oldRequest.newBuilder().method(oldRequest.method(), oldRequest.body()).cacheControl(CacheControl.FORCE_CACHE); //无网络时只从缓存中读取
@@ -63,12 +64,9 @@ public class NetInterceptor implements Interceptor {
                 for (int i = 0; i < body.size(); i++)
                     mRequestBodyMap.put(body.name(i), body.value(i));
             }
-            if (isClass3)
-                newFormBody.add("cdata", SecurityComponents.cipherEncryptData(mRequestBodyMap));
-            else
-                concatParams(sb, newFormBody, mRequestBodyMap);
+            concatParams(sb, newFormBody, mRequestBodyMap);
             String sbString = sb.toString();
-            String sign = SecurityComponents.signatureData(sbString);//获取签名
+            String sign = SHA1Utils.shaEncrypt(sb.toString());//获取签名
             TuDouLogUtils.d(TAG, "post --------->   sign=" + sign + ";;params=" + sbString + ";;url=" + urlStr);
             initDefaultRequestHeaderInfo(requestBuilder, sign);//添加默认的头部信息
             requestBuilder.method(oldRequest.method(), newFormBody.build());
@@ -118,9 +116,7 @@ public class NetInterceptor implements Interceptor {
                 }
             }
             HttpUrl httpUrl = httpBuilder.build();
-//            String sign = isDevUrl ? SecurityComponents.signatureData(sb.toString()) : SHA1Utils.shaEncrypt(sb.toString());//获取签名
-            String sign = SecurityComponents.signatureData(sb.toString());//获取签名
-
+            String sign = SHA1Utils.shaEncrypt(sb.toString());//获取签名
             initDefaultRequestHeaderInfo(requestBuilder, sign);
             newRequest = requestBuilder
                     .method(oldRequest.method(), oldRequest.body())
