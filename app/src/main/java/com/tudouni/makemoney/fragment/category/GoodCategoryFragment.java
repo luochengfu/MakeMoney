@@ -4,10 +4,14 @@ import android.databinding.DataBindingUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
+import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.databinding.FragmentGoodCategoryBinding;
+import com.tudouni.makemoney.databinding.ItemCategoryHeaderImageBinding;
 import com.tudouni.makemoney.fragment.BaseFragment;
 import com.tudouni.makemoney.model.Category;
+import com.tudouni.makemoney.utils.TDLog;
+import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
 import com.tudouni.makemoney.viewModel.GoodCategoryViewModel;
 
 import java.util.List;
@@ -21,8 +25,13 @@ import java.util.List;
 public class GoodCategoryFragment extends BaseFragment {
 
     private FragmentGoodCategoryBinding mCategoryBinding;
+    /**
+     * 一级品类Adapter
+     */
     private CategoryNameAdapter mNameAdapter;
     private GoodCategoryViewModel mCategoryViewModel;
+    private GoodListAdapter mGoodListAdapter;
+    private ItemCategoryHeaderImageBinding mHeaderImageBinding;
 
     @Override
     protected int getContentView() {
@@ -38,13 +47,35 @@ public class GoodCategoryFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
+
+        initFirstClassCategoryView();
+        initGoodListRecyclerView();
+    }
+
+    /**
+     * 初始化右边商品列表view
+     * */
+    private void initGoodListRecyclerView() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        mCategoryBinding.rvGood.setLayoutManager(layoutManager);
+        mGoodListAdapter = new GoodListAdapter(getActivity().getLayoutInflater());
+        LRecyclerViewAdapter lRecyclerViewAdapter = new LRecyclerViewAdapter(mGoodListAdapter);
+        mHeaderImageBinding = DataBindingUtil.inflate(getActivity().getLayoutInflater(), R.layout.item_category_header_image,null,false);
+        lRecyclerViewAdapter.addHeaderView(mHeaderImageBinding.getRoot());
+        mCategoryBinding.rvGood.setAdapter(lRecyclerViewAdapter);
+    }
+
+    /**
+     * 初始化一级目录列表view
+     * */
+    private void initFirstClassCategoryView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mCategoryBinding.rvCategories.setLayoutManager(layoutManager);
         mNameAdapter = new CategoryNameAdapter(getActivity().getLayoutInflater());
         mCategoryBinding.rvCategories.setAdapter(mNameAdapter);
-        mNameAdapter.setListener((position, itemData) -> {
+        mNameAdapter.setOnItemClickListener((position, itemData) -> {
             //一级品类Item被点击
-
+            mGoodListAdapter.replaceData(itemData.getCategorys());
         });
     }
 

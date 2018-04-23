@@ -114,6 +114,7 @@ static def releaseTime() {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:25.2.0'
+    implementation 'com.android.support:design:25.2.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     compile 'com.trello:rxlifecycle:0.6.1'
     compile 'com.squareup.okhttp3:okhttp:3.9.0'

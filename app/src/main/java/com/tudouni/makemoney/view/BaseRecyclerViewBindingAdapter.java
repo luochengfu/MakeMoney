@@ -17,11 +17,11 @@ import java.util.List;
  */
 public abstract class BaseRecyclerViewBindingAdapter<T> extends RecyclerView.Adapter<BaseRecyclerViewBindingAdapter.BaseViewHolder> {
     protected List<T> data = new ArrayList<>();
-    private LayoutInflater mInflater;
-    private OnItemClickListener<T> mListener;
+    protected LayoutInflater mInflater;
+    protected OnItemClickListener<T> mOnItemClickListener;
 
-    public void setListener(OnItemClickListener<T> listener) {
-        mListener = listener;
+    public void setOnItemClickListener(OnItemClickListener<T> onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
     }
 
     public BaseRecyclerViewBindingAdapter(LayoutInflater inflater) {
@@ -51,8 +51,8 @@ public abstract class BaseRecyclerViewBindingAdapter<T> extends RecyclerView.Ada
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         holder.getBinding().getRoot().setOnClickListener(l -> {
-            if (mListener != null) {
-                mListener.onItemClick(position,this.data.get(position));
+            if (mOnItemClickListener != null) {
+                mOnItemClickListener.onItemClick(position,this.data.get(position));
             }
         });
     }

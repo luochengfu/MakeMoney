@@ -23,6 +23,9 @@ public class CategoryNameAdapter extends BaseRecyclerViewBindingAdapter<Category
             this.data.get(lastSelectedItem).setSelected(false);
             this.data.get(holder.getAdapterPosition()).setSelected(true);
             lastSelectedItem = holder.getAdapterPosition();
+            if (mOnItemClickListener != null) {
+                mOnItemClickListener.onItemClick(position,this.data.get(position));
+            }
         });
     }
 
