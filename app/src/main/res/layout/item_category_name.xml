@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.tudouni.makemoney.model.CategoryNameItem" />
+            type="com.tudouni.makemoney.model.Category"/>
     </data>
 
     <TextView
