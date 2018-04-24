@@ -80,14 +80,6 @@
                     android:paddingRight="10dp">
 
                     <ImageView
-                        android:id="@+id/user_photo_bg"
-                        android:layout_width="16dp"
-                        android:layout_height="15dp"
-                        android:layout_above="@+id/ivPhoto"
-                        android:layout_marginLeft="50dp"
-                        android:src="@mipmap/ic_green_leaves" />
-
-                    <ImageView
                         android:id="@+id/ivPhoto"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
@@ -358,8 +350,6 @@
 
                     </LinearLayout>
 
-                    <View style="@style/verticalLine" />
-
                     <LinearLayout
                         android:id="@+id/ly_share_weixin_circle"
                         android:layout_width="0dp"
@@ -380,7 +370,6 @@
 
                     </LinearLayout>
 
-                    <View style="@style/verticalLine" />
 
                     <LinearLayout
                         android:id="@+id/ly_share_qq"
@@ -402,8 +391,6 @@
 
                     </LinearLayout>
 
-                    <View style="@style/verticalLine" />
-
                     <LinearLayout
                         android:id="@+id/ly_share_face_to_face"
                         android:layout_width="0dp"
@@ -423,8 +410,6 @@
                             android:text="面对面" />
 
                     </LinearLayout>
-
-                    <View style="@style/verticalLine" />
 
                 </LinearLayout>
 
@@ -519,7 +504,6 @@
 
                     </LinearLayout>
 
-                    <View style="@style/verticalLine" />
                     <!--今日收益-->
                     <LinearLayout
                         android:id="@+id/ly_earn_today"
@@ -543,7 +527,6 @@
 
                     </LinearLayout>
 
-                    <View style="@style/verticalLine" />
                     <!--本月预估收益-->
                     <LinearLayout
                         android:id="@+id/ly_earn_month"

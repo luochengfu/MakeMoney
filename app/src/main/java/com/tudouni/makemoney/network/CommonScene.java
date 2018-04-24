@@ -142,4 +142,12 @@ public class CommonScene extends RetrofitUtils {
         setSubscribe(commonApi.passwordLogin(user,password,model,brand),observer);
     }
 
+    /**
+     * 第三方登录
+     */
+    public static void threeLoginProcess(String acessToken, String openid,String platform, String birthday,String city, String nickname,
+                                         String photo, String sex,String signature, String unionid,String model, String brand,BaseObserver<User> observer) {
+        setSubscribe(commonApi.threeLoginProcess(acessToken,openid,platform,birthday,city,nickname,photo,sex,signature,unionid,model,brand),observer);
+    }
+
 }

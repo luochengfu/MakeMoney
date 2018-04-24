@@ -68,17 +68,15 @@ public class ShareWindow_v3 extends BottomPushPopupWindow<Void> implements OnCli
         int icno[] = {R.mipmap.share_wx, R.mipmap.share_circle,
                 R.mipmap.share_qq, R.mipmap.share_copy,
                 R.mipmap.icon_shre_keep};
-        String name[] = {"豆友", "动态", "微信", "朋友圈", "QQ", "复制", "保存"};
+        String name[] = {"微信", "朋友圈", "QQ", "复制", "保存"};
         ArrayList<Integer> invalidPosition = new ArrayList<>();
         if (mType != null && mType == Share.Type.LIVE) {
             invalidPosition.add(1);
             invalidPosition.add(7);
         }
         if (mType != null && mType == Share.Type.IMAGE_POTATOES) {
-            invalidPosition.add(0);
-            invalidPosition.add(1);
-            invalidPosition.add(6);
-            invalidPosition.add(7);
+            invalidPosition.add(3);
+            invalidPosition.add(4);
         }
         dataList = new ArrayList<Map<String, Object>>();
         for (int i = 0; i < icno.length; i++) {

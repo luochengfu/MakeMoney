@@ -60,7 +60,9 @@
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+
+        </activity>
 
         <activity
             android:name=".activity.FaceToFaceActivity"
@@ -79,12 +81,12 @@
         <activity
             android:name=".activity.SettingActivity"
             android:label="设置"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activity.AccountSecurityActivity"
             android:label="账号安全"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activity.TelLoginActivity"
