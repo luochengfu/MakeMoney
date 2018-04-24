@@ -5,6 +5,8 @@ import com.tudouni.makemoney.model.AliAuth;
 import com.tudouni.makemoney.model.AppConfig;
 import com.tudouni.makemoney.model.BindInfo;
 import com.tudouni.makemoney.model.Invite;
+import com.tudouni.makemoney.model.Banner;
+import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.model.User;
@@ -193,4 +195,12 @@ public class CommonScene extends RetrofitUtils {
     public static void getAgentInfo(BaseObserver<AgentInfo> observer) {
         setSubscribe(commonApi.getAgentInfo(), observer);
     }
+
+    /**
+     * 发现获取banner数据
+     */
+    public static void getFoundBanner(BaseObserver<List<Banner>> observer) {
+        setSubscribe(commonApi.getFoundBanner(), observer);
+    }
+
 }

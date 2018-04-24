@@ -27,6 +27,7 @@ import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.myApplication.MyApplication;
+import com.tudouni.makemoney.myApplication.jPush.TagAliasOperatorHelper;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.CommonUtil;
@@ -108,6 +109,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             }
         });
 
+        tvCode.setOnClickListener(new NoDoubleClickListener() {
+            @Override
+            protected void onNoDoubleClick(View v) {
+                MobclickAgent.onEvent(LoginActivity.this, "lg_sms");
+                generateCode();
+            }
+        });
+
         buttomTV.setOnClickListener(new NoDoubleClickListener() {
             @Override
             protected void onNoDoubleClick(View v) {
@@ -122,7 +131,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     protected void onDestroy() {
         super.onDestroy();
         //TODO 有bug，没有释放引用，Activity依然驻留内存
-//        mShareAPI.release();
+        mShareAPI.release();
     }
 
     private void initView() {
@@ -147,7 +156,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     private void initDatas() {
         mExecutouService = Executors.newSingleThreadExecutor();
         loginModeChangeView.setOnClickListener(this);
-        tvCode.setOnClickListener(this);
         submitBtn.setOnClickListener(this);
         mLossPasswordBtn.setOnClickListener(this);
         //获取设备ID
@@ -177,18 +185,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         String statisticsType = null;
         switch (v.getId()) {
-            case R.id.iv_WechatLogin:
-                wechatLogin();
-                statisticsType = "lg_wx";
-                break;
-            case R.id.iv_QqLogin:
-                qqLogin();
-                statisticsType = "lg_qq";
-                break;
-            case R.id.xy:
-                statisticsType = "lg_deal";
-//                ForwardUtils.target(this, Constant.h5_loginXy);
-                break;
             case R.id.login_mode_change_view:
                 if(mLoginModeStatus == 1) {
                     mLoginModeStatus = 2;
@@ -196,10 +192,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                     mLoginModeStatus = 1;
                 }
                 loginModeChange();
-                break;
-            case R.id.tvCode:
-                statisticsType = "lg_sms";
-                generateCode();
                 break;
             case R.id.tv_commit:
                 if(mLoginModeStatus == 1) {
@@ -504,7 +496,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
 
     private void enableTvCode() {
         tvCode.setClickable(true);
-        tvCode.setOnClickListener(this);
         tvCode.setTextColor(getResources().getColor(R.color.color_333333));
         tvCode.setBackgroundDrawable(getResources().getDrawable(R.drawable.get_vcode_style_02));
     }
@@ -521,7 +512,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             ToastUtil.show("请安装微信客户端");
             return;
         }
-//        login(SHARE_MEDIA.WEIXIN);
+        login(SHARE_MEDIA.WEIXIN);
     }
 
 
@@ -623,51 +614,35 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                             final SHARE_MEDIA share_media,
                             String rawData) {
 
+        CommonScene.threeLoginProcess(accessToken, openid, platform, birthday, city, nickname, photo,
+                sex, signature, unionid, Build.MODEL, Build.BRAND, new BaseObserver<LoginBean>() {
+                    @Override
+                    public void OnSuccess(LoginBean user) {
+                        if (null != loadingDialog) {
+                            loadingDialog.dismiss();
+                        }
 
-        Map<String, String> params = new HashMap<>();
-        params.put("acessToken", accessToken);
-        params.put("openid", openid);
-        params.put("platform", platform);
-        params.put("birthday", birthday);
-        params.put("city", city);
-        params.put("nickname", nickname);
-        params.put("photo", photo);
-        params.put("sex", sex);
-        params.put("signature", signature);
-        params.put("unionid", unionid);
-        params.put("model", Build.MODEL);
-        params.put("brand", Build.BRAND);
+                        mShareAPI.deleteOauth(LoginActivity.this, share_media, null);
+                        if(user.getUser() == null || user.getNewer()) {
+                            skipTelephoneLogin(user,"6");
+                        } else if(null == user.getUser().getPhone() || "".equals(user.getUser().getPhone())){//老用户没有手机号码
+                            skipTelephoneLogin(user,"6");
+                        }else {
+                            saveLoginInfo(user.getUser());
+                            //防止点击第三方登录取消在点击密码登录的功能
+                            startActivity(SplashActivity.createIntent(mContext));
+                            finish();
+                        }
+                    }
 
-        /*RequestUtils.sendPostRequest(Api.THIRD_LOGIN_PROCESS, params, new ResponseCallBack<LoginBean>() {
-            @Override
-            public void onSuccess(LoginBean user) {
-                super.onSuccess(user);
-
-                if (null != loadingDialog) {
-                    loadingDialog.dismiss();
-                }
-
-                mShareAPI.deleteOauth(LoginActivity.this, share_media, null);
-                if(user.getNewer()) {
-                    skipTelephoneLogin(user,"6");
-                } else if(null == user.getUser().getPhone() || "".equals(user.getUser().getPhone())){//老用户没有手机号码
-                    skipTelephoneLogin(user,"7");
-                }else {
-                    saveLoginInfo(user.getUser());
-                    //防止点击第三方登录取消在点击密码登录的功能
-                    startActivity(SplashActivity.createIntent(mContext));
-                    finish();
-                }
-            }
-
-            @Override
-            public void onFailure(ServiceException e) {
-                super.onFailure(e);
-                if (null != loadingDialog) {
-                    loadingDialog.dismiss();
-                }
-            }
-        });*/
+                    @Override
+                    public void OnFail(int code, String err) {
+                        super.OnFail(code, err);
+                        if (null != loadingDialog) {
+                            loadingDialog.dismiss();
+                        }
+                    }
+                });
     }
 
     private void skipTelephoneLogin(LoginBean user, String type) {
@@ -682,6 +657,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
 
 
     private void saveLoginInfo(User user) {
+        TagAliasOperatorHelper.getInstance().handleAction((++TagAliasOperatorHelper.sequence), new TagAliasOperatorHelper.TagAliasBean(user.getUnionid()));
         MyApplication.saveLoginUser(user);
     }
 

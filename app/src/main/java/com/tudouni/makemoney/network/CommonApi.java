@@ -6,6 +6,8 @@ import com.tudouni.makemoney.model.AppConfig;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.model.BindInfo;
 import com.tudouni.makemoney.model.Invite;
+import com.tudouni.makemoney.model.Banner;
+import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.User;
 
@@ -180,4 +182,6 @@ public interface CommonApi {
     @POST(NetConfig.AGENTINFO)
     Observable<Result<AgentInfo>> getAgentInfo();
 
+    @POST(NetConfig.FOUND_BANNER)
+    Observable<Result<List<Banner>>> getFoundBanner();
 }

@@ -2,6 +2,7 @@ package com.tudouni.makemoney.myApplication;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.view.CropImageView;
@@ -19,14 +20,8 @@ import com.tudouni.makemoney.utils.base.IBaseRequirement;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
-import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.uuzuche.lib_zxing.PicassoImageLoader;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
-
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -171,4 +166,13 @@ public class MyApplication extends BaseApplication {
         mLoginUser = null;
         UserInfoHelper.clearLoginUser(sContext);
     }
+
+
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
 }
