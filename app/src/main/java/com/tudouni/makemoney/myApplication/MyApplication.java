@@ -5,6 +5,8 @@ import android.content.Context;
 
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.view.CropImageView;
+import com.tudouni.makemoney.activity.BindingInvitationActivity;
+import com.tudouni.makemoney.activity.FaceToFaceActivity;
 import com.tudouni.makemoney.model.AppConfig;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.myApplication.jPush.TagAliasOperatorHelper;
@@ -92,7 +94,7 @@ public class MyApplication extends BaseApplication {
 
             @Override
             public void OnFail(int code, String err) {
-                super.OnFail(code, err);
+//                super.OnFail(code, err);
             }
         });
     }

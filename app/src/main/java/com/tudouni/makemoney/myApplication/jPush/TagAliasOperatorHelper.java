@@ -7,6 +7,7 @@ import android.util.SparseArray;
 
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.Logger;
+import com.tudouni.makemoney.utils.TuDouLogUtils;
 import com.tudouni.makemoney.utils.UserInfoHelper;
 
 import java.util.Locale;
@@ -207,7 +208,7 @@ public class TagAliasOperatorHelper {
         }
         //返回的错误码为6002 超时,6024 服务器内部错误,建议稍后重试
         if (errorCode == 6002 || errorCode == 6024) {
-            Logger.d(TAG, "need retry");
+            TuDouLogUtils.d(TAG, "need retry");
             Message message = new Message();
             message.what = DELAY_SET_MOBILE_NUMBER_ACTION;
             message.obj = mobileNumber;
@@ -247,8 +248,8 @@ public class TagAliasOperatorHelper {
 
     public void onTagOperatorResult(JPushMessage jPushMessage) {
         int sequence = jPushMessage.getSequence();
-        Logger.i(TAG, "action - onTagOperatorResult, sequence:" + sequence + ",tags:" + jPushMessage.getTags());
-        Logger.i(TAG, "tags size:" + jPushMessage.getTags().size());
+        TuDouLogUtils.i(TAG, "action - onTagOperatorResult, sequence:" + sequence + ",tags:" + jPushMessage.getTags());
+        TuDouLogUtils.i(TAG, "tags size:" + jPushMessage.getTags().size());
 //        init(context);
         //根据sequence从之前操作缓存中获取缓存记录
         TagAliasBean tagAliasBean = (TagAliasBean) setActionCache.get(sequence);
@@ -257,11 +258,11 @@ public class TagAliasOperatorHelper {
             return;
         }
         if (jPushMessage.getErrorCode() == 0) {
-            Logger.i(TAG, "action - modify tag Success,sequence:" + sequence);
+            TuDouLogUtils.i(TAG, "action - modify tag Success,sequence:" + sequence);
             setActionCache.remove(sequence);
             String logs = getActionStr(tagAliasBean.action) + " tags success";
-            Logger.i(TAG, logs);
-            ExampleUtil.showToast(logs, context);
+            TuDouLogUtils.i(TAG, logs);
+//            ExampleUtil.showToast(logs, context);
         } else {
             String logs = "Failed to " + getActionStr(tagAliasBean.action) + " tags";
             if (jPushMessage.getErrorCode() == 6018) {
@@ -269,7 +270,7 @@ public class TagAliasOperatorHelper {
                 logs += ", tags is exceed limit need to clean";
             }
             logs += ", errorCode:" + jPushMessage.getErrorCode();
-            Logger.e(TAG, logs);
+            TuDouLogUtils.e(TAG, logs);
             if (!RetryActionIfNeeded(jPushMessage.getErrorCode(), tagAliasBean)) {
                 ExampleUtil.showToast(logs, context);
             }
@@ -278,7 +279,7 @@ public class TagAliasOperatorHelper {
 
     public void onCheckTagOperatorResult(JPushMessage jPushMessage) {
         int sequence = jPushMessage.getSequence();
-        Logger.i(TAG, "action - onCheckTagOperatorResult, sequence:" + sequence + ",checktag:" + jPushMessage.getCheckTag());
+        TuDouLogUtils.i(TAG, "action - onCheckTagOperatorResult, sequence:" + sequence + ",checktag:" + jPushMessage.getCheckTag());
         //根据sequence从之前操作缓存中获取缓存记录
         TagAliasBean tagAliasBean = (TagAliasBean) setActionCache.get(sequence);
         if (tagAliasBean == null) {
@@ -286,14 +287,14 @@ public class TagAliasOperatorHelper {
             return;
         }
         if (jPushMessage.getErrorCode() == 0) {
-            Logger.i(TAG, "tagBean:" + tagAliasBean);
+            TuDouLogUtils.i(TAG, "tagBean:" + tagAliasBean);
             setActionCache.remove(sequence);
             String logs = getActionStr(tagAliasBean.action) + " tag " + jPushMessage.getCheckTag() + " bind state success,state:" + jPushMessage.getTagCheckStateResult();
-            Logger.i(TAG, logs);
+            TuDouLogUtils.i(TAG, logs);
             ExampleUtil.showToast(logs, context);
         } else {
             String logs = "Failed to " + getActionStr(tagAliasBean.action) + " tags, errorCode:" + jPushMessage.getErrorCode();
-            Logger.e(TAG, logs);
+            TuDouLogUtils.e(TAG, logs);
             if (!RetryActionIfNeeded(jPushMessage.getErrorCode(), tagAliasBean)) {
                 ExampleUtil.showToast(logs, context);
             }
@@ -302,7 +303,7 @@ public class TagAliasOperatorHelper {
 
     public void onAliasOperatorResult(JPushMessage jPushMessage) {
         int sequence = jPushMessage.getSequence();
-        Logger.i(TAG, "action - onAliasOperatorResult, sequence:" + sequence + ",alias:" + jPushMessage.getAlias());
+        TuDouLogUtils.i(TAG, "action - onAliasOperatorResult, sequence:" + sequence + ",alias:" + jPushMessage.getAlias());
         //根据sequence从之前操作缓存中获取缓存记录
         TagAliasBean tagAliasBean = (TagAliasBean) setActionCache.get(sequence);
         if (tagAliasBean == null) {
@@ -310,15 +311,14 @@ public class TagAliasOperatorHelper {
             return;
         }
         if (jPushMessage.getErrorCode() == 0) {
-            Logger.i(TAG, "action - modify alias Success,sequence:" + sequence);
+            TuDouLogUtils.i(TAG, "action - modify alias Success,sequence:" + sequence);
             setActionCache.remove(sequence);
             String logs = getActionStr(tagAliasBean.action) + " alias success";
-            Logger.i(TAG, logs);
-            ExampleUtil.showToast(logs, context);
+            TuDouLogUtils.i(TAG, logs + "  Alias:" + tagAliasBean.alias);
             UserInfoHelper.isSetAlias(context);//设置别名成功
         } else {
             String logs = "Failed to " + getActionStr(tagAliasBean.action) + " alias, errorCode:" + jPushMessage.getErrorCode();
-            Logger.e(TAG, logs);
+            TuDouLogUtils.e(TAG, logs);
             if (!RetryActionIfNeeded(jPushMessage.getErrorCode(), tagAliasBean)) {
                 ExampleUtil.showToast(logs, context);
             }
@@ -328,13 +328,13 @@ public class TagAliasOperatorHelper {
     //设置手机号码回调
     public void onMobileNumberOperatorResult(JPushMessage jPushMessage) {
         int sequence = jPushMessage.getSequence();
-        Logger.i(TAG, "action - onMobileNumberOperatorResult, sequence:" + sequence + ",mobileNumber:" + jPushMessage.getMobileNumber());
+        TuDouLogUtils.i(TAG, "action - onMobileNumberOperatorResult, sequence:" + sequence + ",mobileNumber:" + jPushMessage.getMobileNumber());
         if (jPushMessage.getErrorCode() == 0) {
-            Logger.i(TAG, "action - set mobile number Success,sequence:" + sequence);
+            TuDouLogUtils.i(TAG, "action - set mobile number Success,sequence:" + sequence);
             setActionCache.remove(sequence);
         } else {
             String logs = "Failed to set mobile number, errorCode:" + jPushMessage.getErrorCode();
-            Logger.e(TAG, logs);
+            TuDouLogUtils.e(TAG, logs);
             if (!RetrySetMObileNumberActionIfNeeded(jPushMessage.getErrorCode(), jPushMessage.getMobileNumber())) {
                 ExampleUtil.showToast(logs, context);
             }

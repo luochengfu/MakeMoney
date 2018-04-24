@@ -11,13 +11,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tudouni.makemoney.R;
+import com.tudouni.makemoney.model.Invite;
 import com.tudouni.makemoney.myApplication.MyApplication;
+import com.tudouni.makemoney.network.CommonScene;
+import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.BitMapUtils;
 import com.tudouni.makemoney.utils.DialogUtils;
 import com.tudouni.makemoney.utils.ForwardUtils;
 import com.tudouni.makemoney.utils.InjectView;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.TuDouLogUtils;
+import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
 import com.tudouni.makemoney.view.MyTitleBar;
 import com.tudouni.makemoney.widget.sharePart.ShareWindow_v3;
 import com.tudouni.makemoney.widget.sharePart.model.Share;
@@ -59,7 +63,7 @@ public class InvitationDouFenActivity extends BaseActivity implements View.OnCli
 
     private void initData() {
         mInvitationCode = getIntent().getStringExtra("code");
-//        mInvitationCode = (TextUtils.isEmpty(mInvitationCode)) ? (MyApplication.getLoginUser().getInvistCode()) : (mInvitationCode);
+        mInvitationCode = (TextUtils.isEmpty(mInvitationCode)) ? (MyApplication.getLoginUser().getInvistCode()) : (mInvitationCode);
         mInvitationCode = (TextUtils.isEmpty(mInvitationCode)) ? ("333333333") : (mInvitationCode);
     }
 
@@ -122,21 +126,21 @@ public class InvitationDouFenActivity extends BaseActivity implements View.OnCli
     private void startRequest() {
         mPotatoesBitmap = BitMapUtils.createPotatoesBitMap(this);
         mImPotatoes.setImageBitmap(mPotatoesBitmap);
-//        CommonScene.getBind(new BaseObserver<Invite>() {
-//            @Override
-//            public void OnFail(int code, String err) {
-//                mLyInvitationInfo.setVisibility(View.GONE);
-//            }
-//
-//            @Override
-//            public void OnSuccess(Invite invite) {
-//                if (invite == null) return;
-//                mLyInvitationInfo.setVisibility((invite == null) ? View.GONE : View.VISIBLE);
-//                ImageUtils.display150(iv_picture, invite.getPhoto());
-//                mTvTime.setText(invite.getInviteTime());
-//                mTvInvCode.setText(invite.getInviteCode());
-//            }
-//        });
+        CommonScene.getBind(new BaseObserver<Invite>() {
+            @Override
+            public void OnFail(int code, String err) {
+                mLyInvitationInfo.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void OnSuccess(Invite invite) {
+                if (invite == null) return;
+                mLyInvitationInfo.setVisibility((invite == null) ? View.GONE : View.VISIBLE);
+                GlideUtil.getInstance().loadImage(InvitationDouFenActivity.this, invite.getPhoto(), iv_picture, R.mipmap.default_head2);
+                mTvTime.setText(invite.getInviteTime());
+                mTvInvCode.setText(invite.getInviteCode());
+            }
+        });
     }
 
     /**

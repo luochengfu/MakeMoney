@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.tudouni.makemoney.R;
+import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.utils.BitMapUtils;
 import com.tudouni.makemoney.utils.CommonUtil;
@@ -46,12 +47,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private ImageView mImUserGender;
     @InjectView(id = R.id.tvAccount)
     private TextView tvAccount;
-    @InjectView(id = R.id.tv_fans_count)
-    private TextView tv_fans_count;
-    @InjectView(id = R.id.tv_follow_count)
-    private TextView tv_follow_count;
-    @InjectView(id = R.id.tv_dynamic_count)
-    private TextView tv_dynamic_count;
     @InjectView(id = R.id.tv_chat_num)
     private TextView tv_chat_num;
     @InjectView(id = R.id.tv_chat_dot)
@@ -62,10 +57,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private TextView tv_earn_today;
     @InjectView(id = R.id.tv_earn_month)
     private TextView tv_earn_month;
-    @InjectView(id = R.id.tv_doufen_count)
-    private TextView mTvDoufenCount;//我的豆粉个数
+    //    @InjectView(id = R.id.tv_doufen_count)
+//    private TextView mTvDoufenCount;//我的豆粉个数
     @InjectView(id = R.id.tv_mine_invitation_count)
     private TextView mTvMineInvitationCount;//我的邀请中豆粉个数
+    @InjectView(id = R.id.tv_top_level)
+    private TextView mTvTopLevel;//我的商城等级
     @InjectView(id = R.id.tv_shop_level)
     private TextView mTvShopLevel;//我的商城等级
     @InjectView(id = R.id.ly_mine_invitation, onClick = true)
@@ -100,8 +97,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         view.findViewById(R.id.iv_setting).setOnClickListener(this);
         view.findViewById(R.id.ly_shop_level).setOnClickListener(this);
         view.findViewById(R.id.ivPhoto).setOnClickListener(this);
-        view.findViewById(R.id.ly_follows).setOnClickListener(this);
-        view.findViewById(R.id.ly_fans).setOnClickListener(this);
         view.findViewById(R.id.ly_chat).setOnClickListener(this);
         view.findViewById(R.id.ly_invitation_douyou).setOnClickListener(this);
 
@@ -133,24 +128,22 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initData() {
-//        User user = MyApplication.getLoginUser();
-//        if (user != null) {
-//            GlideUtil.getInstance().loadCircle(getContext(), user.getPhoto(), ivPhoto, R.mipmap.default_head);
-//            tvName.setText(user.getNickName());
-//            tvAccount.setText(String.valueOf("ID " + user.getUnumber()));
-//            tv_fans_count.setText(user.getFans());
-//            tv_follow_count.setText(user.getFollows());
-//            tv_dynamic_count.setText(user.getDynamicCount());
-//            TuDouTextUtil.setTextToTextViewFormatWan(mTvTudoubiCount, user.getCoins());
-//            mImUserGender.setImageResource(("1".equals(user.getSex())) ? R.mipmap.public_gender_man : R.mipmap.public_gender_woman);
-//
-//            TuDouTextUtil.setTextToTextViewFormatWan(mTvDoufenCount, user.getInviteCount() + "", false);
-//            TuDouTextUtil.setTextToTextView(mTvMineInvitationCount, user.getInviteCount() + "");
-//            TuDouTextUtil.setTextToTextView(mTvShopLevel, user.getAgentSeriesName());
-//
-//        }
-//
-//        getTopFansData(App.getLoginUser().getUid());
+        User user = MyApplication.getLoginUser();
+        if (user != null) {
+            GlideUtil.getInstance().loadCircle(getContext(), user.getPhoto(), ivPhoto, R.mipmap.default_head);
+            tvName.setText(user.getNickName());
+            tvAccount.setText(String.valueOf("ID " + user.getUnumber()));
+            TuDouTextUtil.setTextToTextViewFormatWan(mTvTudoubiCount, user.getCoins());
+            mImUserGender.setImageResource(("1".equals(user.getSex())) ? R.mipmap.public_gender_man : R.mipmap.public_gender_woman);
+
+            TuDouTextUtil.setTextToTextViewFormatWan(mTvDoufenCount, user.getInviteCount() + "", false);
+            TuDouTextUtil.setTextToTextView(mTvMineInvitationCount, user.getInviteCount() + "");
+            TuDouTextUtil.setTextToTextView(mTvShopLevel, user.getAgentSeriesName());
+            TuDouTextUtil.setTextToTextView(mTvTopLevel, user.getAgentSeriesName());
+
+        }
+
+        getTopFansData(App.getLoginUser().getUid());
 
     }
 
@@ -178,12 +171,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
 //            case R.id.ivPhoto:      //点击用户头像
 //                ForwardUtils.target(getActivity(), Constant.USERINFO);
-//                break;
-//            case R.id.ly_follows://我的关注
-//                ForwardUtils.target(getActivity(), Constant.FOLLOW);
-//                break;
-//            case R.id.ly_fans://我的粉丝
-//                ForwardUtils.target(getActivity(), Constant.FANS);
 //                break;
 //            case R.id.ly_chat:  //豆聊
 //                intent = new Intent(getActivity(), DouIMActivity.class);

@@ -4,6 +4,7 @@ import com.tudouni.makemoney.model.AliAuth;
 import com.tudouni.makemoney.model.AppConfig;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.model.BindInfo;
+import com.tudouni.makemoney.model.Invite;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.User;
 
@@ -52,7 +53,6 @@ public interface CommonApi {
     Observable<Result<String>> setPWD(@Field("password") String password);
 
 
-
     @POST(NetConfig.GOOD_LIST)
     Observable<Result<List<Category>>> getGoodList();
 
@@ -60,39 +60,39 @@ public interface CommonApi {
     @FormUrlEncoded
     @POST(NetConfig.BINDPHONE)
     Observable<Result<User>> bindPhone(@Field("phone") String phone,
-                                          @Field("code") String code,
-                                          @Field("model") String model,
-                                          @Field("brand") String brand);
-
-    @FormUrlEncoded
-    @POST(NetConfig.BINDPHONE2)
-    Observable<Result<User>> bindPhone2(@Field("phone") String phone,
-                                       @Field("code") String code,
-                                       @Field("model") String model,
-                                       @Field("brand") String brand,
-                                        @Field("verifyToken") String verifyToken);
-
-    @FormUrlEncoded
-    @POST(NetConfig.VERIFCODE_CHANGE)
-    Observable<Result<User>> verifcodeChange(@Field("phone") String phone,
                                        @Field("code") String code,
                                        @Field("model") String model,
                                        @Field("brand") String brand);
 
     @FormUrlEncoded
-    @POST(NetConfig.TEL_LOGIN)
-    Observable<Result<User>> findPassword(@Field("phone") String phone,
+    @POST(NetConfig.BINDPHONE2)
+    Observable<Result<User>> bindPhone2(@Field("phone") String phone,
+                                        @Field("code") String code,
+                                        @Field("model") String model,
+                                        @Field("brand") String brand,
+                                        @Field("verifyToken") String verifyToken);
+
+    @FormUrlEncoded
+    @POST(NetConfig.VERIFCODE_CHANGE)
+    Observable<Result<User>> verifcodeChange(@Field("phone") String phone,
                                              @Field("code") String code,
                                              @Field("model") String model,
                                              @Field("brand") String brand);
 
     @FormUrlEncoded
+    @POST(NetConfig.TEL_LOGIN)
+    Observable<Result<User>> findPassword(@Field("phone") String phone,
+                                          @Field("code") String code,
+                                          @Field("model") String model,
+                                          @Field("brand") String brand);
+
+    @FormUrlEncoded
     @POST(NetConfig.BIND_NEW_PHONE)
     Observable<Result<User>> bindNewPhone(@Field("phone") String phone,
-                                        @Field("code") String code,
-                                        @Field("model") String model,
-                                        @Field("brand") String brand,
-                                        @Field("handleToken") String handleToken);
+                                          @Field("code") String code,
+                                          @Field("model") String model,
+                                          @Field("brand") String brand,
+                                          @Field("handleToken") String handleToken);
 
     @POST(NetConfig.GETUSERINFO)
     Observable<Result<User>> getUserInfo();
@@ -106,8 +106,8 @@ public interface CommonApi {
     @FormUrlEncoded
     @POST(NetConfig.UNBUNDTHREE)
     Observable<Result<String>> unbindThree(@Field("acessToken") String acessToken,
-                                          @Field("openid") String openid,
-                                          @Field("platform") String platform);
+                                           @Field("openid") String openid,
+                                           @Field("platform") String platform);
 
     @FormUrlEncoded
     @POST(NetConfig.BINDACCCOUNT)
@@ -127,14 +127,14 @@ public interface CommonApi {
     Observable<Result<User>> passwordLogin(@Field("user") String user,
                                            @Field("password") String password,
                                            @Field("model") String model,
-                                             @Field("brand") String brand);
+                                           @Field("brand") String brand);
 
     @FormUrlEncoded
     @POST(NetConfig.THIRD_LOGIN_PROCESS)
     Observable<Result<User>> threeLoginProcess(@Field("acessToken") String acessToken,
-                                           @Field("openid") String openid,
-                                           @Field("platform") String platform,
-                                           @Field("birthday") String birthday,
+                                               @Field("openid") String openid,
+                                               @Field("platform") String platform,
+                                               @Field("birthday") String birthday,
                                                @Field("city") String city,
                                                @Field("nickname") String nickname,
                                                @Field("photo") String photo,
@@ -143,4 +143,31 @@ public interface CommonApi {
                                                @Field("unionid") String unionid,
                                                @Field("model") String model,
                                                @Field("brand") String brand);
+
+
+    @POST(NetConfig.INVITEINFO)
+    Observable<Result<Invite>> getBindata();
+
+    /**
+     * 查询邀请人的个人信息（简略信息）
+     *
+     * @param inviterUnionid 待查询的邀请人的unionid
+     * @param userId         待查询的邀请人的userId（注：不是土豆号、是数据库uid）
+     * @param userCode       待查询的邀请人的土豆号
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConfig.INVITEINFO_V2)
+    Observable<Result<Invite>> getInviteInfo(@Field("inviterUnionid") String inviterUnionid, @Field("userId") String userId, @Field("userCode") String userCode);
+
+    /**
+     * 绑定邀请
+     *
+     * @param unionid
+     * @param userCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConfig.BINDING_INVITE)
+    Observable<Result<Result>> addBinding(@Field("inviterUnionid") String unionid, @Field("userCode") String userCode);
 }

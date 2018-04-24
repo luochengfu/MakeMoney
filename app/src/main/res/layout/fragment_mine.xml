@@ -19,18 +19,18 @@
             android:orientation="vertical"
             tools:ignore="ScrollViewSize">
 
-            <RelativeLayout
+            <!--头部信息-->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/yellowColor"
-                android:gravity="center_vertical">
+                android:layout_height="wrap_content"
+                android:background="@mipmap/ic_top_bg"
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:id="@+id/ly_chat"
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="right"
                     android:layout_marginRight="@dimen/default_user_margen"
                     android:layout_weight="1">
 
@@ -59,211 +59,150 @@
                         android:layout_width="10dp"
                         android:layout_height="10dp"
                         android:layout_alignRight="@id/iv_chat"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="10dp"
                         android:background="@drawable/bg_pink_radius_20"
                         android:visibility="visible" />
                 </RelativeLayout>
-            </RelativeLayout>
-
-            <!--头部信息-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:background="@mipmap/ic_top_bg"
-                android:orientation="horizontal">
-                <!--个人信息-->
-                <RelativeLayout
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp">
-
-                    <ImageView
-                        android:id="@+id/ivPhoto"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginTop="-5dp"
-                        android:src="@mipmap/default_head" />
-
-                    <ImageView
-                        android:id="@+id/im_user_gender"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/ivPhoto"
-                        android:layout_marginLeft="50dp"
-                        android:src="@mipmap/public_gender_woman" />
-
-                </RelativeLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp">
-
-                    <TextView
-                        android:id="@+id/tvName"
-                        style="@style/tab_four_Name_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxEms="8"
-                        android:singleLine="true"
-                        android:text="奶茶妹妹"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/tvAccount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginTop="10dp"
-                        android:layout_toRightOf="@id/ivPhoto"
-                        android:text="ID"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-
-                    <LinearLayout
-                        android:id="@+id/ly_doufen"
-                        android:layout_width="wrap_content"
-                        android:layout_height="35dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:background="@drawable/bg_doufen_userfragment"
-                        android:orientation="horizontal"
-                        android:paddingBottom="2dp"
+                    android:layout_height="120dp"
+                    android:orientation="horizontal">
+                    <!--个人信息-->
+                    <RelativeLayout
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="2dp">
+                        android:paddingRight="10dp">
 
                         <ImageView
-                            android:layout_width="17dp"
-                            android:layout_height="17dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginRight="10dp"
-                            android:src="@mipmap/ic_default_user" />
+                            android:id="@+id/ivPhoto"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="-5dp"
+                            android:src="@mipmap/default_head" />
 
-                        <LinearLayout
+                        <ImageView
+                            android:id="@+id/im_user_gender"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/ivPhoto"
+                            android:layout_marginLeft="50dp"
+                            android:src="@mipmap/public_gender_woman"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp">
+
+                        <TextView
+                            android:id="@+id/tvName"
+                            style="@style/tab_four_Name_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxEms="8"
+                            android:singleLine="true"
+                            android:text="奶茶妹妹"
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/tvAccount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@id/ivPhoto"
+                            android:text="ID"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                    <!--顶部右侧信息-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <View
+                            android:id="@+id/middle_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:layout_centerVertical="true" />
+                        <!--商城等级-->
+                        <LinearLayout
+                            android:id="@+id/ly_doufen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="22dp"
+                            android:layout_above="@+id/middle_view"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:background="@drawable/bg_doufen_userfragment"
                             android:gravity="center_vertical"
-                            android:orientation="vertical">
+                            android:orientation="horizontal"
+                            android:paddingBottom="2dp"
+                            android:paddingLeft="30dp"
+                            android:paddingTop="2dp">
+
+                            <TextView
+                                android:id="@+id/tv_top_level"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical"
+                                android:text="会员"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="13dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="@dimen/dp_22"
+                                android:src="@mipmap/ic_arrow_white" />
+
+                        </LinearLayout>
+                        <!--大A等级-->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="22dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_below="@+id/middle_view"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingBottom="2dp"
+                            android:paddingLeft="30dp"
+                            android:paddingRight="22dp"
+                            android:paddingTop="2dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="13dp"
+                                android:layout_marginRight="5dp"
+                                android:src="@mipmap/ic_arrow_white" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center_vertical"
                                 android:gravity="center_vertical"
-                                android:text="豆粉"
-                                android:textColor="@color/white"
-                                android:textSize="11sp" />
+                                android:text="荣耀王者"
+                                android:textColor="#FFF700"
+                                android:textSize="12sp" />
 
-                            <TextView
-                                android:id="@+id/tv_doufen_count"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:ellipsize="end"
-                                android:gravity="center"
-                                android:singleLine="true"
-                                android:text="0"
-                                android:textColor="@color/white"
-                                android:textSize="11sp" />
                         </LinearLayout>
-
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-                <!--旧版本关注等-->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/ivPhoto"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/ivPhoto"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:id="@+id/ly_follows"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="关注"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:id="@+id/tv_follow_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:text="0"
-                            android:textColor="@color/black"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ly_fans"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:text="粉丝"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:id="@+id/tv_fans_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:text="0"
-                            android:textColor="@color/black"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="作品"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/tv_dynamic_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:text="0"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-
+                    </RelativeLayout>
                 </LinearLayout>
-
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"

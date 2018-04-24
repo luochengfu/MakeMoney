@@ -19,7 +19,7 @@ public class NetConfig {
     public static final String MSG_CODE = "/shop/getVerifCode";
     public static final String TEL_LOGIN = "/shop/login";
     public static final String SETPWD = "/shop/auth/user/setPwd";
-    public static final String CONFIG = "/config";
+    public static final String CONFIG = "/shop/config";
     public static final String BINDPHONE = "/shop/auth/user/bindPhone";
     public static final String VERIFCODE_CHANGE = "/shop/auth/user/verifyCode";
     public static final String BINDPHONE2 = "/shop/auth/user/bindPhone_V2";
@@ -36,6 +36,9 @@ public class NetConfig {
     public static final String USERNAME_PASSWOED_LOGIN = "/shop/loginPwd";
     public static final String GOOD_LIST = "/shop/goodsCategory/list";
     public static final String THIRD_LOGIN_PROCESS = "/login/thirdPartySNS/loginWithProcess";
+    public static final String INVITEINFO = "/shop/auth/invite/info";
+    public static final String INVITEINFO_V2 = "/shop/auth/invite/info_V2";//查询邀请人的个人信息（简略信息）
+    public static final String BINDING_INVITE = "/shop/auth/invite/action/addBinding";//绑定邀请
 
     /**
      * 网络环境名称数组
