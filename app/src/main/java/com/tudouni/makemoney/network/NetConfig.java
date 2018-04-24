@@ -30,12 +30,14 @@ public class NetConfig {
     public static final String ACCOUNT_BIND = "/shop/auth/user/bindStatus";
     public static final String PAY_STATUS = "/shop/auth/pay/status";
     public static final String UNBUNDTHREE = "/auth/user/unBindThird";
-    public static final String BINDACCCOUNT = "/auth/user/bindAccount";
+    public static final String BINDACCCOUNT = "/shop/auth/user/bindAccount";
     public static final String ALIAUTH = "/auth/alipay/info";
     public static final String VERIFPWD = "/shop/auth/user/verifPwd";
     public static final String USERNAME_PASSWOED_LOGIN = "/shop/loginPwd";
     public static final String GOOD_LIST = "/shop/goodsCategory/list";
-    public static final String THIRD_LOGIN_PROCESS = "/login/thirdPartySNS/loginWithProcess";
+    public static final String THIRD_LOGIN_PROCESS = "/shop/login/thirdPartySNS/loginWithProcess";
+    public static final String FOUND_BANNER = "/shop/discovery/getbanner";
+
 
     /**
      * 网络环境名称数组

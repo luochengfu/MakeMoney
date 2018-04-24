@@ -3,6 +3,8 @@ package com.tudouni.makemoney.network;
 import com.tudouni.makemoney.model.AliAuth;
 import com.tudouni.makemoney.model.AppConfig;
 import com.tudouni.makemoney.model.BindInfo;
+import com.tudouni.makemoney.model.Banner;
+import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.model.User;
@@ -146,8 +148,15 @@ public class CommonScene extends RetrofitUtils {
      * 第三方登录
      */
     public static void threeLoginProcess(String acessToken, String openid,String platform, String birthday,String city, String nickname,
-                                         String photo, String sex,String signature, String unionid,String model, String brand,BaseObserver<User> observer) {
+                                         String photo, String sex,String signature, String unionid,String model, String brand,BaseObserver<LoginBean> observer) {
         setSubscribe(commonApi.threeLoginProcess(acessToken,openid,platform,birthday,city,nickname,photo,sex,signature,unionid,model,brand),observer);
+    }
+
+    /**
+     * 发现获取banner数据
+     */
+    public static void getFoundBanner(BaseObserver<List<Banner>> observer) {
+        setSubscribe(commonApi.getFoundBanner(),observer);
     }
 
 }
