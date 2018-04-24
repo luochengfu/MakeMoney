@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.tudouni.makemoney.R;
-import com.tudouni.makemoney.fragment.MainTabOneFragment;
+import com.tudouni.makemoney.fragment.MallFragment;
 import com.tudouni.makemoney.fragment.MainTabThreeFragment;
 import com.tudouni.makemoney.fragment.category.GoodCategoryFragment;
 import com.tudouni.makemoney.fragment.MineFragment;
@@ -39,7 +39,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private final int PERMISSION_REQUEST_CODE = 123;
     private final int PERMISSION_REQUEST_CODE_VIDEO = 124;
     private RelativeLayout tab1, tab2, tab3, tab4;
-    private MainTabOneFragment mTabOne;
+    private MallFragment mTabOne;
     private GoodCategoryFragment mTabTwo;
     private MainTabThreeFragment mTabThree;
     private MineFragment mTabMine;
@@ -80,7 +80,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initDatas() {
-        mTabOne = new MainTabOneFragment();
+        mTabOne = new MallFragment();
         mTabTwo = new GoodCategoryFragment();
         mTabThree = new MainTabThreeFragment();
         mTabMine = new MineFragment();
