@@ -165,9 +165,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 statisticsType = "me_set";
                 ForwardUtils.target(getActivity(), Constants.SETTING);
                 break;
-//            case R.id.ivPhoto:      //点击用户头像
-//                ForwardUtils.target(getActivity(), Constant.USERINFO);
-//                break;
+            case R.id.ivPhoto:      //点击用户头像
+                ForwardUtils.target(getActivity(), Constants.USERINFO);
+                break;
 //            case R.id.ly_chat:  //豆聊
 //                intent = new Intent(getActivity(), DouIMActivity.class);
 //                startActivity(intent);

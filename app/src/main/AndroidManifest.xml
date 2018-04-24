@@ -59,7 +59,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.FaceToFaceActivity"
             android:screenOrientation="portrait"
@@ -259,7 +259,8 @@
         </receiver>
         <!-- ===============极光推送 End========================= -->
         <activity android:name=".activity.InvitationDouFenActivity" />
-        <activity android:name=".activity.BindingInvitationActivity"></activity>
+        <activity android:name=".activity.BindingInvitationActivity" />
+        <activity android:name=".activity.UserInfoActivity"></activity>
     </application>
 
 </manifest>

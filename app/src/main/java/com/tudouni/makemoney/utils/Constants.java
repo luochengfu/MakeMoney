@@ -43,5 +43,6 @@ public class Constants {
     public static final String ABOUTUS = BASE_H5_URL + "/tudouni/html/contact.html";
     public static final String CONTACTUS = BASE_H5_URL + "/tudouni/html/contact.html";
     public static final String BINDING_FACE_TO_FACE = BASE_PRE + "binding_face_to_face";
+    public static final String USERINFO = BASE_PRE + "setinfo";
 
 }

@@ -70,6 +70,13 @@
         <attr name="pressedColor" format="color" />     <!-- 按下蒙版颜色 -->
 
     </declare-styleable>
+
+    <declare-styleable name="DatePicker">
+        <attr name="picker_text_color" format="color" />
+        <attr name="picker_select_textColor" format="color" />
+        <attr name="picker_split" format="color" />
+        <attr name="picker_split_height" format="dimension" />
+    </declare-styleable>
 </resources>
 
 
