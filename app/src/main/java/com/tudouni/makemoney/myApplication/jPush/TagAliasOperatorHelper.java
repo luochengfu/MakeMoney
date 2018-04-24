@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.SparseArray;
 
+import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.Logger;
 import com.tudouni.makemoney.utils.UserInfoHelper;
 
@@ -47,7 +48,7 @@ public class TagAliasOperatorHelper {
 
     public static final int DELAY_SET_MOBILE_NUMBER_ACTION = 2;
 
-    private Context context;
+    private Context context = MyApplication.getContext();
 
     private static TagAliasOperatorHelper mInstance;
 
@@ -63,12 +64,6 @@ public class TagAliasOperatorHelper {
             }
         }
         return mInstance;
-    }
-
-    public void init(Context context) {
-        if (context != null) {
-            this.context = context.getApplicationContext();
-        }
     }
 
     private SparseArray<Object> setActionCache = new SparseArray<Object>();
@@ -96,7 +91,7 @@ public class TagAliasOperatorHelper {
                         TagAliasBean tagAliasBean = (TagAliasBean) msg.obj;
                         setActionCache.put(sequence, tagAliasBean);
                         if (context != null) {
-                            handleAction(context, sequence, tagAliasBean);
+                            handleAction(sequence, tagAliasBean);
                         } else {
                             Logger.e(TAG, "#unexcepted - context was null");
                         }
@@ -132,9 +127,9 @@ public class TagAliasOperatorHelper {
     /**
      * 处理设置tag
      */
-    public void handleAction(Context context, int sequence, TagAliasBean tagAliasBean) {
-        if (UserInfoHelper.isSetAlias(context)) return;
-        init(context);
+    public void handleAction(int sequence, TagAliasBean tagAliasBean) {
+        if (UserInfoHelper.isSetAlias(MyApplication.getContext())) return;
+//        init(context);
         if (tagAliasBean == null) {
             Logger.w(TAG, "tagAliasBean was null");
             return;
@@ -250,11 +245,11 @@ public class TagAliasOperatorHelper {
         return "unkonw operation";
     }
 
-    public void onTagOperatorResult(Context context, JPushMessage jPushMessage) {
+    public void onTagOperatorResult(JPushMessage jPushMessage) {
         int sequence = jPushMessage.getSequence();
         Logger.i(TAG, "action - onTagOperatorResult, sequence:" + sequence + ",tags:" + jPushMessage.getTags());
         Logger.i(TAG, "tags size:" + jPushMessage.getTags().size());
-        init(context);
+//        init(context);
         //根据sequence从之前操作缓存中获取缓存记录
         TagAliasBean tagAliasBean = (TagAliasBean) setActionCache.get(sequence);
         if (tagAliasBean == null) {
@@ -281,10 +276,9 @@ public class TagAliasOperatorHelper {
         }
     }
 
-    public void onCheckTagOperatorResult(Context context, JPushMessage jPushMessage) {
+    public void onCheckTagOperatorResult(JPushMessage jPushMessage) {
         int sequence = jPushMessage.getSequence();
         Logger.i(TAG, "action - onCheckTagOperatorResult, sequence:" + sequence + ",checktag:" + jPushMessage.getCheckTag());
-        init(context);
         //根据sequence从之前操作缓存中获取缓存记录
         TagAliasBean tagAliasBean = (TagAliasBean) setActionCache.get(sequence);
         if (tagAliasBean == null) {
@@ -306,10 +300,9 @@ public class TagAliasOperatorHelper {
         }
     }
 
-    public void onAliasOperatorResult(Context context, JPushMessage jPushMessage) {
+    public void onAliasOperatorResult(JPushMessage jPushMessage) {
         int sequence = jPushMessage.getSequence();
         Logger.i(TAG, "action - onAliasOperatorResult, sequence:" + sequence + ",alias:" + jPushMessage.getAlias());
-        init(context);
         //根据sequence从之前操作缓存中获取缓存记录
         TagAliasBean tagAliasBean = (TagAliasBean) setActionCache.get(sequence);
         if (tagAliasBean == null) {
@@ -333,10 +326,9 @@ public class TagAliasOperatorHelper {
     }
 
     //设置手机号码回调
-    public void onMobileNumberOperatorResult(Context context, JPushMessage jPushMessage) {
+    public void onMobileNumberOperatorResult(JPushMessage jPushMessage) {
         int sequence = jPushMessage.getSequence();
         Logger.i(TAG, "action - onMobileNumberOperatorResult, sequence:" + sequence + ",mobileNumber:" + jPushMessage.getMobileNumber());
-        init(context);
         if (jPushMessage.getErrorCode() == 0) {
             Logger.i(TAG, "action - set mobile number Success,sequence:" + sequence);
             setActionCache.remove(sequence);
