@@ -19,6 +19,8 @@ public class Constants {
      */
     public static String HTTP_URL = "";
 
+    public static final String DEFALT_HEAD = "";
+
     /**
      * 默认分页大小
      */

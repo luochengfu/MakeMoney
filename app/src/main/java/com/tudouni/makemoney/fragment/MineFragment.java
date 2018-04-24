@@ -2,6 +2,7 @@ package com.tudouni.makemoney.fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,8 +13,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.tudouni.makemoney.R;
+import com.tudouni.makemoney.model.AgentInfo;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.myApplication.MyApplication;
+import com.tudouni.makemoney.network.CommonScene;
+import com.tudouni.makemoney.network.Logger;
+import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.BitMapUtils;
 import com.tudouni.makemoney.utils.CommonUtil;
 import com.tudouni.makemoney.utils.Constants;
@@ -30,6 +35,9 @@ import com.tudouni.makemoney.widget.sharePart.ShareUtil;
 import com.tudouni.makemoney.widget.sharePart.model.Share;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -53,12 +61,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private View tv_chat_dot;
     @InjectView(id = R.id.tv_balance)
     private TextView tv_balance;
-    @InjectView(id = R.id.tv_earn_today)
-    private TextView tv_earn_today;
     @InjectView(id = R.id.tv_earn_month)
     private TextView tv_earn_month;
-    //    @InjectView(id = R.id.tv_doufen_count)
-//    private TextView mTvDoufenCount;//我的豆粉个数
     @InjectView(id = R.id.tv_mine_invitation_count)
     private TextView mTvMineInvitationCount;//我的邀请中豆粉个数
     @InjectView(id = R.id.tv_top_level)
@@ -83,7 +87,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected int getContentView() {
-//        return R.layout.fragment_user_ex;
         return R.layout.fragment_mine;
     }
 
@@ -102,7 +105,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
 //        view.findViewById(R.id.ly_mine_shop).setOnClickListener(this);
         view.findViewById(R.id.ly_earn_month).setOnClickListener(this);
-        view.findViewById(R.id.ly_earn_today).setOnClickListener(this);
         view.findViewById(R.id.ly_tv_balance).setOnClickListener(this);
         view.findViewById(R.id.llMyOrder).setOnClickListener(this);
 
@@ -133,18 +135,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             GlideUtil.getInstance().loadCircle(getContext(), user.getPhoto(), ivPhoto, R.mipmap.default_head);
             tvName.setText(user.getNickName());
             tvAccount.setText(String.valueOf("ID " + user.getUnumber()));
-            TuDouTextUtil.setTextToTextViewFormatWan(mTvTudoubiCount, user.getCoins());
             mImUserGender.setImageResource(("1".equals(user.getSex())) ? R.mipmap.public_gender_man : R.mipmap.public_gender_woman);
-
-            TuDouTextUtil.setTextToTextViewFormatWan(mTvDoufenCount, user.getInviteCount() + "", false);
             TuDouTextUtil.setTextToTextView(mTvMineInvitationCount, user.getInviteCount() + "");
             TuDouTextUtil.setTextToTextView(mTvShopLevel, user.getAgentSeriesName());
             TuDouTextUtil.setTextToTextView(mTvTopLevel, user.getAgentSeriesName());
 
         }
-
-        getTopFansData(App.getLoginUser().getUid());
-
     }
 
     @Override
@@ -186,12 +182,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 //            case R.id.ly_mine_shop: //商城收益
 //            case R.id.ly_tv_balance: //商城余额
 //                statisticsType = "me_balance";
-//                intent = new Intent(getActivity(), FreeShopActivity.class);
-//                intent.putExtra("tagUrl", Constant.H5_MALL_INCOME + para);
-//                startActivity(intent);
-//                break;
-//            case R.id.ly_earn_today: //商城今日收益
-//                statisticsType = "me_toincome";
 //                intent = new Intent(getActivity(), FreeShopActivity.class);
 //                intent.putExtra("tagUrl", Constant.H5_MALL_INCOME + para);
 //                startActivity(intent);
@@ -281,46 +271,40 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         setOnclickToView(mContentView);
-//        Map<String, String> params = new HashMap<String, String>();
-//        RequestUtils.sendPostRequest(Api.GETUSERINFO, params, new ResponseCallBack<User2>() {
-//            @Override
-//            public void onSuccess(User2 user) {
-//                super.onSuccess(user);
-//                if (!App.getLoginUser().getNickName().equals(user.getNickName()) || null == user.getPhoto() || !App.getLoginUser().getPhoto().equals(user.getPhoto())) {
-//                    if (TextUtils.isEmpty(user.getPhoto()) || user.getPhoto().equals("null")) {
-//                        user.setPhoto(Constant.DEFALT_HEAD);
-//                    }
-//                    UserInfo ifo = new UserInfo(user.getUid(), user.getNickName(), Uri.parse(user.getPhoto()));
-//                    AppUserInfoManager.getInstance().refreshUserInfo(ifo);
-//                }
-//                Logger.e("", user.toString());
-//                saveLoginInfo(user);
-//            }
-//
-//            @Override
-//            public void onFailure(ServiceException e) {
-//                super.onFailure(e);
-////                ToastUtil.show("我的信息加载失败！（" + e.getCode() + ")");
-//            }
-//        });
-//
-//        CommonScene.getAgentInfo(new BaseObserver<AgentInfo>() {
-//            @Override
-//            public void OnSuccess(AgentInfo agentInfo) {
-//                if (agentInfo != null) {
-//                    TuDouTextUtil.setTextToTextView(tv_balance, (long) agentInfo.getBalance());
-//                    TuDouTextUtil.setTextToTextView(tv_earn_today, (long) agentInfo.getTodayIncome());
-//                    TuDouTextUtil.setTextToTextView(tv_earn_month, (long) agentInfo.getThisMonthExpectedIncome());
-//                }
-//            }
-//
-//            @Override
-//            public void OnFail(int code, String err) {
-////                ToastUtil.show("商城收益" + err + ":（" + code + ")");
-//            }
-//        });
+        Map<String, String> params = new HashMap<String, String>();
+        CommonScene.getUserInfo(new BaseObserver<User>() {
+            @Override
+            public void OnSuccess(User user) {
+                if (!MyApplication.getLoginUser().getNickName().equals(user.getNickName()) || null == user.getPhoto() || !MyApplication.getLoginUser().getPhoto().equals(user.getPhoto())) {
+                    if (TextUtils.isEmpty(user.getPhoto()) || user.getPhoto().equals("null")) {
+                        user.setPhoto(Constants.DEFALT_HEAD);
+                    }
+                }
+                MyApplication.saveLoginUser(user);
+                initData();
+            }
+
+            @Override
+            public void OnFail(int code, String err) {
+                TuDouLogUtils.e(TAG, "Get UserInfo Error：" + err + "  error code=" + code);
+            }
+        });
+        CommonScene.getAgentInfo(new BaseObserver<AgentInfo>() {
+            @Override
+            public void OnSuccess(AgentInfo agentInfo) {
+                if (agentInfo != null) {
+                    TuDouTextUtil.setTextToTextView(tv_balance, (long) agentInfo.getBalance());
+                    TuDouTextUtil.setTextToTextView(tv_earn_month, (long) agentInfo.getThisMonthExpectedIncome());
+                }
+            }
+
+            @Override
+            public void OnFail(int code, String err) {
+                ToastUtil.show("商城收益" + err + ":（" + code + ")");
+            }
+        });
 //        sessionMsg(null);
-//
+
     }
 
     /**
@@ -344,8 +328,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             platform = (viewId == R.id.ly_share_wx) ? SHARE_MEDIA.WEIXIN : SHARE_MEDIA.WEIXIN_CIRCLE;
         }
         if (viewId == R.id.ly_share_qq) {
-            if (!CommonUtil.isWXInstall(getActivity())) {
-                ToastUtil.show(getActivity(), "请安装微信客户端");
+            if (!CommonUtil.isQQInstall(getActivity())) {
+                ToastUtil.show(getActivity(), "请安装QQ客户端");
                 return;
             }
         }
@@ -366,10 +350,4 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             }
         });
     }
-
-//    private void saveLoginInfo(User2 user) {
-//        User saveUser = user.toLoginUser();
-//        App.saveLoginUser(saveUser);
-//        initData();
-//    }
 }

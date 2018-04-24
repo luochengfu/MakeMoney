@@ -1,5 +1,6 @@
 package com.tudouni.makemoney.network;
 
+import com.tudouni.makemoney.model.AgentInfo;
 import com.tudouni.makemoney.model.AliAuth;
 import com.tudouni.makemoney.model.AppConfig;
 import com.tudouni.makemoney.model.BindInfo;
@@ -184,4 +185,12 @@ public class CommonScene extends RetrofitUtils {
         setSubscribe(commonApi.addBinding(inviterUnionid, userCode), observer);
     }
 
+    /**
+     * 商城收益
+     *
+     * @param observer
+     */
+    public static void getAgentInfo(BaseObserver<AgentInfo> observer) {
+        setSubscribe(commonApi.getAgentInfo(), observer);
+    }
 }

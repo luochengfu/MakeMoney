@@ -1,5 +1,6 @@
 package com.tudouni.makemoney.network;
 
+import com.tudouni.makemoney.model.AgentInfo;
 import com.tudouni.makemoney.model.AliAuth;
 import com.tudouni.makemoney.model.AppConfig;
 import com.tudouni.makemoney.model.Category;
@@ -170,4 +171,13 @@ public interface CommonApi {
     @FormUrlEncoded
     @POST(NetConfig.BINDING_INVITE)
     Observable<Result<Result>> addBinding(@Field("inviterUnionid") String unionid, @Field("userCode") String userCode);
+
+    /**
+     * 获取钱数
+     *
+     * @return
+     */
+    @POST(NetConfig.AGENTINFO)
+    Observable<Result<AgentInfo>> getAgentInfo();
+
 }
