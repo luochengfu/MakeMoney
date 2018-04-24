@@ -5,13 +5,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
-import com.tudouni.makemoney.BR;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.databinding.FragmentGoodCategoryBinding;
 import com.tudouni.makemoney.databinding.ItemCategoryHeaderImageBinding;
 import com.tudouni.makemoney.fragment.BaseFragment;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.viewModel.GoodCategoryViewModel;
+import com.tudouni.makemoney.viewModel.VMResultCallback;
 
 import java.util.List;
 
@@ -57,15 +57,16 @@ public class GoodCategoryFragment extends BaseFragment {
     private void initGoodListRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mCategoryBinding.rvGood.setLayoutManager(layoutManager);
+        mCategoryBinding.rvGood.setPullRefreshEnabled(false);
         mGoodListAdapter = new GoodListAdapter(getActivity().getLayoutInflater());
         LRecyclerViewAdapter lRecyclerViewAdapter = new LRecyclerViewAdapter(mGoodListAdapter);
-        mHeaderImageBinding = DataBindingUtil.inflate(getActivity().getLayoutInflater(), R.layout.item_category_header_image,null,false);
+        mHeaderImageBinding = DataBindingUtil.inflate(getActivity().getLayoutInflater(), R.layout.item_category_header_image,mCategoryBinding.rvGood,false);
         lRecyclerViewAdapter.addHeaderView(mHeaderImageBinding.getRoot());
         mCategoryBinding.rvGood.setAdapter(lRecyclerViewAdapter);
     }
 
     /**
-     * 初始化一级目录列表view
+     * 初始化一级目录列表view（左侧品类）
      * */
     private void initFirstClassCategoryView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -73,7 +74,7 @@ public class GoodCategoryFragment extends BaseFragment {
         mNameAdapter = new CategoryNameAdapter(getActivity().getLayoutInflater());
         mCategoryBinding.rvCategories.setAdapter(mNameAdapter);
         mNameAdapter.setOnItemClickListener((position, itemData) -> {
-            //一级品类Item被点击
+            //一级品类Item被点击(左侧品类)后填充右侧数据
             mHeaderImageBinding.setImageUrl(itemData.getCategorys().get(0).getImgUrl());
             mGoodListAdapter.replaceData(itemData.getCategorys());
         });
@@ -84,12 +85,20 @@ public class GoodCategoryFragment extends BaseFragment {
         getData();
     }
 
+    /**
+     * 加载页面数据
+     */
     private void getData() {
         if (mCategoryViewModel != null) {
-            mCategoryViewModel.getGoodList(new ResultCallback(){
+            mCategoryViewModel.getGoodList(new VMResultCallback<List<Category>>(){
                 @Override
                 public void onSuccess(List<Category> categoryNameList) {
+                    //填充左侧品类数据
                     mNameAdapter.replaceData(categoryNameList);
+                    //填充Banner数据
+                    mHeaderImageBinding.setImageUrl(categoryNameList.get(0).getCategorys().get(0).getImgUrl());
+                    //填充右侧品类数据
+                    mGoodListAdapter.replaceData(categoryNameList.get(0).getCategorys());
                 }
 
                 @Override
@@ -98,12 +107,6 @@ public class GoodCategoryFragment extends BaseFragment {
                 }
             });
         }
-    }
-
-    public interface ResultCallback{
-        void onSuccess(List<Category> categoryNameList);
-
-        void onFailure();
     }
 
 }
