@@ -10,8 +10,7 @@ import java.io.Serializable;
 /**
  * Created by hjw on 17/1/24.
  */
-public class User implements Serializable
-{
+public class User implements Serializable {
     private String birthday;
     private String city;
     private String follows;
@@ -52,6 +51,7 @@ public class User implements Serializable
     private boolean newUser;
     private String bindPhoneStatus;
     private String pwd;
+    private boolean setAlias;//是否设置过别名
 
     public int getSeq() {
         return seq;
@@ -357,5 +357,13 @@ public class User implements Serializable
 
     public void setInviteCount(long inviteCount) {
         this.inviteCount = inviteCount;
+    }
+
+    public boolean isSetAlias() {
+        return setAlias;
+    }
+
+    public void setSetAlias(boolean setAlias) {
+        this.setAlias = setAlias;
     }
 }

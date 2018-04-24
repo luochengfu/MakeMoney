@@ -7,6 +7,7 @@ import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.view.CropImageView;
 import com.tudouni.makemoney.model.AppConfig;
 import com.tudouni.makemoney.model.User;
+import com.tudouni.makemoney.myApplication.jPush.TagAliasOperatorHelper;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.DBLifecycleHandler;
@@ -58,6 +59,13 @@ public class MyApplication extends BaseApplication {
         ZXingLibrary.initDisplayOpinion(this);
         registerActivityLifecycleCallbacks();
 
+        initImagePicker();
+    }
+
+    /**
+     * 初始化图片选择器
+     */
+    private void initImagePicker() {
         ImagePicker imagePicker = ImagePicker.getInstance();
         imagePicker.setImageLoader(new PicassoImageLoader());   //设置图片加载器
         imagePicker.setShowCamera(true);  //显示拍照按钮
@@ -71,6 +79,9 @@ public class MyApplication extends BaseApplication {
         imagePicker.setOutPutY(1000);//保存文件的高度。单位像素
     }
 
+    /**
+     * 初始启动页配置接口
+     */
     private void initConfig() {
         CommonScene.getConfig(new BaseObserver<AppConfig>() {
             @Override
@@ -91,6 +102,9 @@ public class MyApplication extends BaseApplication {
         JPushInterface.init(this);
     }
 
+    /**
+     * 初始化友盟
+     */
     private void initUmeng() {
         UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, null);
 
@@ -115,6 +129,7 @@ public class MyApplication extends BaseApplication {
             return;
         mLoginUser = user;
         UserInfoHelper.saveUserDatas(sContext, user);
+        TagAliasOperatorHelper.getInstance().handleAction(getContext(), (++TagAliasOperatorHelper.sequence), new TagAliasOperatorHelper.TagAliasBean(mLoginUser.getUnionid()));
     }
 
     /**
