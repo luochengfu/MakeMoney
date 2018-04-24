@@ -155,7 +155,7 @@ public class MyApplication extends BaseApplication {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        Multidex.install(this);
+        MultiDex.install(this);
     }
 
 }
