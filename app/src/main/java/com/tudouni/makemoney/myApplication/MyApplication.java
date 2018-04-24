@@ -129,7 +129,7 @@ public class MyApplication extends BaseApplication {
             return;
         mLoginUser = user;
         UserInfoHelper.saveUserDatas(sContext, user);
-        TagAliasOperatorHelper.getInstance().handleAction(getContext(), (++TagAliasOperatorHelper.sequence), new TagAliasOperatorHelper.TagAliasBean(mLoginUser.getUnionid()));
+        TagAliasOperatorHelper.getInstance().handleAction((++TagAliasOperatorHelper.sequence), new TagAliasOperatorHelper.TagAliasBean(mLoginUser.getUnionid()));
     }
 
     /**
