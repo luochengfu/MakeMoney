@@ -12,7 +12,9 @@
     <ImageView
         android:id="@+id/iv_banner"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        app:loadImage="@{imageUrl}" />
+        android:layout_height="102dp"
+        app:roundImageUrl="@{imageUrl}"
+        app:roundImageCornerRadius="@{String.valueOf(4)}"
+       />
 
 </layout>
