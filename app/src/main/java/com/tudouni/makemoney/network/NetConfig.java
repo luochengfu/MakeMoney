@@ -35,6 +35,7 @@ public class NetConfig {
     public static final String VERIFPWD = "/shop/auth/user/verifPwd";
     public static final String USERNAME_PASSWOED_LOGIN = "/shop/loginPwd";
     public static final String GOOD_LIST = "/shop/goodsCategory/list";
+    public static final String THIRD_LOGIN_PROCESS = "/login/thirdPartySNS/loginWithProcess";
 
     /**
      * 网络环境名称数组

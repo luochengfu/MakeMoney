@@ -34,6 +34,9 @@ import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.ValidateUtil;
 import com.tudouni.makemoney.view.CenterLoadingView;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -56,7 +59,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     private EditText mPhoneNumberInput, mPasswrodInput, mPhoneNumberInput2, mPhoneCodeInput;
     private View mLine1, mLine2;
     private LinearLayout mTelLogin1, mTelLogin2;
-//    private UMShareAPI mShareAPI = null;
+    private UMShareAPI mShareAPI = null;
     private CenterLoadingView loadingDialog = null;
     private final String[] permissionManifest = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -73,7 +76,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-//        mShareAPI = UMShareAPI.get(this);
+        mShareAPI = UMShareAPI.get(this);
         initView();
         initDatas();
     }
@@ -530,11 +533,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             ToastUtil.show("请安装QQ客户端");
             return;
         }
-//        login(SHARE_MEDIA.QQ);
+        login(SHARE_MEDIA.QQ);
     }
 
 
-/*    private void login(final SHARE_MEDIA platform) {
+    private void login(final SHARE_MEDIA platform) {
         if (null == loadingDialog) {
             loadingDialog = new CenterLoadingView(LoginActivity.this);
         }
@@ -566,10 +569,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                     flag = "2";
                     rawDataKey = "unionid";
                     openid = map.get("openid");
-                } else if (platform == SHARE_MEDIA.SINA) {
-                    flag = "3";
-                    rawDataKey = "id";
-                    openid = map.get(rawDataKey);
                 }
                 String temp = "";
                 for (String key : map.keySet()) {
@@ -607,13 +606,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             }
         });
 
-    }*/
+    }
 
     /**
      * 第三方登录
      *
      */
- /*   private void thirdLogin(String accessToken, String openid, final String platform,
+    private void thirdLogin(String accessToken, String openid, final String platform,
                             String birthday,
                             String city,
                             String nickname,
@@ -638,13 +637,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         params.put("unionid", unionid);
         params.put("model", Build.MODEL);
         params.put("brand", Build.BRAND);
-        HashMap<String, String> encryptedDataMap = MobileSecurity.toEncryptedData(this, rawData);
-        if (encryptedDataMap != null) {
-            params.put("rawData", encryptedDataMap.get("rawData"));
-            params.put("sign", encryptedDataMap.get("sign"));
-            params.put("douboFingerPrint", encryptedDataMap.get("douboFingerPrint"));
-        }
-        RequestUtils.sendPostRequest(Api.THIRD_LOGIN_PROCESS, params, new ResponseCallBack<LoginBean>() {
+
+        /*RequestUtils.sendPostRequest(Api.THIRD_LOGIN_PROCESS, params, new ResponseCallBack<LoginBean>() {
             @Override
             public void onSuccess(LoginBean user) {
                 super.onSuccess(user);
@@ -673,10 +667,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                     loadingDialog.dismiss();
                 }
             }
-        });
-    }*/
+        });*/
+    }
 
-    /*private void skipTelephoneLogin(LoginBean user, String type) {
+    private void skipTelephoneLogin(LoginBean user, String type) {
         Intent intent = new Intent(LoginActivity.this, TelLoginActivity.class);
         intent.putExtra("type", type);
         intent.putExtra("handleToken",user.getHandleToken());
@@ -684,7 +678,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             intent.putExtra("loginUser",user.getUser());
         }
         startActivity(intent);
-    }*/
+    }
 
 
     private void saveLoginInfo(User user) {
@@ -695,7 +689,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
 
     }
 
