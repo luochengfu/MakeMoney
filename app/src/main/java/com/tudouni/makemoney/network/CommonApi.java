@@ -134,18 +134,18 @@ public interface CommonApi {
 
     @FormUrlEncoded
     @POST(NetConfig.THIRD_LOGIN_PROCESS)
-    Observable<Result<User>> threeLoginProcess(@Field("acessToken") String acessToken,
-                                               @Field("openid") String openid,
-                                               @Field("platform") String platform,
-                                               @Field("birthday") String birthday,
-                                               @Field("city") String city,
-                                               @Field("nickname") String nickname,
-                                               @Field("photo") String photo,
-                                               @Field("sex") String sex,
-                                               @Field("signature") String signature,
-                                               @Field("unionid") String unionid,
-                                               @Field("model") String model,
-                                               @Field("brand") String brand);
+    Observable<Result<LoginBean>> threeLoginProcess(@Field("acessToken") String acessToken,
+                                                    @Field("openid") String openid,
+                                                    @Field("platform") String platform,
+                                                    @Field("birthday") String birthday,
+                                                    @Field("city") String city,
+                                                    @Field("nickname") String nickname,
+                                                    @Field("photo") String photo,
+                                                    @Field("sex") String sex,
+                                                    @Field("signature") String signature,
+                                                    @Field("unionid") String unionid,
+                                                    @Field("model") String model,
+                                                    @Field("brand") String brand);
 
 
     @POST(NetConfig.INVITEINFO)

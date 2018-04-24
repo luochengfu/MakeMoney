@@ -150,7 +150,7 @@ public class CommonScene extends RetrofitUtils {
      * 第三方登录
      */
     public static void threeLoginProcess(String acessToken, String openid, String platform, String birthday, String city, String nickname,
-                                         String photo, String sex, String signature, String unionid, String model, String brand, BaseObserver<User> observer) {
+                                         String photo, String sex,String signature, String unionid,String model, String brand,BaseObserver<LoginBean> observer) {
         setSubscribe(commonApi.threeLoginProcess(acessToken, openid, platform, birthday, city, nickname, photo, sex, signature, unionid, model, brand), observer);
     }
 
