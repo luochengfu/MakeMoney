@@ -150,9 +150,12 @@ public class MyApplication extends BaseApplication {
         UserInfoHelper.clearLoginUser(sContext);
     }
 
+
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
+        Multidex.install(this);
     }
 
 }

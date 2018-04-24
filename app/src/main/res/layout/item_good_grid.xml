@@ -23,6 +23,7 @@
             android:textSize="12sp" />
 
         <android.support.v7.widget.RecyclerView
+            android:paddingTop="10dp"
             android:id="@+id/rv_good_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

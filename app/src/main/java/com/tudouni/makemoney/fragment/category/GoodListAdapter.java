@@ -10,8 +10,14 @@ import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.databinding.ItemGoodGridBinding;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.myApplication.MyApplication;
+import com.tudouni.makemoney.utils.ScreenUtils;
 import com.tudouni.makemoney.view.BaseRecyclerViewBindingAdapter;
 
+/**
+ * 二级品类（右侧）的数据适配器
+ * Jaron.Wu
+ *    2018/04/23
+ */
 public class GoodListAdapter extends BaseRecyclerViewBindingAdapter<Category> {
 
     GoodListAdapter(LayoutInflater inflater) {
@@ -31,13 +37,14 @@ public class GoodListAdapter extends BaseRecyclerViewBindingAdapter<Category> {
         RecyclerView.ItemDecoration itemDecoration = new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                int gap = ScreenUtils.dp2px(view.getContext(), 3);
                 if (parent.getChildAdapterPosition(view) % 3 == 0) {
-                    outRect.right = 8;
+                    outRect.right = gap;
                 } else if (parent.getChildAdapterPosition(view) % 3 == 1) {
-                    outRect.left = 8;
-                    outRect.right = 8;
+                    outRect.left = gap;
+                    outRect.right = gap;
                 }else{
-                    outRect.left = 8;
+                    outRect.left = gap;
                 }
             }
         };

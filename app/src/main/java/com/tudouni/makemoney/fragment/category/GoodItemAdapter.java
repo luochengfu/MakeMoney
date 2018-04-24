@@ -10,6 +10,12 @@ import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.utils.ScreenUtils;
 import com.tudouni.makemoney.view.BaseRecyclerViewBindingAdapter;
 
+
+/***
+ * 二级品类（右侧）中的子RecyclerView适配器
+ * Jaron.Wu
+ *    2018/04/23
+ */
 public class GoodItemAdapter extends BaseRecyclerViewBindingAdapter<Category> {
     GoodItemAdapter(LayoutInflater inflater) {
         super(inflater);
