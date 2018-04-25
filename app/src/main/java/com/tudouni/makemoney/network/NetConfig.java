@@ -43,6 +43,7 @@ public class NetConfig {
     public static final String FOUND_BANNER = "/shop/discovery/getbanner";
     public static final String UPLOAD_INFO = "/shop/auth/upAuth";
     public static final String SET_INFO = "/shop/auth/user/setInfo";
+    public static final String UPINFO = "/config/getUpgradeInfo";  //版本升级信息
 
 
     /**

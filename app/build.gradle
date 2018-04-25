@@ -146,4 +146,5 @@ dependencies {
     implementation files('libs/umeng-share-wechat-simplify-6.9.1.jar')
     implementation files('libs/umeng-sharetool-6.9.1.jar')
     implementation files('libs/aliyun-oss-sdk-android-2.3.0.jar')
+    implementation files('libs/xutils-3.5.0.jar')
 }

@@ -10,6 +10,8 @@ import com.tudouni.makemoney.utils.Constants;
 import com.tudouni.makemoney.utils.base.BaseViewHelper;
 import com.tudouni.makemoney.utils.base.IBaseRequirement;
 
+import org.xutils.x;
+
 /**
  *
  */
@@ -30,6 +32,7 @@ public abstract class BaseApplication extends MultiDexApplication {
             if (!TextUtils.isEmpty(requirement.getImageCacheDir()))
                 Constants.IMAGE_CACHE_DIR = requirement.getImageCacheDir();
         }
+        x.Ext.init(this);
     }
 
     @Override

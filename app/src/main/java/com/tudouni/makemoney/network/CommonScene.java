@@ -12,6 +12,7 @@ import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.upload.UploadInfo;
+import com.tudouni.makemoney.widget.versionUpdate.Upinfo;
 
 import java.util.HashMap;
 import java.util.List;
@@ -220,6 +221,13 @@ public class CommonScene extends RetrofitUtils {
      */
     public static void setUserInfo(String birthday, String city, String nickName, String photo, String sex, String singtrue, BaseObserver<Object> observer) {
         setSubscribe(commonApi.setUserInfo(birthday, city, nickName, photo, sex, singtrue), observer);
+    }
+
+    /**
+     * 版本更新
+     */
+    public static void getVersionUpdataInfo(BaseObserver<Upinfo> observer) {
+        setSubscribe(commonApi.getVersionUpdataInfo(), observer);
     }
 
 }

@@ -33,4 +33,6 @@
     <color name="split_color">#f4f5f9</color>
     <color name="tram">#00000000</color>
     <color name="province_line_border">#C7C7C7</color>
+    <color name="fkyellow">#F74266</color>
+    <color name="hint02Color">#9C9C9C</color>
 </resources>

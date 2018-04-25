@@ -11,6 +11,7 @@ import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.utils.upload.UploadInfo;
+import com.tudouni.makemoney.widget.versionUpdate.Upinfo;
 
 import java.util.List;
 
@@ -204,7 +205,14 @@ public interface CommonApi {
     @FormUrlEncoded
     @POST(NetConfig.SET_INFO)
     Observable<Result<Object>> setUserInfo(@Field("birthday") String birthday, @Field("city") String city, @Field("nickName") String nickName,
-                                   @Field("photo") String photo, @Field("sex") String sex, @Field("singtrue") String singtrue);
+                                           @Field("photo") String photo, @Field("sex") String sex, @Field("singtrue") String singtrue);
 
+    /**
+     * 获取版本更新信息
+     *
+     * @return
+     */
+    @POST(NetConfig.UPINFO)
+    Observable<Result<Upinfo>> getVersionUpdataInfo();
 
 }

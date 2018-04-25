@@ -49,8 +49,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener
-{
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private final String TAG = "LoginActivity";
 
     private Context mContext = this;
@@ -167,7 +166,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
 //            App.setDeviceId();
         }*/
         //是否有更新
-//        UpdateAPKUtil.uptateAPK(this);
+        UpdateAPKUtil.uptateAPK(this);
         //如果维护中
         /*if (App.appConfig.isMaintain()) {
             new MaintinDialog(this, App.appConfig.getShutdownMaintainMsg()).show();
@@ -186,18 +185,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         String statisticsType = null;
         switch (v.getId()) {
             case R.id.login_mode_change_view:
-                if(mLoginModeStatus == 1) {
+                if (mLoginModeStatus == 1) {
                     mLoginModeStatus = 2;
-                } else if(mLoginModeStatus == 2) {
+                } else if (mLoginModeStatus == 2) {
                     mLoginModeStatus = 1;
                 }
                 loginModeChange();
                 break;
             case R.id.tv_commit:
-                if(mLoginModeStatus == 1) {
+                if (mLoginModeStatus == 1) {
                     passwordSubmit();
                     statisticsType = "lg_shaclick";
-                } else if(mLoginModeStatus == 2) {
+                } else if (mLoginModeStatus == 2) {
                     codeSubmit();
                     statisticsType = "lg_lgclick";
                 }
@@ -221,11 +220,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         String code = mPhoneCodeInput.getText().toString();
 
         boolean bool = ValidateUtil.isMobileNO(phone);
-        if(!bool) {
+        if (!bool) {
             return;
         }
 
-        if(phone == null || code == null || phone.equals("") || code.equals(""))
+        if (phone == null || code == null || phone.equals("") || code.equals(""))
             return;
         if (null == loadingDialog) {
             loadingDialog = new CenterLoadingView(LoginActivity.this);
@@ -244,9 +243,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                     intent1.putExtra("type", "1");
                     intent1.putExtra("user", user);
                     startActivity(intent1);
-                }else {//设置了登录密码
+                } else {//设置了登录密码
                     saveLoginInfo(user);
-                    startActivity(new Intent(LoginActivity.this,SplashActivity.class));
+                    startActivity(new Intent(LoginActivity.this, SplashActivity.class));
                     finish();
                 }
             }
@@ -270,7 +269,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         String password = mPasswrodInput.getText().toString();
 
         boolean bool = ValidateUtil.isMobileNO(userName);
-        if(!bool) {
+        if (!bool) {
             return;
         }
 
@@ -297,7 +296,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
 
-                startActivityForResult(SplashActivity.createIntent(mContext),0x200);
+                startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
                 finish();
             }
 
@@ -315,9 +314,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
      * 点击切换
      */
     private void loginModeChange() {
-        if(mLoginModeStatus == 1) {
+        if (mLoginModeStatus == 1) {
             mPhoneNumberInput.setText(mPhoneNum);
-            setLoginBtnStatus(mPhoneNumberInput,mPasswrodInput);
+            setLoginBtnStatus(mPhoneNumberInput, mPasswrodInput);
             loginModeChangeView.setText(getResources().getString(R.string.telLogin));
             mPhoneNumberInput.setVisibility(View.VISIBLE);
             mPasswrodInput.setVisibility(View.VISIBLE);
@@ -327,7 +326,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             mTelLogin1.setVisibility(View.GONE);
             mTelLogin2.setVisibility(View.GONE);
             mLine2.setVisibility(View.GONE);
-        } else if(mLoginModeStatus == 2) {
+        } else if (mLoginModeStatus == 2) {
             mPhoneNumberInput2.setText(mPhoneNum);
             loginModeChangeView.setText(getResources().getString(R.string.tudouni_password_login_change));
             mPhoneNumberInput.setVisibility(View.GONE);
@@ -338,7 +337,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             mTelLogin1.setVisibility(View.VISIBLE);
             mTelLogin2.setVisibility(View.VISIBLE);
             mLine2.setVisibility(View.VISIBLE);
-            setLoginBtnStatus(mPhoneNumberInput2,mPhoneCodeInput);
+            setLoginBtnStatus(mPhoneNumberInput2, mPhoneCodeInput);
         }
     }
 
@@ -533,8 +532,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             loadingDialog = new CenterLoadingView(LoginActivity.this);
         }
 
-        mShareAPI.getPlatformInfo(LoginActivity.this, platform, new UMAuthListener()
-        {
+        mShareAPI.getPlatformInfo(LoginActivity.this, platform, new UMAuthListener() {
             @Override
             public void onStart(SHARE_MEDIA share_media) {
                 if (!platform.equals(SHARE_MEDIA.SINA)) {
@@ -601,7 +599,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
 
     /**
      * 第三方登录
-     *
      */
     private void thirdLogin(String accessToken, String openid, final String platform,
                             String birthday,
@@ -623,11 +620,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                         }
 
                         mShareAPI.deleteOauth(LoginActivity.this, share_media, null);
-                        if(user.getUser() == null || user.getNewer()) {
-                            skipTelephoneLogin(user,"6");
-                        } else if(null == user.getUser().getPhone() || "".equals(user.getUser().getPhone())){//老用户没有手机号码
-                            skipTelephoneLogin(user,"6");
-                        }else {
+                        if (user.getUser() == null || user.getNewer()) {
+                            skipTelephoneLogin(user, "6");
+                        } else if (null == user.getUser().getPhone() || "".equals(user.getUser().getPhone())) {//老用户没有手机号码
+                            skipTelephoneLogin(user, "6");
+                        } else {
                             saveLoginInfo(user.getUser());
                             //防止点击第三方登录取消在点击密码登录的功能
                             startActivity(SplashActivity.createIntent(mContext));
@@ -648,9 +645,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     private void skipTelephoneLogin(LoginBean user, String type) {
         Intent intent = new Intent(LoginActivity.this, TelLoginActivity.class);
         intent.putExtra("type", type);
-        intent.putExtra("handleToken",user.getHandleToken());
-        if(type.equals("7")) {
-            intent.putExtra("loginUser",user.getUser());
+        intent.putExtra("handleToken", user.getHandleToken());
+        if (type.equals("7")) {
+            intent.putExtra("loginUser", user.getUser());
         }
         startActivity(intent);
     }
@@ -769,12 +766,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             }
         });
     }*/
-
     @Override
     protected void onResume() {
         super.onResume();
-        if(!"".equals(MyApplication.mNewUserClipPhone))
-        {
+        if (!"".equals(MyApplication.mNewUserClipPhone)) {
             mPhoneNumberInput2.setText(MyApplication.mNewUserClipPhone);
             MyApplication.mNewUserClipPhone = "";
         }
@@ -793,7 +788,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
      */
     private void generateCode() {
         String phone = mPhoneNumberInput2.getText().toString();
-        if(null == phone || "".equals(phone))
+        if (null == phone || "".equals(phone))
             return;
 
         if (null == loadingDialog) {
@@ -801,7 +796,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         }
         loadingDialog.setTitle("获取中");
         loadingDialog.show();
-        CommonScene.getMsgCode(phone,  new BaseObserver<String>() {
+        CommonScene.getMsgCode(phone, new BaseObserver<String>() {
             @Override
             public void OnSuccess(String s) {
                 if (null != loadingDialog) {
@@ -829,7 +824,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     /**
      * 定义任务类，用于实现倒计时功能
      */
-    public class MyAsyncTask extends AsyncTask{
+    public class MyAsyncTask extends AsyncTask {
 
         @Override
         protected Object doInBackground(Object[] objects) {
