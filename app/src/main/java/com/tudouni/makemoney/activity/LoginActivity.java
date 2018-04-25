@@ -34,6 +34,7 @@ import com.tudouni.makemoney.utils.CommonUtil;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.ValidateUtil;
 import com.tudouni.makemoney.view.CenterLoadingView;
+import com.tudouni.makemoney.widget.versionUpdate.UpdateAPKUtil;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;

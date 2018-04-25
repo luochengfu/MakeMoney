@@ -35,7 +35,8 @@ public class UpdateAPKUtil {
 
 
     public static void uptateAPK(Context context) {
-        loadUpInfo(context);
+        //暂时关闭
+//        loadUpInfo(context);
     }
 
     private static void loadUpInfo(final Context context) {

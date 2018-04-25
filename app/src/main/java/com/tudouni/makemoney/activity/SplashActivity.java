@@ -10,6 +10,7 @@ import android.os.Handler;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.utils.CommonUtil;
+import com.umeng.analytics.MobclickAgent;
 
 
 public class SplashActivity extends Activity {
@@ -56,10 +57,10 @@ public class SplashActivity extends Activity {
 
     private void nextPage() {
         if (null != MyApplication.getLoginUser() && CommonUtil.isNetworkAvailable(mContext)) {
-            startActivity(new Intent(SplashActivity.this,MainActivity.class));
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
             finish();
         } else {  //跳转到登录
-            startActivity(new Intent(SplashActivity.this,LoginActivity.class));
+            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             finish();
             return;
         }
@@ -70,5 +71,15 @@ public class SplashActivity extends Activity {
         return intent;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 }

@@ -26,6 +26,7 @@ import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.utils.Constants;
 import com.tudouni.makemoney.utils.ForwardUtils;
 import com.tudouni.makemoney.view.Tip_dialog;
+import com.tudouni.makemoney.widget.versionUpdate.UpdateAPKUtil;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMShareAPI;
 
@@ -70,6 +71,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initDatas();
         initPermissions();
         EventBus.getDefault().register(this);
+        UpdateAPKUtil.uptateAPK(this);
     }
 
     private void initView() {
