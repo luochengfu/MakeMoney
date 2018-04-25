@@ -341,11 +341,15 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             @Override
             public void onSuccess(Share data) {
                 ToastUtil.show(getActivity(), "分享成功");
+                if (mPotatoesBitmap != null && !mPotatoesBitmap.isRecycled())
+                    mPotatoesBitmap.recycle();
             }
 
             @Override
             public void onFailure(ServiceException e) {
                 super.onFailure(e);
+                if (mPotatoesBitmap != null && !mPotatoesBitmap.isRecycled())
+                    mPotatoesBitmap.recycle();
                 ToastUtil.show(getActivity(), "分享失败");
             }
         });

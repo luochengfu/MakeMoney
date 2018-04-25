@@ -100,9 +100,8 @@ public class CaptureActivity extends AppCompatActivity {
         if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
             if (data != null && requestCode == IMAGE_PICKER) {
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+                CodeUtils.analyzeBitmap(images.get(0).path, analyzeCallback);
                 Log.e("", "地址：" + images.get(0).path);
-//                MyAdapter adapter = new MyAdapter(images);
-//                gridView.setAdapter(adapter);
             } else {
                 Toast.makeText(this, "没有数据", Toast.LENGTH_SHORT).show();
             }

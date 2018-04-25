@@ -21,6 +21,7 @@ import com.tudouni.makemoney.utils.ForwardUtils;
 import com.tudouni.makemoney.utils.InjectView;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.TuDouLogUtils;
+import com.tudouni.makemoney.utils.base.AppUtils;
 import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
 import com.tudouni.makemoney.view.MyTitleBar;
 import com.tudouni.makemoney.widget.sharePart.ShareWindow_v3;
@@ -64,7 +65,6 @@ public class InvitationDouFenActivity extends BaseActivity implements View.OnCli
     private void initData() {
         mInvitationCode = getIntent().getStringExtra("code");
         mInvitationCode = (TextUtils.isEmpty(mInvitationCode)) ? (MyApplication.getLoginUser().getInvistCode()) : (mInvitationCode);
-        mInvitationCode = (TextUtils.isEmpty(mInvitationCode)) ? ("333333333") : (mInvitationCode);
     }
 
     private void initView() {
@@ -89,14 +89,14 @@ public class InvitationDouFenActivity extends BaseActivity implements View.OnCli
         switch (v.getId()) {
             case R.id.bt_copy_invitation_code:
                 MobclickAgent.onEvent(this, "me_indfcopy");
-//                if (!TextUtils.isEmpty(mTvInvitationCode.getText().toString())) {
-//                    String copyStr = App.getLoginUser().getNickName() + "邀请您加入土豆泥，自动搜索淘宝天猫优惠券！先领券，再购物，更划算！\n" +
-//                            "---下载链接： http://url.cn/5qwJJtP -----\n" +
-//                            "复制邀请码： " + mTvInvitationCode.getText().toString() + " \n" +
-//                            "打开土豆泥，注册领取优惠券";
-//                    CommonUtil.copyToClipboard(InvitationDouFenActivity.this, copyStr);
-//                    showToast("复制成功");
-//                }
+                if (!TextUtils.isEmpty(mTvInvitationCode.getText().toString())) {
+                    String copyStr = MyApplication.getLoginUser().getNickName() + "邀请您加入土豆泥，自动搜索淘宝天猫优惠券！先领券，再购物，更划算！\n" +
+                            "---下载链接： http://url.cn/5qwJJtP -----\n" +
+                            "复制邀请码： " + mTvInvitationCode.getText().toString() + " \n" +
+                            "打开土豆泥，注册领取优惠券";
+                    AppUtils.copyToClipboard(InvitationDouFenActivity.this, copyStr);
+                    showToast("复制成功");
+                }
                 break;
             case R.id.bt_share_link:
 //                MobclickAgent.onEvent(this, "me_indfshare");

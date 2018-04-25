@@ -10,6 +10,7 @@ import com.tudouni.makemoney.model.Banner;
 import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.User;
+import com.tudouni.makemoney.utils.upload.UploadInfo;
 
 import java.util.List;
 
@@ -184,4 +185,26 @@ public interface CommonApi {
 
     @POST(NetConfig.FOUND_BANNER)
     Observable<Result<List<Banner>>> getFoundBanner();
+
+
+    /**
+     * 获取上传信息
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConfig.UPLOAD_INFO)
+    Observable<Result<UploadInfo>> uploadInfo(@Field("type") String type);
+
+    /**
+     * 设置用户信息
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConfig.SET_INFO)
+    Observable<Result<Object>> setUserInfo(@Field("birthday") String birthday, @Field("city") String city, @Field("nickName") String nickName,
+                                   @Field("photo") String photo, @Field("sex") String sex, @Field("singtrue") String singtrue);
+
+
 }

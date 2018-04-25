@@ -45,4 +45,6 @@ public class Constants {
     public static final String BINDING_FACE_TO_FACE = BASE_PRE + "binding_face_to_face";
     public static final String USERINFO = BASE_PRE + "setinfo";
 
+    public static final String UPTYPE_IMGHEADER = "img-header";
+
 }

@@ -2,6 +2,8 @@ package com.tudouni.makemoney.utils.base;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -15,6 +17,8 @@ import com.tudouni.makemoney.utils.TuDouLogUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.CLIPBOARD_SERVICE;
 
 /**
  * App相关工具类
@@ -683,5 +687,18 @@ public final class AppUtils {
             }
         }
         return false;
+    }
+
+    /**
+     *
+     * @param context
+     * @param content
+     */
+    public static void copyToClipboard(Context context, String content) {
+        //创建一个新的文本clip对象
+        ClipData clipData = ClipData.newPlainText("content", content);
+        //把clip对象放在剪贴板中
+        ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
+        clipboardManager.setPrimaryClip(clipData);
     }
 }

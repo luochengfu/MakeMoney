@@ -11,8 +11,11 @@ import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.network.rx.BaseObserver;
+import com.tudouni.makemoney.utils.upload.UploadInfo;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2018/4/20 0020.
@@ -150,7 +153,7 @@ public class CommonScene extends RetrofitUtils {
      * 第三方登录
      */
     public static void threeLoginProcess(String acessToken, String openid, String platform, String birthday, String city, String nickname,
-                                         String photo, String sex,String signature, String unionid,String model, String brand,BaseObserver<LoginBean> observer) {
+                                         String photo, String sex, String signature, String unionid, String model, String brand, BaseObserver<LoginBean> observer) {
         setSubscribe(commonApi.threeLoginProcess(acessToken, openid, platform, birthday, city, nickname, photo, sex, signature, unionid, model, brand), observer);
     }
 
@@ -201,6 +204,22 @@ public class CommonScene extends RetrofitUtils {
      */
     public static void getFoundBanner(BaseObserver<List<Banner>> observer) {
         setSubscribe(commonApi.getFoundBanner(), observer);
+    }
+
+    /**
+     * 获取上传信息
+     */
+    public static void uploadInfo(String type, BaseObserver<UploadInfo> observer) {
+        Map<String, String> para1 = new HashMap<>();
+        para1.put("type", type);
+        setSubscribe(commonApi.uploadInfo(type), observer);
+    }
+
+    /**
+     * 获取上传信息
+     */
+    public static void setUserInfo(String birthday, String city, String nickName, String photo, String sex, String singtrue, BaseObserver<Object> observer) {
+        setSubscribe(commonApi.setUserInfo(birthday, city, nickName, photo, sex, singtrue), observer);
     }
 
 }

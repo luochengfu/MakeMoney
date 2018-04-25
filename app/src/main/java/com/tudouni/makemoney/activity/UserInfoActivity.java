@@ -1,6 +1,7 @@
 package com.tudouni.makemoney.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
@@ -8,8 +9,15 @@ import android.os.Environment;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.bean.ImageItem;
+import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.tudouni.makemoney.network.CommonScene;
+import com.tudouni.makemoney.network.Logger;
+import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.DateUtils;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -23,17 +31,24 @@ import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.utils.CommonUtil;
 import com.tudouni.makemoney.utils.InjectView;
+import com.tudouni.makemoney.utils.LoadingUtils;
 import com.tudouni.makemoney.utils.StringUtil;
 import com.tudouni.makemoney.utils.TuDouLogUtils;
+import com.tudouni.makemoney.utils.UserInfoHelper;
 import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
+import com.tudouni.makemoney.utils.upload.UploadUtils;
 import com.tudouni.makemoney.view.MyTitleBar;
+import com.tudouni.makemoney.widget.callBack.ApiCallback;
+import com.tudouni.makemoney.widget.callBack.ServiceException;
 import com.tudouni.makemoney.widget.dialog.DialogChooseSex;
 import com.tudouni.makemoney.widget.picker.DatePickDialog;
 import com.tudouni.makemoney.widget.picker.OnSureLisener;
 import com.tudouni.makemoney.widget.picker.bean.DateType;
 import com.tudouni.makemoney.widget.picker.citypickerview.widget.CityPicker;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,39 +58,21 @@ import java.util.Map;
  * 编辑资料
  */
 public class UserInfoActivity extends BaseActivity implements View.OnClickListener {
-
-
     private static final String TAG = "UserInfoActivity";
-
-    @InjectView(id = R.id.main)
-    LinearLayout main;
-
     @InjectView(id = R.id.title_bar)
     private MyTitleBar title_bar;
-
     @InjectView(id = R.id.llUser)
     LinearLayout llUser;
-    @InjectView(id = R.id.llName)
-    LinearLayout llName;
     @InjectView(id = R.id.llSex)
     LinearLayout llSex;
-    @InjectView(id = R.id.llId)
-    LinearLayout llId;
-    @InjectView(id = R.id.llSign)
-    LinearLayout llSign;
     @InjectView(id = R.id.llBirthday)
     LinearLayout llBirthday;
     @InjectView(id = R.id.llCity)
     LinearLayout llCity;
-    @InjectView(id = R.id.llPhone)
-    LinearLayout llPhone;
-
-
     @InjectView(id = R.id.etName)
     EditText etName;
     @InjectView(id = R.id.etSign)
     EditText etSign;
-
     @InjectView(id = R.id.tvSex)
     TextView tvSex;
     @InjectView(id = R.id.tvCity)
@@ -84,31 +81,14 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     TextView tvId;
     @InjectView(id = R.id.tvBirthday)
     TextView tvBirthday;
-
     @InjectView(id = R.id.ivPhoto)
     ImageView ivPhoto;
 
     private String photoPath;
-
-    private int maxSelectNum = 9;// 图片最大可选数量
-    private ImageButton minus, plus;
-    private EditText select_num;
-    private EditText et_w, et_h, et_compress_width, et_compress_height;
-    private LinearLayout ll_luban_wh;
-    private boolean isShow = true;
-    private boolean enablePreview = true;
-    private boolean isPreviewVideo = true;
-    private boolean enableCrop = true;
-    private boolean theme = false;
-    private boolean selectImageType = false;
-    private int cropW = 640;
-    private int cropH = 640;
-    private int compressW = 0;
-    private int compressH = 0;
-    private boolean isCompress = false;
-    private boolean isCheckNumMode = false;
-    private int compressFlag = 1;// 1 系统自带压缩 2 luban压缩
     private User user;
+    private int IMAGE_PICKER = 555;
+
+    private LoadingUtils dialogUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,7 +161,6 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         llSex.setOnClickListener(this);
         llCity.setOnClickListener(this);
         llBirthday.setOnClickListener(this);
-
     }
 
     private void saveUserInfo() {
@@ -197,6 +176,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         user.setBirthday(tvBirthday.getText().toString());
         user.setCity(tvCity.getText().toString());
         user.setNickName(etName.getText().toString());
+        user.setPhoto(photoUrl);
         user.setSex(tvSex.getText().toString().equals("男") ? "1" : "0");
         user.setSignature(sign);
 
@@ -209,25 +189,28 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         }
         params.put("sex", tvSex.getText().toString().equals("男") ? "1" : "0");
         params.put("singtrue", sign);
-//        RequestUtils.sendPostRequest(Api.SET_INFO, params, new ResponseCallBack<Object>() {
-//
-//            @Override
-//            public void onSuccess(Object data) {
-//                super.onSuccess(data);
-////                User user = AppCacheInfo.getLoginUser();
-//                User user = UserInfoHelper.getUserDatas(UserInfoActivity.this);
-//                user.setBirthday(user.getBirthday());
-//                user.setCity(user.getCity());
-//                user.setNickName(user.getNickName());
-//                user.setSex(user.getSex());
-//                user.setSignature(user.getSignature());
-//                user.setPhoto(photoUrl);
-//                MyApplication.saveLoginUser(user);
-//                Logger.e(user.toString() + "@@", MyApplication.getLoginUser().toString());
-//                setResult(2);
-//                UserInfoActivity.this.finish();
-//            }
-//        });
+        CommonScene.setUserInfo(tvBirthday.getText().toString(), tvCity.getText().toString(),
+                etName.getText().toString(), photoUrl, tvSex.getText().toString().equals("男") ? "1" : "0", sign, new BaseObserver<Object>() {
+                    @Override
+                    public void OnSuccess(Object o) {
+                        User userNew = UserInfoHelper.getUserDatas(UserInfoActivity.this);
+                        userNew.setBirthday(user.getBirthday());
+                        userNew.setCity(user.getCity());
+                        userNew.setNickName(user.getNickName());
+                        userNew.setSex(user.getSex());
+                        userNew.setSignature(user.getSignature());
+                        userNew.setPhoto(photoUrl);
+                        MyApplication.saveLoginUser(userNew);
+                        Logger.e(userNew.toString() + "@@", MyApplication.getLoginUser().toString());
+                        setResult(2);
+                        UserInfoActivity.this.finish();
+                    }
+
+                    @Override
+                    public void OnFail(int code, String err) {
+                        super.OnFail(code, err);
+                    }
+                });
     }
 
     @Override
@@ -237,9 +220,9 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 CommonUtil.hideKeyBoard(this, etName);
                 upSex();
                 break;
-//            case R.id.llUser:
-//                initDialogOpenAvatar();
-//                break;
+            case R.id.llUser:
+                initDialogOpenAvatar();
+                break;
             case R.id.llBirthday:
                 DatePickDialog dialog = new DatePickDialog(this);
                 dialog.setYearLimt(70);
@@ -306,92 +289,46 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initDialogOpenAvatar() {
-//        checkPermission();
-//        FunctionOptions options = new FunctionOptions.Builder()
-//                .setType(selectType)
-//                .setCropMode(copyMode)
-//                .setCompress(true)
-//                .setEnablePixelCompress(true)
-//                .setEnableQualityCompress(true)
-//                .setMaxSelectNum(1)
-//                .setSelectMode(selectMode)
-//                .setShowCamera(isShow)
-//                .setEnablePreview(enablePreview)
-//                .setEnableCrop(enableCrop)
-//                .setCropW(cropW)
-//                .setCropH(cropH)
-//                .setCheckNumMode(isCheckNumMode)
-//                .setCompressQuality(100)
-//                .setImageSpanCount(3)
-//                .setSelectMedia(selectMedia)
-//                .setCompressFlag(1)
-//                .setCompressW(compressW)
-//                .setCompressH(compressH)
-//                .create();
-
-
-        // 先初始化参数配置，在启动相册
-//        PictureConfig.getInstance().init(options);
-//        PictureConfig.getInstance().openPhoto(this, resultCallback2);
+        ImagePicker.getInstance().setCrop(true);
+        ImagePicker.getInstance().setMultiMode(false);
+        Intent intent = new Intent(this, ImageGridActivity.class);
+        startActivityForResult(intent, IMAGE_PICKER);
     }
 
 
     private String photoUrl = MyApplication.getLoginUser().getPhoto();
 
-    /**
-     * 图片回调方法
-     */
-//    private PictureConfig.OnSelectResultCallback resultCallback2 = new PictureConfig.OnSelectResultCallback() {
-//        @Override
-//        public void onSelectSuccess(List<LocalMedia> resultList) {
-//            selectMedia = resultList;
-//            if (selectMedia != null) {
-//                TuDouLogUtils.i("callBack_result", selectMedia.size() + "");
-//                photoPath = selectMedia.get(0).getCompressPath();
-//                TuDouLogUtils.i("malegebi", photoPath);
-//                showLoading("上传中");
-//                UploadUtils.uploadImageForUser(photoPath, new ApiCallback<String>() {
-//                    @Override
-//                    public void onSuccess(String data) {
-//                        photoUrl = data;
-//                        ImageUtils.display150(ivPhoto, photoUrl);
-//                        dismissLoading();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(ServiceException e) {
-//                        super.onFailure(e);
-//                        dismissLoading();
-//                    }
-//                });
-//
-//            }
-//        }
-//
-//        @Override
-//        public void onSelectSuccess(LocalMedia media) {
-//            // 单选回调
-//            if (selectMedia != null) {
-//                photoPath = media.getCompressPath();
-//                showLoading("上传中");
-//                UploadUtils.uploadImageForUser(photoPath, new ApiCallback<String>() {
-//                    @Override
-//                    public void onSuccess(String data) {
-//                        photoUrl = data;
-//                        ImageUtils.display150(ivPhoto, photoUrl);
-//                        dismissLoading();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(ServiceException e) {
-//                        super.onFailure(e);
-//                        dismissLoading();
-//                    }
-//                });
-//
-//            }
-//        }
-//    };
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
+            if (data != null && requestCode == IMAGE_PICKER) {
+                ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+                photoPath = images.get(0).path;
+                Log.e("", "地址：" + images.get(0).path);
+                showLoading("上传中");
+                UploadUtils.uploadImageForUser(photoPath, new BaseObserver<String>() {
+
+                    @Override
+                    public void OnSuccess(String data) {
+                        photoUrl = data;
+                        GlideUtil.getInstance().loadImage(UserInfoActivity.this, photoUrl, ivPhoto, R.mipmap.default_head);
+                        dismissLoading();
+                    }
+
+                    @Override
+                    public void OnFail(int code, String err) {
+                        super.OnFail(code, err);
+                        dismissLoading();
+                    }
+                });
+
+            } else {
+                Toast.makeText(this, "没有数据", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     private void checkPermission() {
         if (Build.VERSION.SDK_INT >= 23) {
             int write = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -421,6 +358,19 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
+    public void showLoading() {
+        showLoading("");
+    }
+
+    public void showLoading(String text) {
+        dialogUtils = new LoadingUtils(this);
+        dialogUtils.showLoading(text);
+    }
+
+    public void dismissLoading() {
+        if (dialogUtils == null) return;
+        dialogUtils.dismissLoading();
+    }
 
 }
 

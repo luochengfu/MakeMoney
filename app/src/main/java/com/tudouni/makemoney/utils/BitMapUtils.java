@@ -44,7 +44,7 @@ public class BitMapUtils {
             TuDouLogUtils.e(TAG, "backBitmap=" + backBitmap + ";frontBitmap=" + frontBitmap);
             return null;
         }
-        Bitmap bitmap = backBitmap.copy(Bitmap.Config.ARGB_8888, true);
+        Bitmap bitmap = backBitmap.copy(Bitmap.Config.RGB_565, true);
         int size = backBitmap.getWidth() / 3;
 //        if (size > frontBitmap.getWidth())
 //            size = frontBitmap.getWidth();
@@ -70,8 +70,7 @@ public class BitMapUtils {
         int mar = ScreenUtils.dp2px(context, 40);
         int w = ScreenUtils.getScreenWidth(context) - mar * 2;
         try {
-//            mesg = String.format(Share.getShareInviteUrl(), MyApplication.getLoginUser().getInvistCode(), URLEncoder.encode(MyApplication.getLoginUser().getNickName(), "utf-8"), MyApplication.getLoginUser().getUnionid());
-            mesg = String.format(Share.getShareInviteUrl(), "-3333333", URLEncoder.encode("鹏哥测试", "utf-8"), "-333333");
+            mesg = String.format(Share.getShareInviteUrl(), MyApplication.getLoginUser().getInvistCode(), URLEncoder.encode(MyApplication.getLoginUser().getNickName(), "utf-8"), MyApplication.getLoginUser().getUnionid());
             qrCodeBitmap = CodeUtils.createImage(mesg, w / 2, w / 2, null);
             potatoesBitMapBg = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_potatoes_bg);
             mPotatoesBitmap = BitMapUtils.mergeBitmap(context, potatoesBitMapBg, qrCodeBitmap);
