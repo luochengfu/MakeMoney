@@ -19,13 +19,14 @@ public class TuDouTextUtil {
             TuDouLogUtils.e("TuDouTextUtil", "控件空指针异常！");
             return;
         }
-        String showStr = "¥";
+        String showStr = "";
         if (number > 10000) {
             String s = number + "";
             showStr += s.substring(0, s.length() - 4) + "万+";
         } else {
             showStr += number;
         }
+        showStr += "元";
         setTextToTextView(textView, showStr);
     }
 
@@ -46,13 +47,14 @@ public class TuDouTextUtil {
     public static void setTextToTextViewFormatWan(TextView textView, String str, boolean withDollar) {
         try {
             long number = Long.parseLong(str);
-            String showStr = withDollar ? "¥" : "";
+            String showStr = "";
             if (number > 10000) {
                 String s = number + "";
                 showStr += s.substring(0, s.length() - 4) + "万+";
             } else {
                 showStr += number;
             }
+            showStr += withDollar ? "元" : "";
             setTextToTextView(textView, showStr);
         } catch (Exception e) {
             TuDouLogUtils.e("TuDouTextUtil", "数据转换报错str=" + str + ";转为Int");

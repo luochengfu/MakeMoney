@@ -59,6 +59,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private TextView tv_chat_num;
     @InjectView(id = R.id.tv_chat_dot)
     private View tv_chat_dot;
+    @InjectView(id = R.id.bag_a_ly)
+    private View mBagALy;//大a布局
     @InjectView(id = R.id.tv_balance)
     private TextView tv_balance;
     @InjectView(id = R.id.tv_earn_month)
@@ -139,7 +141,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             TuDouTextUtil.setTextToTextView(mTvMineInvitationCount, user.getInviteCount() + "");
             TuDouTextUtil.setTextToTextView(mTvShopLevel, user.getAgentSeriesName());
             TuDouTextUtil.setTextToTextView(mTvTopLevel, user.getAgentSeriesName());
-
+            mBagALy.setVisibility(user.getHeadAgent() ? View.VISIBLE : View.INVISIBLE);
         }
     }
 

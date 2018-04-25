@@ -170,6 +170,7 @@
                         </LinearLayout>
                         <!--大A等级-->
                         <LinearLayout
+                            android:id="@+id/bag_a_ly"
                             android:layout_width="wrap_content"
                             android:layout_height="22dp"
                             android:layout_alignParentRight="true"
@@ -184,10 +185,10 @@
                             android:paddingTop="2dp">
 
                             <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="13dp"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
                                 android:layout_marginRight="5dp"
-                                android:src="@mipmap/ic_arrow_white" />
+                                android:src="@mipmap/ic_glory_king" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -556,7 +557,7 @@
 
                 <TextView
                     style="@style/mine_item"
-                    android:text="商城等级" />
+                    android:text="我的等级" />
 
                 <TextView
                     android:id="@+id/tv_shop_level"
@@ -630,8 +631,7 @@
             <LinearLayout
                 android:id="@+id/iv_setting"
                 style="@style/mine_item_ll"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginBottom="10dp">
 
                 <ImageView
                     android:layout_width="21dp"
