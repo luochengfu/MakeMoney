@@ -26,7 +26,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/color_EEEEEE"/>
+            android:background="@color/color_EEEEEE" />
 
         <LinearLayout
             android:id="@+id/main_bottom"
@@ -47,15 +47,15 @@
                     android:id="@+id/gt_home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableTop="@drawable/tab_home_icon"
-                    android:textSize="@dimen/text_size_10"
-                    android:gravity="center"
-                    android:layout_centerHorizontal="true"
                     android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginBottom="5dp"
                     android:drawablePadding="3dp"
+                    android:drawableTop="@drawable/tab_mall_icon"
+                    android:gravity="center"
+                    android:text="@string/shop_main_tab1"
                     android:textColor="@drawable/selector_tab"
-                    android:text="@string/shop_main_tab1"/>
+                    android:textSize="@dimen/text_size_10" />
             </RelativeLayout>
 
 
@@ -71,16 +71,16 @@
                     android:id="@+id/gt_im"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:drawableTop="@drawable/tab_mall_icon"
-                    android:gravity="center"
-                    android:textSize="@dimen/text_size_10"
-                    android:drawablePadding="3dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="5dp"
                     android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="5dp"
+                    android:drawablePadding="3dp"
+                    android:drawableTop="@drawable/tab_category_icon"
+                    android:gravity="center"
+                    android:text="@string/shop_main_tab2"
                     android:textColor="@drawable/selector_tab"
-                    android:text="@string/shop_main_tab2"/>
+                    android:textSize="@dimen/text_size_10" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -94,16 +94,16 @@
                     android:id="@+id/gt_mall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentBottom="true"
                     android:layout_marginBottom="5dp"
-                    android:drawableTop="@drawable/tab_attention_icon"
-                    android:gravity="center"
-                    android:textSize="@dimen/text_size_10"
                     android:drawablePadding="3dp"
+                    android:drawableTop="@drawable/tab_find_icon"
+                    android:gravity="center"
+                    android:text="@string/shop_main_tab3"
                     android:textColor="@drawable/selector_tab"
-                    android:text="@string/shop_main_tab3"/>
+                    android:textSize="@dimen/text_size_10" />
 
 
             </RelativeLayout>
@@ -119,16 +119,16 @@
                     android:id="@+id/gt_mine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:drawableTop="@drawable/tab_mine_icon"
-                    android:layout_alignParentBottom="true"
                     android:layout_marginBottom="5dp"
-                    android:gravity="center"
-                    android:textSize="@dimen/text_size_10"
-                    android:textColor="@drawable/selector_tab"
                     android:drawablePadding="3dp"
-                    android:text="@string/shop_main_tab4"/>
+                    android:drawableTop="@drawable/tab_mine_icon"
+                    android:gravity="center"
+                    android:text="@string/shop_main_tab4"
+                    android:textColor="@drawable/selector_tab"
+                    android:textSize="@dimen/text_size_10" />
 
             </RelativeLayout>
         </LinearLayout>
