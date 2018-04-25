@@ -27,42 +27,63 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
-                    android:id="@+id/ly_chat"
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:layout_marginRight="@dimen/default_user_margen"
-                    android:layout_weight="1">
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:gravity="center_vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/ly_chat"
+                        android:layout_width="40dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/default_user_margen">
+
+                        <ImageView
+                            android:id="@+id/iv_chat"
+                            android:layout_width="18dp"
+                            android:layout_height="16dp"
+                            android:layout_centerInParent="true"
+                            android:scaleType="fitXY"
+                            android:src="@mipmap/user_chat" />
+
+                        <TextView
+                            android:id="@+id/tv_chat_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:background="@drawable/bg_pink_radius_20"
+                            android:gravity="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="7sp"
+                            android:visibility="gone" />
+
+                        <View
+                            android:id="@+id/tv_chat_dot"
+                            android:layout_width="6dp"
+                            android:layout_height="6dp"
+                            android:layout_alignRight="@id/iv_chat"
+                            android:layout_alignTop="@+id/iv_chat"
+                            android:layout_marginRight="-3dp"
+                            android:layout_marginTop="-3dp"
+                            android:background="@drawable/bg_pink_radius_20"
+                            android:visibility="visible" />
+                    </RelativeLayout>
 
                     <ImageView
-                        android:id="@+id/iv_chat"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_centerInParent="true"
-                        android:scaleType="fitXY"
-                        android:src="@mipmap/user_chat" />
+                        android:id="@+id/ll_sao"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_marginRight="@dimen/dp_22"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/ly_chat"
+                        android:src="@mipmap/ic_im_menu_scan_white" />
 
-                    <TextView
-                        android:id="@+id/tv_chat_num"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:background="@drawable/bg_pink_radius_20"
-                        android:gravity="center"
-                        android:textColor="#FFFFFF"
-                        android:textSize="7sp"
-                        android:visibility="gone" />
-
-                    <View
-                        android:id="@+id/tv_chat_dot"
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:layout_alignRight="@id/iv_chat"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/bg_pink_radius_20"
-                        android:visibility="visible" />
                 </RelativeLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"

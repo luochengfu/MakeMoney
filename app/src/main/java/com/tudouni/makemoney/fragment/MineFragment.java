@@ -2,12 +2,14 @@ package com.tudouni.makemoney.fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.model.AgentInfo;
@@ -30,6 +32,8 @@ import com.tudouni.makemoney.widget.sharePart.ShareUtil;
 import com.tudouni.makemoney.widget.sharePart.model.Share;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -71,7 +75,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @InjectView(id = R.id.ly_doufen, onClick = true)
     private LinearLayout mLyDoufen;//我的豆粉
     private Bitmap mPotatoesBitmap;//海报
-
+    public static final int REQUEST_CODE = 469;
     private boolean canClick = true;
     private Handler handler = new Handler() {
         @Override
@@ -111,6 +115,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         view.findViewById(R.id.ly_share_face_to_face).setOnClickListener(this);
         view.findViewById(R.id.ly_new_user_raiders).setOnClickListener(this);
         view.findViewById(R.id.ly_common_problem).setOnClickListener(this);
+        view.findViewById(R.id.ll_sao).setOnClickListener(this);
     }
 
     @Override
@@ -158,6 +163,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         String statisticsType = null;
 //        String para = "?uid=" + MyApplication.getLoginUser().getUid() + "&token=" + App.getLoginUser().getToken() + "&unionid=" + App.getLoginUser().getUnionid();
         switch (view.getId()) {
+            case R.id.ll_sao:
+                Intent intent1 = new Intent(getContext(), CaptureActivity.class);
+                startActivityForResult(intent1, REQUEST_CODE);
+                break;
             case R.id.iv_setting://设置
                 statisticsType = "me_set";
                 ForwardUtils.target(getActivity(), Constants.SETTING);
@@ -350,5 +359,33 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 ToastUtil.show(getActivity(), "分享失败");
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        /**
+         * 处理二维码扫描结果
+         */
+        if (requestCode == REQUEST_CODE) {
+            //处理扫描结果（在界面上显示）
+            if (null != data) {
+                Bundle bundle = data.getExtras();
+                if (bundle == null) {
+                    return;
+                }
+                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    String result = bundle.getString(CodeUtils.RESULT_STRING);
+                    if (MyApplication.appConfig.isShareInvistor(result)) {
+                        ForwardUtils.target(getActivity(), result);    //绑定界面
+                    }
+                    TuDouLogUtils.i("", "扫描结果：" + result);
+                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                    Toast.makeText(getContext(), "未发现土豆泥二维码", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+
     }
 }
