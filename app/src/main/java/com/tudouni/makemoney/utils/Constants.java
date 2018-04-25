@@ -50,5 +50,9 @@ public class Constants {
     public static final String MAIN = BASE_PRE + "root";
     public static final String HOME = BASE_PRE + "home";
     public static final String h5_doufen = BASE_H5_URL + "/app/html/doufen.html";//我的豆粉详情和我的邀请详情
+    public static final String H5_MALL_DINGDAN = NetConfig.getShopMainUrl() + "/shopProfit/dingdan.html";//商城订单
+    public static final String h5_mall_grade = BASE_H5_URL + "/app/html/mallGrade.html";//商城等级
+    public static final String h5_novice = BASE_H5_URL + "/app/html/novice.html";//新手攻略
+    public static final String h5_faq = BASE_H5_URL + "/app/html/faq.html";//常见问题
 
 }

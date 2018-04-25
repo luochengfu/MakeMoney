@@ -58,8 +58,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private TextView tv_chat_num;
     @InjectView(id = R.id.tv_chat_dot)
     private View tv_chat_dot;
-    @InjectView(id = R.id.bagA_ly)
-    private LinearLayout mBagALy;//大a布局
     @InjectView(id = R.id.tv_balance)
     private TextView tv_balance;
     @InjectView(id = R.id.tv_economizes)
@@ -72,8 +70,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private TextView mTvShopLevel;//我的商城等级
     @InjectView(id = R.id.ly_mine_invitation, onClick = true)
     private LinearLayout mLyMineInvitation;//我的邀请码
-    @InjectView(id = R.id.ly_doufen, onClick = true)
-    private LinearLayout mLyDoufen;//我的豆粉
+    @InjectView(id = R.id.bagA_ly, onClick = true)
+    private LinearLayout mBagALy;//大a布局
     private Bitmap mPotatoesBitmap;//海报
     public static final int REQUEST_CODE = 469;
     private boolean canClick = true;
@@ -100,6 +98,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private void setOnclickToView(View view) {
         view.findViewById(R.id.iv_setting).setOnClickListener(this);
         view.findViewById(R.id.ly_shop_level).setOnClickListener(this);
+        view.findViewById(R.id.ly_top_shop_level).setOnClickListener(this);
         view.findViewById(R.id.ivPhoto).setOnClickListener(this);
         view.findViewById(R.id.ly_chat).setOnClickListener(this);
         view.findViewById(R.id.ly_invitation_douyou).setOnClickListener(this);
@@ -198,17 +197,16 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 //                intent.putExtra("tagUrl", Constant.H5_MALL_INCOME + para);
 //                startActivity(intent);
 //                break;
-//            case R.id.llMyOrder: //商城我的订单
-////                ForwardUtils.target(getActivity(), Constant.ALL_ORDER_URL + para + "&closeWebView=1");
-//                statisticsType = "me_tran";
-//                intent = new Intent(getActivity(), FreeShopActivity.class);
-//                intent.putExtra("tagUrl", Constant.H5_MALL_DINGDAN + para + "&closeWebView=1&isPage=true");
-//                startActivity(intent);
-//                break;
-//            case R.id.ly_shop_level://商城我的等级
-//                statisticsType = "me_grade";
-//                ForwardUtils.target(getActivity(), Constant.h5_mall_grade + para);
-//                break;
+            case R.id.llMyOrder: //商城我的订单
+                statisticsType = "me_tran";
+                ForwardUtils.target(getActivity(), Constants.H5_MALL_DINGDAN + para + "&closeWebView=1&isPage=true");
+                break;
+            case R.id.ly_shop_level://商城我的等级
+            case R.id.ly_top_shop_level:
+            case R.id.bagA_ly:
+                statisticsType = "me_grade";
+                ForwardUtils.target(getActivity(), Constants.h5_mall_grade + para);
+                break;
             case R.id.ly_share_wx:
             case R.id.ly_share_weixin_circle:
             case R.id.ly_share_qq:
@@ -222,19 +220,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 statisticsType = "me_inviate";
                 ForwardUtils.target(getActivity(), Constants.h5_doufen + para);
                 break;
-//            case R.id.ly_doufen://豆粉
-////                ForwardUtils.target(getActivity(), Constant.h5_doufen + para);
-//                statisticsType = "me_df";
-//                intent = new Intent(getActivity(), FreeShopActivity.class);
-//                intent.putExtra("tagUrl", Constant.h5_doufen + para);
-//                startActivity(intent);
-//                break;
-//            case R.id.ly_new_user_raiders:
-//                ForwardUtils.target(getActivity(), Constant.h5_novice + para);
-//                break;
-//            case R.id.ly_common_problem:
-//                ForwardUtils.target(getActivity(), Constant.h5_faq + para);
-//                break;
+            case R.id.ly_new_user_raiders:
+                ForwardUtils.target(getActivity(), Constants.h5_novice + para);
+                break;
+            case R.id.ly_common_problem:
+                ForwardUtils.target(getActivity(), Constants.h5_faq + para);
+                break;
         }
         if (!TextUtils.isEmpty(statisticsType))
             MobclickAgent.onEvent(getContext(), statisticsType);
