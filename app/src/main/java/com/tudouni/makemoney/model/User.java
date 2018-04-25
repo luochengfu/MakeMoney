@@ -366,4 +366,40 @@ public class User implements Serializable {
     public void setSetAlias(boolean setAlias) {
         this.setAlias = setAlias;
     }
+
+    /**
+     * 刷新用户接口数据
+     *
+     * @param userNewInfo
+     */
+    public void refulshData(User userNewInfo) {
+        if (userNewInfo == null) return;
+        setCity(getCity());
+        setBirthday(getBirthday());
+        setFollows(getFollows());
+        setGrade(getGrade());
+        setNickName(getNickName());
+        setPhone(getPhone());
+        setPhoto(getPhoto());
+        setSignature(getSignature());
+        setUnumber(getUnumber());
+        setInvistCode(getInvistCode());
+        setGradeName(getGradeName());
+        setExpense(getExpense());
+        setBackground(getBackground());
+        setProfit(getProfit());
+        setExperience(getExperience());
+        setSex(getSex());
+
+        setUnionid(getUnionid());
+        setHeadAgent(getHeadAgent());
+        setAgentSeries(getAgentSeries());
+        setAgentSeriesName(getAgentSeriesName());
+        setInviteCount(getInviteCount());
+        setBindPhoneStatus(getBindPhoneStatus());
+        setNewUser(isNewUser());
+        setPwd(getPwd());
+        setUid(getUid());
+        setUnumber(getUnumber());
+    }
 }

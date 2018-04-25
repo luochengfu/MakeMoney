@@ -49,5 +49,6 @@ public class Constants {
     public static final String MY_INVITE = BASE_H5_URL + "/m/subject/invite.income.html";
     public static final String MAIN = BASE_PRE + "root";
     public static final String HOME = BASE_PRE + "home";
+    public static final String h5_doufen = BASE_H5_URL + "/app/html/doufen.html";//我的豆粉详情和我的邀请详情
 
 }

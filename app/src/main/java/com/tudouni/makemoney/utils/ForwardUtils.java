@@ -7,12 +7,15 @@ import android.text.TextUtils;
 import com.tudouni.makemoney.activity.AccountSecurityActivity;
 import com.tudouni.makemoney.activity.BindingInvitationActivity;
 import com.tudouni.makemoney.activity.FaceToFaceActivity;
+import com.tudouni.makemoney.activity.H5Activity;
 import com.tudouni.makemoney.activity.InvitationDouFenActivity;
 import com.tudouni.makemoney.activity.LoginActivity;
 import com.tudouni.makemoney.activity.MainActivity;
 import com.tudouni.makemoney.activity.SettingActivity;
 import com.tudouni.makemoney.activity.UserInfoActivity;
 import com.tudouni.makemoney.myApplication.MyApplication;
+
+import java.net.URLDecoder;
 
 /**
  * 跳转中心
@@ -56,6 +59,9 @@ public class ForwardUtils {
                 Intent intent = new Intent(oriActivity, MainActivity.class);
                 toIntent(oriActivity, url, intent);
                 oriActivity.finish();
+            } else if (url.startsWith("http")) {//本次判断放在最后
+                Intent intent = new Intent(oriActivity, H5Activity.class);
+                toH5Intent(oriActivity, url, intent);
             }
 
         } catch (Exception e) {
@@ -102,6 +108,11 @@ public class ForwardUtils {
             return strings[strings.length - 1];
         }
         return "";
+    }
+
+    private static void toH5Intent(Activity oriActivity, String url, Intent intent) throws Exception {
+        intent.putExtra("url", URLDecoder.decode(url, "utf-8"));
+        toIntent(oriActivity, url, intent);
     }
 
 }

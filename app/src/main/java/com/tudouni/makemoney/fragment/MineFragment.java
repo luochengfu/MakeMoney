@@ -161,7 +161,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private void doOnClick(View view) {
         Intent intent;
         String statisticsType = null;
-//        String para = "?uid=" + MyApplication.getLoginUser().getUid() + "&token=" + App.getLoginUser().getToken() + "&unionid=" + App.getLoginUser().getUnionid();
+        String para = "?uid=" + MyApplication.getLoginUser().getUid() + "&token=" + MyApplication.getLoginUser().getToken() + "&unionid=" + MyApplication.getLoginUser().getUnionid();
         switch (view.getId()) {
             case R.id.ll_sao:
                 Intent intent1 = new Intent(getContext(), CaptureActivity.class);
@@ -218,12 +218,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 statisticsType = "me_inf2f";
                 ForwardUtils.target(getActivity(), Constants.BINDING_FACE_TO_FACE);
                 break;
-//            case R.id.ly_mine_invitation://我的邀请
-//                statisticsType = "me_inviate";
-//                intent = new Intent(getActivity(), FreeShopActivity.class);
-//                intent.putExtra("tagUrl", Constant.h5_doufen + para);
-//                startActivity(intent);
-//                break;
+            case R.id.ly_mine_invitation://我的邀请
+                statisticsType = "me_inviate";
+                ForwardUtils.target(getActivity(), Constants.h5_doufen + para);
+                break;
 //            case R.id.ly_doufen://豆粉
 ////                ForwardUtils.target(getActivity(), Constant.h5_doufen + para);
 //                statisticsType = "me_df";
@@ -286,7 +284,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                         user.setPhoto(Constants.DEFALT_HEAD);
                     }
                 }
-                MyApplication.saveLoginUser(user);
+                MyApplication.getLoginUser().refulshData(user);
+                MyApplication.saveLoginUser(MyApplication.getLoginUser());
                 initData();
             }
 
