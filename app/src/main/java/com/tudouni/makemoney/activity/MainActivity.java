@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.tudouni.makemoney.R;
-import com.tudouni.makemoney.fragment.MallFragment;
+import com.tudouni.makemoney.fragment.mall.MallFragment;
 import com.tudouni.makemoney.fragment.MainTabThreeFragment;
 import com.tudouni.makemoney.fragment.category.GoodCategoryFragment;
 import com.tudouni.makemoney.fragment.MineFragment;

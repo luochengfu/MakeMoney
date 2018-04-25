@@ -4,10 +4,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.tudouni.makemoney.activity.BaseActivity;
+import com.tudouni.makemoney.model.MallCommonModel;
+import com.tudouni.makemoney.network.rx.BaseMallObserver;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.Constants;
 
 import org.reactivestreams.Subscription;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -81,6 +85,13 @@ public abstract class RetrofitUtils {
     protected static <T> void setSubscribe(BaseActivity activity, Observable<Result<T>> observable, BaseObserver<T> observer) {
         observable
                 .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    protected static <T> void setMallSubscriber(Observable<MallCommonModel<T>> observable, BaseMallObserver<T> observer) {
+        observable.subscribeOn(Schedulers.io())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

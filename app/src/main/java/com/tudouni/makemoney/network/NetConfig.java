@@ -37,6 +37,8 @@ public class NetConfig {
     public static final String GOOD_LIST = "/shop/goodsCategory/list";
     public static final String THIRD_LOGIN_PROCESS = "/shop/login/thirdPartySNS/loginWithProcess";
     public static final String FOUND_BANNER = "/shop/discovery/getbanner";
+    public static final String MALL_BANNER = "shop/getindexbanner";
+
 
 
     /**
