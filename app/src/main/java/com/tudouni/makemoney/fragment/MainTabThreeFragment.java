@@ -82,7 +82,7 @@ public class MainTabThreeFragment extends BaseFragment
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getActivity(), H5Activity.class);
-//                intent.putExtra("url",mAdapter.getUrl(position));
+                intent.putExtra("url",mAdapter.getUrl(position));
                 startActivity(intent);
             }
         });

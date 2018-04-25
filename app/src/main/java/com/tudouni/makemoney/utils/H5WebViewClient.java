@@ -162,6 +162,7 @@ public class H5WebViewClient extends WVJBWebViewClient
         });
     }
 
+
     /**
      * 阿里授权
      */
@@ -219,36 +220,45 @@ public class H5WebViewClient extends WVJBWebViewClient
      * 跳转
      */
     private void jump() {
-        registerHandler("jumpPage", new WVJBHandler() {
+
+        registerHandler("jumpPage", new WVJBWebViewClient.WVJBHandler() {
 
             @Override
             public void request(Object data, WVJBResponseCallback callback) {
-                if (data != null) {
-                    try {
-                        JSONObject ja = new JSONObject(data.toString());
-                        String url = ja.getString("url");
-                        if("tudouni://tudouni/home".equals(url) || "tudouni://tudouni/back".equals(url)) {
-                            mActivity.finish();
-                        } else if(url.startsWith(NetConfig.getShopMainUrl())){
-//                            Intent intent = new Intent(mActivity, FreeShopActivity.class);
-//                            intent.putExtra("tagUrl", url);
-//                            if(url.contains("/shopHome/sousuo.html")) {
-//                               intent.putExtra("titleStatus",0);
-//                            } else {
-//                                intent.putExtra("titleStatus",1);
-//                            }
-//                            mActivity.startActivity(intent);
-                        } else {
-                            ForwardUtils.target(mActivity, url);
-                            callback.callback("{\"status\":\"yes\"}");
-                        }
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
-
+               ToastUtil.show("tttttttttttttttttt");
             }
         });
+
+//        registerHandler("jumpPage", new WVJBHandler() {
+//
+//            @Override
+//            public void request(Object data, WVJBResponseCallback callback) {
+//                if (data != null) {
+//                    try {
+//                        JSONObject ja = new JSONObject(data.toString());
+//                        String url = ja.getString("url");
+////                        if("tudouni://tudouni/home".equals(url) || "tudouni://tudouni/back".equals(url)) {
+////                            mActivity.finish();
+////                        } else if(url.startsWith(NetConfig.getShopMainUrl())){
+////                            Intent intent = new Intent(mActivity, FreeShopActivity.class);
+////                            intent.putExtra("tagUrl", url);
+////                            if(url.contains("/shopHome/sousuo.html")) {
+////                               intent.putExtra("titleStatus",0);
+////                            } else {
+////                                intent.putExtra("titleStatus",1);
+////                            }
+////                            mActivity.startActivity(intent);
+////                        } else {
+////                            ForwardUtils.target(mActivity, url);
+////                            callback.callback("{\"status\":\"yes\"}");
+////                        }
+//                    } catch (Exception ex) {
+//                        ex.printStackTrace();
+//                    }
+//                }
+//
+//            }
+//        });
     }
     /**
      * 分享
@@ -394,7 +404,7 @@ public class H5WebViewClient extends WVJBWebViewClient
 //                o.addProperty("deviceModel", App.deviceModel);
 //                o.addProperty("osType", "Android");
 //                o.addProperty("osVersion", App.osVersion);
-//                if (MyApplication.sLocal != null) {
+//                if (App.sLocal != null) {
 //                    o.addProperty("province", App.sLocal.getProvince());
 //                    o.addProperty("city", App.sLocal.getCity());
 //                }

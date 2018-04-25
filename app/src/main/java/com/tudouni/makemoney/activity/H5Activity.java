@@ -29,18 +29,18 @@ import com.tudouni.makemoney.network.NetConfig;
 import com.tudouni.makemoney.utils.AndroidBug5497Workaround;
 import com.tudouni.makemoney.utils.Constants;
 import com.tudouni.makemoney.utils.H5WebViewClient;
-import com.tudouni.makemoney.utils.InjectView;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.WVJBWebViewClient;
 import com.tudouni.makemoney.utils.base.AppUtils;
 import com.tudouni.makemoney.view.MyTitleBar;
 
 import org.simple.eventbus.EventBus;
+import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
 import pub.devrel.easypermissions.EasyPermissions;
-
 
 /**
  * H5统一页面
@@ -67,11 +67,11 @@ public class H5Activity extends BaseActivity implements
 
 
     public WebView webview;
-    @InjectView(id = R.id.progress)
+    @ViewInject(R.id.progress)
     ProgressBar progress;
     private WVJBWebViewClient webViewClient;
 
-    @InjectView(id = R.id.title_bar)
+    @ViewInject(R.id.title_bar)
     public MyTitleBar title_bar;
     private String mDefaultTitle;
     private int titleStatus;//状态栏状态：0、隐藏；1、显示
@@ -114,19 +114,18 @@ public class H5Activity extends BaseActivity implements
 
         AndroidBug5497Workaround.assistActivity(this);
         webview = (BridgeWebView) findViewById(R.id.webView);
-//        url = getIntent().getStringExtra("url");
-        url = "http://192.168.16.183:3001/html/webView.html";
+        url = getIntent().getStringExtra("url");
         titleStatus = getIntent().getIntExtra("titleStatus", 0);
         mDefaultTitle = getIntent().getStringExtra("title");
         isLive = getIntent().getBooleanExtra("isLive", false);
         accessToken = getIntent().getStringExtra("accessToken");
         /*http://rc.doubozhibo.com/*/
-        if (url.indexOf("mall.tudouni.doubozhibo.com") > 0 || url.indexOf("mall.tudouni.doubozhibo.com") > 0
-                || url.indexOf("rc.doubozhibo.com") > 0 || url.indexOf("h5.mall.doubozhibo.com") > 0 || url.startsWith(NetConfig.getOrderH5Url())
-                || url.startsWith("http://pc.mall.doubozhibo.com") || (titleStatus == 1)) {
-            title_bar.setHeadVisibility(View.GONE);
-            title_bar.setStatusVisibility(View.VISIBLE);
-        }
+//        if (url.indexOf("mall.tudouni.doubozhibo.com") > 0 || url.indexOf("mall.tudouni.doubozhibo.com") > 0
+//                || url.indexOf("rc.doubozhibo.com") > 0 || url.indexOf("h5.mall.doubozhibo.com") > 0 || url.startsWith(NetConfig.getOrderH5Url())
+//                || url.startsWith("http://pc.mall.doubozhibo.com") || (titleStatus == 1)) {
+//            title_bar.setHeadVisibility(View.GONE);
+//            title_bar.setStatusVisibility(View.VISIBLE);
+//        }
 
         if (url.contains(Constants.MY_INVITE)) {
             title_bar.setStatusBackground(ContextCompat.getColor(this, R.color.color_FDCE00));
@@ -141,9 +140,11 @@ public class H5Activity extends BaseActivity implements
         if ("#".equals(mDefaultTitle)) {
             title_bar.setHeadVisibility(View.GONE);
         }
+        WebChromeClient webChromeClient = new WebChromeClient() {
+            private boolean isCheckNumMode = false;
+            private List<LocalMedia> selectMedia = new ArrayList<>();
 
-        WebChromeClient webChromeClient = new WebChromeClient()
-        {
+
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 if (TextUtils.isEmpty(mDefaultTitle)) {
@@ -189,6 +190,8 @@ public class H5Activity extends BaseActivity implements
         webViewClient.enableLogging();
         webview.setWebViewClient(webViewClient);
 
+        webview.setWebViewClient(new MyWebViewClient(webview));
+
         if (BuildConfig.DEBUG && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(true);       //允许调试
         }
@@ -214,6 +217,47 @@ public class H5Activity extends BaseActivity implements
         webview.loadUrl(url);
     }
 
+    class MyWebViewClient extends WVJBWebViewClient {
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            //处理代码
+
+
+            return super.shouldOverrideUrlLoading(view, url);
+        }
+
+
+        public MyWebViewClient(WebView webView) {
+            super(webView, new WVJBHandler() {
+                @Override
+                public void request(Object data, WVJBResponseCallback callback) {
+                    callback.callback("Response for message from ObjC!");
+                }
+            });
+
+            enableLogging();
+
+            //是否支持该方法
+            registerHandler("jumpPage", new WVJBHandler() {
+                @Override
+                public void request(Object data, WVJBResponseCallback callback) {
+
+                    if (data != null && H5Activity.support.indexOf(data.toString()) != -1) {
+                        callback.callback("{\"status\":\"yes\"}");
+                    }
+                }
+            });
+
+
+        }
+    }
+
     String phoneUrl;
 
     @Override
@@ -232,11 +276,13 @@ public class H5Activity extends BaseActivity implements
         }
     }
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -307,5 +353,3 @@ public class H5Activity extends BaseActivity implements
         return !TextUtils.isEmpty(newCookie);
     }
 }
-
-
