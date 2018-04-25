@@ -89,8 +89,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/ivPhoto"
                             android:layout_marginLeft="50dp"
-                            android:src="@mipmap/public_gender_woman"
-                            android:visibility="gone" />
+                            android:src="@mipmap/public_gender_woman" />
 
                     </RelativeLayout>
 
@@ -170,7 +169,7 @@
                         </LinearLayout>
                         <!--大A等级-->
                         <LinearLayout
-                            android:id="@+id/bag_a_ly"
+                            android:id="@+id/bagA_ly"
                             android:layout_width="wrap_content"
                             android:layout_height="22dp"
                             android:layout_alignParentRight="true"
@@ -512,7 +511,7 @@
 
                     <!--我省的钱-->
                     <LinearLayout
-                        android:id="@+id/ly_earn_month"
+                        android:id="@+id/ly_tv_economizes"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -528,7 +527,7 @@
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/tv_earn_month"
+                            android:id="@+id/tv_economizes"
                             style="@style/text_cons_style_for_user"
                             android:text="0元" />
 

@@ -54,6 +54,9 @@ public class AgentInfo {
      */
     private double yesterdayExpectedIncome;
 
+    private double economizes;//省钱
+    private double income;//收益
+
 
     public double getBalance() {
         return balance;
@@ -133,5 +136,21 @@ public class AgentInfo {
 
     public void setYesterdayExpectedIncome(double yesterdayExpectedIncome) {
         this.yesterdayExpectedIncome = yesterdayExpectedIncome;
+    }
+
+    public double getEconomizes() {
+        return economizes;
+    }
+
+    public void setEconomizes(double economizes) {
+        this.economizes = economizes;
+    }
+
+    public double getIncome() {
+        return income;
+    }
+
+    public void setIncome(double income) {
+        this.income = income;
     }
 }

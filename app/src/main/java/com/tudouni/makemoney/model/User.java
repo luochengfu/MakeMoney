@@ -44,7 +44,7 @@ public class User implements Serializable {
     private String closeCommon;
     private String verifyToken;
     private String unionid;//邀请人在豆播平台的身份标识符3.0.0
-    private Boolean headAgent;//是否头部代理
+    private boolean headAgent;//是否头部代理
     private Integer agentSeries;//商城等级
     private String agentSeriesName;//商城等级
     private long inviteCount = 0;//邀请数量 (豆粉数量)

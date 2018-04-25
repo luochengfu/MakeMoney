@@ -21,6 +21,7 @@ import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * Created by Administrator on 2018/4/20 0020.
@@ -192,6 +193,7 @@ public interface CommonApi {
 
     @POST(NetConfig.MALL_BANNER)
     Observable<MallCommonModel<MallAlbumModel>> getMallBannerData();
+
     /**
      * 获取上传信息
      *
@@ -218,5 +220,13 @@ public interface CommonApi {
      */
     @POST(NetConfig.UPINFO)
     Observable<Result<Upinfo>> getVersionUpdataInfo();
+
+    /**
+     * 我的账本
+     *
+     * @return
+     */
+    @POST("/shop/income/profile/{uid}")
+    Observable<Result<AgentInfo>> getMineTicketBook(@Path("uid") String uid);
 
 }

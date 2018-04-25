@@ -1,5 +1,7 @@
 package com.tudouni.makemoney.network;
 
+import android.text.TextUtils;
+
 import com.tudouni.makemoney.model.AgentInfo;
 import com.tudouni.makemoney.model.AliAuth;
 import com.tudouni.makemoney.model.AppConfig;
@@ -12,6 +14,7 @@ import com.tudouni.makemoney.model.MallCommonModel;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.model.User;
+import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.rx.BaseMallObserver;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.upload.UploadInfo;
@@ -238,6 +241,14 @@ public class CommonScene extends RetrofitUtils {
      */
     public static void getMallBanner(BaseMallObserver<MallAlbumModel> observer) {
         setMallSubscriber(commonApi.getMallBannerData(), observer);
+    }
+
+    /**
+     * 我的账本
+     */
+    public static void getMineTicketBook(BaseObserver<AgentInfo> observer) {
+        if (MyApplication.getLoginUser() == null) return;
+        setSubscribe(commonApi.getMineTicketBook(MyApplication.getLoginUser().getUid()), observer);
     }
 
 }

@@ -2,22 +2,18 @@ package com.tudouni.makemoney.fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.model.AgentInfo;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.CommonScene;
-import com.tudouni.makemoney.network.Logger;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.BitMapUtils;
 import com.tudouni.makemoney.utils.CommonUtil;
@@ -27,7 +23,6 @@ import com.tudouni.makemoney.utils.InjectView;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.TuDouLogUtils;
 import com.tudouni.makemoney.utils.TuDouTextUtil;
-import com.tudouni.makemoney.utils.base.ACache;
 import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
 import com.tudouni.makemoney.widget.callBack.ApiCallback;
 import com.tudouni.makemoney.widget.callBack.ServiceException;
@@ -59,12 +54,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private TextView tv_chat_num;
     @InjectView(id = R.id.tv_chat_dot)
     private View tv_chat_dot;
-    @InjectView(id = R.id.bag_a_ly)
-    private View mBagALy;//大a布局
+    @InjectView(id = R.id.bagA_ly)
+    private LinearLayout mBagALy;//大a布局
     @InjectView(id = R.id.tv_balance)
     private TextView tv_balance;
-    @InjectView(id = R.id.tv_earn_month)
-    private TextView tv_earn_month;
+    @InjectView(id = R.id.tv_economizes)
+    private TextView tv_economizes;
     @InjectView(id = R.id.tv_mine_invitation_count)
     private TextView mTvMineInvitationCount;//我的邀请中豆粉个数
     @InjectView(id = R.id.tv_top_level)
@@ -106,7 +101,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         view.findViewById(R.id.ly_invitation_douyou).setOnClickListener(this);
 
 //        view.findViewById(R.id.ly_mine_shop).setOnClickListener(this);
-        view.findViewById(R.id.ly_earn_month).setOnClickListener(this);
+        view.findViewById(R.id.ly_tv_economizes).setOnClickListener(this);
         view.findViewById(R.id.ly_tv_balance).setOnClickListener(this);
         view.findViewById(R.id.llMyOrder).setOnClickListener(this);
 
@@ -291,12 +286,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 TuDouLogUtils.e(TAG, "Get UserInfo Error：" + err + "  error code=" + code);
             }
         });
-        CommonScene.getAgentInfo(new BaseObserver<AgentInfo>() {
+        CommonScene.getMineTicketBook(new BaseObserver<AgentInfo>() {
             @Override
             public void OnSuccess(AgentInfo agentInfo) {
                 if (agentInfo != null) {
-                    TuDouTextUtil.setTextToTextView(tv_balance, (long) agentInfo.getBalance());
-                    TuDouTextUtil.setTextToTextView(tv_earn_month, (long) agentInfo.getThisMonthExpectedIncome());
+                    TuDouTextUtil.setTextToTextView(tv_balance, agentInfo.getBalance());
+                    TuDouTextUtil.setTextToTextView(tv_economizes, agentInfo.getEconomizes());
                 }
             }
 

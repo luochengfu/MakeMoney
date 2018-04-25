@@ -31,6 +31,28 @@ public class TuDouTextUtil {
     }
 
     /**
+     * 一万元为单位
+     *
+     * @param textView
+     * @param number
+     */
+    public static void setTextToTextView(TextView textView, double number) {
+        if (textView == null) {
+            TuDouLogUtils.e("TuDouTextUtil", "控件空指针异常！");
+            return;
+        }
+        String showStr = "";
+        if (number > 10000) {
+            String s = number + "";
+            showStr += s.substring(0, s.length() - 4) + "万+";
+        } else {
+            showStr += number;
+        }
+        showStr += "元";
+        setTextToTextView(textView, showStr);
+    }
+
+    /**
      * 格式化为一万元给单位一万元为单位
      *
      * @param textView
