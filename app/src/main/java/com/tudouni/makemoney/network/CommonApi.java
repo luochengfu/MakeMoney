@@ -7,10 +7,12 @@ import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.model.BindInfo;
 import com.tudouni.makemoney.model.Invite;
 import com.tudouni.makemoney.model.Banner;
+import com.tudouni.makemoney.model.FoundTopicBean;
 import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.model.MallAlbumModel;
 import com.tudouni.makemoney.model.MallCommonModel;
 import com.tudouni.makemoney.model.PayBindingInfo;
+import com.tudouni.makemoney.model.RecommendTopicBean;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.utils.upload.UploadInfo;
 import com.tudouni.makemoney.widget.versionUpdate.Upinfo;
@@ -189,6 +191,12 @@ public interface CommonApi {
 
     @POST(NetConfig.FOUND_BANNER)
     Observable<Result<List<Banner>>> getFoundBanner();
+
+    @POST(NetConfig.RECOMMEND_TOPIC)
+    Observable<Result<List<RecommendTopicBean>>> getRecommendTopic();
+
+    @POST(NetConfig.FOUND_TOPIC)
+    Observable<Result<List<FoundTopicBean>>> getFoundTopic();
 
 
     @POST(NetConfig.MALL_BANNER)

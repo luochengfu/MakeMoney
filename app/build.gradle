@@ -112,8 +112,9 @@ static def releaseTime() {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:25.2.0'
-    implementation 'com.android.support:design:25.2.0'
+    //noinspection GradleDependency
+    implementation 'com.android.support:appcompat-v7:25.3.1'
+    implementation 'com.android.support:design:25.3.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     compile 'com.trello:rxlifecycle:0.6.1'
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
@@ -136,6 +137,8 @@ dependencies {
     //极光推送
     // 此处以JPush 3.1.1 版本为例。
     compile 'cn.jiguang.sdk:jpush:3.1.1'
+    compile 'pub.devrel:easypermissions:0.1.9'
+    compile 'com.github.lzyzsd:jsbridge:1.0.4'
     // 此处以JCore 1.1.9 版本为例。
     compile 'cn.jiguang.sdk:jcore:1.1.9'
     compile 'com.github.pinguo-zhouwei:MZBannerView:v2.0.1'

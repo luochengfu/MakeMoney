@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/three_tab_header_layout"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingBottom="4dp">
 
 
     <com.zhouwei.mzbanner.MZBannerView
@@ -15,6 +17,12 @@
         app:middle_page_cover="false"
         app:open_mz_mode="false" />
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/three_tab_rv_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"/>
 
 
 </LinearLayout>

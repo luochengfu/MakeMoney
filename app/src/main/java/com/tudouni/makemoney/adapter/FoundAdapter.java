@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.tudouni.makemoney.R;
-import com.tudouni.makemoney.model.FoundItemBean;
+import com.tudouni.makemoney.model.RecommendTopicBean;
 import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
 
 import java.util.ArrayList;
@@ -19,7 +19,11 @@ import java.util.List;
 
 public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.FoundViewHolder>
 {
-    private List<FoundItemBean> mDatas = new ArrayList<>();
+    private List<RecommendTopicBean> mDatas = new ArrayList<>();
+
+    public FoundAdapter() {
+
+    }
 
     @Override
     public FoundViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -29,8 +33,8 @@ public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.FoundViewHol
 
     @Override
     public void onBindViewHolder(FoundViewHolder holder, int position) {
-        FoundItemBean itemBean = mDatas.get(position);
-        GlideUtil.bindImage(holder.itemIV,itemBean.getImg());
+        RecommendTopicBean itemBean = mDatas.get(position);
+        GlideUtil.bindImage(holder.itemIV,itemBean.getImageUrl());
     }
 
     @Override
@@ -38,11 +42,15 @@ public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.FoundViewHol
         return mDatas.size();
     }
 
-    public void addData(List<FoundItemBean> data) {
+    public void addData(List<RecommendTopicBean> data) {
         if (data.size() > 0) {
             mDatas.addAll(data);
             notifyDataSetChanged();
         }
+    }
+
+    public String getUrl(int position) {
+        return mDatas.get(position).getUrl() + "?title=" + mDatas.get(position).getTitle();
     }
 
     public void removeData(int position) {

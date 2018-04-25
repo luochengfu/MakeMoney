@@ -47,6 +47,9 @@ public class NetConfig {
     public static final String SET_INFO = "/shop/auth/user/setInfo";
     public static final String UPINFO = "/shop/config/getUpgradeInfo";  //版本升级信息
 
+    public static final String RECOMMEND_TOPIC = "/shop/discovery/getRecommendTopic";
+    public static final String FOUND_TOPIC = "/shop/discovery/getTopic";
+
 
     /**
      * 网络环境名称数组
