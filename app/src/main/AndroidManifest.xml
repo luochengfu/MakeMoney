@@ -61,6 +61,17 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.H5Activity"
+            android:label="H5页"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.tudouni.action.H5Activity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".activity.FaceToFaceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme_yellow" />

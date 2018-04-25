@@ -9,6 +9,7 @@ import com.tudouni.makemoney.activity.BindingInvitationActivity;
 import com.tudouni.makemoney.activity.FaceToFaceActivity;
 import com.tudouni.makemoney.activity.InvitationDouFenActivity;
 import com.tudouni.makemoney.activity.LoginActivity;
+import com.tudouni.makemoney.activity.MainActivity;
 import com.tudouni.makemoney.activity.SettingActivity;
 import com.tudouni.makemoney.activity.UserInfoActivity;
 import com.tudouni.makemoney.myApplication.MyApplication;
@@ -51,6 +52,10 @@ public class ForwardUtils {
             } else if (url.startsWith(Constants.USERINFO)) { //编辑用户资料
                 Intent intent = new Intent(oriActivity, UserInfoActivity.class);
                 toIntent(oriActivity, url, intent);
+            } else if (url.startsWith(Constants.MAIN) || (url.startsWith(Constants.HOME))) {
+                Intent intent = new Intent(oriActivity, MainActivity.class);
+                toIntent(oriActivity, url, intent);
+                oriActivity.finish();
             }
 
         } catch (Exception e) {

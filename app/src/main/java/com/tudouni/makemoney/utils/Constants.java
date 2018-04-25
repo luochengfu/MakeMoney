@@ -46,5 +46,8 @@ public class Constants {
     public static final String USERINFO = BASE_PRE + "setinfo";
 
     public static final String UPTYPE_IMGHEADER = "img-header";
+    public static final String MY_INVITE = BASE_H5_URL + "/m/subject/invite.income.html";
+    public static final String MAIN = BASE_PRE + "root";
+    public static final String HOME = BASE_PRE + "home";
 
 }
