@@ -19,6 +19,8 @@ public class Constants {
      */
     public static String HTTP_URL = "";
 
+    public static final String DEFALT_HEAD = "";
+
     /**
      * 默认分页大小
      */
@@ -36,9 +38,13 @@ public class Constants {
     public static final String BASE_H5_URL = NetConfig.getBaseTuDouNiH5Url();
     public static final String INVISIT_POSTER = BASE_PRE + "invisitPoster";
     public static final String SHARE_INVISTOR = BASE_H5_URL + "/tudouni/html/invistor.html";
+    public static final String MYINVITATION = BASE_PRE + "invisit";
     public static final String ACCOUNT_SECURITY = BASE_PRE + "sefaty";
     public static final String ABOUTUS = BASE_H5_URL + "/tudouni/html/contact.html";
     public static final String CONTACTUS = BASE_H5_URL + "/tudouni/html/contact.html";
     public static final String BINDING_FACE_TO_FACE = BASE_PRE + "binding_face_to_face";
+    public static final String USERINFO = BASE_PRE + "setinfo";
+
+    public static final String UPTYPE_IMGHEADER = "img-header";
 
 }

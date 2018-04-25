@@ -33,4 +33,5 @@
     <string name="password_not_same_error_hint">输入密码不一致</string>
     <string name="password_format_error_hint">登录密码仅支持数字和字母，区分大小写，不允许包含空格</string>
     <string name="sure">确定</string>
+    <string name="upUserInfo">编辑资料</string>
 </resources>

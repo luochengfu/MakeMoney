@@ -2,14 +2,19 @@ package com.tudouni.makemoney.utils;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.text.TextUtils;
 
 import com.tudouni.makemoney.activity.AccountSecurityActivity;
+import com.tudouni.makemoney.activity.BindingInvitationActivity;
 import com.tudouni.makemoney.activity.FaceToFaceActivity;
 import com.tudouni.makemoney.activity.InvitationDouFenActivity;
 import com.tudouni.makemoney.activity.LoginActivity;
 import com.tudouni.makemoney.activity.SettingActivity;
+import com.tudouni.makemoney.activity.UserInfoActivity;
+import com.tudouni.makemoney.myApplication.MyApplication;
 
 /**
+ * 跳转中心
  * Created by ZhangPeng on 2018/4/20.
  */
 
@@ -18,6 +23,9 @@ public class ForwardUtils {
         try {
             if (url.startsWith(Constants.BINDING_FACE_TO_FACE)) {//面对面绑定
                 Intent intent = new Intent(oriActivity, FaceToFaceActivity.class);
+                toIntent(oriActivity, url, intent);
+            } else if (MyApplication.appConfig.isShareInvistor(url)) {//绑定界面
+                Intent intent = new Intent(oriActivity, BindingInvitationActivity.class);
                 toIntent(oriActivity, url, intent);
             } else if (url.startsWith(Constants.INVISIT_POSTER)) {//分享海报界面
                 String code = null;
@@ -40,6 +48,9 @@ public class ForwardUtils {
                 Intent intent = new Intent(oriActivity, LoginActivity.class);
                 toIntent(oriActivity, url, intent);
                 oriActivity.finish();
+            } else if (url.startsWith(Constants.USERINFO)) { //编辑用户资料
+                Intent intent = new Intent(oriActivity, UserInfoActivity.class);
+                toIntent(oriActivity, url, intent);
             }
 
         } catch (Exception e) {
@@ -78,6 +89,14 @@ public class ForwardUtils {
         } catch (Exception e) {
             TuDouLogUtils.e("ForwardUtils", e.getMessage());
         }
-
     }
+
+    private static CharSequence getLastName(String s) {
+        if (!TextUtils.isEmpty(s)) {
+            String[] strings = s.split("/");
+            return strings[strings.length - 1];
+        }
+        return "";
+    }
+
 }

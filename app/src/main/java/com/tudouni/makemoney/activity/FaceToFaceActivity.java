@@ -10,8 +10,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.tudouni.makemoney.R;
+import com.tudouni.makemoney.model.Invite;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.CommonScene;
+import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.CommonUtil;
 import com.tudouni.makemoney.utils.ForwardUtils;
 import com.tudouni.makemoney.utils.InjectView;
@@ -74,22 +76,22 @@ public class FaceToFaceActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
-//        CommonScene.getBind(new BaseObserver<Invite>() {
-//            @Override
-//            public void OnFail(int code, String err) {
-//                mLyInvitationInfo.setVisibility(View.GONE);
-//            }
-//
-//            @Override
-//            public void OnSuccess(Invite invite) {
-//                if (invite == null) return;
-//                mLyInvitationInfo.setVisibility((invite == null) ? View.GONE : View.VISIBLE);
-//                GlideUtil.getInstance().loadCircle(this, invite.getPhoto(), iv_picture, R.drawable.default_head2);
-//                mTvTime.setText(invite.getInviteTime());
-//                mTvInvCode.setText(invite.getInviteCode());
-//            }
-//        });
-//        initView();
+        CommonScene.getBind(new BaseObserver<Invite>() {
+            @Override
+            public void OnFail(int code, String err) {
+                mLyInvitationInfo.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void OnSuccess(Invite invite) {
+                if (invite == null) return;
+                mLyInvitationInfo.setVisibility((invite == null) ? View.GONE : View.VISIBLE);
+                GlideUtil.getInstance().loadCircle(FaceToFaceActivity.this, invite.getPhoto(), iv_picture, R.mipmap.default_head2);
+                mTvTime.setText(invite.getInviteTime());
+                mTvInvCode.setText(invite.getInviteCode());
+            }
+        });
+        initView();
     }
 
     private void initView() {
@@ -136,11 +138,10 @@ public class FaceToFaceActivity extends BaseActivity implements View.OnClickList
 //                    } else if (result.startsWith(Constant.FRENDINFO + "?uid=") || result.startsWith(Constant.UER_CENTER + "?uid=")) {
 //                        String uid = result.substring(result.indexOf("=") + 1, result.length());
 //                        ForwardUtils.toFrendcenter(this, uid);
+                    } else if (MyApplication.appConfig.isShareInvistor(result)) {
+                        //绑定界面
+                        ForwardUtils.target(this, result);
                     }
-//                    else if (MyApplication.appConfig.isShareInvistor(result)) {
-//                        //绑定界面
-//                        ForwardUtils.target(this, result);
-//                    }
                     TuDouLogUtils.e("", "扫描结果：" + result);
                 } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
                     Toast.makeText(this, "未发现土豆泥二维码", Toast.LENGTH_LONG).show();

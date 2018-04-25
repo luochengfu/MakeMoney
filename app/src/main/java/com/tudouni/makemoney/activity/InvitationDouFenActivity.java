@@ -11,13 +11,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tudouni.makemoney.R;
+import com.tudouni.makemoney.model.Invite;
 import com.tudouni.makemoney.myApplication.MyApplication;
+import com.tudouni.makemoney.network.CommonScene;
+import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.BitMapUtils;
 import com.tudouni.makemoney.utils.DialogUtils;
 import com.tudouni.makemoney.utils.ForwardUtils;
 import com.tudouni.makemoney.utils.InjectView;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.TuDouLogUtils;
+import com.tudouni.makemoney.utils.base.AppUtils;
+import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
 import com.tudouni.makemoney.view.MyTitleBar;
 import com.tudouni.makemoney.widget.sharePart.ShareWindow_v3;
 import com.tudouni.makemoney.widget.sharePart.model.Share;
@@ -59,8 +64,7 @@ public class InvitationDouFenActivity extends BaseActivity implements View.OnCli
 
     private void initData() {
         mInvitationCode = getIntent().getStringExtra("code");
-//        mInvitationCode = (TextUtils.isEmpty(mInvitationCode)) ? (MyApplication.getLoginUser().getInvistCode()) : (mInvitationCode);
-        mInvitationCode = (TextUtils.isEmpty(mInvitationCode)) ? ("333333333") : (mInvitationCode);
+        mInvitationCode = (TextUtils.isEmpty(mInvitationCode)) ? (MyApplication.getLoginUser().getInvistCode()) : (mInvitationCode);
     }
 
     private void initView() {
@@ -85,14 +89,14 @@ public class InvitationDouFenActivity extends BaseActivity implements View.OnCli
         switch (v.getId()) {
             case R.id.bt_copy_invitation_code:
                 MobclickAgent.onEvent(this, "me_indfcopy");
-//                if (!TextUtils.isEmpty(mTvInvitationCode.getText().toString())) {
-//                    String copyStr = App.getLoginUser().getNickName() + "邀请您加入土豆泥，自动搜索淘宝天猫优惠券！先领券，再购物，更划算！\n" +
-//                            "---下载链接： http://url.cn/5qwJJtP -----\n" +
-//                            "复制邀请码： " + mTvInvitationCode.getText().toString() + " \n" +
-//                            "打开土豆泥，注册领取优惠券";
-//                    CommonUtil.copyToClipboard(InvitationDouFenActivity.this, copyStr);
-//                    showToast("复制成功");
-//                }
+                if (!TextUtils.isEmpty(mTvInvitationCode.getText().toString())) {
+                    String copyStr = MyApplication.getLoginUser().getNickName() + "邀请您加入土豆泥，自动搜索淘宝天猫优惠券！先领券，再购物，更划算！\n" +
+                            "---下载链接： http://url.cn/5qwJJtP -----\n" +
+                            "复制邀请码： " + mTvInvitationCode.getText().toString() + " \n" +
+                            "打开土豆泥，注册领取优惠券";
+                    AppUtils.copyToClipboard(InvitationDouFenActivity.this, copyStr);
+                    showToast("复制成功");
+                }
                 break;
             case R.id.bt_share_link:
 //                MobclickAgent.onEvent(this, "me_indfshare");
@@ -122,21 +126,21 @@ public class InvitationDouFenActivity extends BaseActivity implements View.OnCli
     private void startRequest() {
         mPotatoesBitmap = BitMapUtils.createPotatoesBitMap(this);
         mImPotatoes.setImageBitmap(mPotatoesBitmap);
-//        CommonScene.getBind(new BaseObserver<Invite>() {
-//            @Override
-//            public void OnFail(int code, String err) {
-//                mLyInvitationInfo.setVisibility(View.GONE);
-//            }
-//
-//            @Override
-//            public void OnSuccess(Invite invite) {
-//                if (invite == null) return;
-//                mLyInvitationInfo.setVisibility((invite == null) ? View.GONE : View.VISIBLE);
-//                ImageUtils.display150(iv_picture, invite.getPhoto());
-//                mTvTime.setText(invite.getInviteTime());
-//                mTvInvCode.setText(invite.getInviteCode());
-//            }
-//        });
+        CommonScene.getBind(new BaseObserver<Invite>() {
+            @Override
+            public void OnFail(int code, String err) {
+                mLyInvitationInfo.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void OnSuccess(Invite invite) {
+                if (invite == null) return;
+                mLyInvitationInfo.setVisibility((invite == null) ? View.GONE : View.VISIBLE);
+                GlideUtil.getInstance().loadImage(InvitationDouFenActivity.this, invite.getPhoto(), iv_picture, R.mipmap.default_head2);
+                mTvTime.setText(invite.getInviteTime());
+                mTvInvCode.setText(invite.getInviteCode());
+            }
+        });
     }
 
     /**

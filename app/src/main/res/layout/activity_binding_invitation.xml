@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ptr="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEEEE"
+    android:orientation="vertical">
+
+    <com.tudouni.makemoney.view.MyTitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ptr:middleText="面对面邀请" />
+    <!--绑定界面-->
+    <LinearLayout
+        android:id="@+id/ly_binding"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_bar"
+        android:background="#EEEEEE"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/top_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="39dp"
+            android:text="邀请您成为TA的豆粉"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_sao_qr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_22"
+            android:layout_marginRight="@dimen/dp_22"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/black_corner2"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:visibility="visible">
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp">
+
+                <com.tudouni.makemoney.view.ShapeImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/iv_sao_head"
+                    android:layout_width="76dp"
+                    android:layout_height="76dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/default_head2"
+                    app:borderRadius="38dp" />
+
+                <ImageView
+                    android:id="@+id/im_sao_user_gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/iv_sao_head"
+                    android:layout_marginLeft="50dp"
+                    android:src="@mipmap/public_gender_woman" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/dp_22"
+                android:layout_marginTop="@dimen/dp_22">
+
+                <TextView
+                    android:id="@+id/tv_sao_userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="****"
+                    android:textColor="#333333"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_sao_userName"
+                    android:layout_marginTop="9dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ID "
+                        android:textColor="#333333"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_sao_userCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="******"
+                        android:textColor="#333333"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bt_invitation"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:layout_marginLeft="@dimen/dp_22"
+            android:layout_marginRight="@dimen/dp_22"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/bg_btn_red_gray"
+            android:text="接受邀请"
+            android:textColor="#C9C9C9"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_add_firend"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="15dp"
+            android:gravity="center|right"
+            android:paddingRight="@dimen/dp_22"
+            android:text="加TA为好友"
+            android:textColor="@color/black"
+            android:textSize="14dp"
+            android:visibility="invisible" />
+
+        <RelativeLayout
+            android:id="@+id/ly_invited_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_invited_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="您已有邀请人，不能重复受邀！"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_alignLeft="@+id/tv_invited_tip"
+                android:layout_alignRight="@+id/tv_invited_tip"
+                android:layout_below="@+id/tv_invited_tip"
+                android:background="#666666" />
+
+        </RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/tv_bottom_tip"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="@dimen/dp_22"
+            android:layout_marginRight="@dimen/dp_22"
+            android:src="@mipmap/ic_invite_tip"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+    </LinearLayout>
+    <!--结果展示界面-->
+    <RelativeLayout
+        android:id="@+id/ly_invitation_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:visibility="gone">
+
+
+        <ImageView
+            android:id="@+id/im_invitation_result"
+            android:layout_width="86dp"
+            android:layout_height="95dp"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/ic_invitation_sucess" />
+    </RelativeLayout>
+</RelativeLayout>

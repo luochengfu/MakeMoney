@@ -23,7 +23,6 @@ android {
                 JPUSH_PKGNAME: applicationId,
                 JPUSH_APPKEY : "cedcea9b2ba677d77d2060c6", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
-                qqappid      : "1106781729",
         ]
     }
 
@@ -146,4 +145,5 @@ dependencies {
     implementation files('libs/umeng-share-QQ-simplify-6.9.1.jar')
     implementation files('libs/umeng-share-wechat-simplify-6.9.1.jar')
     implementation files('libs/umeng-sharetool-6.9.1.jar')
+    implementation files('libs/aliyun-oss-sdk-android-2.3.0.jar')
 }

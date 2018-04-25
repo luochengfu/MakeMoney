@@ -28,4 +28,9 @@
     <color name="black80">#212121</color>
     <color name="blue">#ff298ecb</color>
     <color name="transparent">#00000000</color>
+    <color name="mine_text_red">#ED3434</color>
+    <color name="sysBg">#f4f5f9</color>
+    <color name="split_color">#f4f5f9</color>
+    <color name="tram">#00000000</color>
+    <color name="province_line_border">#C7C7C7</color>
 </resources>

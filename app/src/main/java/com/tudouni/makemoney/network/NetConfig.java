@@ -19,14 +19,14 @@ public class NetConfig {
     public static final String MSG_CODE = "/shop/getVerifCode";
     public static final String TEL_LOGIN = "/shop/login";
     public static final String SETPWD = "/shop/auth/user/setPwd";
-    public static final String CONFIG = "/config";
+    public static final String CONFIG = "/shop/config";
     public static final String BINDPHONE = "/shop/auth/user/bindPhone";
     public static final String VERIFCODE_CHANGE = "/shop/auth/user/verifyCode";
     public static final String BINDPHONE2 = "/shop/auth/user/bindPhone_V2";
     public static final String BIND_NEW_PHONE = "/shop/login/thirdPartySNS/bindingPhone";
     public static final String VERIFCODE = "/auth/user/getVerifCode";
     public static final String PASSWORD_MSG_CODE = "/shop/user/getVerifCode";
-    public static final String GETUSERINFO = "/auth/user/info";
+    public static final String GETUSERINFO = "/shop/auth/user/info";
     public static final String ACCOUNT_BIND = "/shop/auth/user/bindStatus";
     public static final String PAY_STATUS = "/shop/auth/pay/status";
     public static final String UNBUNDTHREE = "/auth/user/unBindThird";
@@ -35,9 +35,17 @@ public class NetConfig {
     public static final String VERIFPWD = "/shop/auth/user/verifPwd";
     public static final String USERNAME_PASSWOED_LOGIN = "/shop/loginPwd";
     public static final String GOOD_LIST = "/shop/goodsCategory/list";
+    public static final String INVITEINFO = "/shop/auth/invite/info";
+    public static final String INVITEINFO_V2 = "/shop/auth/invite/info_V2";//查询邀请人的个人信息（简略信息）
+    public static final String BINDING_INVITE = "/shop/auth/invite/action/addBinding";//绑定邀请
+    public static final String AGENTINFO = "/shop/auth/user/agentInfo";//商城收益
     public static final String THIRD_LOGIN_PROCESS = "/shop/login/thirdPartySNS/loginWithProcess";
     public static final String FOUND_BANNER = "/shop/discovery/getbanner";
     public static final String MALL_BANNER = "shop/getindexbanner";
+
+
+    public static final String UPLOAD_INFO = "/shop/auth/upAuth";
+    public static final String SET_INFO = "/shop/auth/user/setInfo";
 
 
 

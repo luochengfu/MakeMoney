@@ -114,7 +114,7 @@
             android:textColor="@color/gray"
             android:textSize="13sp" />
 
-        <ImageView
+        <com.tudouni.makemoney.view.ShapeImageView
             android:id="@+id/iv_picture"
             android:layout_width="32dp"
             android:layout_height="32dp"
