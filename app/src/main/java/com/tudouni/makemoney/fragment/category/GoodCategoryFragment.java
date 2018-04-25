@@ -1,6 +1,5 @@
 package com.tudouni.makemoney.fragment.category;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;

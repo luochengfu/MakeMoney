@@ -7,9 +7,12 @@ import com.tudouni.makemoney.model.BindInfo;
 import com.tudouni.makemoney.model.Invite;
 import com.tudouni.makemoney.model.Banner;
 import com.tudouni.makemoney.model.LoginBean;
+import com.tudouni.makemoney.model.MallAlbumModel;
+import com.tudouni.makemoney.model.MallCommonModel;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.model.User;
+import com.tudouni.makemoney.network.rx.BaseMallObserver;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.upload.UploadInfo;
 import com.tudouni.makemoney.widget.versionUpdate.Upinfo;
@@ -228,6 +231,13 @@ public class CommonScene extends RetrofitUtils {
      */
     public static void getVersionUpdataInfo(BaseObserver<Upinfo> observer) {
         setSubscribe(commonApi.getVersionUpdataInfo(), observer);
+    }
+
+    /**
+     * 商城首页Banner
+     */
+    public static void getMallBanner(BaseMallObserver<MallAlbumModel> observer) {
+        setMallSubscriber(commonApi.getMallBannerData(), observer);
     }
 
 }

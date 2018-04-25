@@ -41,9 +41,13 @@ public class NetConfig {
     public static final String AGENTINFO = "/shop/auth/user/agentInfo";//商城收益
     public static final String THIRD_LOGIN_PROCESS = "/shop/login/thirdPartySNS/loginWithProcess";
     public static final String FOUND_BANNER = "/shop/discovery/getbanner";
+    public static final String MALL_BANNER = "shop/getindexbanner";
+
+
     public static final String UPLOAD_INFO = "/shop/auth/upAuth";
     public static final String SET_INFO = "/shop/auth/user/setInfo";
     public static final String UPINFO = "/config/getUpgradeInfo";  //版本升级信息
+
 
 
     /**

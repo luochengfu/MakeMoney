@@ -8,6 +8,8 @@ import com.tudouni.makemoney.model.BindInfo;
 import com.tudouni.makemoney.model.Invite;
 import com.tudouni.makemoney.model.Banner;
 import com.tudouni.makemoney.model.LoginBean;
+import com.tudouni.makemoney.model.MallAlbumModel;
+import com.tudouni.makemoney.model.MallCommonModel;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.utils.upload.UploadInfo;
@@ -188,6 +190,8 @@ public interface CommonApi {
     Observable<Result<List<Banner>>> getFoundBanner();
 
 
+    @POST(NetConfig.MALL_BANNER)
+    Observable<MallCommonModel<MallAlbumModel>> getMallBannerData();
     /**
      * 获取上传信息
      *
