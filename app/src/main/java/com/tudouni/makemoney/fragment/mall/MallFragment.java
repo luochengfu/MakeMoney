@@ -2,6 +2,7 @@ package com.tudouni.makemoney.fragment.mall;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.databinding.ObservableArrayList;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -68,7 +69,27 @@ public class MallFragment extends BaseFragment {
     protected void initData() {
         loadBannerData();
         loadMallAlbum();
+        loadSelfGood();
         loadRecommendGood();
+    }
+
+    private void loadSelfGood() {
+        if (mMallViewModel != null) {
+            mMallViewModel.loadSelfGood(new VMResultCallback<ObservableArrayList<MallAlbumModel>>() {
+                @Override
+                public void onSuccess(ObservableArrayList<MallAlbumModel> data) {
+                    if (mMallHeaderViewBinding != null) {
+                        //编译器提示错误，不影响实际运行
+                        mMallHeaderViewBinding.setSelfData(data);
+                    }
+                }
+
+                @Override
+                public void onFailure() {
+
+                }
+            });
+        }
     }
 
     private void loadRecommendGood() {

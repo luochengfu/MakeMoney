@@ -1,6 +1,7 @@
 package com.tudouni.makemoney.network;
 
 import android.databinding.BaseObservable;
+import android.databinding.ObservableArrayList;
 import android.text.TextUtils;
 
 import com.tudouni.makemoney.model.AgentInfo;
@@ -263,6 +264,13 @@ public class CommonScene extends RetrofitUtils {
      */
     public static void getRecommendGood(BaseObserver<List<MallGoodItem>> observer){
         setSubscribe(commonApi.getRecommendGood(),observer);
+    }
+
+    /**
+     * 自营分类
+     */
+    public static void getSelfGood(BaseObserver<ObservableArrayList<MallAlbumModel>> observer){
+        setSubscribe(commonApi.getSelfGood(),observer);
     }
 
     /**

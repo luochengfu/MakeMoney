@@ -1,5 +1,7 @@
 package com.tudouni.makemoney.network;
 
+import android.databinding.ObservableArrayList;
+
 import com.tudouni.makemoney.model.AgentInfo;
 import com.tudouni.makemoney.model.AliAuth;
 import com.tudouni.makemoney.model.AppConfig;
@@ -277,4 +279,7 @@ public interface CommonApi {
 
     @POST("shop/getrecommendgoods")
     Observable<Result<List<MallGoodItem>>> getRecommendGood();
+
+    @POST("shop/getownGoodscatalog")
+    Observable<Result<ObservableArrayList<MallAlbumModel>>> getSelfGood();
 }

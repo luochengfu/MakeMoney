@@ -2,6 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <import type="android.databinding.ObservableArrayList"/>
+        <import type="com.tudouni.makemoney.model.MallAlbumModel"/>
+        <variable
+            name="selfData"
+            type="ObservableArrayList&lt;MallAlbumModel&gt;"/>
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,6 +44,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                app:loadImage="@{selfData[0].imageUrl}"
                 android:background="#22ff0000" />
 
             <LinearLayout
@@ -49,6 +58,7 @@
                     android:id="@+id/iv_self_category1"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    app:loadImage="@{selfData[1].imageUrl}"
                     android:layout_weight="1"
                     android:background="#2200ff00" />
 
@@ -59,6 +69,7 @@
                     android:layout_weight="1">
 
                     <ImageView
+                        app:loadImage="@{selfData[2].imageUrl}"
                         android:id="@+id/iv_self_category2"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -66,6 +77,7 @@
                         android:background="#220000ff" />
 
                     <ImageView
+                        app:loadImage="@{selfData[3].imageUrl}"
                         android:id="@+id/iv_self_category3"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"

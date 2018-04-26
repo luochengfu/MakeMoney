@@ -1,5 +1,7 @@
 package com.tudouni.makemoney.viewModel;
 
+import android.databinding.ObservableArrayList;
+
 import com.tudouni.makemoney.model.MallAlbumModel;
 import com.tudouni.makemoney.model.MallGoodItem;
 import com.tudouni.makemoney.network.CommonScene;
@@ -14,6 +16,8 @@ import java.util.List;
  * 2018/4/25
  */
 public class MallViewModel extends LoadingViewModel {
+
+
 
 
     /**
@@ -56,6 +60,27 @@ public class MallViewModel extends LoadingViewModel {
 
             @Override
             public void OnFail(int code, String err) {
+                TDLog.e(code,err);
+                if (callback != null) {
+                    callback.onFailure();
+                }
+            }
+        });
+    }
+
+    public void loadSelfGood(VMResultCallback<ObservableArrayList<MallAlbumModel>> callback){
+        CommonScene.getSelfGood(new BaseObserver<ObservableArrayList<MallAlbumModel>>() {
+            @Override
+            public void OnSuccess(ObservableArrayList<MallAlbumModel> models) {
+                TDLog.e(models);
+                if (callback != null) {
+                    callback.onSuccess(models);
+                }
+            }
+
+            @Override
+            public void OnFail(int code, String err) {
+                super.OnFail(code, err);
                 TDLog.e(code,err);
                 if (callback != null) {
                     callback.onFailure();
