@@ -70,6 +70,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activity.RefreshWebViewActivity"
+            android:label="H5页"
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".activity.FaceToFaceActivity"
             android:screenOrientation="portrait"

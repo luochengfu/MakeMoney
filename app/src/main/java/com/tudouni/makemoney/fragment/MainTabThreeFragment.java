@@ -12,6 +12,7 @@ import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.activity.H5Activity;
+import com.tudouni.makemoney.activity.RefreshWebViewActivity;
 import com.tudouni.makemoney.adapter.FoundAdapter;
 import com.tudouni.makemoney.adapter.TopicAdapter;
 import com.tudouni.makemoney.interfaces.IItemClickListener;
@@ -101,7 +102,7 @@ public class MainTabThreeFragment extends BaseFragment
         mTopticAdapter.setItemClickListener(new IItemClickListener() {
             @Override
             public void action(String url) {
-                Intent intent = new Intent(getActivity(), H5Activity.class);
+                Intent intent = new Intent(getActivity(), RefreshWebViewActivity.class);
                 intent.putExtra("url",url);
                 startActivity(intent);
             }
