@@ -69,8 +69,8 @@ public class NetConfig {
     /**
      * 土豆泥H5基础地址数组
      */
-    private static final String[] BASE_TUDOUNI_H5_URLS = {"https://h5.tudouni.doubozhibo.com",
-            "http://dev-sbzhibo-h5.oss-cn-hangzhou.aliyuncs.com"};
+    private static final String[] BASE_TUDOUNI_H5_URLS = {"https://h5.tudouni.doubozhibo.com/shoplite/",
+            "http://dev-sbzhibo-h5.oss-cn-hangzhou.aliyuncs.com/shoplite/"};
 
     /**
      * 土豆泥订单相关H5地址数据

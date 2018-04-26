@@ -17,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.utils.AutoHideKeyboard;
 import com.tudouni.makemoney.utils.MeizuSmartBarUtils;
@@ -55,7 +56,7 @@ public class BaseActivity extends AppCompatActivity {
 
 
         super.onCreate(savedInstanceState);
-
+//        StatusBarUtil.setTranslucent(this);
         AutoHideKeyboard.init(this);
 //        App.addActivity(this);
         if (MeizuSmartBarUtils.hasSmartBar()) {

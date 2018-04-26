@@ -49,10 +49,14 @@ public class Constants {
     public static final String MY_INVITE = BASE_H5_URL + "/m/subject/invite.income.html";
     public static final String MAIN = BASE_PRE + "root";
     public static final String HOME = BASE_PRE + "home";
-    public static final String h5_doufen = BASE_H5_URL + "/app/html/doufen.html";//我的豆粉详情和我的邀请详情
-    public static final String H5_MALL_DINGDAN = NetConfig.getShopMainUrl() + "/shopProfit/dingdan.html";//商城订单
-    public static final String h5_mall_grade = BASE_H5_URL + "/app/html/mallGrade.html";//商城等级
-    public static final String h5_novice = BASE_H5_URL + "/app/html/novice.html";//新手攻略
-    public static final String h5_faq = BASE_H5_URL + "/app/html/faq.html";//常见问题
+    public static final String h5_doufen = BASE_H5_URL + "mycenter/doufen.html";//我的豆粉详情和我的邀请详情
+    public static final String H5_MALL_DINGDAN = BASE_H5_URL + "mycenter/order.html";//商城订单
+    public static final String h5_mall_grade = BASE_H5_URL + "mycenter/mallgrade.html";//商城等级
+    public static final String h5_collect = BASE_H5_URL + "mycenter/collect.html";//我的收藏
+    public static final String h5_makemoney = BASE_H5_URL + "mycenter/makemoney.html";//我赚的钱
+    public static final String h5_savemoney = BASE_H5_URL + "mycenter/savemoney.html";//我省的钱
+    public static final String h5_novice = BASE_H5_URL + "mycenter/novice.html";//新手攻略
+    public static final String h5_faq = BASE_H5_URL + "mycenter/faq.html";//常见问题
+    public static final String MESSAGE = BASE_PRE + "message";//消息列表
 
 }

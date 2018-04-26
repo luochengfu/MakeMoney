@@ -98,6 +98,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private void setOnclickToView(View view) {
         view.findViewById(R.id.iv_setting).setOnClickListener(this);
         view.findViewById(R.id.ly_shop_level).setOnClickListener(this);
+        view.findViewById(R.id.llMyCollection).setOnClickListener(this);
         view.findViewById(R.id.ly_top_shop_level).setOnClickListener(this);
         view.findViewById(R.id.ivPhoto).setOnClickListener(this);
         view.findViewById(R.id.ly_chat).setOnClickListener(this);
@@ -173,10 +174,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             case R.id.ivPhoto:      //点击用户头像
                 ForwardUtils.target(getActivity(), Constants.USERINFO);
                 break;
-//            case R.id.ly_chat:  //豆聊
-//                intent = new Intent(getActivity(), DouIMActivity.class);
-//                startActivity(intent);
-//                break;
+            case R.id.ly_chat:
+                statisticsType = "me_message";
+                ForwardUtils.target(getActivity(), Constants.MESSAGE);
+                break;
 //            case R.id.ly_invitation_code: //绑定邀请码
 //                ForwardUtils.target(getActivity(), Constant.BINDING_INVITATION);
 //                break;
@@ -184,24 +185,23 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 statisticsType = "me_intogether";
                 ForwardUtils.target(getActivity(), Constants.INVISIT_POSTER);
                 break;
-//            case R.id.ly_mine_shop: //商城收益
-//            case R.id.ly_tv_balance: //商城余额
-//                statisticsType = "me_balance";
-//                intent = new Intent(getActivity(), FreeShopActivity.class);
-//                intent.putExtra("tagUrl", Constant.H5_MALL_INCOME + para);
-//                startActivity(intent);
-//                break;
-//            case R.id.ly_earn_month: //商城本月预估收益
-//                statisticsType = "me_moincome";
-//                intent = new Intent(getActivity(), FreeShopActivity.class);
-//                intent.putExtra("tagUrl", Constant.H5_MALL_INCOME + para);
-//                startActivity(intent);
-//                break;
             case R.id.llMyOrder: //商城我的订单
                 statisticsType = "me_tran";
                 ForwardUtils.target(getActivity(), Constants.H5_MALL_DINGDAN + para + "&closeWebView=1&isPage=true");
                 break;
-            case R.id.ly_shop_level://商城我的等级
+            case R.id.llMyCollection: //我的收藏
+                statisticsType = "me_tran";
+                ForwardUtils.target(getActivity(), Constants.h5_collect + para);
+                break;
+            case R.id.ly_tv_balance: //我赚的钱
+                statisticsType = "me_tran";
+                ForwardUtils.target(getActivity(), Constants.h5_makemoney + para);
+                break;
+            case R.id.ly_tv_economizes: //我省的钱
+                statisticsType = "me_tran";
+                ForwardUtils.target(getActivity(), Constants.h5_savemoney + para);
+                break;
+            case R.id.ly_shop_level://我的等级
             case R.id.ly_top_shop_level:
             case R.id.bagA_ly:
                 statisticsType = "me_grade";

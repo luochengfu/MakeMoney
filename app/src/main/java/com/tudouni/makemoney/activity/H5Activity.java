@@ -29,6 +29,7 @@ import com.tudouni.makemoney.network.NetConfig;
 import com.tudouni.makemoney.utils.AndroidBug5497Workaround;
 import com.tudouni.makemoney.utils.Constants;
 import com.tudouni.makemoney.utils.H5WebViewClient;
+import com.tudouni.makemoney.utils.InjectView;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.WVJBWebViewClient;
 import com.tudouni.makemoney.utils.base.AppUtils;
@@ -40,6 +41,7 @@ import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
@@ -67,11 +69,11 @@ public class H5Activity extends BaseActivity implements
 
 
     public WebView webview;
-    @ViewInject(R.id.progress)
+    @InjectView(id = R.id.progress)
     ProgressBar progress;
     private WVJBWebViewClient webViewClient;
 
-    @ViewInject(R.id.title_bar)
+    @InjectView(id = R.id.title_bar)
     public MyTitleBar title_bar;
     private String mDefaultTitle;
     private int titleStatus;//状态栏状态：0、隐藏；1、显示
@@ -186,7 +188,7 @@ public class H5Activity extends BaseActivity implements
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
-        webViewClient = new H5WebViewClient(this,payHandler,webview);
+        webViewClient = new H5WebViewClient(this, payHandler, webview);
         webViewClient.enableLogging();
         webview.setWebViewClient(webViewClient);
 
