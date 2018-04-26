@@ -274,6 +274,14 @@ public class RefreshWebViewActivity extends BaseActivity implements
         }
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (0 != (Intent.FLAG_ACTIVITY_SINGLE_TOP & intent.getFlags())) {
+            url = intent.getStringExtra("url");
+        }
+    }
+
     public static Intent newIntent(Context context, String url, String title) {
         Intent intent = new Intent(context, H5Activity.class);
         intent.putExtra("url", url);

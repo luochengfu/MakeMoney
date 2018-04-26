@@ -40,7 +40,7 @@ public class Constants {
     public static final String SHARE_INVISTOR = BASE_H5_URL + "/tudouni/html/invistor.html";
     public static final String MYINVITATION = BASE_PRE + "invisit";
     public static final String ACCOUNT_SECURITY = BASE_PRE + "sefaty";
-    public static final String ABOUTUS = BASE_H5_URL + "/tudouni/html/contact.html";
+    public static final String ABOUTUS = BASE_H5_URL + "/mycenter/contact.html";
     public static final String CONTACTUS = BASE_H5_URL + "/tudouni/html/contact.html";
     public static final String BINDING_FACE_TO_FACE = BASE_PRE + "binding_face_to_face";
     public static final String USERINFO = BASE_PRE + "setinfo";
