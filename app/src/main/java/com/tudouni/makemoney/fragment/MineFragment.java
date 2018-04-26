@@ -179,9 +179,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 statisticsType = "me_message";
                 ForwardUtils.target(getActivity(), Constants.MESSAGE);
                 break;
-//            case R.id.ly_invitation_code: //绑定邀请码
-//                ForwardUtils.target(getActivity(), Constant.BINDING_INVITATION);
-//                break;
             case R.id.ly_invitation_douyou: //邀请豆友一起玩
                 statisticsType = "me_intogether";
                 ForwardUtils.target(getActivity(), Constants.INVISIT_POSTER);
