@@ -1,5 +1,6 @@
 package com.tudouni.makemoney.network;
 
+import android.databinding.BaseObservable;
 import android.text.TextUtils;
 
 import com.tudouni.makemoney.model.AgentInfo;
@@ -244,8 +245,16 @@ public class CommonScene extends RetrofitUtils {
     /**
      * 商城首页Banner
      */
-    public static void getMallBanner(BaseMallObserver<MallAlbumModel> observer) {
-        setMallSubscriber(commonApi.getMallBannerData(), observer);
+    public static void getMallBanner(BaseObserver<List<MallAlbumModel>> observer) {
+        setSubscribe(commonApi.getMallBannerData(), observer);
+    }
+
+
+    /**
+     * 商城首页专题
+     */
+    public static void getMallAlbumData(BaseObserver<List<MallAlbumModel>> observer){
+        setSubscribe(commonApi.getMallAlbumData(),observer);
     }
 
     /**

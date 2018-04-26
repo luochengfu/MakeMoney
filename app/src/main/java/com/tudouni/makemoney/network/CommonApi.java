@@ -201,7 +201,7 @@ public interface CommonApi {
 
 
     @POST(NetConfig.MALL_BANNER)
-    Observable<MallCommonModel<MallAlbumModel>> getMallBannerData();
+    Observable<Result<List<MallAlbumModel>>> getMallBannerData();
 
     /**
      * 获取上传信息
@@ -270,4 +270,7 @@ public interface CommonApi {
     @FormUrlEncoded
     @POST("/shop/updateMsgReadInfo")
     Observable<Result<Object>> updateMsgReadInfo(@Field("sysmsgtime") long sysmsgtime, @Field("gsysmsgtime") long gsysmsgtime);
+
+    @POST("shop/gethotcatalog")
+    Observable<Result<List<MallAlbumModel>>> getMallAlbumData();
 }
