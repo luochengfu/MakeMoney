@@ -134,7 +134,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_margin="10dp"
-                android:background="@drawable/yanzheng_bg_selector"
+                android:background="@drawable/login_button_selector"
                 android:gravity="center"
                 android:text="@string/login"
                 android:textColor="@color/color_999999"

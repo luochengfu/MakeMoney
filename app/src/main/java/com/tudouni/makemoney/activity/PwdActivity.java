@@ -154,7 +154,7 @@ public class PwdActivity extends BaseActivity implements View.OnClickListener {
                         && (password.length() <= 16) && (password.length() >= 6)
                         && (confrimPassword.length() <= 16) && (confrimPassword.length() >= 6)) {
                     tv_commit.setSelected(true);
-                    tv_commit.setTextColor(getResources().getColor(R.color.color_333333));
+                    tv_commit.setTextColor(getResources().getColor(R.color.white));
                 } else {
                     tv_commit.setTextColor(getResources().getColor(R.color.color_999999));
                     tv_commit.setSelected(false);
@@ -191,7 +191,7 @@ public class PwdActivity extends BaseActivity implements View.OnClickListener {
                         && (password.length() <= 16) && (password.length() >= 6)
                         && (confrimPassword.length() <= 16) && (confrimPassword.length() >= 6)) {
                     tv_commit.setSelected(true);
-                    tv_commit.setTextColor(getResources().getColor(R.color.color_333333));
+                    tv_commit.setTextColor(getResources().getColor(R.color.white));
                 } else {
                     tv_commit.setTextColor(getResources().getColor(R.color.color_999999));
                     tv_commit.setSelected(false);

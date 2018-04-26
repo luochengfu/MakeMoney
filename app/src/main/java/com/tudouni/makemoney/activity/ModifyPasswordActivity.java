@@ -63,7 +63,7 @@ public class ModifyPasswordActivity extends BaseActivity implements View.OnClick
             public void afterTextChanged(Editable s) {
                 String password = s.toString();
                 if ((password.length() >= 6) && password.length() <= 16) {
-                    submitBtn.setTextColor(getResources().getColor(R.color.color_333333));
+                    submitBtn.setTextColor(getResources().getColor(R.color.white));
                     submitBtn.setSelected(true);
                 } else {
                     submitBtn.setTextColor(getResources().getColor(R.color.color_999999));

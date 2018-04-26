@@ -11,7 +11,7 @@
     <style name="MyAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/color_212121</item>
+        <item name="colorPrimaryDark">@color/color_E81534</item>
         <item name="colorAccent">@color/color_212121</item>
         <item name="android:textColorPrimary">@color/color_212121</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -213,6 +213,13 @@
         <item name="android:textColor">@color/color_999999</item>
         <item name="android:textStyle">normal</item>
     </style>
+
+    <style name="color_E81833_13_style">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/color_E81833</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
 
     <style name="FullTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>

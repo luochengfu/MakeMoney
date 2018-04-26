@@ -224,7 +224,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
     private void enableTvLogin() {
         tvLogin.setClickable(true);
         tvLogin.setOnClickListener(this);
-        tvLogin.setTextColor(getResources().getColor(R.color.color_333333));
+        tvLogin.setTextColor(getResources().getColor(R.color.white));
         tvLogin.setSelected(true);
     }
 
@@ -238,7 +238,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
     private void enableTvCode() {
         tvCode.setClickable(true);
         tvCode.setOnClickListener(this);
-        tvCode.setTextColor(getResources().getColor(R.color.color_333333));
+        tvCode.setTextColor(getResources().getColor(R.color.white));
         tvCode.setBackgroundDrawable(getResources().getDrawable(R.drawable.get_vcode_style_02));
     }
 

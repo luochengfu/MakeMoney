@@ -3,6 +3,7 @@ package com.tudouni.makemoney.activity;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -45,10 +46,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private Context mContext = this;
     private ImageView iv_WechatLogin, iv_QqLogin;
     private TextView loginModeChangeView, mLossPasswordView;
-    private TextView buttomTV, submitBtn, tvCode, mLossPasswordBtn;
+    private TextView submitBtn, tvCode, mLossPasswordBtn, mTaghint;
     private EditText mPhoneNumberInput, mPasswrodInput, mPhoneNumberInput2, mPhoneCodeInput;
-    private View mLine1, mLine2;
-    private LinearLayout mTelLogin1, mTelLogin2;
+    private View mLine1, mLine2,mline3,mLine4;
+    private LinearLayout mTelLogin1, mTelLogin2,mPWLayout1, mPWLayout2,buttomTV;
     private UMShareAPI mShareAPI = null;
     private CenterLoadingView loadingDialog = null;
     private final String[] permissionManifest = {
@@ -101,6 +102,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         tvCode.setOnClickListener(new NoDoubleClickListener() {
             @Override
             protected void onNoDoubleClick(View v) {
+                String input = mPhoneNumberInput2.getText().toString();
+                if(null == input || "".equals(input) ||  !ValidateUtil.isMobileNO(input))
+                    return;
                 MobclickAgent.onEvent(LoginActivity.this, "lg_sms");
                 generateCode();
             }
@@ -126,20 +130,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void initView() {
         iv_WechatLogin = (ImageView) findViewById(R.id.iv_WechatLogin);
         iv_QqLogin = (ImageView) findViewById(R.id.iv_QqLogin);
-        buttomTV = (TextView) findViewById(R.id.xy);
+        buttomTV = (LinearLayout) findViewById(R.id.xy);
         loginModeChangeView = (TextView) findViewById(R.id.login_mode_change_view);
         mPhoneNumberInput = (EditText) findViewById(R.id.phone_number_et);
         mPasswrodInput = (EditText) findViewById(R.id.comfirm_pasword_et);
         mLine1 = findViewById(R.id.password_login_child_layout_line);
+        mLine4 = findViewById(R.id.password_login_child_layout_line2);
+        mline3 = findViewById(R.id.tel_login_line1);
         mLine2 = findViewById(R.id.tel_login_line);
         mPhoneNumberInput2 = (EditText) findViewById(R.id.etTelNumber);
         mPhoneCodeInput = (EditText) findViewById(R.id.etCode);
         mTelLogin1 = (LinearLayout) findViewById(R.id.tel_phone_ll_layout_1);
         mTelLogin2 = (LinearLayout) findViewById(R.id.tel_phone_ll_layout_2);
+        mPWLayout1 = (LinearLayout) findViewById(R.id.password_layout_1);
+        mPWLayout2 = (LinearLayout) findViewById(R.id.password_layout_2);
         mLossPasswordView = (TextView) findViewById(R.id.loss_password_tv);
         submitBtn = (TextView) findViewById(R.id.tv_commit);
         tvCode = (TextView) findViewById(R.id.tvCode);
         mLossPasswordBtn = (TextView) findViewById(R.id.loss_password_tv);
+        mTaghint = (TextView) findViewById(R.id.activity_login_tv);
     }
 
     private void initDatas() {
@@ -147,6 +156,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         loginModeChangeView.setOnClickListener(this);
         submitBtn.setOnClickListener(this);
         mLossPasswordBtn.setOnClickListener(this);
+        mTaghint.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG );
         //获取设备ID
         /*if (!permissionCheck()) {
             if (Build.VERSION.SDK_INT >= 23) {
@@ -311,22 +321,30 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             mPhoneNumberInput.setVisibility(View.VISIBLE);
             mPasswrodInput.setVisibility(View.VISIBLE);
             mLine1.setVisibility(View.VISIBLE);
+            mLine4.setVisibility(View.VISIBLE);
             mLossPasswordView.setVisibility(View.VISIBLE);
+            mPWLayout1.setVisibility(View.VISIBLE);
+            mPWLayout2.setVisibility(View.VISIBLE);
 
             mTelLogin1.setVisibility(View.GONE);
             mTelLogin2.setVisibility(View.GONE);
             mLine2.setVisibility(View.GONE);
+            mline3.setVisibility(View.GONE);
         } else if (mLoginModeStatus == 2) {
             mPhoneNumberInput2.setText(mPhoneNum);
             loginModeChangeView.setText(getResources().getString(R.string.tudouni_password_login_change));
             mPhoneNumberInput.setVisibility(View.GONE);
             mPasswrodInput.setVisibility(View.GONE);
             mLine1.setVisibility(View.GONE);
+            mLine4.setVisibility(View.GONE);
             mLossPasswordView.setVisibility(View.GONE);
+            mPWLayout1.setVisibility(View.GONE);
+            mPWLayout2.setVisibility(View.GONE);
 
             mTelLogin1.setVisibility(View.VISIBLE);
             mTelLogin2.setVisibility(View.VISIBLE);
             mLine2.setVisibility(View.VISIBLE);
+            mline3.setVisibility(View.VISIBLE);
             setLoginBtnStatus(mPhoneNumberInput2, mPhoneCodeInput);
         }
     }
@@ -473,7 +491,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void enableTvLogin() {
-        submitBtn.setTextColor(getResources().getColor(R.color.color_333333));
+        submitBtn.setTextColor(getResources().getColor(R.color.white));
         submitBtn.setSelected(true);
     }
 
@@ -485,7 +503,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void enableTvCode() {
         tvCode.setClickable(true);
-        tvCode.setTextColor(getResources().getColor(R.color.color_333333));
+        tvCode.setTextColor(getResources().getColor(R.color.white));
         tvCode.setBackgroundDrawable(getResources().getDrawable(R.drawable.get_vcode_style_02));
     }
 
