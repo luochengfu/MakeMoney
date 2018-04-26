@@ -8,7 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.GridLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.CookieManager;
@@ -19,56 +19,57 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.github.jdsjlzx.interfaces.OnItemClickListener;
+import com.github.jdsjlzx.interfaces.OnRefreshListener;
+import com.github.jdsjlzx.recyclerview.LRecyclerView;
+import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.tudouni.makemoney.BuildConfig;
 import com.tudouni.makemoney.R;
+import com.tudouni.makemoney.adapter.FoundAdapter;
+import com.tudouni.makemoney.adapter.TopicAdapter;
 import com.tudouni.makemoney.myApplication.MyApplication;
-import com.tudouni.makemoney.utils.AndroidBug5497Workaround;
 import com.tudouni.makemoney.utils.Constants;
 import com.tudouni.makemoney.utils.H5WebViewClient;
-import com.tudouni.makemoney.utils.InjectView;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.WVJBWebViewClient;
 import com.tudouni.makemoney.utils.base.AppUtils;
 import com.tudouni.makemoney.view.MyTitleBar;
+
 import org.simple.eventbus.EventBus;
+
 import java.util.List;
+
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
- * H5统一页面
+ * Created by Administrator on 2018/4/26 0026.
  */
+
 @SuppressLint("SetJavaScriptEnabled")
-public class H5Activity extends BaseActivity implements
-        EasyPermissions.PermissionCallbacks {
+public class RefreshWebViewActivity extends BaseActivity implements
+        EasyPermissions.PermissionCallbacks
+{
     public static final int REQUEST_CODE_PERMISSION_CALL = 3;
-    private Context mContext = this;
-
-    public static final String support = "support,getUserInfo,login,closeWebView,getDeviceInfo," +
-            "copy,setShareInfo,jumpPage,getUserAgent,setBgColor,uploadCallback,loginSuccess,payCallback";
-
-    private String url;
-
-    /**
-     * 本地是否正在直播
-     */
-    private boolean isLive = true;
-    /**
-     * OAuth2.0授权后的Token
-     */
-    private String accessToken = "";
-
-
-    public WebView webview;
-    @InjectView(id = R.id.progress)
-    ProgressBar progress;
-
-    private WVJBWebViewClient webViewClient;
-
-    @InjectView(id = R.id.title_bar)
+    private LRecyclerView mLRecyclerView;
     public MyTitleBar title_bar;
+    private ProgressBar progress;
+    public WebView webview;
+    private View mHeadView;
+    private LRecyclerViewAdapter mLRecyclerViewAdapter;
+    private GridLayoutManager mLayoutManager;
+    private FoundAdapter mAdapter;
+    private WVJBWebViewClient webViewClient;
     private String mDefaultTitle;
-    private int titleStatus;//状态栏状态：0、隐藏；1、显示
+    private String url;
+    //本地是否正在直播
+    private boolean isLive = true;
+    //Auth2.0授权后的Token
+    private String accessToken = "";
+    /* 需要重新刷新的页面*/
+    private final String[] needResumUrl = new String[]{"lotteryDraw.html", Constants.MY_INVITE};
+    private boolean needResum;
 
     private Handler payHandler = new Handler() {
 
@@ -76,16 +77,16 @@ public class H5Activity extends BaseActivity implements
 
             switch (msg.what) {
                 case 111: {
-                    H5Activity.this.dissLoad();
+                    RefreshWebViewActivity.this.dissLoad();
                     if (msg.obj != null) {
-                        Toast.makeText(H5Activity.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RefreshWebViewActivity.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
                     }
                     break;
                 }
                 case 222: {
-                    H5Activity.this.dissLoad();
+                    RefreshWebViewActivity.this.dissLoad();
                     if (msg.obj != null) {
-                        Toast.makeText(H5Activity.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RefreshWebViewActivity.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
                     }
                     finish();
                     break;
@@ -94,40 +95,59 @@ public class H5Activity extends BaseActivity implements
         }
     };
 
-    private ValueCallback<Uri[]> filePathCallback;
-    /* 需要重新刷新的页面*/
-    private final String[] needResumUrl = new String[]{"lotteryDraw.html", Constants.MY_INVITE};
-    private boolean needResum;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_h5);
 
-        EventBus.getDefault().register(this);
-
-        AndroidBug5497Workaround.assistActivity(this);
-        webview = (BridgeWebView) findViewById(R.id.webView);
         url = getIntent().getStringExtra("url");
-//        url = "http://192.168.16.183:3001/html/webView.html";
-        titleStatus = getIntent().getIntExtra("titleStatus", 0);
-        mDefaultTitle = getIntent().getStringExtra("title");
-        isLive = getIntent().getBooleanExtra("isLive", false);
-        accessToken = getIntent().getStringExtra("accessToken");
+        setContentView(R.layout.refresh_webview_layout);
+        initView();
+        initDatas();
+    }
 
-        if (url.contains(Constants.MY_INVITE)) {
-            title_bar.setStatusBackground(ContextCompat.getColor(this, R.color.color_FDCE00));
-            title_bar.setHeadBackground(ContextCompat.getColor(this, R.color.color_FDCE00));
-            title_bar.setMiddleTextColor(ContextCompat.getColor(this, R.color.white));
-        }
+    private void initView() {
+        mLRecyclerView = (LRecyclerView) findViewById(R.id.three_tab_rv);
+        progress = (ProgressBar) findViewById(R.id.progress);
+        title_bar = (MyTitleBar) findViewById(R.id.title_bar);
+    }
 
-        if (!TextUtils.isEmpty(mDefaultTitle)) {
-            title_bar.setHeadVisibility(View.VISIBLE);
-            title_bar.setMiddleText(mDefaultTitle);
-        }
-        if ("#".equals(mDefaultTitle)) {
-            title_bar.setHeadVisibility(View.GONE);
-        }
+    private void initDatas() {
+        initHeader();
+        initAdapter();
+        initWebView();
+    }
+
+    private void initAdapter() {
+        mAdapter = new FoundAdapter();
+        mLayoutManager = new GridLayoutManager(this, 1);
+        mLRecyclerView.setLayoutManager(mLayoutManager);
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
+        mLRecyclerViewAdapter.addHeaderView(mHeadView);
+        mLRecyclerView.setAdapter(mLRecyclerViewAdapter);
+        //去掉footview
+        mLRecyclerViewAdapter.removeFooterView();
+
+        mLRecyclerView.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mLRecyclerView.refreshComplete(0);
+                        webview.loadUrl(url);
+                    }
+                }, 1000);
+            }
+        });
+
+    }
+
+    private void initHeader() {
+        mHeadView = getLayoutInflater().inflate(R.layout.refresh_webview_title_layout, null, false);
+        webview = (WebView) mHeadView.findViewById(R.id.refresh_webView_title);
+    }
+
+    private void initWebView() {
         WebChromeClient webChromeClient = new WebChromeClient()
         {
             @Override
@@ -139,7 +159,6 @@ public class H5Activity extends BaseActivity implements
 
             @Override
             public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
-                H5Activity.this.filePathCallback = filePathCallback;
                 return true;
             }
 
@@ -202,7 +221,6 @@ public class H5Activity extends BaseActivity implements
         syncCookie();
         webview.loadUrl(url);
     }
-
     String phoneUrl;
 
     @Override

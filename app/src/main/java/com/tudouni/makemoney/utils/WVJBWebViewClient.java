@@ -10,6 +10,11 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.github.lzyzsd.jsbridge.BridgeHandler;
+import com.github.lzyzsd.jsbridge.BridgeWebView;
+import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
+import com.github.lzyzsd.jsbridge.CallBackFunction;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SuppressLint({ "SetJavaScriptEnabled", "NewApi" })
-public class WVJBWebViewClient extends WebViewClient {
+public class WVJBWebViewClient extends BridgeWebViewClient {
 
     private static final String kTag = "WVJB";
     private static final String kInterface = kTag + "Interface";
@@ -35,9 +40,9 @@ public class WVJBWebViewClient extends WebViewClient {
 
     private ArrayList<WVJBMessage> startupMessageQueue = null;
     private Map<String, WVJBResponseCallback> responseCallbacks = null;
-    private Map<String, WVJBHandler> messageHandlers = null;
+    private Map<String, BridgeHandler> messageHandlers = null;
     private long uniqueId = 0;
-    private WVJBHandler messageHandler;
+    private BridgeHandler messageHandler;
     private MyJavascriptInterface myInterface = new MyJavascriptInterface();
 
     public interface WVJBResponseCallback {
@@ -48,16 +53,17 @@ public class WVJBWebViewClient extends WebViewClient {
         void request(Object data, WVJBResponseCallback callback);
     }
 
-    public WVJBWebViewClient(WebView webView) {
+    public WVJBWebViewClient(BridgeWebView webView) {
         this(webView, null);
     }
 
-    public WVJBWebViewClient(WebView webView, WVJBHandler messageHandler) {
+    public WVJBWebViewClient(BridgeWebView webView, BridgeHandler messageHandler) {
+        super(webView);
         this.webView = webView;
         this.webView.getSettings().setJavaScriptEnabled(true);
         this.webView.addJavascriptInterface(myInterface, kInterface);
         this.responseCallbacks = new HashMap<String, WVJBResponseCallback>();
-        this.messageHandlers = new HashMap<String, WVJBHandler>();
+        this.messageHandlers = new HashMap<String, BridgeHandler>();
         this.startupMessageQueue = new ArrayList<WVJBMessage>();
         this.messageHandler = messageHandler;
     }
@@ -98,7 +104,7 @@ public class WVJBWebViewClient extends WebViewClient {
      * @param handlerName
      * @param handler
      */
-    public void registerHandler(String handlerName, WVJBHandler handler) {
+    public void registerHandler(String handlerName, BridgeHandler handler) {
         if (handlerName == null || handlerName.length() == 0 || handler == null)
             return;
         messageHandlers.put(handlerName, handler);
@@ -219,12 +225,12 @@ public class WVJBWebViewClient extends WebViewClient {
                         responseCallback.callback(message.responseData);
                     }
                 } else {
-                    WVJBResponseCallback responseCallback = null;
+                    CallBackFunction responseCallback = null;
                     if (message.callbackId != null) {
                         final String callbackId = message.callbackId;
-                        responseCallback = new WVJBResponseCallback() {
+                        responseCallback = new CallBackFunction() {
                             @Override
-                            public void callback(Object data) {
+                            public void onCallBack(String data) {
                                 WVJBMessage msg = new WVJBMessage();
                                 msg.responseId = callbackId;
                                 msg.responseData = data;
@@ -233,14 +239,14 @@ public class WVJBWebViewClient extends WebViewClient {
                         };
                     }
 
-                    WVJBHandler handler;
+                    BridgeHandler handler;
                     if (message.handlerName != null) {
                         handler = messageHandlers.get(message.handlerName);
                     } else {
                         handler = messageHandler;
                     }
                     if (handler != null) {
-                        handler.request(message.data, responseCallback);
+                        handler.handler(message.data.toString(), responseCallback);
                     }
                 }
             }

@@ -16,9 +16,13 @@ import android.text.TextUtils;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.github.lzyzsd.jsbridge.BridgeHandler;
+import com.github.lzyzsd.jsbridge.BridgeWebView;
+import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.tudouni.makemoney.activity.H5Activity;
@@ -50,7 +54,7 @@ public class H5WebViewClient extends WVJBWebViewClient
     private Activity mActivity;
     private Handler payHandler;
     private CenterLoadingView loading;
-    private WebView webview;
+    private BridgeWebView webview;
     private IActionListener mListner;
 
     private boolean isGameHallPage;
@@ -102,11 +106,11 @@ public class H5WebViewClient extends WVJBWebViewClient
         String PAGE_VALUE_START_LIVE = "startLivePage";
     }
 
-    public H5WebViewClient(Activity activity, Handler handler, WebView webView) {
-        super(webView, new WVJBHandler() {
+    public H5WebViewClient(Activity activity, Handler handler, BridgeWebView webView) {
+        super(webView, new BridgeHandler() {
             @Override
-            public void request(Object data, WVJBResponseCallback callback) {
-                callback.callback("Response for message from ObjC!");
+            public void handler(String data, CallBackFunction function) {
+                function.onCallBack("Response for message from ObjC!");
             }
         });
 
@@ -131,7 +135,6 @@ public class H5WebViewClient extends WVJBWebViewClient
         jump();
         startTaobao();
         setBGColor();
-        aliauth();
         setTabIndex();
 
         enableLogging();
@@ -141,9 +144,9 @@ public class H5WebViewClient extends WVJBWebViewClient
      * 跳转到主页相应 Tab
      */
     private void setTabIndex() {
-        registerHandler("setTabIndex", new WVJBHandler() {
+        webview.registerHandler("setTabIndex", new BridgeHandler() {
             @Override
-            public void request(Object data, WVJBResponseCallback callback) {
+            public void handler(String data, CallBackFunction callback) {
                 try {
                     int index = 2;
                     if (data != null) {
@@ -157,33 +160,35 @@ public class H5WebViewClient extends WVJBWebViewClient
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                if (callback != null) {
+                    callback.onCallBack("{\"status\":\"yes\"}");
+                }
+
 
             }
         });
     }
-
 
     /**
      * 阿里授权
      */
-    private void aliauth() {
+    /*private void aliauth() {
         registerHandler("aliauth", new WVJBHandler() {
 
             @Override
             public void request(Object data, WVJBResponseCallback callback) {
-//                startAuth();
             }
         });
-    }
+    }*/
 
     /**
      * 设置背景色
      */
     private void setBGColor() {
-        registerHandler("setBgColor", new WVJBHandler() {
+        webview.registerHandler("setBgColor", new BridgeHandler() {
 
             @Override
-            public void request(Object data, WVJBResponseCallback callback) {
+            public void handler(String data, CallBackFunction callback) {
                 try {
                     JSONObject ja = new JSONObject(data.toString());
                     int r = ja.getInt("r");
@@ -194,6 +199,10 @@ public class H5WebViewClient extends WVJBWebViewClient
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
+                if (callback != null) {
+                    callback.onCallBack("{\"status\":\"yes\"}");
+                }
+
             }
         });
     }
@@ -202,10 +211,10 @@ public class H5WebViewClient extends WVJBWebViewClient
      * 启动淘宝
      */
     private void startTaobao() {
-        registerHandler("taobaoBridge", new WVJBHandler() {
+        webview.registerHandler("taobaoBridge", new BridgeHandler() {
 
             @Override
-            public void request(Object data, WVJBResponseCallback callback) {
+            public void handler(String data, CallBackFunction callback) {
                 try {
                     JSONObject ja = new JSONObject(data.toString());
                     String url = ja.getString("url");
@@ -213,6 +222,10 @@ public class H5WebViewClient extends WVJBWebViewClient
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
+                if (callback != null) {
+                    callback.onCallBack("{\"status\":\"yes\"}");
+                }
+
             }
         });
     }
@@ -220,58 +233,51 @@ public class H5WebViewClient extends WVJBWebViewClient
      * 跳转
      */
     private void jump() {
-
-        registerHandler("jumpPage", new WVJBWebViewClient.WVJBHandler() {
+       webview.registerHandler("jumpPage", new BridgeHandler() {
 
             @Override
-            public void request(Object data, WVJBResponseCallback callback) {
-               ToastUtil.show("tttttttttttttttttt");
+            public void handler(String data, CallBackFunction callback) {
+                if (data != null) {
+                    try {
+                        /*JSONObject ja = new JSONObject(data.toString());
+                        String url = ja.getString("url");
+                        if("tudouni://tudouni/home".equals(url) || "tudouni://tudouni/back".equals(url)) {
+                            mActivity.finish();
+                        } else if(url.startsWith(NetConfig.getShopMainUrl())){
+                            Intent intent = new Intent(mActivity, FreeShopActivity.class);
+                            intent.putExtra("tagUrl", url);
+                            if(url.contains("/shopHome/sousuo.html")) {
+                                intent.putExtra("titleStatus",0);
+                            } else {
+                                intent.putExtra("titleStatus",1);
+                            }
+                            mActivity.startActivity(intent);
+                        } else {
+                            ForwardUtils.target(mActivity, url);
+                            function.onCallBack("{\"status\":\"yes\"}");
+                        }*/
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                if (callback != null) {
+                    callback.onCallBack("{\"status\":\"yes\"}");
+                }
             }
-        });
 
-//        registerHandler("jumpPage", new WVJBHandler() {
-//
-//            @Override
-//            public void request(Object data, WVJBResponseCallback callback) {
-//                if (data != null) {
-//                    try {
-//                        JSONObject ja = new JSONObject(data.toString());
-//                        String url = ja.getString("url");
-////                        if("tudouni://tudouni/home".equals(url) || "tudouni://tudouni/back".equals(url)) {
-////                            mActivity.finish();
-////                        } else if(url.startsWith(NetConfig.getShopMainUrl())){
-////                            Intent intent = new Intent(mActivity, FreeShopActivity.class);
-////                            intent.putExtra("tagUrl", url);
-////                            if(url.contains("/shopHome/sousuo.html")) {
-////                               intent.putExtra("titleStatus",0);
-////                            } else {
-////                                intent.putExtra("titleStatus",1);
-////                            }
-////                            mActivity.startActivity(intent);
-////                        } else {
-////                            ForwardUtils.target(mActivity, url);
-////                            callback.callback("{\"status\":\"yes\"}");
-////                        }
-//                    } catch (Exception ex) {
-//                        ex.printStackTrace();
-//                    }
-//                }
-//
-//            }
-//        });
+        });
     }
     /**
      * 分享
      */
     private void share() {
-        registerHandler("share", new WVJBHandler() {
+        webview.registerHandler("share", new BridgeHandler() {
 
             @Override
-            public void request(Object data, WVJBResponseCallback callback) {
+            public void handler(String data, CallBackFunction callback) {
                 JSONObject ja = null;
                 try {
                     ja = new JSONObject(data.toString());
-//                        {"url":"","title","","content":"","img":""}
                     String url = ja.getString("url");
                     String title = ja.getString("title");
                     String img = ja.getString("img");
@@ -314,7 +320,9 @@ public class H5WebViewClient extends WVJBWebViewClient
                     e.printStackTrace();
                 }
 
-
+                if (callback != null) {
+                    callback.onCallBack("{\"status\":\"yes\"}");
+                }
             }
         });
     }
@@ -322,9 +330,9 @@ public class H5WebViewClient extends WVJBWebViewClient
      * 拷贝
      */
     private void copy() {
-        registerHandler("copy", new WVJBHandler() {
+        webview.registerHandler("copy", new BridgeHandler() {
             @Override
-            public void request(Object data, WVJBResponseCallback callback) {
+            public void handler(String data, CallBackFunction callback) {
                 if (data != null) {
                     try {
                         JSONObject ja = new JSONObject(data.toString());
@@ -335,7 +343,7 @@ public class H5WebViewClient extends WVJBWebViewClient
                     }
                 }
                 if (callback != null) {
-                    callback.callback("{\"status\":\"yes\"}");
+                    callback.onCallBack("{\"status\":\"yes\"}");
                 }
             }
         });
@@ -344,29 +352,31 @@ public class H5WebViewClient extends WVJBWebViewClient
      * 获取设备信息
      */
     private void getDeviceInfo() {
-        registerHandler("getDeviceInfo", new WVJBHandler() {
+        webview.registerHandler("getDeviceInfo", new BridgeHandler() {
             @Override
-            public void request(Object data, WVJBResponseCallback callback) {
-
+            public void handler(String data, CallBackFunction callback) {
+                if (callback != null) {
+                    callback.onCallBack("{\"status\":\"yes\"}");
+                }
             }
         });
-
     }
     /**
      * 关闭webview
      */
     private void closeWebView() {
-        registerHandler("closeWebView", new WVJBHandler() {
+        webview.registerHandler("closeWebView", new BridgeHandler() {
             @Override
-            public void request(Object data, WVJBResponseCallback callback) {
+            public void handler(String data, CallBackFunction callback) {
                 try {
                     mActivity.onBackPressed();
                     mActivity.finish();
-                    if (callback != null) {
-                        callback.callback("{\"status\":\"yes\"}");
-                    }
                 } catch (Exception e) {
                     e.printStackTrace();
+                }
+
+                if (callback != null) {
+                    callback.onCallBack("{\"status\":\"yes\"}");
                 }
             }
         });
@@ -375,16 +385,17 @@ public class H5WebViewClient extends WVJBWebViewClient
      * 退出
      */
     private void logout() {
-        registerHandler("logout", new WVJBHandler() {
+        webview.registerHandler("logout", new BridgeHandler() {
             @Override
-            public void request(Object data, WVJBResponseCallback callback) {
+            public void handler(String data, CallBackFunction callback) {
                 try {
                     EventBus.getDefault().post(new LogOut("登录失效，请重新登录", true), "clear");
-                    if (callback != null) {
-                        callback.callback("{\"status\":\"yes\"}");
-                    }
                 } catch (Exception e) {
                     e.printStackTrace();
+                }
+
+                if (callback != null) {
+                    callback.onCallBack("{\"status\":\"yes\"}");
                 }
             }
         });
@@ -395,10 +406,10 @@ public class H5WebViewClient extends WVJBWebViewClient
      * 获取用户设备信息
      */
     private void getMetaInfo() {
-        registerHandler("getMetaInfo", new WVJBHandler() {
+        webview.registerHandler("getMetaInfo", new BridgeHandler() {
             @Override
-            public void request(Object data, WVJBResponseCallback callback) {
-                JsonObject o = new JsonObject();
+            public void handler(String data, CallBackFunction callback) {
+//                JsonObject o = new JsonObject();
 //                o.addProperty("appVersion", CommonHelper.getAppVersionName(App.getContext()));
 //                o.addProperty("deviceId", App.deviceId);
 //                o.addProperty("deviceModel", App.deviceModel);
@@ -408,7 +419,7 @@ public class H5WebViewClient extends WVJBWebViewClient
 //                    o.addProperty("province", App.sLocal.getProvince());
 //                    o.addProperty("city", App.sLocal.getCity());
 //                }
-                callback.callback(new Gson().toJson(o));
+                callback.onCallBack(new Gson().toJson(data));
             }
         });
     }
@@ -417,10 +428,10 @@ public class H5WebViewClient extends WVJBWebViewClient
      * 登录
      */
     private void login() {
-        registerHandler("login", new WVJBHandler() {
+        webview.registerHandler("login", new BridgeHandler() {
             @Override
-            public void request(Object data, WVJBResponseCallback callback) {
-
+            public void handler(String data, CallBackFunction callback) {
+                callback.onCallBack("");
             }
         });
     }
@@ -429,12 +440,12 @@ public class H5WebViewClient extends WVJBWebViewClient
      * 是否支持该方法
      */
     private void support() {
-        registerHandler("support", new WVJBHandler() {
+        webview.registerHandler("support", new BridgeHandler() {
             @Override
-            public void request(Object data, WVJBResponseCallback callback) {
+            public void handler(String data, CallBackFunction callback) {
 
                 if (data != null && H5Activity.support.indexOf(data.toString()) != -1) {
-                    callback.callback("{\"status\":\"yes\"}");
+                    callback.onCallBack("{\"status\":\"yes\"}");
                 }
             }
         });
@@ -444,15 +455,15 @@ public class H5WebViewClient extends WVJBWebViewClient
      * 获取用户数据
      */
     private void getUserInfo() {
-        registerHandler("getUserInfo", new WVJBHandler() {
+        webview.registerHandler("getUserInfo", new BridgeHandler() {
             @Override
-            public void request(Object data, WVJBResponseCallback callback) {
+            public void handler(String data, CallBackFunction callback) {
                 User user = MyApplication.getLoginUser();
                 if (user != null) {
                     String js = new Gson().toJson(user);
-                    callback.callback(js);
+                    callback.onCallBack(js);
                 } else {
-                    callback.callback("");
+                    callback.onCallBack("");
                 }
             }
         });
@@ -462,11 +473,11 @@ public class H5WebViewClient extends WVJBWebViewClient
      * 获取用户 agent
      */
     private void getUserAgent() {
-        registerHandler("getUserAgent", new WVJBHandler() {
+        webview.registerHandler("getUserAgent", new BridgeHandler() {
 
             @Override
-            public void request(Object data, WVJBResponseCallback callback) {
-                callback.callback("tuoduni-android-" + AppUtils.getAppVersionName());
+            public void handler(String data, CallBackFunction callback) {
+                callback.onCallBack("tuoduni-android-" + AppUtils.getAppVersionName());
             }
         });
     }
@@ -476,6 +487,7 @@ public class H5WebViewClient extends WVJBWebViewClient
     public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
         handler.proceed();      //忽略ssl错误
     }
+
 
     public void loading(String title) {
         if (null == loading) {
