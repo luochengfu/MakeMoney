@@ -1,6 +1,7 @@
 package com.tudouni.makemoney.viewModel;
 
 import com.tudouni.makemoney.model.MallAlbumModel;
+import com.tudouni.makemoney.model.MallGoodItem;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseMallObserver;
 import com.tudouni.makemoney.network.rx.BaseObserver;
@@ -40,6 +41,9 @@ public class MallViewModel extends LoadingViewModel {
         });
     }
 
+    /**
+     * 加载专栏数据
+     */
     public void loadAlbumData(VMResultCallback<List<MallAlbumModel>> callback){
         CommonScene.getMallAlbumData(new BaseObserver<List<MallAlbumModel>>() {
             @Override
@@ -52,6 +56,27 @@ public class MallViewModel extends LoadingViewModel {
 
             @Override
             public void OnFail(int code, String err) {
+                TDLog.e(code,err);
+                if (callback != null) {
+                    callback.onFailure();
+                }
+            }
+        });
+    }
+
+    public void loadRecommendGoodData(VMResultCallback<List<MallGoodItem>> callback){
+        CommonScene.getRecommendGood(new BaseObserver<List<MallGoodItem>>() {
+            @Override
+            public void OnSuccess(List<MallGoodItem> items) {
+                TDLog.e(items);
+                if (callback != null) {
+                    callback.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void OnFail(int code, String err) {
+                super.OnFail(code, err);
                 TDLog.e(code,err);
                 if (callback != null) {
                     callback.onFailure();

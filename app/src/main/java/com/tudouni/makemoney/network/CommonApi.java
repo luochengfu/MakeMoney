@@ -11,6 +11,7 @@ import com.tudouni.makemoney.model.FoundTopicBean;
 import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.model.MallAlbumModel;
 import com.tudouni.makemoney.model.MallCommonModel;
+import com.tudouni.makemoney.model.MallGoodItem;
 import com.tudouni.makemoney.model.MessageResponsBean;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.RecommendTopicBean;
@@ -273,4 +274,7 @@ public interface CommonApi {
 
     @POST("shop/gethotcatalog")
     Observable<Result<List<MallAlbumModel>>> getMallAlbumData();
+
+    @POST("shop/getrecommendgoods")
+    Observable<Result<List<MallGoodItem>>> getRecommendGood();
 }

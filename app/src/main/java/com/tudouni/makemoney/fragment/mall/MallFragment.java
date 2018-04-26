@@ -35,9 +35,11 @@ public class MallFragment extends BaseFragment {
 
     private FragmentMallBinding mMallBinding;
     private MallViewModel mMallViewModel;
-    private MallItemAdapter mMallItemAdapter;
     private MallHeaderViewBinding mMallHeaderViewBinding;
     private AlbumItemAdapter mAlbumItemAdapter;
+
+    private RecommendGoodItemAdapter mRecommendGoodItemAdapter;
+    private LRecyclerViewAdapter mLRecyclerViewAdapter;
 
     @Override
     protected int getContentView() {
@@ -55,6 +57,10 @@ public class MallFragment extends BaseFragment {
     protected void initView(View view) {
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
         mMallBinding.lrvHome.setLayoutManager(layoutManager);
+
+        mRecommendGoodItemAdapter = new RecommendGoodItemAdapter(getActivity().getLayoutInflater());
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mRecommendGoodItemAdapter);
+        mMallBinding.lrvHome.setAdapter(mLRecyclerViewAdapter);
         initHeaderView();
     }
 
@@ -62,6 +68,25 @@ public class MallFragment extends BaseFragment {
     protected void initData() {
         loadBannerData();
         loadMallAlbum();
+        loadRecommendGood();
+    }
+
+    private void loadRecommendGood() {
+        if (mMallViewModel != null) {
+            mMallViewModel.loadRecommendGoodData(new VMResultCallback<List<MallGoodItem>>() {
+                @Override
+                public void onSuccess(List<MallGoodItem> data) {
+                    if (mRecommendGoodItemAdapter != null) {
+                        mRecommendGoodItemAdapter.replaceData(data);
+                    }
+                }
+
+                @Override
+                public void onFailure() {
+
+                }
+            });
+        }
     }
 
     private void loadMallAlbum() {
@@ -100,20 +125,14 @@ public class MallFragment extends BaseFragment {
 
     private void initHeaderView(){
         mMallHeaderViewBinding = DataBindingUtil.inflate(getActivity().getLayoutInflater(), R.layout.mall_header_view,mMallBinding.lrvHome,false);
-        mMallItemAdapter = new MallItemAdapter(getActivity().getLayoutInflater());
-        LRecyclerViewAdapter lRecyclerViewAdapter = new LRecyclerViewAdapter(mMallItemAdapter);
-        lRecyclerViewAdapter.addHeaderView(mMallHeaderViewBinding.getRoot());
-        mMallBinding.lrvHome.setAdapter(lRecyclerViewAdapter);
+
+        mLRecyclerViewAdapter.addHeaderView(mMallHeaderViewBinding.getRoot());
 
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(),5);
         mMallHeaderViewBinding.rvAlbum.setLayoutManager(layoutManager);
         mAlbumItemAdapter = new AlbumItemAdapter(getActivity().getLayoutInflater());
         mMallHeaderViewBinding.rvAlbum.setAdapter(mAlbumItemAdapter);
 
-
-//        List<MallGoodItem> list = new ArrayList<>();
-//        list.add(new MallGoodItem());
-//        mMallItemAdapter.notifyDataSetChanged();
     }
 
     class MallBannerViewHolder implements MZViewHolder<MallAlbumModel>{

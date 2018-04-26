@@ -13,6 +13,7 @@ import com.tudouni.makemoney.model.FoundTopicBean;
 import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.model.MallAlbumModel;
 import com.tudouni.makemoney.model.MallCommonModel;
+import com.tudouni.makemoney.model.MallGoodItem;
 import com.tudouni.makemoney.model.MessageResponsBean;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.Category;
@@ -255,6 +256,13 @@ public class CommonScene extends RetrofitUtils {
      */
     public static void getMallAlbumData(BaseObserver<List<MallAlbumModel>> observer){
         setSubscribe(commonApi.getMallAlbumData(),observer);
+    }
+
+    /**
+     * 商城首页推荐
+     */
+    public static void getRecommendGood(BaseObserver<List<MallGoodItem>> observer){
+        setSubscribe(commonApi.getRecommendGood(),observer);
     }
 
     /**
