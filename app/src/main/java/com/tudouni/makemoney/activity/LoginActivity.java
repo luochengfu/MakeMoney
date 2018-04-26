@@ -25,6 +25,7 @@ import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.myApplication.jPush.TagAliasOperatorHelper;
 import com.tudouni.makemoney.network.CommonScene;
+import com.tudouni.makemoney.network.NetConfig;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.CommonUtil;
 import com.tudouni.makemoney.utils.ToastUtil;
@@ -114,7 +115,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             protected void onNoDoubleClick(View v) {
                 MobclickAgent.onEvent(LoginActivity.this, "lg_deal");
-//                ForwardUtils.target(LoginActivity.this, Constant.h5_loginXy);
+                Intent intent = new Intent(LoginActivity.this,H5Activity.class);
+                intent.putExtra("url", NetConfig.getBaseTuDouNiH5Url()+"mycenter/protocol.html");
+                startActivity(intent);
             }
         });
     }

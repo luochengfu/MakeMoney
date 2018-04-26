@@ -27,6 +27,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.tudouni.makemoney.activity.H5Activity;
 import com.tudouni.makemoney.activity.MainActivity;
+import com.tudouni.makemoney.activity.RefreshWebViewActivity;
 import com.tudouni.makemoney.interfaces.IActionListener;
 import com.tudouni.makemoney.model.LogOut;
 import com.tudouni.makemoney.model.User;
@@ -558,11 +559,11 @@ public class H5WebViewClient extends WVJBWebViewClient
             return true;
         }
 
-        if(url.startsWith(NetConfig.getShopMainUrl())) {
-//            Intent intent = new Intent(mActivity, FreeShopActivity.class);
-//            intent.putExtra("tagUrl", url);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//            mActivity.startActivity(intent);
+        if(url.startsWith(NetConfig.getBaseTuDouNiH5Url())) {
+            Intent intent = new Intent(mActivity, RefreshWebViewActivity.class);
+            intent.putExtra("url", url);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            mActivity.startActivity(intent);
         }
 
         return super.shouldOverrideUrlLoading(view, url);
