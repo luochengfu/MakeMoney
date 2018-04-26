@@ -39,6 +39,7 @@ public class GlideUtil {
     }
 
     public void loadImage(Context context, String url, ImageView imageView, int defaultImg) {
+        if (imageView == null) return;
         Glide.with(context)
                 .load(url)
                 .error(defaultImg)
@@ -51,8 +52,9 @@ public class GlideUtil {
 
     /**
      * 加载图片【数据绑定方式，xml中引用】，也可以直接调用
-     * @param imageView  图片View
-     * @param url 路径
+     *
+     * @param imageView 图片View
+     * @param url       路径
      */
     @BindingAdapter("loadImage")
     public static void bindImage(ImageView imageView, String url) {
@@ -61,9 +63,10 @@ public class GlideUtil {
 
     /**
      * 加载圆角图片【数据绑定方式，xml中引用】，也可以直接调用
-     * @param imageView   图片View
-     * @param url  图片路径
-     * @param dp   圆角弧度
+     *
+     * @param imageView 图片View
+     * @param url       图片路径
+     * @param dp        圆角弧度
      */
     @BindingAdapter({"roundImageUrl", "roundImageCornerRadius"})
     public static void roundImage(ImageView imageView, String url, String dp) {

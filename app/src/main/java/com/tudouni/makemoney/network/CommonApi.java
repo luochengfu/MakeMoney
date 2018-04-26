@@ -11,6 +11,7 @@ import com.tudouni.makemoney.model.FoundTopicBean;
 import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.model.MallAlbumModel;
 import com.tudouni.makemoney.model.MallCommonModel;
+import com.tudouni.makemoney.model.MessageResponsBean;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.RecommendTopicBean;
 import com.tudouni.makemoney.model.User;
@@ -237,4 +238,36 @@ public interface CommonApi {
     @POST("/shop/income/profile/{uid}")
     Observable<Result<AgentInfo>> getMineTicketBook(@Path("uid") String uid);
 
+
+    /**
+     * 获取消息列表
+     *
+     * @param uid
+     * @param msgpage  个人系统消息页数
+     * @param gmsgpage 全局系统消息页数
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/shop/getSysMsg")
+    Observable<Result<MessageResponsBean>> getSysMsg(@Field("uid") String uid, @Field("msgpage") int msgpage, @Field("gmsgpage") int gmsgpage);
+
+    /**
+     * 是否有未读消息
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/shop/isThereUnreadMsg")
+    Observable<Result<MessageResponsBean>> isThereUnreadMsg(@Field("uid") String uid);
+
+    /**
+     * 已读消息上报
+     *
+     * @param sysmsgtime  个人系统消息最近一条的时间戳，消息体有带time字段，没有则填0
+     * @param gsysmsgtime 全局系统消息最近一条的时间戳，消息体有带time字段，没有则填0
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/shop/updateMsgReadInfo")
+    Observable<Result<Object>> updateMsgReadInfo(@Field("sysmsgtime") long sysmsgtime, @Field("gsysmsgtime") long gsysmsgtime);
 }

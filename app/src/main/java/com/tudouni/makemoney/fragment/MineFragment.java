@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.model.AgentInfo;
+import com.tudouni.makemoney.model.MessageResponsBean;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.CommonScene;
@@ -231,37 +232,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             MobclickAgent.onEvent(getContext(), statisticsType);
     }
 
-    private void toShop() {
-//        RxUtils.rx(com.doubozhibo.tudouni.shop.net.Api.getService().haveShop(), new OnNext<Response<Boolean>>() {
-//            @Override
-//            public void onNext(Response<Boolean> booleanResponse) {
-//                Intent intent = new Intent();
-//                intent.putExtra("appVersion", CommonHelper.getAppVersionName(App.getContext()));
-//                intent.putExtra("deviceId", App.deviceId);
-//                intent.putExtra("deviceModel", App.deviceModel);
-//                intent.putExtra("osType", App.osType);
-//                intent.putExtra("osVersion", App.osVersion);
-//                String province = "";
-//                String city = "";
-//                if (App.sLocal != null) {
-//                    province = App.sLocal.getProvince();
-//                    city = App.sLocal.getCity();
-//                }
-//                intent.putExtra("province", province);
-//                intent.putExtra("city", city);
-//                if (booleanResponse.result) {
-//                    intent.setClass(getActivity(), MyShopActivity.class);
-//                } else {
-//                    intent.setClass(getActivity(), CreateShopActivity.class);
-//                }
-//                startActivity(intent);
-//            }
-//        });
-    }
-
-    public void refresh() {
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -299,6 +269,19 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 ToastUtil.show("商城收益" + err + ":（" + code + ")");
             }
         });
+        CommonScene.isThereUnreadMsg(new BaseObserver<MessageResponsBean>() {
+            @Override
+            public void OnSuccess(MessageResponsBean o) {
+                tv_chat_dot.setVisibility(o.isRes() ? View.VISIBLE : View.GONE);
+            }
+
+            @Override
+            public void OnFail(int code, String err) {
+                ToastUtil.showError("获取消息状态 error：" + err, code);
+            }
+        });
+
+
 //        sessionMsg(null);
 
     }

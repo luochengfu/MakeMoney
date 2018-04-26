@@ -7,14 +7,27 @@ import android.support.v7.widget.RecyclerView;
 
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.adapter.MessageAdapter;
+import com.tudouni.makemoney.model.MessageResponsBean;
 import com.tudouni.makemoney.model.MineMessage;
+import com.tudouni.makemoney.myApplication.MyApplication;
+import com.tudouni.makemoney.network.CommonScene;
+import com.tudouni.makemoney.network.rx.BaseObserver;
+import com.tudouni.makemoney.utils.ToastUtil;
+import com.tudouni.makemoney.utils.TuDouLogUtils;
+import com.tudouni.makemoney.view.MyDecoration;
 
 import java.util.ArrayList;
 
+/**
+ * 消息列表界面
+ */
 public class MessageActivity extends AppCompatActivity {
+    private String TAG = "MessageActivity";
     private RecyclerView mRcMessage;
     private MessageAdapter mMessageAdapter;
     private ArrayList<MineMessage> mData;
+    private int msgpage = 1;
+    private int gmsgpage = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +40,31 @@ public class MessageActivity extends AppCompatActivity {
     private void initData() {
         if (mData == null)
             mData = new ArrayList<>();
+        CommonScene.getSysMsg(MyApplication.getLoginUser().getUid(), msgpage, gmsgpage, new BaseObserver<MessageResponsBean>() {
+            @Override
+            public void OnSuccess(MessageResponsBean messageResponsBean) {
+                if (messageResponsBean == null) return;
+                ArrayList<MineMessage> mData = new ArrayList<>();
+                if (msgpage + gmsgpage == 2) {
+                    updateMsgReadInfo(messageResponsBean);
+                }
+                if (messageResponsBean.getSysmsg() != null && !messageResponsBean.getSysmsg().isEmpty()) {
+                    mData.addAll(messageResponsBean.getSysmsg());
+                    msgpage++;
+                }
+                if (messageResponsBean.getGsysmsg() != null && !messageResponsBean.getGsysmsg().isEmpty()) {
+                    mData.addAll(messageResponsBean.getGsysmsg());
+                    gmsgpage++;
+                }
+                mMessageAdapter.addData(mData);
+            }
+
+            @Override
+            public void OnFail(int code, String err) {
+                super.OnFail(code, err);
+                ToastUtil.showError(err, code);
+            }
+        });
     }
 
     private void initView() {
@@ -35,9 +73,33 @@ public class MessageActivity extends AppCompatActivity {
         //设置RecyclerView 布局
         mRcMessage.setLayoutManager(layoutmanager);
         //设置Adapter
-        mMessageAdapter = new MessageAdapter();
+        mMessageAdapter = new MessageAdapter(this);
         mRcMessage.setAdapter(mMessageAdapter);
+        mRcMessage.addItemDecoration(new MyDecoration(this, MyDecoration.HORIZONTAL_LIST));
 
 //        mRcMessage.setIte
+    }
+
+
+    /**
+     * 上报已读消息
+     *
+     * @param messageResponsBean
+     */
+    private void updateMsgReadInfo(MessageResponsBean messageResponsBean) {
+        if (messageResponsBean == null) return;
+        long sysmsgtime = (messageResponsBean.getSysmsg() != null && messageResponsBean.getSysmsg().size() > 0) ? (messageResponsBean.getSysmsg().get(0).getTime()) : 0;
+        long gsysmsgtime = (messageResponsBean.getGsysmsg() != null && messageResponsBean.getGsysmsg().size() > 0) ? (messageResponsBean.getGsysmsg().get(0).getTime()) : 0;
+        CommonScene.updateMsgReadInfo(sysmsgtime, gsysmsgtime, new BaseObserver<Object>() {
+            @Override
+            public void OnSuccess(Object o) {
+                TuDouLogUtils.i(TAG, "updateMsgReadInfo secuss");
+            }
+
+            @Override
+            public void OnFail(int code, String err) {
+                ToastUtil.showError(err, code);
+            }
+        });
     }
 }

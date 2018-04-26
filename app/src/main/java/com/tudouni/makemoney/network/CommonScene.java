@@ -12,6 +12,7 @@ import com.tudouni.makemoney.model.FoundTopicBean;
 import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.model.MallAlbumModel;
 import com.tudouni.makemoney.model.MallCommonModel;
+import com.tudouni.makemoney.model.MessageResponsBean;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.model.RecommendTopicBean;
@@ -25,6 +26,8 @@ import com.tudouni.makemoney.widget.versionUpdate.Upinfo;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import retrofit2.http.Field;
 
 /**
  * Created by Administrator on 2018/4/20 0020.
@@ -266,6 +269,30 @@ public class CommonScene extends RetrofitUtils {
      */
     public static void getFoundTopic(BaseObserver<List<FoundTopicBean>> observer) {
         setSubscribe(commonApi.getFoundTopic(), observer);
+    }
+
+    /**
+     * 获取消息列表
+     */
+    public static void getSysMsg(String uid, int msgpage, int gmsgpage, BaseObserver<MessageResponsBean> observer) {
+        setSubscribe(commonApi.getSysMsg(uid, msgpage, gmsgpage), observer);
+    }
+
+    /**
+     * 是否有未读消息
+     *
+     * @param observer
+     */
+    public static void isThereUnreadMsg(BaseObserver<MessageResponsBean> observer) {
+        if (MyApplication.getLoginUser() == null) return;
+        setSubscribe(commonApi.isThereUnreadMsg(MyApplication.getLoginUser().getUid()), observer);
+    }
+
+    /**
+     * 获取消息列表
+     */
+    public static void updateMsgReadInfo(long sysmsgtime, long gsysmsgtime, BaseObserver<Object> observer) {
+        setSubscribe(commonApi.updateMsgReadInfo(sysmsgtime, gsysmsgtime), observer);
     }
 
 }

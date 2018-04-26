@@ -19,6 +19,10 @@ public class ToastUtil {
     private ToastUtil() {
     }
 
+    public static void showError(String text, int errrorCode) {
+        show(text + "（" + errrorCode + ")");
+    }
+
     public static void show(CharSequence text) {
         if (TextUtils.isEmpty(text))
             return;

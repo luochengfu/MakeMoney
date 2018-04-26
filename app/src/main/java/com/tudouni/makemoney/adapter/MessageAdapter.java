@@ -1,15 +1,22 @@
 package com.tudouni.makemoney.adapter;
 
+import android.content.Context;
+import android.graphics.drawable.Icon;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.model.MineMessage;
 import com.tudouni.makemoney.model.RecommendTopicBean;
+import com.tudouni.makemoney.utils.TimeUtil;
+import com.tudouni.makemoney.utils.TuDouTextUtil;
 import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,21 +28,25 @@ import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
     private List<MineMessage> mDatas = new ArrayList<>();
+    private Context context;
 
-    public MessageAdapter() {
-
+    public MessageAdapter(Context context) {
+        this.context = context;
     }
 
     @Override
     public MessageViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.found_item_layout, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_message, viewGroup, false);
         return new MessageViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MessageViewHolder holder, int position) {
         MineMessage itemBean = mDatas.get(position);
-//        GlideUtil.bindImage(holder.itemIV, itemBean.getImageUrl());
+        holder.mIcon.setImageResource((itemBean.getType() == 2) ? R.mipmap.ic_note_system : R.mipmap.ic_note_up_leve);
+        TuDouTextUtil.setTextToTextView(holder.mTvTitle, itemBean.getTitle());
+        TuDouTextUtil.setTextToTextView(holder.mMessageContent, itemBean.getContent());
+        TuDouTextUtil.setTextToTextView(holder.mTvTime, TimeUtil.getTimeFromMillisecond(itemBean.getTime()));
     }
 
     @Override
@@ -56,11 +67,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     }
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
-        public ImageView itemIV;
+        public ImageView mIcon;
+        public TextView mTvTitle;
+        public TextView mTvTime;
+        public TextView mMessageContent;
 
         public MessageViewHolder(View itemView) {
             super(itemView);
-            this.itemIV = (ImageView) itemView.findViewById(R.id.found_item_iv);
+            this.mIcon = (ImageView) itemView.findViewById(R.id.iteam_icon);
+            this.mTvTitle = (TextView) itemView.findViewById(R.id.tv_title);
+            this.mTvTime = (TextView) itemView.findViewById(R.id.tv_date);
+            this.mMessageContent = (TextView) itemView.findViewById(R.id.tv_message_content);
         }
     }
 }
