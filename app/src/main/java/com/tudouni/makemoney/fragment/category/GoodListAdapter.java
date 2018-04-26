@@ -1,5 +1,6 @@
 package com.tudouni.makemoney.fragment.category;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -7,10 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.tudouni.makemoney.R;
+import com.tudouni.makemoney.activity.H5Activity;
 import com.tudouni.makemoney.databinding.ItemGoodGridBinding;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.utils.ScreenUtils;
+import com.tudouni.makemoney.utils.TDLog;
 import com.tudouni.makemoney.view.BaseRecyclerViewBindingAdapter;
 
 /**
@@ -59,6 +62,16 @@ public class GoodListAdapter extends BaseRecyclerViewBindingAdapter<Category> {
         holder.getBinding().executePendingBindings();
         GoodItemAdapter itemAdapter = new GoodItemAdapter(mInflater);
         itemBinding.rvGoodList.setAdapter(itemAdapter);
+        itemAdapter.setOnItemClickListener((index,good) -> {
+            //TODO:
+            TDLog.e(good,index);
+            Intent intent = new Intent(MyApplication.sCurrActivity, H5Activity.class);
+            intent.putExtra("url","http://dev-sbzhibo-h5.oss-cn-hangzhou.aliyuncs.com/shoplite/html/resultlist.html?uid=" + MyApplication.getLoginUser().getUid() +
+            "&token="+MyApplication.getLoginUser().getToken()+
+            "&unionid=" + MyApplication.getLoginUser().getUnionid() +
+            "&search=" + good.getName());
+            MyApplication.sCurrActivity.startActivity(intent);
+        });
         itemAdapter.replaceData(this.data.get(position).getCategorys());
     }
 }
