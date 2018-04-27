@@ -238,7 +238,7 @@ public interface CommonApi {
      *
      * @return
      */
-    @POST("/shop/income/profile/{uid}")
+    @POST("/zzshop/income/profile/{uid}")
     Observable<Result<AgentInfo>> getMineTicketBook(@Path("uid") String uid);
 
 
@@ -251,7 +251,7 @@ public interface CommonApi {
      * @return
      */
     @FormUrlEncoded
-    @POST("/shop/getSysMsg")
+    @POST("/zzshop/getSysMsg")
     Observable<Result<MessageResponsBean>> getSysMsg(@Field("uid") String uid, @Field("msgpage") int msgpage, @Field("gmsgpage") int gmsgpage);
 
     /**
@@ -260,7 +260,7 @@ public interface CommonApi {
      * @return
      */
     @FormUrlEncoded
-    @POST("/shop/isThereUnreadMsg")
+    @POST("/zzshop/isThereUnreadMsg")
     Observable<Result<MessageResponsBean>> isThereUnreadMsg(@Field("uid") String uid);
 
     /**
@@ -271,15 +271,15 @@ public interface CommonApi {
      * @return
      */
     @FormUrlEncoded
-    @POST("/shop/updateMsgReadInfo")
+    @POST("/zzshop/updateMsgReadInfo")
     Observable<Result<Object>> updateMsgReadInfo(@Field("sysmsgtime") long sysmsgtime, @Field("gsysmsgtime") long gsysmsgtime);
 
-    @POST("shop/gethotcatalog")
+    @POST("zzshop/gethotcatalog")
     Observable<Result<List<MallAlbumModel>>> getMallAlbumData();
 
-    @POST("shop/getrecommendgoods")
+    @POST("zzshop/getrecommendgoods")
     Observable<Result<List<MallGoodItem>>> getRecommendGood();
 
-    @POST("shop/getownGoodscatalog")
+    @POST("zzshop/getownGoodscatalog")
     Observable<Result<ObservableArrayList<MallAlbumModel>>> getSelfGood();
 }
