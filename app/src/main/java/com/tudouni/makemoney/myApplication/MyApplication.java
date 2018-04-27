@@ -1,20 +1,33 @@
 package com.tudouni.makemoney.myApplication;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipDescription;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.support.multidex.MultiDex;
 
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.view.CropImageView;
+import com.tudouni.makemoney.activity.BindInvitationCodeActivity;
 import com.tudouni.makemoney.activity.BindingInvitationActivity;
 import com.tudouni.makemoney.activity.FaceToFaceActivity;
+import com.tudouni.makemoney.activity.LoginActivity;
+import com.tudouni.makemoney.activity.PwdActivity;
+import com.tudouni.makemoney.activity.SearchGoodActivity;
+import com.tudouni.makemoney.activity.SplashActivity;
+import com.tudouni.makemoney.activity.TelLoginActivity;
 import com.tudouni.makemoney.model.AppConfig;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.myApplication.jPush.TagAliasOperatorHelper;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseObserver;
+import com.tudouni.makemoney.utils.ClipboardUtil;
 import com.tudouni.makemoney.utils.DBLifecycleHandler;
+import com.tudouni.makemoney.utils.PatternUtil;
 import com.tudouni.makemoney.utils.UserInfoHelper;
+import com.tudouni.makemoney.utils.ValidateUtil;
 import com.tudouni.makemoney.utils.base.BaseFrameworkInit;
 import com.tudouni.makemoney.utils.base.IBaseRequirement;
 import com.umeng.analytics.MobclickAgent;
@@ -29,12 +42,14 @@ import cn.jpush.android.api.JPushInterface;
  * Created by ZhangPeng on 2018/4/19.
  */
 
-public class MyApplication extends BaseApplication {
+public class MyApplication extends BaseApplication implements ClipboardUtil.OnPrimaryClipChangedListener{
     private static MyApplication sContext;
     private static User mLoginUser;
     public static String mNewUserClipPhone = "";
     public static AppConfig appConfig;
     public static Activity sCurrActivity = null;
+    private ClipboardUtil mClipboard;
+    public static String mClipStr = "";
 
 
     @Override
@@ -72,8 +87,17 @@ public class MyApplication extends BaseApplication {
         UMConfigure.setEncryptEnabled(true);
         //场景类型设置接口
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
-        PlatformConfig.setWeixin("wxb7563676e3d2b035", "b3babc1e374bf1f7fbb540d2497f64ed");//需要替换第二个apps
+        PlatformConfig.setWeixin("wx9dc84ba75bee1a73", "ea0ad0c6438f1dd58f8909dc0e531276");//需要替换第二个apps
         PlatformConfig.setQQZone("1106781729", "KsDhxiNWe91diHM0");
+
+        //注册监听器
+        ClipboardUtil.init(this);
+        mClipboard = ClipboardUtil.getInstance();
+        mClipboard.addOnPrimaryClipChangedListener(this);
+        String mimeType = mClipboard.getPrimaryClipMimeType();
+        if (ClipDescription.MIMETYPE_TEXT_PLAIN.equals(mimeType)) {
+            mClipStr = mClipboard.coercePrimaryClipToText().toString();
+        }
     }
 
     /**
@@ -134,7 +158,7 @@ public class MyApplication extends BaseApplication {
         UMConfigure.setEncryptEnabled(true);
         //场景类型设置接口
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
-        PlatformConfig.setWeixin("wxb7563676e3d2b035", "b3babc1e374bf1f7fbb540d2497f64ed");//需要替换第二个apps
+        PlatformConfig.setWeixin("wx9dc84ba75bee1a73", "ea0ad0c6438f1dd58f8909dc0e531276");//需要替换第二个apps
         PlatformConfig.setQQZone("1106781729", "KsDhxiNWe91diHM0");
     }
 
@@ -155,7 +179,7 @@ public class MyApplication extends BaseApplication {
             public void onActivityResumed(Activity activity) {
                 super.onActivityResumed(activity);
 
-//                popGoodSerachWindow(activity);
+                popGoodSerachWindow(activity);
                 sCurrActivity = activity;
 
             }
@@ -184,12 +208,79 @@ public class MyApplication extends BaseApplication {
         UserInfoHelper.clearLoginUser(sContext);
     }
 
-
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        mClipboard.removeOnPrimaryClipChangedListener(this);
+    }
 
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
 //        MultiDex.install(this);
+    }
+
+    private void popGoodSerachWindow(Activity activity) {
+        if (activity.getClass().getName().startsWith("com.tudouni") && !(sCurrActivity instanceof SearchGoodActivity) && !(activity instanceof LoginActivity) &&
+                !(activity instanceof TelLoginActivity) && !(activity instanceof PwdActivity) &&
+                !(activity instanceof SplashActivity) && !(sCurrActivity instanceof BindInvitationCodeActivity)) {
+            String mimeType = mClipboard.getPrimaryClipMimeType();
+            //一般来说，收到系统 onPrimaryClipChanged() 回调时，剪贴板一定不为空
+            //但为了保险起见，在这边还是做了空指针判断
+
+            if (ClipDescription.MIMETYPE_TEXT_PLAIN.equals(mimeType) || ClipDescription.MIMETYPE_TEXT_HTML.equals(mimeType)) {
+                if (mClipStr != null && !mClipStr.equals("") && mClipStr.trim().length() > 6 && !ValidateUtil.isMobileNO(mClipStr) && mClipStr.startsWith("#tdn")) {
+                    String userCode = mClipStr.substring(4, mClipStr.lastIndexOf("#tdn"));
+                    ClipboardUtil.getInstance().copyText("", "");
+                    mClipStr = "";
+                    Intent intent = new Intent(getContext(), BindInvitationCodeActivity.class);
+                    intent.putExtra("userCode", userCode);
+                    activity.startActivity(intent);
+
+                } else if (mClipStr != null && !mClipStr.equals("") && mClipStr.trim().length() > 15 && !PatternUtil.matchClipStr(mClipStr.trim()) &&
+                        !PatternUtil.matchURL(mClipStr.trim()) && !ValidateUtil.isMobileNO(mClipStr) && !mClipStr.startsWith("#bind")) {
+                    Intent intent = new Intent(getContext(), SearchGoodActivity.class);
+                    intent.putExtra("url", mClipStr);
+                    activity.startActivity(intent);
+                }
+            }
+        }
+
+        //如果是新注册的账户如果粘贴板有"#tdn绑定码#tdn手机号"格式就赋值到登录界面的账号登录中的手机控件
+        if (mClipStr != null && !mClipStr.equals("") && mClipStr.trim().length() > 6 && !ValidateUtil.isMobileNO(mClipStr) && mClipStr.startsWith("#tdn")) {
+            String phone = mClipStr.substring(mClipStr.lastIndexOf("#tdn") + 4, mClipStr.length());
+            if (ValidateUtil.isMobileNO(mClipStr.substring(mClipStr.lastIndexOf("#tdn") + 4, mClipStr.length()))) {
+                mNewUserClipPhone = phone;
+            }
+        }
+
+        //如果只有手机号码的情况
+        if (mClipStr != null && !mClipStr.equals("") && mClipStr.trim().length() > 5 && !ValidateUtil.isMobileNO(mClipStr) && mClipStr.startsWith("#bind")) {
+            String phone = mClipStr.substring(mClipStr.lastIndexOf("#bind") + 5, mClipStr.length());
+            if (ValidateUtil.isMobileNO(phone)) {
+                ClipboardUtil.getInstance().copyText("", "");
+                mNewUserClipPhone = phone;
+            }
+        }
+    }
+
+    @Override
+    public void onPrimaryClipChanged(ClipboardManager clipboardManager) {
+        ClipData data = clipboardManager.getPrimaryClip();
+        String mimeType = mClipboard.getPrimaryClipMimeType();
+        //一般来说，收到系统 onPrimaryClipChanged() 回调时，剪贴板一定不为空
+        //但为了保险起见，在这边还是做了空指针判断
+        if (data == null) {
+            return;
+        }
+
+        if (ClipDescription.MIMETYPE_TEXT_PLAIN.equals(mimeType) || ClipDescription.MIMETYPE_TEXT_HTML.equals(mimeType)) {
+            if (!DBLifecycleHandler.isApplicationInForeground()) {
+                mClipStr = mClipboard.coercePrimaryClipToText().toString();
+                return;
+            }
+            popGoodSerachWindow(sCurrActivity);
+        }
     }
 
 }
