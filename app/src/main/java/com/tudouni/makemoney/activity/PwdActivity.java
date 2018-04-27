@@ -213,16 +213,15 @@ public class PwdActivity extends BaseActivity implements View.OnClickListener {
         map.put("password", etPwd.getText().toString());
 
 
+        String uid = "";
 
         if (mPageType.equals("1")) {
-            map.put("uid", mUser.getUid());
-            map.put("token", mUser.getToken());
+            uid = mUser.getUid();
         } else if (mPageType.equals("3")) {
-            map.put("uid", mUserId);
-            map.put("token", mToken);
+            uid = mUserId;
         }
 
-        CommonScene.setPWD(etPwd.getText().toString(), new BaseObserver<String>() {
+        CommonScene.setPWD(etPwd.getText().toString(),uid, new BaseObserver<String>() {
             @Override
             public void OnSuccess(String s) {
                 ToastUtil.show("设置密码成功");

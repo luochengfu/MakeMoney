@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:paddingBottom="30dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:background="@mipmap/my_money_public_bottom"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/bind_invitation_close_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginRight="6dp"
+                android:padding="8dp"
+                android:src="@mipmap/game_out"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:textScaleX="1.2"
+            android:text="接受邀请"/>
+
+        <TextView
+            android:id="@+id/bind_number_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="@color/color_8A552A"
+            android:textSize="13sp"
+            android:layout_marginTop="12dp"
+            android:text="你的粘贴板存在邀请码"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="@color/color_8A552A"
+            android:textSize="13sp"
+            android:layout_marginTop="2dp"
+            android:text="是否立即接受邀请？"/>
+    </LinearLayout>
+
+
+    <com.tudouni.makemoney.view.ShapeImageView
+        android:id="@+id/ivPhoto"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="130dp"
+        android:src="@mipmap/default_head"/>
+
+    <TextView
+        android:id="@+id/bind_invitation_code_layout_nick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_below="@id/ivPhoto"
+        android:textColor="@color/gray"
+        android:layout_marginTop="8dp"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/bind_invitation_code_layout_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_below="@id/bind_invitation_code_layout_nick"
+        android:textColor="@color/gray"
+        android:layout_marginTop="4dp"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:id="@+id/bind_invitation_code_layout_bind_buttom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_below="@id/bind_invitation_code_layout_num"
+        android:textColor="@color/color_333333"
+        android:background="@color/color_FFE300"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="6dp"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="6dp"
+        android:textSize="13sp"
+        android:text="接受邀请"/>
+
+    <TextView
+        android:id="@+id/bind_invitation_code_layout_text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_below="@id/bind_invitation_code_layout_bind_buttom"
+        android:textColor="@color/gray"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="14dp"
+        android:textSize="14sp"
+        android:text="绑定说明"/>
+
+    <TextView
+        android:id="@+id/bind_invitation_code_layout_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bind_invitation_code_layout_text1"
+        android:textColor="@color/color_999999"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:textSize="12sp"
+        android:text="1.土豆泥邀请机制是基于平等自愿原则下进行的，请用户接受邀请时认真确认。"/>
+
+    <TextView
+        android:id="@+id/bind_invitation_code_layout_text3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bind_invitation_code_layout_text2"
+        android:textColor="@color/color_999999"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:textSize="12sp"
+        android:text="2.土豆泥官方不会以任何形式要求您接受任何邀请码。"/>
+
+    <TextView
+        android:id="@+id/bind_invitation_code_layout_text4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bind_invitation_code_layout_text3"
+        android:textColor="@color/color_999999"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:textSize="12sp"
+        android:text="3.在日常使用中，如发现恶意邀请、充值欺诈，请联系官方客服进行举报。"/>
+
+</RelativeLayout>

@@ -16,6 +16,7 @@ import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.BitMapUtils;
+import com.tudouni.makemoney.utils.Constants;
 import com.tudouni.makemoney.utils.DialogUtils;
 import com.tudouni.makemoney.utils.ForwardUtils;
 import com.tudouni.makemoney.utils.InjectView;
@@ -111,8 +112,7 @@ public class InvitationDouFenActivity extends BaseActivity implements View.OnCli
 //                shareWindow_v2.show(this);
                 break;
             case R.id.right_layer:
-//                String para = "?uid=" + App.getLoginUser().getUid() + "&token=" + App.getLoginUser().getToken() + "&unionid=" + App.getLoginUser().getUnionid();
-//                ForwardUtils.target(this, Constant.h5_inviterule_rule + para);
+                ForwardUtils.target(this, Constants.h5_inviterule);
                 break;
         }
     }

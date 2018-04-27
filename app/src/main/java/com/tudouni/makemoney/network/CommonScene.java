@@ -8,6 +8,7 @@ import com.tudouni.makemoney.model.AgentInfo;
 import com.tudouni.makemoney.model.AliAuth;
 import com.tudouni.makemoney.model.AppConfig;
 import com.tudouni.makemoney.model.BindInfo;
+import com.tudouni.makemoney.model.BindUserBean;
 import com.tudouni.makemoney.model.Invite;
 import com.tudouni.makemoney.model.Banner;
 import com.tudouni.makemoney.model.FoundTopicBean;
@@ -61,8 +62,8 @@ public class CommonScene extends RetrofitUtils {
         setSubscribe(commonApi.telCodeLogin(phone, code, model, brand), observer);
     }
 
-    public static void setPWD(String password, BaseObserver<String> observer) {
-        setSubscribe(commonApi.setPWD(password), observer);
+    public static void setPWD(String password,String uid, BaseObserver<String> observer) {
+        setSubscribe(commonApi.setPWD(password,uid), observer);
     }
 
     public static void getConfig(BaseObserver<AppConfig> observer) {
@@ -318,6 +319,20 @@ public class CommonScene extends RetrofitUtils {
      */
     public static void updateMsgReadInfo(long sysmsgtime, long gsysmsgtime, BaseObserver<Object> observer) {
         setSubscribe(commonApi.updateMsgReadInfo(sysmsgtime, gsysmsgtime), observer);
+    }
+
+    /**
+     * 邀请绑定用户数据
+     */
+    public static void getBindUserInfo(String userCode, BaseObserver<BindUserBean> observer) {
+        setSubscribe(commonApi.getBindUserInfo(userCode), observer);
+    }
+
+    /**
+     * 绑定操作
+     */
+    public static void addBindUser(String userCode, String inviterUnionid, BaseObserver<String> observer) {
+        setSubscribe(commonApi.addBindUser(userCode, inviterUnionid), observer);
     }
 
 }

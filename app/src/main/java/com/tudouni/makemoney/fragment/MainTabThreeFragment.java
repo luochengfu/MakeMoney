@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
@@ -22,6 +23,7 @@ import com.tudouni.makemoney.model.RecommendTopicBean;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.ScreenUtils;
+import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
 import com.tudouni.makemoney.view.MZBannerViewHolder;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
@@ -39,6 +41,7 @@ public class MainTabThreeFragment extends BaseFragment
     private View mHeadView;
     private LRecyclerView mLRecyclerView;
     private RecyclerView mRecyclerView;
+    private ImageView mHeadImageView;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private TopicAdapter mTopticAdapter;
     private FoundAdapter mAdapter;
@@ -65,6 +68,7 @@ public class MainTabThreeFragment extends BaseFragment
     }
 
     private void getServerDatas() {
+        getBanner();
         getRecommendTopic();
         getFoundTopic();
     }
@@ -93,6 +97,7 @@ public class MainTabThreeFragment extends BaseFragment
         mHeadView = getActivity().getLayoutInflater().inflate(R.layout.three_tab_header_layout, null, false);
         mBanner = (MZBannerView) mHeadView.findViewById(R.id.banner);
         mRecyclerView = (RecyclerView) mHeadView.findViewById(R.id.three_tab_rv_2);
+        mHeadImageView = (ImageView) mHeadView.findViewById(R.id.iv_banner);
 
         mTopticAdapter = new TopicAdapter();
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
@@ -134,10 +139,18 @@ public class MainTabThreeFragment extends BaseFragment
             public void OnSuccess(List<Banner> data) {
                 bannerList.clear();
                 bannerList.addAll(data);
+                if(bannerList.size() == 0) {
+                    mHeadImageView.setVisibility(View.GONE);
+                    mBanner.setVisibility(View.GONE);
+                }
                 if (bannerList != null && bannerList.size() > 0) {
                     if (bannerList.size() == 1) {
-//                        ImageUtils.glidRadiusImage(mLiveHeadBinding.ivBanner, bannerList.get(0).getImage(), 15);
+                        mHeadImageView.setVisibility(View.VISIBLE);
+                        mBanner.setVisibility(View.GONE);
+                        GlideUtil.bindImage(mHeadImageView,bannerList.get(0).getImageUrl());
                     } else {
+                        mHeadImageView.setVisibility(View.GONE);
+                        mBanner.setVisibility(View.VISIBLE);
                         mBanner.setPages(bannerList, new MZHolderCreator<MZBannerViewHolder>() {
                             @Override
                             public MZBannerViewHolder createViewHolder() {

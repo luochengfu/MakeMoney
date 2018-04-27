@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.adapter.MessageAdapter;
@@ -12,6 +13,8 @@ import com.tudouni.makemoney.model.MineMessage;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseObserver;
+import com.tudouni.makemoney.utils.Constants;
+import com.tudouni.makemoney.utils.ForwardUtils;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.TuDouLogUtils;
 import com.tudouni.makemoney.view.MyDecoration;
@@ -44,19 +47,21 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void OnSuccess(MessageResponsBean messageResponsBean) {
                 if (messageResponsBean == null) return;
-                ArrayList<MineMessage> mData = new ArrayList<>();
+                ArrayList<MineMessage> mmData = new ArrayList<>();
                 if (msgpage + gmsgpage == 2) {
                     updateMsgReadInfo(messageResponsBean);
                 }
                 if (messageResponsBean.getSysmsg() != null && !messageResponsBean.getSysmsg().isEmpty()) {
-                    mData.addAll(messageResponsBean.getSysmsg());
+                    mmData.addAll(messageResponsBean.getSysmsg());
                     msgpage++;
                 }
                 if (messageResponsBean.getGsysmsg() != null && !messageResponsBean.getGsysmsg().isEmpty()) {
-                    mData.addAll(messageResponsBean.getGsysmsg());
+                    mmData.addAll(messageResponsBean.getGsysmsg());
                     gmsgpage++;
                 }
-                mMessageAdapter.addData(mData);
+                if (mmData == null || mmData.isEmpty()) return;
+                mMessageAdapter.addData(mmData);
+                mData.addAll(mmData);
             }
 
             @Override
@@ -76,7 +81,28 @@ public class MessageActivity extends AppCompatActivity {
         mMessageAdapter = new MessageAdapter(this);
         mRcMessage.setAdapter(mMessageAdapter);
         mRcMessage.addItemDecoration(new MyDecoration(this, MyDecoration.HORIZONTAL_LIST));
+        mMessageAdapter.setOnItemClickListener(new MessageAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                String para = "?uid=" + MyApplication.getLoginUser().getUid() + "&token=" + MyApplication.getLoginUser().getToken() + "&unionid=" + MyApplication.getLoginUser().getUnionid();
+                switch (mData.get(position).getType()) {
+                    case 1:
+                        ForwardUtils.target(MessageActivity.this, mData.get(position).getUrl());
+                        break;
+                    case 2:
+                        ForwardUtils.target(MessageActivity.this, Constants.h5_mall_grade + para);
+                        break;
+                    case 3:
+                        ForwardUtils.target(MessageActivity.this, Constants.h5_makemoney + para);
+                        break;
+                }
+            }
 
+            @Override
+            public void onLongClick(int position) {
+
+            }
+        });
 //        mRcMessage.setIte
     }
 
