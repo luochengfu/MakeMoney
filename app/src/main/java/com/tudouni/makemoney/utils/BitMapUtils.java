@@ -45,12 +45,12 @@ public class BitMapUtils {
             return null;
         }
         Bitmap bitmap = backBitmap.copy(Bitmap.Config.RGB_565, true);
-        int size = backBitmap.getWidth() / 3;
+        int size = backBitmap.getWidth() / 5 * 2;
 //        if (size > frontBitmap.getWidth())
 //            size = frontBitmap.getWidth();
         Canvas canvas = new Canvas(bitmap);
-        int top = backBitmap.getHeight() - ScreenUtils.dp2px(context, 180) - size - 2;
-        int left = (backBitmap.getWidth() - size) / 2 - 2;
+        int top = (backBitmap.getHeight() - size) / 2 - ScreenUtils.dp2px(context, 80)-2;
+        int left = (backBitmap.getWidth() - size) / 2-2;
         Rect baseRect = new Rect(left, top, left + size, top + size);
         canvas.drawBitmap(frontBitmap, null, baseRect, null);
         return bitmap;
@@ -67,12 +67,13 @@ public class BitMapUtils {
         Bitmap potatoesBitMapBg = null;//海报背景图片
         Bitmap qrCodeBitmap = null;//二维码图片
         String mesg = "";
-        int mar = ScreenUtils.dp2px(context, 40);
-        int w = ScreenUtils.getScreenWidth(context) - mar * 2;
+//        int mar = ScreenUtils.dp2px(context, 40);
         try {
-            mesg = String.format(Share.getShareInviteUrl(), MyApplication.getLoginUser().getInvistCode(), URLEncoder.encode(MyApplication.getLoginUser().getNickName(), "utf-8"), MyApplication.getLoginUser().getUnionid());
-            qrCodeBitmap = CodeUtils.createImage(mesg, w / 2, w / 2, null);
+
             potatoesBitMapBg = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_potatoes_bg);
+            mesg = String.format(Share.getShareInviteUrl(), MyApplication.getLoginUser().getInvistCode(), URLEncoder.encode(MyApplication.getLoginUser().getNickName(), "utf-8"), MyApplication.getLoginUser().getUnionid());
+            int w = potatoesBitMapBg.getWidth() / 5 * 2;
+            qrCodeBitmap = CodeUtils.createImage(mesg, w, w, null);
             mPotatoesBitmap = BitMapUtils.mergeBitmap(context, potatoesBitMapBg, qrCodeBitmap);
         } catch (Exception e) {
             TuDouLogUtils.e(TAG, "生成海报出错 e:" + e.getMessage());

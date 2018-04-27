@@ -49,7 +49,8 @@ public class Constants {
     public static final String MY_INVITE = BASE_H5_URL + "/m/subject/invite.income.html";
     public static final String MAIN = BASE_PRE + "root";
     public static final String HOME = BASE_PRE + "home";
-    public static final String h5_doufen = BASE_H5_URL + "mycenter/doufen.html";//我的豆粉详情和我的邀请详情
+    public static final String h5_myinvite = BASE_H5_URL + "mycenter/myinvite.html";//我的豆粉详情和我的邀请详情
+    public static final String h5_bindsearch = BASE_H5_URL + "mycenter/bindsearch.html";//我的邀请顶部搜索
     public static final String H5_MALL_DINGDAN = BASE_H5_URL + "mycenter/order.html";//商城订单
     public static final String h5_mall_grade = BASE_H5_URL + "mycenter/mallgrade.html";//商城等级
     public static final String h5_collect = BASE_H5_URL + "mycenter/collect.html";//我的收藏

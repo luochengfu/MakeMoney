@@ -216,7 +216,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.ly_mine_invitation://我的邀请
                 statisticsType = "me_inviate";
-                ForwardUtils.target(getActivity(), Constants.h5_doufen + para);
+                ForwardUtils.target(getActivity(), Constants.h5_myinvite + para);
                 break;
             case R.id.ly_new_user_raiders:
                 ForwardUtils.target(getActivity(), Constants.h5_novice + para);

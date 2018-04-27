@@ -233,13 +233,21 @@ public interface CommonApi {
     @POST(NetConfig.UPINFO)
     Observable<Result<Upinfo>> getVersionUpdataInfo();
 
+//    /**
+//     * 我的账本
+//     *
+//     * @return
+//     */
+//    @POST("/zzshop/income/profile/{uid}")
+//    Observable<Result<AgentInfo>> getMineTicketBook(@Path("uid") String uid);
+
     /**
      * 我的账本
      *
      * @return
      */
-    @POST("/zzshop/income/profile/{uid}")
-    Observable<Result<AgentInfo>> getMineTicketBook(@Path("uid") String uid);
+    @POST("/zzshop/income/profile")
+    Observable<Result<AgentInfo>> getMineTicketBook(@Field("uid") String uid);
 
 
     /**

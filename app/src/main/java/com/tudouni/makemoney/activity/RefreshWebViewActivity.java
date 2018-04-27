@@ -31,6 +31,7 @@ import com.tudouni.makemoney.adapter.FoundAdapter;
 import com.tudouni.makemoney.adapter.TopicAdapter;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.utils.Constants;
+import com.tudouni.makemoney.utils.ForwardUtils;
 import com.tudouni.makemoney.utils.H5WebViewClient;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.WVJBWebViewClient;
@@ -49,8 +50,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class RefreshWebViewActivity extends BaseActivity implements
-        EasyPermissions.PermissionCallbacks
-{
+        EasyPermissions.PermissionCallbacks {
     public static final int REQUEST_CODE_PERMISSION_CALL = 3;
     private LRecyclerView mLRecyclerView;
     public MyTitleBar title_bar;
@@ -103,6 +103,21 @@ public class RefreshWebViewActivity extends BaseActivity implements
         setContentView(R.layout.refresh_webview_layout);
         initView();
         initDatas();
+        initTitleBar();
+    }
+
+    private void initTitleBar() {
+        if (title_bar == null) return;
+        if (url.startsWith(Constants.h5_myinvite)) {
+            title_bar.setRightIcon(R.mipmap.mall_search_icon);
+            title_bar.setRightIconStatus(View.VISIBLE);
+            title_bar.setOnRightClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ForwardUtils.target(RefreshWebViewActivity.this, Constants.h5_bindsearch);
+                }
+            });
+        }
     }
 
     private void initView() {
@@ -148,8 +163,7 @@ public class RefreshWebViewActivity extends BaseActivity implements
     }
 
     private void initWebView() {
-        WebChromeClient webChromeClient = new WebChromeClient()
-        {
+        WebChromeClient webChromeClient = new WebChromeClient() {
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 if (TextUtils.isEmpty(mDefaultTitle)) {
@@ -192,7 +206,7 @@ public class RefreshWebViewActivity extends BaseActivity implements
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
-        webViewClient = new H5WebViewClient(this,payHandler,(BridgeWebView) webview);
+        webViewClient = new H5WebViewClient(this, payHandler, (BridgeWebView) webview);
         webViewClient.enableLogging();
         webview.setWebViewClient(webViewClient);
 
@@ -221,6 +235,7 @@ public class RefreshWebViewActivity extends BaseActivity implements
         syncCookie();
         webview.loadUrl(url);
     }
+
     String phoneUrl;
 
     @Override
