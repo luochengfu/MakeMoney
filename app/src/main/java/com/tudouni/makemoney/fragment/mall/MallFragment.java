@@ -1,29 +1,31 @@
 package com.tudouni.makemoney.fragment.mall;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.tudouni.makemoney.R;
+import com.tudouni.makemoney.activity.H5Activity;
 import com.tudouni.makemoney.databinding.FragmentMallBinding;
 import com.tudouni.makemoney.databinding.MallHeaderViewBinding;
 import com.tudouni.makemoney.fragment.BaseFragment;
 import com.tudouni.makemoney.model.MallAlbumModel;
 import com.tudouni.makemoney.model.MallGoodItem;
+import com.tudouni.makemoney.myApplication.MyApplication;
+import com.tudouni.makemoney.network.NetConfig;
+import com.tudouni.makemoney.utils.Constants;
 import com.tudouni.makemoney.utils.TDLog;
 import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
 import com.tudouni.makemoney.viewModel.MallViewModel;
 import com.tudouni.makemoney.viewModel.VMResultCallback;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,11 +64,27 @@ public class MallFragment extends BaseFragment {
         mRecommendGoodItemAdapter = new RecommendGoodItemAdapter(getActivity().getLayoutInflater());
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mRecommendGoodItemAdapter);
         mMallBinding.lrvHome.setAdapter(mLRecyclerViewAdapter);
+        mMallBinding.lrvHome.setOnRefreshListener(this::loadMallData);
+
+        mRecommendGoodItemAdapter.setOnItemClickListener((position, itemData) -> {
+            Intent intent = new Intent(getActivity(), H5Activity.class);
+            String url = NetConfig.getBaseTuDouNiH5Url() + "?uid=" + MyApplication.getLoginUser().getUid()
+                    + "&token=" + MyApplication.getLoginUser().getToken() + "&unionid=" +
+                    MyApplication.getLoginUser().getUnionid() + "&itemid=" + itemData.getItem_id()
+                    + "&source=" + itemData.getSource();
+            intent.putExtra("url",url);
+            TDLog.e(url);
+            startActivity(intent);
+        });
         initHeaderView();
     }
 
     @Override
     protected void initData() {
+        loadMallData();
+    }
+
+    private void loadMallData() {
         loadBannerData();
         loadMallAlbum();
         loadSelfGood();
@@ -92,6 +110,15 @@ public class MallFragment extends BaseFragment {
         }
     }
 
+    public void onSelfCategoryClick(View view ,MallAlbumModel albumModel){
+        Intent intent = new Intent(getActivity(),H5Activity.class);
+        intent.putExtra("url",NetConfig.getBaseTuDouNiH5Url() + "?uid=" + MyApplication.getLoginUser().getUid()
+                + "&token=" + MyApplication.getLoginUser().getToken()
+                + "&unionid=" + MyApplication.getLoginUser().getUnionid()
+                + "&search=" + albumModel.getTitle());
+        startActivity(intent);
+    }
+
     private void loadRecommendGood() {
         if (mMallViewModel != null) {
             mMallViewModel.loadRecommendGoodData(new VMResultCallback<List<MallGoodItem>>() {
@@ -99,12 +126,13 @@ public class MallFragment extends BaseFragment {
                 public void onSuccess(List<MallGoodItem> data) {
                     if (mRecommendGoodItemAdapter != null) {
                         mRecommendGoodItemAdapter.replaceData(data);
+                        mMallBinding.lrvHome.refreshComplete(Constants.DEFAULT_PAGE_SIZE);
                     }
                 }
 
                 @Override
                 public void onFailure() {
-
+                    mMallBinding.lrvHome.refreshComplete(Constants.DEFAULT_PAGE_SIZE);
                 }
             });
         }
@@ -146,15 +174,26 @@ public class MallFragment extends BaseFragment {
 
     private void initHeaderView(){
         mMallHeaderViewBinding = DataBindingUtil.inflate(getActivity().getLayoutInflater(), R.layout.mall_header_view,mMallBinding.lrvHome,false);
-
+        mMallHeaderViewBinding.setSelfCategory(this);
         mLRecyclerViewAdapter.addHeaderView(mMallHeaderViewBinding.getRoot());
 
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(),5);
         mMallHeaderViewBinding.rvAlbum.setLayoutManager(layoutManager);
         mAlbumItemAdapter = new AlbumItemAdapter(getActivity().getLayoutInflater());
         mMallHeaderViewBinding.rvAlbum.setAdapter(mAlbumItemAdapter);
+        mAlbumItemAdapter.setOnItemClickListener((position, itemData) -> {
+            Intent intent = new Intent(getActivity(),H5Activity.class);
+            intent.putExtra("url",NetConfig.getBaseTuDouNiH5Url() + "?uid=" + MyApplication.getLoginUser().getUid()
+                    + "&token=" + MyApplication.getLoginUser().getToken()
+            + "&unionid=" + MyApplication.getLoginUser().getUnionid()
+            + "&search=" + itemData.getTitle());
+            startActivity(intent);
+        });
 
     }
+
+
+
 
     class MallBannerViewHolder implements MZViewHolder<MallAlbumModel>{
         private ImageView mImageView;

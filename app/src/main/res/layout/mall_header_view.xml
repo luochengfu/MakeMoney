@@ -3,11 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="android.databinding.ObservableArrayList"/>
-        <import type="com.tudouni.makemoney.model.MallAlbumModel"/>
+
+        <import type="android.databinding.ObservableArrayList" />
+
+        <import type="com.tudouni.makemoney.model.MallAlbumModel" />
+
         <variable
             name="selfData"
-            type="ObservableArrayList&lt;MallAlbumModel&gt;"/>
+            type="ObservableArrayList&lt;MallAlbumModel&gt;" />
+
+        <variable
+            name="selfCategory"
+            type="com.tudouni.makemoney.fragment.mall.MallFragment" />
     </data>
 
     <LinearLayout
@@ -19,8 +26,8 @@
             android:id="@+id/mz_mall_banner"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            app:canLoop="true"
             android:background="#33eaba00"
+            app:canLoop="true"
             app:indicatorAlign="center"
             app:indicatorPaddingLeft="10dp"
             app:middle_page_cover="false"
@@ -44,8 +51,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:loadImage="@{selfData[0].imageUrl}"
-                android:background="#22ff0000" />
+                android:background="#22ff0000"
+                android:onClick="@{(v) -> selfCategory.onSelfCategoryClick(v,selfData[0])}"
+                app:loadImage="@{selfData[0].imageUrl}" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -58,9 +66,10 @@
                     android:id="@+id/iv_self_category1"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    app:loadImage="@{selfData[1].imageUrl}"
                     android:layout_weight="1"
-                    android:background="#2200ff00" />
+                    android:background="#2200ff00"
+                    android:onClick="@{(v) -> selfCategory.onSelfCategoryClick(v,selfData[1])}"
+                    app:loadImage="@{selfData[1].imageUrl}" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -69,21 +78,23 @@
                     android:layout_weight="1">
 
                     <ImageView
-                        app:loadImage="@{selfData[2].imageUrl}"
                         android:id="@+id/iv_self_category2"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="#220000ff" />
+                        android:background="#220000ff"
+                        android:onClick="@{(v) -> selfCategory.onSelfCategoryClick(v,selfData[2])}"
+                        app:loadImage="@{selfData[2].imageUrl}" />
 
                     <ImageView
-                        app:loadImage="@{selfData[3].imageUrl}"
                         android:id="@+id/iv_self_category3"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="3dp"
                         android:layout_weight="1"
-                        android:background="#22eeaadd" />
+                        android:background="#22eeaadd"
+                        android:onClick="@{(v) -> selfCategory.onSelfCategoryClick(v,selfData[3])}"
+                        app:loadImage="@{selfData[3].imageUrl}" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -91,14 +102,14 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:gravity="center"
+            android:layout_height="45dp"
+            android:layout_gravity="center_horizontal"
             android:drawableLeft="@drawable/mall_recommend_left"
             android:drawableRight="@drawable/mall_recommend_right"
-            android:layout_gravity="center_horizontal"
-            android:textColor="#e61c3a"
+            android:gravity="center"
             android:text="  好物推荐  "
-            android:textSize="14sp"
-            android:layout_height="45dp" />
+            android:textColor="#e61c3a"
+            android:textSize="14sp" />
 
     </LinearLayout>
 </layout>

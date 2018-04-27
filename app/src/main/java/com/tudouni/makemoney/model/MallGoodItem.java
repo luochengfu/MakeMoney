@@ -8,20 +8,7 @@ import java.text.NumberFormat;
  * 2018/4/26
  */
 public class MallGoodItem {
-    /**
-     * "item_id": "10093784470",
-     "pic_url": "https://img.alicdn.com/imgextra/i4/856017888/TB2RL_obmtYBeNjSspkXXbU8VXa_!!856017888.jpg",
-     "title": "春游野餐垫防潮垫户外便携野外露营加厚垫子野炊地垫郊游用品必备",
-     "org_price": "39",
-     "coupon_price": "10",
-     "price": "29",
-     "source": "tb",
-     "sales_num": "2066",
-     "commission": "30",
-     "cid": "7",
-     "create_by": "lianglv",
-     "id": "5adeef4cafbc944c73413da8"
-     */
+
     private String item_id;
     private String pic_url;
     private String title;
