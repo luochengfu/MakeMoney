@@ -1,5 +1,8 @@
 package com.tudouni.makemoney.model;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 /**
  * Jaron.Wu
  * 2018/4/26
@@ -30,6 +33,15 @@ public class MallGoodItem {
     private String cid;
     private String create_by;
     private String id;
+    private String price;
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
 
     public String getItem_id() {
         return item_id;
@@ -134,5 +146,14 @@ public class MallGoodItem {
                 ", create_by='" + create_by + '\'' +
                 ", id='" + id + '\'' +
                 '}';
+    }
+
+
+    public String calcCommission(){
+        double commissionRate = Double.valueOf(commission);
+        double price = Double.valueOf(this.price);
+        double commission = (commissionRate/100.0 * price)/2;
+        DecimalFormat numberFormat = new DecimalFormat("#.00");
+        return numberFormat.format(commission);
     }
 }

@@ -274,12 +274,12 @@ public interface CommonApi {
     @POST("/shop/updateMsgReadInfo")
     Observable<Result<Object>> updateMsgReadInfo(@Field("sysmsgtime") long sysmsgtime, @Field("gsysmsgtime") long gsysmsgtime);
 
-    @POST("shop/gethotcatalog")
+    @POST("zzshop/gethotcatalog")
     Observable<Result<List<MallAlbumModel>>> getMallAlbumData();
 
-    @POST("shop/getrecommendgoods")
+    @POST("zzshop/getrecommendgoods")
     Observable<Result<List<MallGoodItem>>> getRecommendGood();
 
-    @POST("shop/getownGoodscatalog")
+    @POST("zzshop/getownGoodscatalog")
     Observable<Result<ObservableArrayList<MallAlbumModel>>> getSelfGood();
 }

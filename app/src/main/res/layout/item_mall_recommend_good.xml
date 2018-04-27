@@ -1,83 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="item"
-            type="com.tudouni.makemoney.model.MallGoodItem"/>
+            type="com.tudouni.makemoney.model.MallGoodItem" />
     </data>
+
     <LinearLayout
-        android:padding="3dp"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:padding="3dp">
 
         <RelativeLayout
             android:id="@+id/rl_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/iv_good_img"
-                app:loadImage="@{item.pic_url}"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_alignParentBottom="true"
+                android:layout_height="wrap_content"
+                app:loadImage="@{item.pic_url}" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:text="预估佣金￥0.54"
+                android:layout_height="wrap_content"
                 android:background="#F05A23"
-                android:padding="4dp"
-                android:gravity="center"
-                android:textSize="12sp"
-                android:textColor="@color/white"
-                android:layout_height="wrap_content" />
+                android:layout_alignParentBottom="true"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="预估佣金"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="@{@string/rmb + item.calcCommission()}"
+                    android:textColor="#fce333"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
         </RelativeLayout>
 
         <TextView
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:maxLines="2"
             android:text="@{item.title}"
-            android:ellipsize="end"
-            android:textSize="12sp"
             android:textColor="@color/black"
-            android:layout_height="wrap_content" />
+            android:textSize="12sp" />
 
         <RelativeLayout
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:textSize="10sp"
-                android:text="淘宝价 ￥69.9"
-                android:textColor="#868686"
-                android:layout_height="wrap_content" />
 
             <TextView
-                android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
-                android:textSize="10sp"
-                android:text="月销26万+"
+                android:layout_height="wrap_content"
+                android:text="@{@string/tb_price + item.org_price}"
                 android:textColor="#868686"
-                android:layout_height="wrap_content" />
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="@{@string/month_sale_count + item.sales_num}"
+                android:textColor="#868686"
+                android:textSize="14sp" />
         </RelativeLayout>
 
         <RelativeLayout
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
+
+            <LinearLayout
+                android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
-                android:textColor="#fc5622"
-                android:textSize="10sp"
-                android:text="￥49.9"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥"
+                    android:textColor="#fc5622"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{item.price}"
+                    android:textColor="#fc5622"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
 
             <TextView
+                android:layout_marginRight="5dp"
                 android:layout_width="wrap_content"
-                android:background="@drawable/shape_mall_title_bg"
-                android:textColor="@color/white"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="券 ￥20.00"
-                android:layout_height="wrap_content" />
+                android:background="@drawable/shape_coupon_bg"
+                android:text="@{@string/mall_coupon + item.coupon_price}"
+                android:padding="2dp"
+                android:textColor="@color/white" />
         </RelativeLayout>
     </LinearLayout>
 
