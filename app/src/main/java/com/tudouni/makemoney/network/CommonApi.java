@@ -248,6 +248,7 @@ public interface CommonApi {
      *
      * @return
      */
+    @FormUrlEncoded
     @POST("/zzshop/income/profile")
     Observable<Result<AgentInfo>> getMineTicketBook(@Field("uid") String uid);
 
