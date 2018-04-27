@@ -72,6 +72,18 @@
         </activity>
 
         <activity
+            android:name=".activity.SearchGoodActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MySelectGoodStyleBottom" />
+
+        <activity
+            android:name=".activity.BindInvitationCodeActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MySelectGoodStyleBottom" />
+
+        <activity
             android:name=".activity.RefreshWebViewActivity"
             android:label="H5页"
             android:screenOrientation="portrait">

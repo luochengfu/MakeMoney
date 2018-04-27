@@ -240,13 +240,13 @@ public class H5WebViewClient extends WVJBWebViewClient
             public void handler(String data, CallBackFunction callback) {
                 if (data != null) {
                     try {
-                        /*JSONObject ja = new JSONObject(data.toString());
+                        JSONObject ja = new JSONObject(data.toString());
                         String url = ja.getString("url");
                         if("tudouni://tudouni/home".equals(url) || "tudouni://tudouni/back".equals(url)) {
                             mActivity.finish();
-                        } else if(url.startsWith(NetConfig.getShopMainUrl())){
-                            Intent intent = new Intent(mActivity, FreeShopActivity.class);
-                            intent.putExtra("tagUrl", url);
+                        } else if(url.startsWith(NetConfig.getBaseTuDouNiH5Url())){
+                            Intent intent = new Intent(mActivity, RefreshWebViewActivity.class);
+                            intent.putExtra("url", url);
                             if(url.contains("/shopHome/sousuo.html")) {
                                 intent.putExtra("titleStatus",0);
                             } else {
@@ -255,8 +255,7 @@ public class H5WebViewClient extends WVJBWebViewClient
                             mActivity.startActivity(intent);
                         } else {
                             ForwardUtils.target(mActivity, url);
-                            function.onCallBack("{\"status\":\"yes\"}");
-                        }*/
+                        }
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }

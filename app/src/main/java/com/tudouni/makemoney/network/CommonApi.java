@@ -5,6 +5,7 @@ import android.databinding.ObservableArrayList;
 import com.tudouni.makemoney.model.AgentInfo;
 import com.tudouni.makemoney.model.AliAuth;
 import com.tudouni.makemoney.model.AppConfig;
+import com.tudouni.makemoney.model.BindUserBean;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.model.BindInfo;
 import com.tudouni.makemoney.model.Invite;
@@ -282,4 +283,12 @@ public interface CommonApi {
 
     @POST("zzshop/getownGoodscatalog")
     Observable<Result<ObservableArrayList<MallAlbumModel>>> getSelfGood();
+
+    @FormUrlEncoded
+    @POST("zzshop/auth/invite/info_V2")
+    Observable<Result<BindUserBean>> getBindUserInfo(@Field("userCode") String userCode);
+
+    @FormUrlEncoded
+    @POST("zzshop/auth/invite/action/addBinding")
+    Observable<Result<String>> addBindUser(@Field("userCode") String userCode, @Field("inviterUnionid") String inviterUnionid);
 }

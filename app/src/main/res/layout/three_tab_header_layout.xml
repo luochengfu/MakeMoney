@@ -17,6 +17,14 @@
         app:middle_page_cover="false"
         app:open_mz_mode="false" />
 
+    <ImageView
+        android:id="@+id/iv_banner"
+        android:layout_width="match_parent"
+        android:layout_height="156dp"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/three_tab_rv_2"
         android:layout_width="match_parent"
