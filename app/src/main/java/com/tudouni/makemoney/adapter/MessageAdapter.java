@@ -29,6 +29,7 @@ import java.util.List;
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
     private List<MineMessage> mDatas = new ArrayList<>();
     private Context context;
+    private OnItemClickListener mOnItemClickListener;
 
     public MessageAdapter(Context context) {
         this.context = context;
@@ -47,6 +48,22 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         TuDouTextUtil.setTextToTextView(holder.mTvTitle, itemBean.getTitle());
         TuDouTextUtil.setTextToTextView(holder.mMessageContent, itemBean.getContent());
         TuDouTextUtil.setTextToTextView(holder.mTvTime, TimeUtil.getTimeFromMillisecond(itemBean.getTime()));
+
+        if (mOnItemClickListener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onClick(position);
+                }
+            });
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    mOnItemClickListener.onLongClick(position);
+                    return false;
+                }
+            });
+        }
     }
 
     @Override
@@ -79,5 +96,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             this.mTvTime = (TextView) itemView.findViewById(R.id.tv_date);
             this.mMessageContent = (TextView) itemView.findViewById(R.id.tv_message_content);
         }
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.mOnItemClickListener = onItemClickListener;
+    }
+
+    public interface OnItemClickListener {
+        void onClick(int position);
+
+        void onLongClick(int position);
     }
 }
