@@ -59,5 +59,5 @@ public class Constants {
     public static final String h5_novice = BASE_H5_URL + "mycenter/novice.html";//新手攻略
     public static final String h5_faq = BASE_H5_URL + "mycenter/faq.html";//常见问题
     public static final String MESSAGE = BASE_PRE + "message";//消息列表
-
+    public static final String h5_inviterule = BASE_H5_URL + "mycenter/inviterule.html";//邀请规则
 }
