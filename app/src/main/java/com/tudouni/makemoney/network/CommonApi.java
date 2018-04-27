@@ -65,7 +65,8 @@ public interface CommonApi {
 
     @FormUrlEncoded
     @POST(NetConfig.SETPWD)
-    Observable<Result<String>> setPWD(@Field("password") String password);
+    Observable<Result<String>> setPWD(@Field("password") String password,
+                                      @Field("uid") String uid);
 
 
     @POST(NetConfig.GOOD_LIST)

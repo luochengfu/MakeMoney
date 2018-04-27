@@ -62,8 +62,8 @@ public class CommonScene extends RetrofitUtils {
         setSubscribe(commonApi.telCodeLogin(phone, code, model, brand), observer);
     }
 
-    public static void setPWD(String password, BaseObserver<String> observer) {
-        setSubscribe(commonApi.setPWD(password), observer);
+    public static void setPWD(String password,String uid, BaseObserver<String> observer) {
+        setSubscribe(commonApi.setPWD(password,uid), observer);
     }
 
     public static void getConfig(BaseObserver<AppConfig> observer) {

@@ -242,6 +242,11 @@ public class H5WebViewClient extends WVJBWebViewClient
                     try {
                         JSONObject ja = new JSONObject(data.toString());
                         String url = ja.getString("url");
+                        if(url.contains("?")){
+                            url = url + "&unionid="+MyApplication.getLoginUser().getUnionid() + "&token="+MyApplication.getLoginUser().getToken()+"&uid="+MyApplication.getLoginUser().getUid();
+                        } else {
+                            url = url + "?unionid="+MyApplication.getLoginUser().getUnionid() + "&token="+MyApplication.getLoginUser().getToken()+"&uid="+MyApplication.getLoginUser().getUid();
+                        }
                         if("tudouni://tudouni/home".equals(url) || "tudouni://tudouni/back".equals(url)) {
                             mActivity.finish();
                         } else if(url.startsWith(NetConfig.getBaseTuDouNiH5Url())){
