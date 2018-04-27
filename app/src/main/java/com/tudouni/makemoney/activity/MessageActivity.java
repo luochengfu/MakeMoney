@@ -47,19 +47,21 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void OnSuccess(MessageResponsBean messageResponsBean) {
                 if (messageResponsBean == null) return;
-                ArrayList<MineMessage> mData = new ArrayList<>();
+                ArrayList<MineMessage> mmData = new ArrayList<>();
                 if (msgpage + gmsgpage == 2) {
                     updateMsgReadInfo(messageResponsBean);
                 }
                 if (messageResponsBean.getSysmsg() != null && !messageResponsBean.getSysmsg().isEmpty()) {
-                    mData.addAll(messageResponsBean.getSysmsg());
+                    mmData.addAll(messageResponsBean.getSysmsg());
                     msgpage++;
                 }
                 if (messageResponsBean.getGsysmsg() != null && !messageResponsBean.getGsysmsg().isEmpty()) {
-                    mData.addAll(messageResponsBean.getGsysmsg());
+                    mmData.addAll(messageResponsBean.getGsysmsg());
                     gmsgpage++;
                 }
-                mMessageAdapter.addData(mData);
+                if (mmData == null || mmData.isEmpty()) return;
+                mMessageAdapter.addData(mmData);
+                mData.addAll(mmData);
             }
 
             @Override
