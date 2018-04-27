@@ -87,7 +87,7 @@ public class MyApplication extends BaseApplication implements ClipboardUtil.OnPr
         UMConfigure.setEncryptEnabled(true);
         //场景类型设置接口
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
-        PlatformConfig.setWeixin("wx9dc84ba75bee1a73", "b3babc1e374bf1f7fbb540d2497f64ed");//需要替换第二个apps
+        PlatformConfig.setWeixin("wx9dc84ba75bee1a73", "ea0ad0c6438f1dd58f8909dc0e531276");//需要替换第二个apps
         PlatformConfig.setQQZone("1106781729", "KsDhxiNWe91diHM0");
 
         //注册监听器
