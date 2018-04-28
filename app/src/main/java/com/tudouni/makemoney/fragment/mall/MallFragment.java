@@ -23,6 +23,7 @@ import com.tudouni.makemoney.network.NetConfig;
 import com.tudouni.makemoney.utils.Constants;
 import com.tudouni.makemoney.utils.TDLog;
 import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
+import com.tudouni.makemoney.view.MineRefreshHeader;
 import com.tudouni.makemoney.viewModel.MallViewModel;
 import com.tudouni.makemoney.viewModel.VMResultCallback;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
@@ -63,6 +64,8 @@ public class MallFragment extends BaseFragment {
     protected void initView(View view) {
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         mMallBinding.lrvHome.setLayoutManager(layoutManager);
+
+        mMallBinding.lrvHome.setRefreshHeader(new MineRefreshHeader(getContext()));
 
         mRecommendGoodItemAdapter = new RecommendGoodItemAdapter(getActivity().getLayoutInflater());
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mRecommendGoodItemAdapter);
