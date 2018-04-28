@@ -67,7 +67,7 @@ public class GoodListAdapter extends BaseRecyclerViewBindingAdapter<Category> {
             //TODO:
             TDLog.e(good,index);
             Intent intent = new Intent(MyApplication.sCurrActivity, H5Activity.class);
-            intent.putExtra("url", NetConfig.getBaseTuDouNiH5Url() + "?uid=" + MyApplication.getLoginUser().getUid() +
+            intent.putExtra("url", NetConfig.getBaseTuDouNiH5Url()+ "html/resultlist.html" + "?uid=" + MyApplication.getLoginUser().getUid() +
             "&token="+MyApplication.getLoginUser().getToken()+
             "&unionid=" + MyApplication.getLoginUser().getUnionid() +
             "&search=" + good.getName());

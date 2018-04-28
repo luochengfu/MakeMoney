@@ -78,7 +78,7 @@ public class GoodCategoryFragment extends BaseFragment {
 
         mHeaderImageBinding.ivBanner.setOnClickListener(l -> {
             Intent intent = new Intent(getActivity(),H5Activity.class);
-            intent.putExtra("url", NetConfig.getBaseTuDouNiH5Url() + "?uid=" + MyApplication.getLoginUser().getUid()
+            intent.putExtra("url", NetConfig.getBaseTuDouNiH5Url()+ "html/resultlist.html" + "?uid=" + MyApplication.getLoginUser().getUid()
                     + "&token=" + MyApplication.getLoginUser().getToken()
                     + "&unionid=" + MyApplication.getLoginUser().getUnionid()
                     + "&search=" + mCurrentRightCategory.getName());
