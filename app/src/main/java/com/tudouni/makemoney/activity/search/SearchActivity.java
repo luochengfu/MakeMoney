@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -20,7 +19,6 @@ import com.tudouni.makemoney.utils.SPUtil;
 import com.tudouni.makemoney.utils.StringUtil;
 import com.tudouni.makemoney.utils.TDLog;
 import com.tudouni.makemoney.utils.ToastUtil;
-import com.tudouni.makemoney.view.BaseRecyclerViewBindingAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +39,7 @@ public class SearchActivity extends BaseActivity {
         ActivitySearchBinding searchBinding = DataBindingUtil.setContentView(this, R.layout.activity_search);
         mSearchHistoryAdapter = new SearchHistoryAdapter(getLayoutInflater());
 
-        mSearchHistoryAdapter.setOnItemClickListener((position, itemData) -> {
-            toSearchResultPage(itemData);
-        });
+        mSearchHistoryAdapter.setOnItemClickListener((position, itemData) -> toSearchResultPage(itemData));
 
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

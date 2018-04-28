@@ -43,6 +43,8 @@ public class MallFragment extends BaseFragment {
     private MallHeaderViewBinding mMallHeaderViewBinding;
     private AlbumItemAdapter mAlbumItemAdapter;
 
+    private int mCurrentPage = 1;
+
     private RecommendGoodItemAdapter mRecommendGoodItemAdapter;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
 
@@ -71,6 +73,8 @@ public class MallFragment extends BaseFragment {
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mRecommendGoodItemAdapter);
         mMallBinding.lrvHome.setAdapter(mLRecyclerViewAdapter);
         mMallBinding.lrvHome.setOnRefreshListener(this::loadMallData);
+        mMallBinding.lrvHome.setLoadMoreEnabled(true);
+        mMallBinding.lrvHome.setOnLoadMoreListener(this::loadMore);
 
         mRecommendGoodItemAdapter.setOnItemClickListener((position, itemData) -> {
             Intent intent = new Intent(getActivity(), H5Activity.class);
@@ -87,6 +91,10 @@ public class MallFragment extends BaseFragment {
         mMallBinding.tvSearchBar.setOnClickListener(l -> startActivity(new Intent(getActivity(), SearchActivity.class)));
     }
 
+    private void loadMore() {
+        loadRecommendGood(mCurrentPage++,Constants.DEFAULT_PAGE_SIZE);
+    }
+
     @Override
     protected void initData() {
         loadMallData();
@@ -96,7 +104,7 @@ public class MallFragment extends BaseFragment {
         loadBannerData();
         loadMallAlbum();
         loadSelfGood();
-        loadRecommendGood();
+        loadRecommendGood(mCurrentPage,Constants.DEFAULT_PAGE_SIZE);
     }
 
     private void loadSelfGood() {
@@ -128,22 +136,33 @@ public class MallFragment extends BaseFragment {
         startActivity(intent);
     }
 
-    private void loadRecommendGood() {
+    private void loadRecommendGood(int page,int pageSize) {
         if (mMallViewModel != null) {
             mMallViewModel.loadRecommendGoodData(new VMResultCallback<List<MallGoodItem>>() {
                 @Override
                 public void onSuccess(List<MallGoodItem> data) {
-                    if (mRecommendGoodItemAdapter != null) {
-                        mRecommendGoodItemAdapter.replaceData(data);
-                        mMallBinding.lrvHome.refreshComplete(Constants.DEFAULT_PAGE_SIZE);
-                    }
+                        if (mRecommendGoodItemAdapter != null) {
+                            if (page == 1) {
+                                mCurrentPage = 1;
+                                mRecommendGoodItemAdapter.replaceData(data);
+                            }else{
+                                mRecommendGoodItemAdapter.addData(data);
+                                if (data.size() < Constants.DEFAULT_PAGE_SIZE) {
+                                    mMallBinding.lrvHome.setNoMore(true);
+                                }
+                            }
+                            mMallBinding.lrvHome.refreshComplete(Constants.DEFAULT_PAGE_SIZE);
+                        }
                 }
 
                 @Override
                 public void onFailure() {
+                    if (page != 1) {
+                        mCurrentPage --;
+                    }
                     mMallBinding.lrvHome.refreshComplete(Constants.DEFAULT_PAGE_SIZE);
                 }
-            });
+            },page,pageSize);
         }
     }
 
