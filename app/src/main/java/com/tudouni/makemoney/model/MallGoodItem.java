@@ -143,4 +143,13 @@ public class MallGoodItem {
         DecimalFormat numberFormat = new DecimalFormat("#.00");
         return numberFormat.format(commission);
     }
+
+    public String calcSalesCount(){
+        int sales = Integer.valueOf(this.sales_num);
+        if (sales > 9999) {
+            int w = sales / 10000;
+            return "月销" + w + "万+";
+        }
+        return "月销" + this.sales_num;
+    }
 }

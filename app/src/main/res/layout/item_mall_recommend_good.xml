@@ -29,8 +29,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#F05A23"
                 android:layout_alignParentBottom="true"
+                android:background="#F05A23"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
@@ -56,75 +56,88 @@
 
         </RelativeLayout>
 
-        <TextView
+
+        <LinearLayout
             android:layout_width="match_parent"
+            android:padding="5dp"
+            android:paddingBottom="5dp"
+            android:background="@drawable/shape_stoke_mall_good"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="@{item.title}"
-            android:textColor="@color/black"
-            android:textSize="12sp" />
-
-        <RelativeLayout
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{@string/tb_price + item.org_price}"
-                android:textColor="#868686"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="@{@string/month_sale_count + item.sales_num}"
-                android:textColor="#868686"
-                android:textSize="14sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="￥"
-                    android:textColor="#fc5622"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{item.price}"
-                    android:textColor="#fc5622"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-
-            <TextView
-                android:layout_marginRight="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/shape_coupon_bg"
-                android:text="@{@string/mall_coupon + item.coupon_price}"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:padding="2dp"
-                android:textColor="@color/white" />
-        </RelativeLayout>
+                android:text="@{item.title}"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{@string/tb_price + item.org_price}"
+                    android:textColor="#868686"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="@{item.calcSalesCount()}"
+                    android:textColor="#868686"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="￥"
+                        android:textColor="#fc5622"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{item.price}"
+                        android:textColor="#fc5622"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/shape_coupon_bg"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:text="@{@string/mall_coupon + item.coupon_price + @string/fix2}"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
+
+        </LinearLayout>
     </LinearLayout>
 
 </layout>
