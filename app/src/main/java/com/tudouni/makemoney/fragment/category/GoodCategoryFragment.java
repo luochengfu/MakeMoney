@@ -8,7 +8,7 @@ import android.view.View;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.activity.H5Activity;
-import com.tudouni.makemoney.activity.SearchActivity;
+import com.tudouni.makemoney.activity.search.SearchActivity;
 import com.tudouni.makemoney.databinding.FragmentGoodCategoryBinding;
 import com.tudouni.makemoney.databinding.ItemCategoryHeaderImageBinding;
 import com.tudouni.makemoney.fragment.BaseFragment;
