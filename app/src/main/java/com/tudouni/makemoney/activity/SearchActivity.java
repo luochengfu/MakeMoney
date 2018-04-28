@@ -33,5 +33,7 @@ public class SearchActivity extends BaseActivity {
                     + "&search=" + keyWord);
             startActivity(intent);
         });
+
+        searchBinding.ivBack.setOnClickListener(l -> finish());
     }
 }
