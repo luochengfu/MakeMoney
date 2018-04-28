@@ -8,6 +8,7 @@ import android.view.View;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.activity.H5Activity;
+import com.tudouni.makemoney.activity.SearchActivity;
 import com.tudouni.makemoney.databinding.FragmentGoodCategoryBinding;
 import com.tudouni.makemoney.databinding.ItemCategoryHeaderImageBinding;
 import com.tudouni.makemoney.fragment.BaseFragment;
@@ -58,9 +59,7 @@ public class GoodCategoryFragment extends BaseFragment {
     }
 
     private void initSearchBar() {
-        mCategoryBinding.tvSearchBar.setOnClickListener(l -> {
-            //TODO：
-        });
+        mCategoryBinding.tvSearchBar.setOnClickListener(l -> startActivity(new Intent(getActivity(), SearchActivity.class)));
     }
 
     /**

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.activity.H5Activity;
+import com.tudouni.makemoney.activity.SearchActivity;
 import com.tudouni.makemoney.databinding.FragmentMallBinding;
 import com.tudouni.makemoney.databinding.MallHeaderViewBinding;
 import com.tudouni.makemoney.fragment.BaseFragment;
@@ -79,6 +80,8 @@ public class MallFragment extends BaseFragment {
             startActivity(intent);
         });
         initHeaderView();
+
+        mMallBinding.tvSearchBar.setOnClickListener(l -> startActivity(new Intent(getActivity(), SearchActivity.class)));
     }
 
     @Override

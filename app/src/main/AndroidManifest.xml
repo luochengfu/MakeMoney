@@ -301,6 +301,7 @@
         <activity android:name=".activity.BindingInvitationActivity" />
         <activity android:name=".activity.UserInfoActivity" />
         <activity android:name=".activity.MessageActivity"></activity>
+        <activity android:name=".activity.SearchActivity" />
     </application>
 
 </manifest>
