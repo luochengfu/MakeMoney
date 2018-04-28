@@ -36,6 +36,10 @@ import com.umeng.socialize.PlatformConfig;
 import com.uuzuche.lib_zxing.PicassoImageLoader;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
+import java.util.ArrayList;
+import java.util.ListIterator;
+import java.util.Set;
+
 import cn.jpush.android.api.JPushInterface;
 
 /**

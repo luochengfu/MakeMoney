@@ -25,6 +25,7 @@ import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.ScreenUtils;
 import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
 import com.tudouni.makemoney.view.MZBannerViewHolder;
+import com.tudouni.makemoney.view.MineRefreshHeader;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 
@@ -78,6 +79,7 @@ public class MainTabThreeFragment extends BaseFragment
         mAdapter = new FoundAdapter();
         mLayoutManager = new GridLayoutManager(getActivity(), 1);
         mLRecyclerView.setLayoutManager(mLayoutManager);
+        mLRecyclerView.setRefreshHeader(new MineRefreshHeader(getContext()));
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
         mLRecyclerViewAdapter.addHeaderView(mHeadView);
         mLRecyclerView.setAdapter(mLRecyclerViewAdapter);
