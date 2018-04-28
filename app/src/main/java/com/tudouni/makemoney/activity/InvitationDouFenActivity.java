@@ -64,7 +64,7 @@ public class InvitationDouFenActivity extends BaseActivity implements View.OnCli
     }
 
     private void initData() {
-        mInvitationCode = getIntent().getStringExtra("code");
+//        mInvitationCode = getIntent().getStringExtra("code");
         mInvitationCode = (TextUtils.isEmpty(mInvitationCode)) ? (MyApplication.getLoginUser().getInvistCode()) : (mInvitationCode);
     }
 
