@@ -211,10 +211,7 @@ public class MallFragment extends BaseFragment {
         mMallHeaderViewBinding.rvAlbum.setAdapter(mAlbumItemAdapter);
         mAlbumItemAdapter.setOnItemClickListener((position, itemData) -> {
             Intent intent = new Intent(getActivity(), H5Activity.class);
-            intent.putExtra("url", NetConfig.getBaseTuDouNiH5Url() + "html/resultlist.html" + "?uid=" + MyApplication.getLoginUser().getUid()
-                    + "&token=" + MyApplication.getLoginUser().getToken()
-                    + "&unionid=" + MyApplication.getLoginUser().getUnionid()
-                    + "&search=" + itemData.getTitle());
+            intent.putExtra("url", itemData.getUrl());
             startActivity(intent);
         });
 
