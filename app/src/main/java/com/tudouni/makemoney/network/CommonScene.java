@@ -263,8 +263,8 @@ public class CommonScene extends RetrofitUtils {
     /**
      * 商城首页推荐
      */
-    public static void getRecommendGood(BaseObserver<List<MallGoodItem>> observer){
-        setSubscribe(commonApi.getRecommendGood(),observer);
+    public static void getRecommendGood(BaseObserver<List<MallGoodItem>> observer,int page,int pageSize){
+        setSubscribe(commonApi.getRecommendGood(page,pageSize),observer);
     }
 
     /**

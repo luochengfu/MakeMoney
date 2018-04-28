@@ -36,6 +36,7 @@ import com.tudouni.makemoney.utils.H5WebViewClient;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.WVJBWebViewClient;
 import com.tudouni.makemoney.utils.base.AppUtils;
+import com.tudouni.makemoney.view.MineRefreshHeader;
 import com.tudouni.makemoney.view.MyTitleBar;
 
 import org.simple.eventbus.EventBus;
@@ -136,6 +137,7 @@ public class RefreshWebViewActivity extends BaseActivity implements
         mAdapter = new FoundAdapter();
         mLayoutManager = new GridLayoutManager(this, 1);
         mLRecyclerView.setLayoutManager(mLayoutManager);
+        mLRecyclerView.setRefreshHeader(new MineRefreshHeader(this));
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
         mLRecyclerViewAdapter.addHeaderView(mHeadView);
         mLRecyclerView.setAdapter(mLRecyclerViewAdapter);

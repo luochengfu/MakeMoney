@@ -39,4 +39,5 @@
     <string name="month_sale_count">月销</string>
     <string name="commission">预估佣金</string>
     <string name="rmb">￥</string>
+    <string name="fix2">.00</string>
 </resources>

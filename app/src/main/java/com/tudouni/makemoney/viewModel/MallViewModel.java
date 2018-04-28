@@ -89,7 +89,7 @@ public class MallViewModel extends LoadingViewModel {
         });
     }
 
-    public void loadRecommendGoodData(VMResultCallback<List<MallGoodItem>> callback){
+    public void loadRecommendGoodData(VMResultCallback<List<MallGoodItem>> callback,int page,int pageSize){
         CommonScene.getRecommendGood(new BaseObserver<List<MallGoodItem>>() {
             @Override
             public void OnSuccess(List<MallGoodItem> items) {
@@ -107,6 +107,6 @@ public class MallViewModel extends LoadingViewModel {
                     callback.onFailure();
                 }
             }
-        });
+        },page,pageSize);
     }
 }

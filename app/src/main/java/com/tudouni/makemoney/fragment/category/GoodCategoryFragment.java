@@ -1,15 +1,20 @@
 package com.tudouni.makemoney.fragment.category;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.tudouni.makemoney.R;
+import com.tudouni.makemoney.activity.H5Activity;
+import com.tudouni.makemoney.activity.search.SearchActivity;
 import com.tudouni.makemoney.databinding.FragmentGoodCategoryBinding;
 import com.tudouni.makemoney.databinding.ItemCategoryHeaderImageBinding;
 import com.tudouni.makemoney.fragment.BaseFragment;
 import com.tudouni.makemoney.model.Category;
+import com.tudouni.makemoney.myApplication.MyApplication;
+import com.tudouni.makemoney.network.NetConfig;
 import com.tudouni.makemoney.viewModel.GoodCategoryViewModel;
 import com.tudouni.makemoney.viewModel.VMResultCallback;
 
@@ -31,6 +36,7 @@ public class GoodCategoryFragment extends BaseFragment {
     private GoodCategoryViewModel mCategoryViewModel;
     private GoodListAdapter mGoodListAdapter;
     private ItemCategoryHeaderImageBinding mHeaderImageBinding;
+    private Category mCurrentRightCategory;
 
     @Override
     protected int getContentView() {
@@ -53,9 +59,7 @@ public class GoodCategoryFragment extends BaseFragment {
     }
 
     private void initSearchBar() {
-        mCategoryBinding.tvSearchBar.setOnClickListener(l -> {
-            //TODO：
-        });
+        mCategoryBinding.tvSearchBar.setOnClickListener(l -> startActivity(new Intent(getActivity(), SearchActivity.class)));
     }
 
     /**
@@ -70,6 +74,15 @@ public class GoodCategoryFragment extends BaseFragment {
         mHeaderImageBinding = DataBindingUtil.inflate(getActivity().getLayoutInflater(), R.layout.item_category_header_image,mCategoryBinding.rvGood,false);
         lRecyclerViewAdapter.addHeaderView(mHeaderImageBinding.getRoot());
         mCategoryBinding.rvGood.setAdapter(lRecyclerViewAdapter);
+
+        mHeaderImageBinding.ivBanner.setOnClickListener(l -> {
+            Intent intent = new Intent(getActivity(),H5Activity.class);
+            intent.putExtra("url", NetConfig.getBaseTuDouNiH5Url()+ "html/resultlist.html" + "?uid=" + MyApplication.getLoginUser().getUid()
+                    + "&token=" + MyApplication.getLoginUser().getToken()
+                    + "&unionid=" + MyApplication.getLoginUser().getUnionid()
+                    + "&search=" + mCurrentRightCategory.getName());
+            startActivity(intent);
+        });
     }
 
     /**
@@ -82,7 +95,8 @@ public class GoodCategoryFragment extends BaseFragment {
         mCategoryBinding.rvCategories.setAdapter(mNameAdapter);
         mNameAdapter.setOnItemClickListener((position, itemData) -> {
             //一级品类Item被点击(左侧品类)后填充右侧数据
-            mHeaderImageBinding.setImageUrl(itemData.getCategorys().get(0).getImgUrl());
+            mHeaderImageBinding.setImageUrl(itemData.getImgUrl());
+            mCurrentRightCategory = itemData;
             mGoodListAdapter.replaceData(itemData.getCategorys());
         });
     }
@@ -100,6 +114,7 @@ public class GoodCategoryFragment extends BaseFragment {
             mCategoryViewModel.getGoodList(new VMResultCallback<List<Category>>(){
                 @Override
                 public void onSuccess(List<Category> categoryNameList) {
+                    mCurrentRightCategory = categoryNameList.get(0);
                     //填充左侧品类数据
                     mNameAdapter.replaceData(categoryNameList);
                     //填充Banner数据

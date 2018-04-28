@@ -12,6 +12,7 @@ import com.tudouni.makemoney.activity.H5Activity;
 import com.tudouni.makemoney.databinding.ItemGoodGridBinding;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.myApplication.MyApplication;
+import com.tudouni.makemoney.network.NetConfig;
 import com.tudouni.makemoney.utils.ScreenUtils;
 import com.tudouni.makemoney.utils.TDLog;
 import com.tudouni.makemoney.view.BaseRecyclerViewBindingAdapter;
@@ -66,7 +67,7 @@ public class GoodListAdapter extends BaseRecyclerViewBindingAdapter<Category> {
             //TODO:
             TDLog.e(good,index);
             Intent intent = new Intent(MyApplication.sCurrActivity, H5Activity.class);
-            intent.putExtra("url","http://dev-sbzhibo-h5.oss-cn-hangzhou.aliyuncs.com/shoplite/html/resultlist.html?uid=" + MyApplication.getLoginUser().getUid() +
+            intent.putExtra("url", NetConfig.getBaseTuDouNiH5Url()+ "html/resultlist.html" + "?uid=" + MyApplication.getLoginUser().getUid() +
             "&token="+MyApplication.getLoginUser().getToken()+
             "&unionid=" + MyApplication.getLoginUser().getUnionid() +
             "&search=" + good.getName());

@@ -288,8 +288,9 @@ public interface CommonApi {
     @POST("zzshop/gethotcatalog")
     Observable<Result<List<MallAlbumModel>>> getMallAlbumData();
 
+    @FormUrlEncoded
     @POST("zzshop/getrecommendgoods")
-    Observable<Result<List<MallGoodItem>>> getRecommendGood();
+    Observable<Result<List<MallGoodItem>>> getRecommendGood(@Field("page")int page,@Field("pageSize")int pageSize);
 
     @POST("zzshop/getownGoodscatalog")
     Observable<Result<ObservableArrayList<MallAlbumModel>>> getSelfGood();
