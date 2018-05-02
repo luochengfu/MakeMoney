@@ -60,6 +60,7 @@ public class MallFragment extends BaseFragment {
     protected View getLayoutView() {
         mMallBinding = DataBindingUtil.inflate(getActivity().getLayoutInflater(), R.layout.fragment_mall, null, false);
         mMallViewModel = new MallViewModel();
+        mMallBinding.setMallViewModel(mMallViewModel);
         return mMallBinding.getRoot();
     }
 
@@ -101,6 +102,9 @@ public class MallFragment extends BaseFragment {
     @Override
     protected void initData() {
         loadMallData();
+        if (mMallViewModel != null) {
+            mMallViewModel.hasUnreadMsg();
+        }
     }
 
     private void loadMallData() {

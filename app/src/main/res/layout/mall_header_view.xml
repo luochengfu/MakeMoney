@@ -107,7 +107,7 @@
             android:drawableLeft="@drawable/mall_recommend_left"
             android:drawableRight="@drawable/mall_recommend_right"
             android:gravity="center"
-            android:text="  好物推荐  "
+            android:text="  商品推荐  "
             android:textColor="#e61c3a"
             android:textSize="14sp" />
 

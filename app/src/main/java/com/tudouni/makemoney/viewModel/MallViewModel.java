@@ -1,9 +1,12 @@
 package com.tudouni.makemoney.viewModel;
 
+import android.databinding.Observable;
 import android.databinding.ObservableArrayList;
+import android.databinding.ObservableBoolean;
 
 import com.tudouni.makemoney.model.MallAlbumModel;
 import com.tudouni.makemoney.model.MallGoodItem;
+import com.tudouni.makemoney.model.MessageResponsBean;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseMallObserver;
 import com.tudouni.makemoney.network.rx.BaseObserver;
@@ -17,7 +20,7 @@ import java.util.List;
  */
 public class MallViewModel extends LoadingViewModel {
 
-
+    public ObservableBoolean hasUnreadMsg = new ObservableBoolean(false);
 
 
     /**
@@ -108,5 +111,17 @@ public class MallViewModel extends LoadingViewModel {
                 }
             }
         },page,pageSize);
+    }
+
+    public void hasUnreadMsg(){
+        CommonScene.isThereUnreadMsg(new BaseObserver<MessageResponsBean>() {
+            @Override
+            public void OnSuccess(MessageResponsBean bean) {
+                TDLog.e(bean);
+                if (bean != null) {
+                    hasUnreadMsg.set(bean.isRes());
+                }
+            }
+        });
     }
 }

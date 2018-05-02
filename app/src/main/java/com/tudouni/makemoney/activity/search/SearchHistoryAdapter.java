@@ -11,7 +11,7 @@ import com.tudouni.makemoney.view.BaseRecyclerViewBindingAdapter;
  * Jaron.Wu
  * 2018/4/28
  */
-public class SearchHistoryAdapter extends BaseRecyclerViewBindingAdapter<SearchHistory> {
+public class SearchHistoryAdapter extends BaseRecyclerViewBindingAdapter<String> {
     public SearchHistoryAdapter(LayoutInflater inflater) {
         super(inflater);
     }

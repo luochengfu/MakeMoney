@@ -35,4 +35,13 @@ public class MessageResponsBean implements Serializable {
     public void setRes(boolean res) {
         this.res = res;
     }
+
+    @Override
+    public String toString() {
+        return "MessageResponsBean{" +
+                "sysmsg=" + sysmsg +
+                ", gsysmsg=" + gsysmsg +
+                ", res=" + res +
+                '}';
+    }
 }
