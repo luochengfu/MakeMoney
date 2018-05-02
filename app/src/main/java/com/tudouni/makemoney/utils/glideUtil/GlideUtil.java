@@ -58,7 +58,7 @@ public class GlideUtil {
      */
     @BindingAdapter("loadImage")
     public static void bindImage(ImageView imageView, String url) {
-        Glide.with(imageView.getContext()).load(url).crossFade().centerCrop().into(imageView);
+        Glide.with(imageView.getContext()).load(url).crossFade().into(imageView);
     }
 
     /**
@@ -71,7 +71,7 @@ public class GlideUtil {
     @BindingAdapter({"roundImageUrl", "roundImageCornerRadius"})
     public static void roundImage(ImageView imageView, String url, String dp) {
         int dpInt = Integer.valueOf(dp);
-        Glide.with(imageView.getContext()).load(url).crossFade().centerCrop().bitmapTransform(new GlideRoundTransform(imageView.getContext(), dpInt)).into(imageView);
+        Glide.with(imageView.getContext()).load(url).crossFade().bitmapTransform(new GlideRoundTransform(imageView.getContext(), dpInt)).into(imageView);
     }
 
 
