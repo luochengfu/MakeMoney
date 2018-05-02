@@ -13,6 +13,7 @@ import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.activity.BaseActivity;
 import com.tudouni.makemoney.activity.H5Activity;
 import com.tudouni.makemoney.databinding.ActivitySearchBinding;
+import com.tudouni.makemoney.model.SearchHistory;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.NetConfig;
 import com.tudouni.makemoney.utils.SPUtil;
@@ -31,7 +32,7 @@ import java.util.List;
  */
 public class SearchActivity extends BaseActivity {
 
-    private List<String> mSearchhistory = new ArrayList<>();
+    private List<SearchHistory> mSearchhistory = new ArrayList<>();
     private Gson mGson = new Gson();
     private SearchHistoryAdapter mSearchHistoryAdapter;
     private SearchViewModel mSearchViewModel;
@@ -41,7 +42,7 @@ public class SearchActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         ActivitySearchBinding searchBinding = DataBindingUtil.setContentView(this, R.layout.activity_search);
         mSearchHistoryAdapter = new SearchHistoryAdapter(getLayoutInflater());
-        mSearchHistoryAdapter.setOnItemClickListener((position, itemData) -> toSearchResultPage(itemData));
+        mSearchHistoryAdapter.setOnItemClickListener((position, itemData) -> toSearchResultPage(itemData.getContent()));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         searchBinding.recycler.setLayoutManager(layoutManager);
@@ -72,9 +73,9 @@ public class SearchActivity extends BaseActivity {
 
     private void loadHistory() {
         if (mSearchViewModel != null) {
-            mSearchViewModel.loadSearchHistory(MyApplication.getLoginUser().getUnionid(), new VMResultCallback<List<String>>() {
+            mSearchViewModel.loadSearchHistory(MyApplication.getLoginUser().getUnionid(), new VMResultCallback<List<SearchHistory>>() {
                 @Override
-                public void onSuccess(List<String> data) {
+                public void onSuccess(List<SearchHistory> data) {
                     if (mSearchHistoryAdapter != null) {
                         mSearchHistoryAdapter.replaceData(data);
                     }
@@ -108,34 +109,34 @@ public class SearchActivity extends BaseActivity {
      * @param keyWord
      */
     private void cacheSearchHistory(String keyWord) {
-        for (String item : mSearchhistory) {
-            if (item.equals(keyWord)) {
-                return;
-            }
-        }
-        mSearchhistory.add(keyWord);
-        SPUtil.putString(this,"search_history",mGson.toJson(mSearchhistory));
+//        for (String item : mSearchhistory) {
+//            if (item.equals(keyWord)) {
+//                return;
+//            }
+//        }
+//        mSearchhistory.add(keyWord);
+//        SPUtil.putString(this,"search_history",mGson.toJson(mSearchhistory));
     }
 
     /**
      * 解析本地历史记录【弃用】
      */
     private void parseSearchHistory() {
-        mSearchhistory.clear();
-        String searchHistoryJson = SPUtil.getString(this,"search_history");
-        TDLog.e(searchHistoryJson,"searchHistoryJson");
-        if (searchHistoryJson == null || StringUtil.isEmpty(searchHistoryJson)) {
-            return;
-        }
-        JsonParser parser = new JsonParser();
-        JsonArray searchArr = parser.parse(searchHistoryJson).getAsJsonArray();
-        for (JsonElement item : searchArr) {
-            String itemStr = mGson.fromJson(item,String.class);
-            mSearchhistory.add(itemStr);
-        }
-        if (mSearchHistoryAdapter != null) {
-            mSearchHistoryAdapter.replaceData(mSearchhistory);
-        }
-        TDLog.e(mSearchHistoryAdapter,mSearchhistory);
+//        mSearchhistory.clear();
+//        String searchHistoryJson = SPUtil.getString(this,"search_history");
+//        TDLog.e(searchHistoryJson,"searchHistoryJson");
+//        if (searchHistoryJson == null || StringUtil.isEmpty(searchHistoryJson)) {
+//            return;
+//        }
+//        JsonParser parser = new JsonParser();
+//        JsonArray searchArr = parser.parse(searchHistoryJson).getAsJsonArray();
+//        for (JsonElement item : searchArr) {
+//            String itemStr = mGson.fromJson(item,String.class);
+//            mSearchhistory.add(itemStr);
+//        }
+//        if (mSearchHistoryAdapter != null) {
+//            mSearchHistoryAdapter.replaceData(mSearchhistory);
+//        }
+//        TDLog.e(mSearchHistoryAdapter,mSearchhistory);
     }
 }

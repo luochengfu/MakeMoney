@@ -1,28 +1,25 @@
 package com.tudouni.makemoney.network;
 
-import android.databinding.BaseObservable;
 import android.databinding.ObservableArrayList;
-import android.text.TextUtils;
 
 import com.tudouni.makemoney.model.AgentInfo;
 import com.tudouni.makemoney.model.AliAuth;
 import com.tudouni.makemoney.model.AppConfig;
+import com.tudouni.makemoney.model.Banner;
 import com.tudouni.makemoney.model.BindInfo;
 import com.tudouni.makemoney.model.BindUserBean;
-import com.tudouni.makemoney.model.Invite;
-import com.tudouni.makemoney.model.Banner;
+import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.model.FoundTopicBean;
+import com.tudouni.makemoney.model.Invite;
 import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.model.MallAlbumModel;
-import com.tudouni.makemoney.model.MallCommonModel;
 import com.tudouni.makemoney.model.MallGoodItem;
 import com.tudouni.makemoney.model.MessageResponsBean;
 import com.tudouni.makemoney.model.PayBindingInfo;
-import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.model.RecommendTopicBean;
+import com.tudouni.makemoney.model.SearchHistory;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.myApplication.MyApplication;
-import com.tudouni.makemoney.network.rx.BaseMallObserver;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.upload.UploadInfo;
 import com.tudouni.makemoney.widget.versionUpdate.Upinfo;
@@ -30,8 +27,6 @@ import com.tudouni.makemoney.widget.versionUpdate.Upinfo;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import retrofit2.http.Field;
 
 /**
  * Created by Administrator on 2018/4/20 0020.
@@ -336,11 +331,11 @@ public class CommonScene extends RetrofitUtils {
     }
 
 
-    public static void loadSearchHistory(String unionId,BaseObserver<List<String>> observer){
+    public static void loadSearchHistory(String unionId,BaseObserver<List<SearchHistory>> observer){
         setSubscribe(commonApi.loadSearchHistory(unionId),observer);
     }
 
-    public static void saveSearchHistoryToService(String source,String deviceModel,String content,BaseObserver<Object> observer){
-        setSubscribe(commonApi.saveSearchHistoryToService(source,deviceModel,content),observer);
+    public static void saveSearchHistoryToService(String unionId,String source,String deviceModel,String content,BaseObserver<Object> observer){
+        setSubscribe(commonApi.saveSearchHistoryToService(unionId,source,deviceModel,content),observer);
     }
 }

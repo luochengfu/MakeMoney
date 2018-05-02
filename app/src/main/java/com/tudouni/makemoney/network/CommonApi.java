@@ -5,19 +5,19 @@ import android.databinding.ObservableArrayList;
 import com.tudouni.makemoney.model.AgentInfo;
 import com.tudouni.makemoney.model.AliAuth;
 import com.tudouni.makemoney.model.AppConfig;
+import com.tudouni.makemoney.model.Banner;
+import com.tudouni.makemoney.model.BindInfo;
 import com.tudouni.makemoney.model.BindUserBean;
 import com.tudouni.makemoney.model.Category;
-import com.tudouni.makemoney.model.BindInfo;
-import com.tudouni.makemoney.model.Invite;
-import com.tudouni.makemoney.model.Banner;
 import com.tudouni.makemoney.model.FoundTopicBean;
+import com.tudouni.makemoney.model.Invite;
 import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.model.MallAlbumModel;
-import com.tudouni.makemoney.model.MallCommonModel;
 import com.tudouni.makemoney.model.MallGoodItem;
 import com.tudouni.makemoney.model.MessageResponsBean;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.RecommendTopicBean;
+import com.tudouni.makemoney.model.SearchHistory;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.utils.upload.UploadInfo;
 import com.tudouni.makemoney.widget.versionUpdate.Upinfo;
@@ -28,7 +28,6 @@ import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 
 /**
  * Created by Administrator on 2018/4/20 0020.
@@ -290,10 +289,11 @@ public interface CommonApi {
 
     @FormUrlEncoded
     @POST("zzshop/getrecommendgoods")
-    Observable<Result<List<MallGoodItem>>> getRecommendGood(@Field("page")int page,@Field("pageSize")int pageSize);
+    Observable<Result<List<MallGoodItem>>> getRecommendGood(@Field("page") int page, @Field("pageSize") int pageSize);
 
     @POST("zzshop/getownGoodscatalog")
     Observable<Result<ObservableArrayList<MallAlbumModel>>> getSelfGood();
+
 
     @FormUrlEncoded
     @POST("zzshop/auth/invite/info_V2")
@@ -305,9 +305,9 @@ public interface CommonApi {
 
     @FormUrlEncoded
     @POST("zzshop/searchRecord/list")
-    Observable<Result<List<String>>> loadSearchHistory(@Field("unionid") String unionid);
+    Observable<Result<List<SearchHistory>>> loadSearchHistory(@Field("unionid") String unionid);
 
     @FormUrlEncoded
     @POST("zzshop/searchRecord/save")
-    Observable<Result<Object>> saveSearchHistoryToService(@Field("source") String source, @Field("deviceModel") String model, @Field("content") String content);
+    Observable<Result<Object>> saveSearchHistoryToService(@Field("unionid") String unionId, @Field("source") String source, @Field("deviceModel") String model, @Field("content") String content);
 }

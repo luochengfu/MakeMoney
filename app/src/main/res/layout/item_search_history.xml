@@ -4,7 +4,7 @@
     <data>
         <variable
             name="item"
-            type="String"/>
+            type="com.tudouni.makemoney.model.SearchHistory"/>
     </data>
     <TextView
         android:layout_width="match_parent"
@@ -12,7 +12,7 @@
         android:paddingLeft="15dp"
         android:gravity="left|center_vertical"
         android:textColor="#999999"
-        android:text="@{item}"
+        android:text="@{item.content}"
         android:layout_height="30dp" />
 
 </layout>

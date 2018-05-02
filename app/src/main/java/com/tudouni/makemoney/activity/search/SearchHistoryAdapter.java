@@ -4,13 +4,14 @@ import android.view.LayoutInflater;
 
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.databinding.ItemSearchHistoryBinding;
+import com.tudouni.makemoney.model.SearchHistory;
 import com.tudouni.makemoney.view.BaseRecyclerViewBindingAdapter;
 
 /**
  * Jaron.Wu
  * 2018/4/28
  */
-public class SearchHistoryAdapter extends BaseRecyclerViewBindingAdapter<String> {
+public class SearchHistoryAdapter extends BaseRecyclerViewBindingAdapter<SearchHistory> {
     public SearchHistoryAdapter(LayoutInflater inflater) {
         super(inflater);
     }
