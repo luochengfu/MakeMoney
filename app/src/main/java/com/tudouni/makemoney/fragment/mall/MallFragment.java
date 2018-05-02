@@ -128,9 +128,11 @@ public class MallFragment extends BaseFragment {
     }
 
     public void onSelfCategoryClick(View view, MallAlbumModel albumModel) {
-        Intent intent = new Intent(getActivity(), H5Activity.class);
-        intent.putExtra("url", albumModel.getUrl());
-        startActivity(intent);
+        if (albumModel != null) {
+            Intent intent = new Intent(getActivity(), H5Activity.class);
+            intent.putExtra("url", albumModel.getUrl());
+            startActivity(intent);
+        }
     }
 
     private void loadRecommendGood(int page,int pageSize) {
