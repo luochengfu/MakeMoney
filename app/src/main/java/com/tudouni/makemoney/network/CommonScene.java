@@ -335,4 +335,12 @@ public class CommonScene extends RetrofitUtils {
         setSubscribe(commonApi.addBindUser(userCode, inviterUnionid), observer);
     }
 
+
+    public static void loadSearchHistory(String unionId,BaseObserver<List<String>> observer){
+        setSubscribe(commonApi.loadSearchHistory(unionId),observer);
+    }
+
+    public static void saveSearchHistoryToService(String source,String deviceModel,String content,BaseObserver<Object> observer){
+        setSubscribe(commonApi.saveSearchHistoryToService(source,deviceModel,content),observer);
+    }
 }

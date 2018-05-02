@@ -302,4 +302,12 @@ public interface CommonApi {
     @FormUrlEncoded
     @POST("zzshop/auth/invite/action/addBinding")
     Observable<Result<String>> addBindUser(@Field("userCode") String userCode, @Field("inviterUnionid") String inviterUnionid);
+
+    @FormUrlEncoded
+    @POST("zzshop/searchRecord/list")
+    Observable<Result<List<String>>> loadSearchHistory(@Field("unionid") String unionid);
+
+    @FormUrlEncoded
+    @POST("zzshop/searchRecord/save")
+    Observable<Result<Object>> saveSearchHistoryToService(@Field("source") String source, @Field("deviceModel") String model, @Field("content") String content);
 }

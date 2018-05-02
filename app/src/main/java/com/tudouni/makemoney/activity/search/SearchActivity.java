@@ -19,6 +19,8 @@ import com.tudouni.makemoney.utils.SPUtil;
 import com.tudouni.makemoney.utils.StringUtil;
 import com.tudouni.makemoney.utils.TDLog;
 import com.tudouni.makemoney.utils.ToastUtil;
+import com.tudouni.makemoney.viewModel.SearchViewModel;
+import com.tudouni.makemoney.viewModel.VMResultCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,29 +34,29 @@ public class SearchActivity extends BaseActivity {
     private List<String> mSearchhistory = new ArrayList<>();
     private Gson mGson = new Gson();
     private SearchHistoryAdapter mSearchHistoryAdapter;
+    private SearchViewModel mSearchViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivitySearchBinding searchBinding = DataBindingUtil.setContentView(this, R.layout.activity_search);
         mSearchHistoryAdapter = new SearchHistoryAdapter(getLayoutInflater());
-
         mSearchHistoryAdapter.setOnItemClickListener((position, itemData) -> toSearchResultPage(itemData));
-
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         searchBinding.recycler.setLayoutManager(layoutManager);
         searchBinding.recycler.setAdapter(mSearchHistoryAdapter);
 
-        parseSearchHistory();
+        mSearchViewModel = new SearchViewModel();
 
+        loadHistory();
         searchBinding.tvSearch.setOnClickListener(l -> {
             String keyWord = searchBinding.etSearch.getText().toString();
             if (StringUtil.isEmpty(keyWord)){
                 ToastUtil.show("搜索关键字不能为空~");
                 return;
             }
-            cacheSearchHistory(keyWord);
+            saveHistoryToService(keyWord);
             toSearchResultPage(keyWord);
         });
 
@@ -62,10 +64,34 @@ public class SearchActivity extends BaseActivity {
 
     }
 
+    private void saveHistoryToService(String searchKey) {
+        if (mSearchViewModel != null) {
+            mSearchViewModel.saveSearchHistoryToService("ssk",searchKey);
+        }
+    }
+
+    private void loadHistory() {
+        if (mSearchViewModel != null) {
+            mSearchViewModel.loadSearchHistory(MyApplication.getLoginUser().getUnionid(), new VMResultCallback<List<String>>() {
+                @Override
+                public void onSuccess(List<String> data) {
+                    if (mSearchHistoryAdapter != null) {
+                        mSearchHistoryAdapter.replaceData(data);
+                    }
+                }
+
+                @Override
+                public void onFailure() {
+
+                }
+            });
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-        parseSearchHistory();
+        loadHistory();
     }
 
     private void toSearchResultPage(String keyWord) {
@@ -77,6 +103,10 @@ public class SearchActivity extends BaseActivity {
         startActivity(intent);
     }
 
+    /**
+     * 缓存历史记录到本地【弃用】
+     * @param keyWord
+     */
     private void cacheSearchHistory(String keyWord) {
         for (String item : mSearchhistory) {
             if (item.equals(keyWord)) {
@@ -87,6 +117,9 @@ public class SearchActivity extends BaseActivity {
         SPUtil.putString(this,"search_history",mGson.toJson(mSearchhistory));
     }
 
+    /**
+     * 解析本地历史记录【弃用】
+     */
     private void parseSearchHistory() {
         mSearchhistory.clear();
         String searchHistoryJson = SPUtil.getString(this,"search_history");

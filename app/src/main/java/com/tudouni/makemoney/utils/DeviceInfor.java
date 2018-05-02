@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.support.v4.content.PermissionChecker;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -73,5 +74,9 @@ public class DeviceInfor {
             SPUtil.putString(context, "uuid", uuid);
         }
         return uuid;
+    }
+
+    public static String getDeviceModel() {
+        return Build.BRAND + " " + Build.MODEL;
     }
 }
