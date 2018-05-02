@@ -73,6 +73,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     public void addData(List<MineMessage> data) {
         if (data.size() > 0) {
+            mDatas.clear();
             mDatas.addAll(data);
             notifyDataSetChanged();
         }

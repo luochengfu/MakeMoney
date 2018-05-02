@@ -29,6 +29,8 @@ public class MessageActivity extends AppCompatActivity {
     private RecyclerView mRcMessage;
     private MessageAdapter mMessageAdapter;
     private ArrayList<MineMessage> mData;
+    private ArrayList<MineMessage> mDataForSys;//非全局消息
+    private ArrayList<MineMessage> mDataForGsys;//全局的消息
     private int msgpage = 1;
     private int gmsgpage = 1;
 
@@ -43,6 +45,10 @@ public class MessageActivity extends AppCompatActivity {
     private void initData() {
         if (mData == null)
             mData = new ArrayList<>();
+        if (mDataForSys == null)
+            mDataForSys = new ArrayList<>();
+        if (mDataForGsys == null)
+            mDataForGsys = new ArrayList<>();
         CommonScene.getSysMsg(MyApplication.getLoginUser().getUid(), msgpage, gmsgpage, new BaseObserver<MessageResponsBean>() {
             @Override
             public void OnSuccess(MessageResponsBean messageResponsBean) {
@@ -51,17 +57,18 @@ public class MessageActivity extends AppCompatActivity {
                 if (msgpage + gmsgpage == 2) {
                     updateMsgReadInfo(messageResponsBean);
                 }
-                if (messageResponsBean.getSysmsg() != null && !messageResponsBean.getSysmsg().isEmpty()) {
-                    mmData.addAll(messageResponsBean.getSysmsg());
-                    msgpage++;
-                }
                 if (messageResponsBean.getGsysmsg() != null && !messageResponsBean.getGsysmsg().isEmpty()) {
-                    mmData.addAll(messageResponsBean.getGsysmsg());
+                    mDataForGsys.addAll(messageResponsBean.getGsysmsg());
                     gmsgpage++;
                 }
-                if (mmData == null || mmData.isEmpty()) return;
-                mMessageAdapter.addData(mmData);
-                mData.addAll(mmData);
+
+                if (messageResponsBean.getSysmsg() != null && !messageResponsBean.getSysmsg().isEmpty()) {
+                    mDataForSys.addAll(messageResponsBean.getSysmsg());
+                    msgpage++;
+                }
+                mData.addAll(mDataForGsys);
+                mData.addAll(mDataForSys);
+                mMessageAdapter.addData(mData);
             }
 
             @Override
@@ -101,6 +108,25 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onLongClick(int position) {
 
+            }
+        });
+        mRcMessage.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+                if (layoutManager instanceof LinearLayoutManager) {
+                    LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
+                    int lastItemPosition = linearManager.findLastVisibleItemPosition();
+                    if (lastItemPosition < mData.size() - 4) {
+                        initData();
+                    }
+                }
             }
         });
 //        mRcMessage.setIte
