@@ -114,8 +114,8 @@ public class MallFragment extends BaseFragment {
                 public void onSuccess(ObservableArrayList<MallAlbumModel> data) {
                     if (mMallHeaderViewBinding != null) {
                         //编译器提示错误，不影响实际运行
+//                        mBannerData = data;
                         mMallHeaderViewBinding.setSelfData(data);
-                        mBannerData = data;
                     }
                 }
 
@@ -185,6 +185,7 @@ public class MallFragment extends BaseFragment {
                 @Override
                 public void onSuccess(List<MallAlbumModel> data) {
                     TDLog.e(data);
+                    mBannerData = data;
                     mMallHeaderViewBinding.mzMallBanner.setPages(data, () -> new MallBannerViewHolder());
                 }
 
@@ -213,7 +214,7 @@ public class MallFragment extends BaseFragment {
         });
 
         mMallHeaderViewBinding.mzMallBanner.setBannerPageClickListener((view, i) -> {
-            TDLog.e("onBannerPageClick");
+            TDLog.e("onBannerPageClick",i);
             Intent intent = new Intent(getActivity(), H5Activity.class);
             intent.putExtra("url", mBannerData.get(i).getUrl());
             startActivity(intent);

@@ -27,6 +27,7 @@ import com.tudouni.makemoney.utils.AndroidBug5497Workaround;
 import com.tudouni.makemoney.utils.Constants;
 import com.tudouni.makemoney.utils.H5WebViewClient;
 import com.tudouni.makemoney.utils.InjectView;
+import com.tudouni.makemoney.utils.TDLog;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.WVJBWebViewClient;
 import com.tudouni.makemoney.utils.base.AppUtils;
@@ -109,6 +110,7 @@ public class H5Activity extends BaseActivity implements
         AndroidBug5497Workaround.assistActivity(this);
         webview = (BridgeWebView) findViewById(R.id.webView);
         url = getIntent().getStringExtra("url");
+        TDLog.e(url);
 //        url = "http://192.168.16.183:3001/html/webView.html";
         titleStatus = getIntent().getIntExtra("titleStatus", 0);
         mDefaultTitle = getIntent().getStringExtra("title");
