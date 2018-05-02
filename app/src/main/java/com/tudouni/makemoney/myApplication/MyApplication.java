@@ -19,10 +19,12 @@ import com.tudouni.makemoney.activity.SearchGoodActivity;
 import com.tudouni.makemoney.activity.SplashActivity;
 import com.tudouni.makemoney.activity.TelLoginActivity;
 import com.tudouni.makemoney.model.AppConfig;
+import com.tudouni.makemoney.model.LogOut;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.myApplication.jPush.TagAliasOperatorHelper;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseObserver;
+import com.tudouni.makemoney.utils.BindInvitationUtil;
 import com.tudouni.makemoney.utils.ClipboardUtil;
 import com.tudouni.makemoney.utils.DBLifecycleHandler;
 import com.tudouni.makemoney.utils.PatternUtil;
@@ -35,6 +37,8 @@ import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 import com.uuzuche.lib_zxing.PicassoImageLoader;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
+
+import org.simple.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -233,20 +237,24 @@ public class MyApplication extends BaseApplication implements ClipboardUtil.OnPr
             //但为了保险起见，在这边还是做了空指针判断
 
             if (ClipDescription.MIMETYPE_TEXT_PLAIN.equals(mimeType) || ClipDescription.MIMETYPE_TEXT_HTML.equals(mimeType)) {
-                if (mClipStr != null && !mClipStr.equals("") && mClipStr.trim().length() > 6 && !ValidateUtil.isMobileNO(mClipStr) && mClipStr.startsWith("#tdn")) {
-                    String userCode = mClipStr.substring(4, mClipStr.lastIndexOf("#tdn"));
-                    ClipboardUtil.getInstance().copyText("", "");
-                    mClipStr = "";
-                    Intent intent = new Intent(getContext(), BindInvitationCodeActivity.class);
+                try {
+                    if (mClipStr != null && !mClipStr.equals("") && mClipStr.trim().length() > 6 && !ValidateUtil.isMobileNO(mClipStr) && mClipStr.startsWith("#tdn")) {
+                        String userCode = mClipStr.substring(4, mClipStr.lastIndexOf("#tdn"));
+                        ClipboardUtil.getInstance().copyText("", "");
+                        mClipStr = "";
+                        BindInvitationUtil.getBindInvitationUseInfo(userCode);
+                    /*Intent intent = new Intent(getContext(), BindInvitationCodeActivity.class);
                     intent.putExtra("userCode", userCode);
-                    activity.startActivity(intent);
+                    activity.startActivity(intent);*/
 
-                } else if (mClipStr != null && !mClipStr.equals("") && mClipStr.trim().length() > 15 && !PatternUtil.matchClipStr(mClipStr.trim()) &&
-                        !PatternUtil.matchURL(mClipStr.trim()) && !ValidateUtil.isMobileNO(mClipStr) && !mClipStr.startsWith("#bind")) {
-                    Intent intent = new Intent(getContext(), SearchGoodActivity.class);
-                    intent.putExtra("url", mClipStr);
-                    activity.startActivity(intent);
-                }
+                    } else if (mClipStr != null && !mClipStr.equals("") && mClipStr.trim().length() > 15 && !PatternUtil.matchClipStr(mClipStr.trim()) &&
+                            !PatternUtil.matchURL(mClipStr.trim()) && !ValidateUtil.isMobileNO(mClipStr) && !mClipStr.startsWith("#bind")) {
+                        EventBus.getDefault().post(mClipStr, "search_good_action");
+                       /* Intent intent = new Intent(getContext(), SearchGoodActivity.class);
+                        intent.putExtra("url", mClipStr);
+                        activity.startActivity(intent);*/
+                    }
+                } catch (Exception e) {}
             }
         }
 
@@ -267,6 +275,7 @@ public class MyApplication extends BaseApplication implements ClipboardUtil.OnPr
             }
         }
     }
+
 
     @Override
     public void onPrimaryClipChanged(ClipboardManager clipboardManager) {

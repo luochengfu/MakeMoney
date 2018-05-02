@@ -32,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:visibility="gone"
                 android:text="点击搜一搜"
                 android:textSize="13sp"
                 android:textColor="@color/color_E1E1E1"

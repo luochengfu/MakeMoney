@@ -10,7 +10,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.ValueCallback;
@@ -161,6 +163,8 @@ public class RefreshWebViewActivity extends BaseActivity implements
 
     private void initHeader() {
         mHeadView = getLayoutInflater().inflate(R.layout.refresh_webview_title_layout, null, false);
+//        ViewGroup.LayoutParams mParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+//        mHeadView.setLayoutParams(mParams);
         webview = (WebView) mHeadView.findViewById(R.id.refresh_webView_title);
     }
 

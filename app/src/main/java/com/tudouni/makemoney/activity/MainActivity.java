@@ -21,10 +21,15 @@ import com.tudouni.makemoney.fragment.mall.MallFragment;
 import com.tudouni.makemoney.fragment.MainTabThreeFragment;
 import com.tudouni.makemoney.fragment.category.GoodCategoryFragment;
 import com.tudouni.makemoney.fragment.MineFragment;
+import com.tudouni.makemoney.model.BindUserBean;
 import com.tudouni.makemoney.model.LogOut;
 import com.tudouni.makemoney.myApplication.MyApplication;
+import com.tudouni.makemoney.network.CommonScene;
+import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.Constants;
 import com.tudouni.makemoney.utils.ForwardUtils;
+import com.tudouni.makemoney.view.BindInvitationCodeDialog;
+import com.tudouni.makemoney.view.SearchGoodDialog;
 import com.tudouni.makemoney.view.Tip_dialog;
 import com.tudouni.makemoney.widget.versionUpdate.UpdateAPKUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -244,6 +249,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             confirmDialog.show();
         } else {
             doLogOut();
+        }
+    }
+
+    @Subscriber(tag = "bind_code_action", mode = ThreadMode.MAIN)
+    private void bindCodeAction(BindUserBean bindUserBean)
+    {
+        if(MyApplication.sCurrActivity.getClass().getName().startsWith("com.tudouni") && !(MyApplication.sCurrActivity instanceof SearchGoodActivity) && !(MyApplication.sCurrActivity instanceof LoginActivity) &&
+                !(MyApplication.sCurrActivity instanceof TelLoginActivity) && !(MyApplication.sCurrActivity instanceof PwdActivity) &&
+                !(MyApplication.sCurrActivity instanceof SplashActivity) && !(MyApplication.sCurrActivity instanceof BindInvitationCodeActivity)) {
+            BindInvitationCodeDialog dialog = new BindInvitationCodeDialog(MyApplication.sCurrActivity, bindUserBean, false);
+            dialog.show();
+
+        }
+    }
+
+    @Subscriber(tag = "search_good_action", mode = ThreadMode.MAIN)
+    private void searchGoodAction(String url)
+    {
+        if(MyApplication.sCurrActivity.getClass().getName().startsWith("com.tudouni") && !(MyApplication.sCurrActivity instanceof SearchGoodActivity) && !(MyApplication.sCurrActivity instanceof LoginActivity) &&
+                !(MyApplication.sCurrActivity instanceof TelLoginActivity) && !(MyApplication.sCurrActivity instanceof PwdActivity) &&
+                !(MyApplication.sCurrActivity instanceof SplashActivity) && !(MyApplication.sCurrActivity instanceof BindInvitationCodeActivity)) {
+            SearchGoodDialog dialog = new SearchGoodDialog(MyApplication.sCurrActivity, url, false);
+            dialog.show();
+
         }
     }
 
