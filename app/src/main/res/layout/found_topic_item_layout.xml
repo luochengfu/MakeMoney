@@ -6,6 +6,7 @@
     <ImageView
         android:id="@+id/found_item_iv"
         android:layout_width="match_parent"
-        android:layout_height="100dp"/>
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"/>
 
 </RelativeLayout>

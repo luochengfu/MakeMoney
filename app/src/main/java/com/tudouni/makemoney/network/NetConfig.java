@@ -29,7 +29,7 @@ public class NetConfig {
     public static final String GETUSERINFO = "/zzshop/auth/user/info";
     public static final String ACCOUNT_BIND = "/zzshop/auth/user/bindStatus";
     public static final String PAY_STATUS = "/zzshop/auth/pay/status";
-    public static final String UNBUNDTHREE = "/auth/user/unBindThird";
+    public static final String UNBUNDTHREE = "/zzshop/auth/user/unBindThird";
     public static final String BINDACCCOUNT = "/zzshop/auth/user/bindAccount";
     public static final String ALIAUTH = "/auth/alipay/info";
 

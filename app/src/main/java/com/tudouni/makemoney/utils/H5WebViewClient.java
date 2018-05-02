@@ -247,7 +247,7 @@ public class H5WebViewClient extends WVJBWebViewClient
                         } else {
                             url = url + "?unionid="+MyApplication.getLoginUser().getUnionid() + "&token="+MyApplication.getLoginUser().getToken()+"&uid="+MyApplication.getLoginUser().getUid();
                         }
-                        if("tudouni://tudouni/home".equals(url) || "tudouni://tudouni/back".equals(url)) {
+                        if(url.startsWith("tudouni://tudouni/home") || url.startsWith("\"tudouni://tudouni/back\"")) {
                             mActivity.finish();
                         } else if(url.startsWith(NetConfig.getBaseTuDouNiH5Url())){
                             Intent intent = new Intent(mActivity, RefreshWebViewActivity.class);

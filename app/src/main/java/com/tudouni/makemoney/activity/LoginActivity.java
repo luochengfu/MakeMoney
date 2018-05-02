@@ -62,6 +62,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public int state = 1; //状态 1 表示未启动线程或正在运行线程。0 停止线程
     private ExecutorService mExecutouService;
     private String mPhoneNum;
+    private boolean mActivityStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,6 +156,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void initDatas() {
+        mActivityStatus = true;
         mExecutouService = Executors.newSingleThreadExecutor();
         loginModeChangeView.setOnClickListener(this);
         submitBtn.setOnClickListener(this);
@@ -182,6 +184,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 //        initEnvironmentButton();
         noDoubleClick();
     }
+
 
     @Override
     public void onClick(View v) {
@@ -505,9 +508,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void enableTvCode() {
-        tvCode.setClickable(true);
-        tvCode.setTextColor(getResources().getColor(R.color.white));
-        tvCode.setBackgroundDrawable(getResources().getDrawable(R.drawable.get_vcode_style_02));
+        String input = mPhoneNumberInput2.getText().toString();
+        if(input == null || "".equals(input) ||  !ValidateUtil.isMobileNO(input)){
+            disenableTvCode();
+        } else {
+            tvCode.setClickable(true);
+            tvCode.setTextColor(getResources().getColor(R.color.white));
+            tvCode.setBackgroundDrawable(getResources().getDrawable(R.drawable.get_vcode_style_02));
+        }
     }
 
     private void enableClickCode() {
@@ -680,6 +688,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        mActivityStatus = false;
     }
 
     /**
@@ -840,7 +849,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         @Override
         protected Object doInBackground(Object[] objects) {
             for (int i = 60; i > 0; i--) {
-                if (state == 0) { // 停止线程
+                if (state == 0 || !mActivityStatus) { // 停止线程
                     return null;
                 }
                 if (i == 1) {

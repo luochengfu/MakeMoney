@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tudouni.makemoney.R;
+import com.tudouni.makemoney.interfaces.NoDoubleClickListener;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.CommonScene;
@@ -26,6 +27,8 @@ import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.ValidateUtil;
 import com.tudouni.makemoney.view.CenterLoadingView;
 import com.tudouni.makemoney.view.MyTitleBar;
+import com.umeng.analytics.MobclickAgent;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,7 +67,8 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
     private TextWatcher mCodeWatcher;
     private String verifyToken;
     private String handleToken;
-
+    private boolean mCodeBtnStatus = true;
+    private boolean mActivityStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,10 +84,17 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mActivityStatus = false;
+    }
+
     /**
      * 获取数据
      */
     private void initData() {
+        mActivityStatus = true;
         Intent intent = getIntent();
         pageType = intent.getStringExtra("type");
         if(pageType.equals("6")) {
@@ -135,6 +146,25 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
         }
 
         focusAndUnFocus();
+
+        tvCode.setOnClickListener(new NoDoubleClickListener() {
+            @Override
+            protected void onNoDoubleClick(View v) {
+                String input = etTelNumber.getText().toString();
+                if(null == input || "".equals(input) ||  !ValidateUtil.isMobileNO(input)|| !mCodeBtnStatus)
+                    return;
+                generateCode();
+            }
+        });
+
+        title_bar.setOnLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mActivityStatus = false;
+                finish();
+            }
+        });
+        tvLogin.setOnClickListener(this);
     }
 
     @Override
@@ -223,7 +253,6 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
 
     private void enableTvLogin() {
         tvLogin.setClickable(true);
-        tvLogin.setOnClickListener(this);
         tvLogin.setTextColor(getResources().getColor(R.color.white));
         tvLogin.setSelected(true);
     }
@@ -236,10 +265,14 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
 
 
     private void enableTvCode() {
-        tvCode.setClickable(true);
-        tvCode.setOnClickListener(this);
-        tvCode.setTextColor(getResources().getColor(R.color.white));
-        tvCode.setBackgroundDrawable(getResources().getDrawable(R.drawable.get_vcode_style_02));
+        String input = etTelNumber.getText().toString();
+        if(input == null || "".equals(input) ||  !ValidateUtil.isMobileNO(input)){
+            disenableTvCode();
+        } else {
+            tvCode.setClickable(true);
+            tvCode.setTextColor(getResources().getColor(R.color.white));
+            tvCode.setBackgroundDrawable(getResources().getDrawable(R.drawable.get_vcode_style_02));
+        }
     }
 
 
@@ -250,6 +283,12 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 generateCode();
                 break;
             case R.id.tvLogin:
+                String phone = etTelNumber.getText().toString();
+                boolean bool = ValidateUtil.isMobileNO(phone);
+                String code = etCode.getText().toString();
+                if (!bool && TextUtils.isEmpty(code) && code.length() < 3) {
+                    return;
+                }
                 if (pageType.equals("1")) {
                     login("登录中");
                 } else if (pageType.equals("2") || pageType.equals("3") || pageType.equals("4") || pageType.equals("5") || pageType.equals("6") || pageType.equals("7")) {
@@ -450,6 +489,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 if (null != loadingDialog) {
                     loadingDialog.dismiss();
                 }
+                mCodeBtnStatus = false;
                 myThread = new MyThread();
                 myThread.run();
             }
@@ -459,6 +499,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 if (null != loadingDialog) {
                     loadingDialog.dismiss();
                 }
+                mCodeBtnStatus = true;
                 ToastUtil.show(err);
             }
         });
@@ -471,6 +512,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 if (null != loadingDialog) {
                     loadingDialog.dismiss();
                 }
+                mCodeBtnStatus = false;
                 myThread = new MyThread();
                 myThread.run();
             }
@@ -480,6 +522,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 if (null != loadingDialog) {
                     loadingDialog.dismiss();
                 }
+                mCodeBtnStatus = true;
                 ToastUtil.show(err);
             }
         });
@@ -495,6 +538,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 if (null != loadingDialog) {
                     loadingDialog.dismiss();
                 }
+                mCodeBtnStatus = false;
                 myThread = new MyThread();
                 myThread.run();
             }
@@ -504,6 +548,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 if (null != loadingDialog) {
                     loadingDialog.dismiss();
                 }
+                mCodeBtnStatus = true;
                 ToastUtil.show(err);
             }
         });
@@ -521,7 +566,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 @Override
                 protected Object doInBackground(Object... arg0) {
                     for (int i = 60; i >= 0; i--) {
-                        if (state == 0) { // 停止线程
+                        if (state == 0 || !mActivityStatus) { // 停止线程
                             return null;
                         }
                         if (i == 0) {
@@ -551,6 +596,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                         if ("剩余59秒".equals(values[0])) {
                             disenableTvCode();
                         } else if ("获取验证码".equals(values[0])) {
+                            mCodeBtnStatus = true;
                             enableTvCode();
                         }
                         tvCode.setText(values[0].toString());

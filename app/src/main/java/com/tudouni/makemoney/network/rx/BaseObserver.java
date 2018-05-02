@@ -3,10 +3,13 @@ package com.tudouni.makemoney.network.rx;
 
 import android.util.Log;
 
+import com.tudouni.makemoney.model.LogOut;
 import com.tudouni.makemoney.network.Result;
 import com.tudouni.makemoney.network.exception.NetWorkExceptionConvert;
 import com.tudouni.makemoney.utils.TDLog;
 import com.tudouni.makemoney.utils.ToastUtil;
+
+import org.simple.eventbus.EventBus;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -51,8 +54,9 @@ public abstract class BaseObserver<T> implements Observer<Result<T>> {
 
     public void OnFail(int code, String err) {
         boolean canToast = true;
-        if (code == 10) {
+        if (code == 10) {//token失效
             canToast = false;
+            EventBus.getDefault().post(new LogOut(err, true), "clear");
         } else if (code == 1048) {//绑定手机号
             canToast = false;
         } else if (code == 5400) {//直播已结束

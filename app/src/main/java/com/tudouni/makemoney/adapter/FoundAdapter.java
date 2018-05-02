@@ -1,5 +1,6 @@
 package com.tudouni.makemoney.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +20,11 @@ import java.util.List;
 
 public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.FoundViewHolder>
 {
+    private Context mContext;
     private List<RecommendTopicBean> mDatas = new ArrayList<>();
 
-    public FoundAdapter() {
-
+    public FoundAdapter(Context context) {
+        mContext = context;
     }
 
     @Override
@@ -34,7 +36,7 @@ public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.FoundViewHol
     @Override
     public void onBindViewHolder(FoundViewHolder holder, int position) {
         RecommendTopicBean itemBean = mDatas.get(position);
-        GlideUtil.bindImage(holder.itemIV,itemBean.getImageUrl());
+        GlideUtil.getInstance().loadImage(mContext,itemBean.getImageUrl(),holder.itemIV,R.mipmap.found_default_banner);
     }
 
     @Override
