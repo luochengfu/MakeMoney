@@ -1,5 +1,6 @@
 package com.tudouni.makemoney.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +23,13 @@ import java.util.List;
 
 public class TopicAdapter extends RecyclerView.Adapter<FoundAdapter.FoundViewHolder>
 {
+    private Context mContext;
     private List<FoundTopicBean> mDatas = new ArrayList<>();
     private IItemClickListener mItemClickListener;
+
+    public TopicAdapter(Context context) {
+        mContext = context;
+    }
 
     @Override
     public FoundAdapter.FoundViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -34,7 +40,7 @@ public class TopicAdapter extends RecyclerView.Adapter<FoundAdapter.FoundViewHol
     @Override
     public void onBindViewHolder(FoundAdapter.FoundViewHolder holder, int position) {
         FoundTopicBean itemBean = mDatas.get(position);
-        GlideUtil.bindImage(holder.itemIV,itemBean.getImageUrl());
+        GlideUtil.getInstance().loadImage(mContext,itemBean.getImageUrl(),holder.itemIV,R.mipmap.found_default_banner);
         holder.itemIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -136,7 +136,7 @@ public class RefreshWebViewActivity extends BaseActivity implements
     }
 
     private void initAdapter() {
-        mAdapter = new FoundAdapter();
+        mAdapter = new FoundAdapter(this);
         mLayoutManager = new GridLayoutManager(this, 1);
         mLRecyclerView.setLayoutManager(mLayoutManager);
         mLRecyclerView.setRefreshHeader(new MineRefreshHeader(this));

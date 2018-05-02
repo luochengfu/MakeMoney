@@ -76,7 +76,7 @@ public class MainTabThreeFragment extends BaseFragment
 
 
     private void initAdapter() {
-        mAdapter = new FoundAdapter();
+        mAdapter = new FoundAdapter(getContext());
         mLayoutManager = new GridLayoutManager(getActivity(), 1);
         mLRecyclerView.setLayoutManager(mLayoutManager);
         mLRecyclerView.setRefreshHeader(new MineRefreshHeader(getContext()));
@@ -101,7 +101,7 @@ public class MainTabThreeFragment extends BaseFragment
         mRecyclerView = (RecyclerView) mHeadView.findViewById(R.id.three_tab_rv_2);
         mHeadImageView = (ImageView) mHeadView.findViewById(R.id.iv_banner);
 
-        mTopticAdapter = new TopicAdapter();
+        mTopticAdapter = new TopicAdapter(getContext());
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mRecyclerView.setAdapter(mTopticAdapter);
         mRecyclerView.addItemDecoration(mItemDecoration);
@@ -149,7 +149,7 @@ public class MainTabThreeFragment extends BaseFragment
                     if (bannerList.size() == 1) {
                         mHeadImageView.setVisibility(View.VISIBLE);
                         mBanner.setVisibility(View.GONE);
-                        GlideUtil.bindImage(mHeadImageView,bannerList.get(0).getImageUrl());
+                        GlideUtil.getInstance().loadImage(getContext(),bannerList.get(0).getImageUrl(),mHeadImageView,R.mipmap.found_default_banner);
                     } else {
                         mHeadImageView.setVisibility(View.GONE);
                         mBanner.setVisibility(View.VISIBLE);
