@@ -587,7 +587,7 @@
                     android:id="@+id/tv_shop_level"
                     style="@style/mine_red_style"
                     android:gravity="center_vertical|left"
-                    android:text="0" />
+                    android:text="会员" />
 
                 <ImageView
                     android:layout_width="13dp"

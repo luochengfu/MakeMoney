@@ -86,12 +86,10 @@
         <activity
             android:name=".activity.RefreshWebViewActivity"
             android:label="H5页"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.FaceToFaceActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme_yellow" />
+            android:screenOrientation="portrait" />
 
         <!-- =========================APP中的 Activity End========================= -->
         <!-- =========================友盟集成 Start========================= -->
