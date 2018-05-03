@@ -13,7 +13,6 @@ import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.activity.BaseActivity;
 import com.tudouni.makemoney.activity.H5Activity;
 import com.tudouni.makemoney.databinding.ActivitySearchBinding;
-import com.tudouni.makemoney.model.SearchHistory;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.NetConfig;
 import com.tudouni.makemoney.utils.SPUtil;
@@ -21,7 +20,6 @@ import com.tudouni.makemoney.utils.StringUtil;
 import com.tudouni.makemoney.utils.TDLog;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.viewModel.SearchViewModel;
-import com.tudouni.makemoney.viewModel.VMResultCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +60,8 @@ public class SearchActivity extends BaseActivity {
             saveHistoryToService(keyWord);
             toSearchResultPage(keyWord);
         });
+
+        searchBinding.ivClearSearch.setOnClickListener(l -> clearSearchHistory());
 
         searchBinding.ivBack.setOnClickListener(l -> finish());
 
@@ -140,5 +140,13 @@ public class SearchActivity extends BaseActivity {
             mSearchHistoryAdapter.replaceData(mSearchhistory);
         }
         TDLog.e(mSearchHistoryAdapter,mSearchhistory);
+    }
+
+    private void clearSearchHistory(){
+        mSearchhistory.clear();
+        if (mSearchHistoryAdapter != null) {
+            mSearchHistoryAdapter.replaceData(mSearchhistory);
+        }
+        SPUtil.putString(getApplicationContext(),"search_history","[]");
     }
 }
