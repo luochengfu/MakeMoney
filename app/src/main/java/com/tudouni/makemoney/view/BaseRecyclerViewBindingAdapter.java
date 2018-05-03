@@ -10,10 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  通用Adapter，适用于使用数据绑定填充数据。
- *    Jaron.Wu
- *       2018/04/23
- * @param <T>  列表数据类型
+ * 通用Adapter，适用于使用数据绑定填充数据。
+ * Jaron.Wu
+ * 2018/04/23
+ *
+ * @param <T> 列表数据类型
  */
 public abstract class BaseRecyclerViewBindingAdapter<T> extends RecyclerView.Adapter<BaseRecyclerViewBindingAdapter.BaseViewHolder> {
     protected List<T> data = new ArrayList<>();
@@ -28,22 +29,24 @@ public abstract class BaseRecyclerViewBindingAdapter<T> extends RecyclerView.Ada
         mInflater = inflater;
     }
 
-    public void addData(List<T> data){
+    public void addData(List<T> data) {
         int startPosition = this.data.size();
         if (data != null) {
             this.data.addAll(data);
             if (startPosition == 0) {
                 notifyDataSetChanged();
-            }else {
+            } else {
                 notifyItemRangeChanged(startPosition - 1, data.size());
             }
         }
     }
 
-    public void replaceData(List<T> data){
+    public void replaceData(List<T> data) {
+        this.data.clear();
         if (data != null) {
-            this.data.clear();
             addData(data);
+        }else{
+            notifyDataSetChanged();
         }
     }
 
@@ -52,14 +55,14 @@ public abstract class BaseRecyclerViewBindingAdapter<T> extends RecyclerView.Ada
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         holder.getBinding().getRoot().setOnClickListener(l -> {
             if (mOnItemClickListener != null) {
-                mOnItemClickListener.onItemClick(position,this.data.get(position));
+                mOnItemClickListener.onItemClick(position, this.data.get(position));
             }
         });
     }
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ViewDataBinding binding = DataBindingUtil.inflate(mInflater,getLayoutId(),parent,false);
+        ViewDataBinding binding = DataBindingUtil.inflate(mInflater, getLayoutId(), parent, false);
         return new BaseViewHolder(binding);
     }
 
@@ -70,7 +73,7 @@ public abstract class BaseRecyclerViewBindingAdapter<T> extends RecyclerView.Ada
 
     protected abstract int getLayoutId();
 
-    public class BaseViewHolder<T extends ViewDataBinding> extends RecyclerView.ViewHolder{
+    public class BaseViewHolder<T extends ViewDataBinding> extends RecyclerView.ViewHolder {
         private T mBinding;
 
         public T getBinding() {
@@ -83,7 +86,7 @@ public abstract class BaseRecyclerViewBindingAdapter<T> extends RecyclerView.Ada
         }
     }
 
-    public interface OnItemClickListener<T>{
+    public interface OnItemClickListener<T> {
         void onItemClick(int position, T itemData);
     }
 }
