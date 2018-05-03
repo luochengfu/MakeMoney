@@ -84,7 +84,7 @@
             android:theme="@style/MySelectGoodStyleBottom" />
 
         <activity
-            android:name=".activity.RefreshWebViewActivity"
+            android:name=".activity.WebvewRefreshActivity"
             android:label="H5页"
             android:screenOrientation="portrait"></activity>
         <activity

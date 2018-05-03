@@ -132,6 +132,7 @@ dependencies {
     //友盟SDK集成
     compile 'com.umeng.sdk:common:latest.integration'
     compile 'com.umeng.sdk:analytics:latest.integration'
+    compile 'com.kevin:pulltorefresh:1.0.7'
     //RecyclerView
     compile 'com.github.jdsjlzx:LRecyclerView:1.5.0'
     compile 'org.simple:androideventbus:1.0.5.1'

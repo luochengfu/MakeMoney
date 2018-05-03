@@ -12,9 +12,9 @@ import com.tudouni.makemoney.activity.InvitationDouFenActivity;
 import com.tudouni.makemoney.activity.LoginActivity;
 import com.tudouni.makemoney.activity.MainActivity;
 import com.tudouni.makemoney.activity.MessageActivity;
-import com.tudouni.makemoney.activity.RefreshWebViewActivity;
 import com.tudouni.makemoney.activity.SettingActivity;
 import com.tudouni.makemoney.activity.UserInfoActivity;
+import com.tudouni.makemoney.activity.WebvewRefreshActivity;
 import com.tudouni.makemoney.myApplication.MyApplication;
 
 import java.net.URLDecoder;
@@ -64,10 +64,10 @@ public class ForwardUtils {
             } else if (url.startsWith(Constants.MESSAGE)) {//系统消息
                 Intent intent = new Intent(oriActivity, MessageActivity.class);
                 toIntent(oriActivity, url, intent);
-            } else if (url.startsWith(Constants.h5_myinvite) || url.startsWith(Constants.h5_bindsearch)) {
-                Intent intent = new Intent(oriActivity, RefreshWebViewActivity.class);
+            } else if (url.startsWith(Constants.h5_bindsearch)) {
+                Intent intent = new Intent(oriActivity, WebvewRefreshActivity.class);
                 toH5Intent(oriActivity, url, intent);
-            } else if (url.startsWith("http")) {//本次判断放在最后
+            } else if (url.startsWith("http") || url.startsWith(Constants.h5_myinvite)) {//本次判断放在最后
                 Intent intent = new Intent(oriActivity, H5Activity.class);
                 toH5Intent(oriActivity, url, intent);
             }
