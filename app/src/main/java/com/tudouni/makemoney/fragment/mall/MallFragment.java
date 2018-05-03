@@ -57,6 +57,20 @@ public class MallFragment extends BaseFragment {
     }
 
     @Override
+    protected void onFragResume() {
+        if (mBannerData.size() > 1 && mMallHeaderViewBinding != null) {
+            mMallHeaderViewBinding.mzMallBanner.start();
+        }
+    }
+
+    @Override
+    protected void onFragPause() {
+        if (mMallHeaderViewBinding != null) {
+            mMallHeaderViewBinding.mzMallBanner.pause();
+        }
+    }
+
+    @Override
     protected View getLayoutView() {
         mMallBinding = DataBindingUtil.inflate(getActivity().getLayoutInflater(), R.layout.fragment_mall, null, false);
         mMallViewModel = new MallViewModel();
@@ -196,6 +210,9 @@ public class MallFragment extends BaseFragment {
                     TDLog.e(data);
                     mBannerData = data;
                     mMallHeaderViewBinding.mzMallBanner.setPages(data, () -> new MallBannerViewHolder());
+                    if (mMallHeaderViewBinding != null && mBannerData.size() > 1) {
+                        mMallHeaderViewBinding.mzMallBanner.start();
+                    }
                 }
 
                 @Override
