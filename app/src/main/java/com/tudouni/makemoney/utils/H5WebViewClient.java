@@ -27,7 +27,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.tudouni.makemoney.activity.H5Activity;
 import com.tudouni.makemoney.activity.MainActivity;
-import com.tudouni.makemoney.activity.RefreshWebViewActivity;
+import com.tudouni.makemoney.activity.WebvewRefreshActivity;
 import com.tudouni.makemoney.interfaces.IActionListener;
 import com.tudouni.makemoney.model.LogOut;
 import com.tudouni.makemoney.model.User;
@@ -250,7 +250,7 @@ public class H5WebViewClient extends WVJBWebViewClient
                         if(url.startsWith("tudouni://tudouni/home") || url.startsWith("\"tudouni://tudouni/back\"")) {
                             mActivity.finish();
                         } else if(url.startsWith(NetConfig.getBaseTuDouNiH5Url())){
-                            Intent intent = new Intent(mActivity, RefreshWebViewActivity.class);
+                            Intent intent = new Intent(mActivity, WebvewRefreshActivity.class);
                             intent.putExtra("url", url);
                             if(url.contains("/shopHome/sousuo.html")) {
                                 intent.putExtra("titleStatus",0);
@@ -564,7 +564,7 @@ public class H5WebViewClient extends WVJBWebViewClient
         }
 
         if(url.startsWith(NetConfig.getBaseTuDouNiH5Url())) {
-            Intent intent = new Intent(mActivity, RefreshWebViewActivity.class);
+            Intent intent = new Intent(mActivity, WebvewRefreshActivity.class);
             intent.putExtra("url", url);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             mActivity.startActivity(intent);

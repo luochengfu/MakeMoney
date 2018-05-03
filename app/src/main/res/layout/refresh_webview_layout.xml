@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
     <com.tudouni.makemoney.view.MyTitleBar
         android:id="@+id/title_bar"
@@ -15,7 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:indeterminateDrawable="@drawable/progressbar" />
-
 
     <com.github.jdsjlzx.recyclerview.LRecyclerView
         android:id="@+id/three_tab_rv"

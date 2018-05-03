@@ -23,7 +23,7 @@
                 android:id="@+id/back"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:scaleType="center"
+                android:padding="4dp"
                 android:src="@mipmap/icon_back" />
         </LinearLayout>
 

@@ -13,6 +13,7 @@ import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.model.MineMessage;
 import com.tudouni.makemoney.model.RecommendTopicBean;
 import com.tudouni.makemoney.utils.TimeUtil;
+import com.tudouni.makemoney.utils.TuDouLogUtils;
 import com.tudouni.makemoney.utils.TuDouTextUtil;
 import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
 
@@ -44,11 +45,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     @Override
     public void onBindViewHolder(MessageViewHolder holder, int position) {
         MineMessage itemBean = mDatas.get(position);
-        holder.mIcon.setImageResource((itemBean.getType() == 2) ? R.mipmap.ic_note_system : R.mipmap.ic_note_up_leve);
-        TuDouTextUtil.setTextToTextView(holder.mTvTitle, itemBean.getTitle());
+        holder.mIcon.setImageResource(itemBean.getShowIcon());
+        TuDouTextUtil.setTextToTextView(holder.mTvTitle, itemBean.getShowTitle());
         TuDouTextUtil.setTextToTextView(holder.mMessageContent, itemBean.getContent());
-        TuDouTextUtil.setTextToTextView(holder.mTvTime, TimeUtil.getTimeFromMillisecond(itemBean.getTime()));
-
+        try {
+            TuDouTextUtil.setTextToTextView(holder.mTvTime,
+                    TimeUtil.formatDisplayTime(TimeUtil.longToString(itemBean.getTime(), "yyyy-MM-dd HH:mm:ss"),
+                            "yyyy-MM-dd HH:mm:ss"));
+        } catch (Exception e) {
+            TuDouLogUtils.e("", "时间转换异常");
+        }
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

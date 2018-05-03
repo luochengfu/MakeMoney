@@ -1,6 +1,5 @@
 package com.tudouni.makemoney.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,38 +7,34 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.github.jdsjlzx.interfaces.OnItemClickListener;
-import com.github.jdsjlzx.interfaces.OnRefreshListener;
-import com.github.jdsjlzx.recyclerview.LRecyclerView;
-import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.tudouni.makemoney.BuildConfig;
 import com.tudouni.makemoney.R;
-import com.tudouni.makemoney.adapter.FoundAdapter;
-import com.tudouni.makemoney.adapter.TopicAdapter;
+import com.tudouni.makemoney.interfaces.IActionListener;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.utils.Constants;
-import com.tudouni.makemoney.utils.ForwardUtils;
 import com.tudouni.makemoney.utils.H5WebViewClient;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.WVJBWebViewClient;
 import com.tudouni.makemoney.utils.base.AppUtils;
 import com.tudouni.makemoney.view.MineRefreshHeader;
 import com.tudouni.makemoney.view.MyTitleBar;
+import com.tudouni.makemoney.view.PullToRefreshBridgeWebView;
+import com.tudouni.makemoney.view.WebviewHeadLoadingView;
 
 import org.simple.eventbus.EventBus;
 
@@ -48,31 +43,24 @@ import java.util.List;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
- * Created by Administrator on 2018/4/26 0026.
+ * Created by Administrator on 2018/5/3 0003.
  */
 
-@SuppressLint("SetJavaScriptEnabled")
-public class RefreshWebViewActivity extends BaseActivity implements
-        EasyPermissions.PermissionCallbacks {
+public class WebvewRefreshActivity extends BaseActivity
+        implements EasyPermissions.PermissionCallbacks, PullToRefreshBase.OnRefreshListener2
+{
     public static final int REQUEST_CODE_PERMISSION_CALL = 3;
-    private LRecyclerView mLRecyclerView;
+    private String url;
+    private WebView webview;
+    private WVJBWebViewClient webViewClient;
+    private PullToRefreshBridgeWebView pullToRefreshBridgeWebView;
     public MyTitleBar title_bar;
     private ProgressBar progress;
-    public WebView webview;
-    private View mHeadView;
-    private LRecyclerViewAdapter mLRecyclerViewAdapter;
-    private GridLayoutManager mLayoutManager;
-    private FoundAdapter mAdapter;
-    private WVJBWebViewClient webViewClient;
+    private WebviewHeadLoadingView headLoadingView;
     private String mDefaultTitle;
-    private String url;
-    //本地是否正在直播
-    private boolean isLive = true;
-    //Auth2.0授权后的Token
-    private String accessToken = "";
+    private boolean needResum;
     /* 需要重新刷新的页面*/
     private final String[] needResumUrl = new String[]{"lotteryDraw.html", Constants.MY_INVITE};
-    private boolean needResum;
 
     private Handler payHandler = new Handler() {
 
@@ -80,16 +68,16 @@ public class RefreshWebViewActivity extends BaseActivity implements
 
             switch (msg.what) {
                 case 111: {
-                    RefreshWebViewActivity.this.dissLoad();
+                    WebvewRefreshActivity.this.dissLoad();
                     if (msg.obj != null) {
-                        Toast.makeText(RefreshWebViewActivity.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(WebvewRefreshActivity.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
                     }
                     break;
                 }
                 case 222: {
-                    RefreshWebViewActivity.this.dissLoad();
+                    WebvewRefreshActivity.this.dissLoad();
                     if (msg.obj != null) {
-                        Toast.makeText(RefreshWebViewActivity.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(WebvewRefreshActivity.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
                     }
                     finish();
                     break;
@@ -98,74 +86,31 @@ public class RefreshWebViewActivity extends BaseActivity implements
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         url = getIntent().getStringExtra("url");
-        setContentView(R.layout.refresh_webview_layout);
+
+        setContentView(R.layout.webview_refresh_layout);
         initView();
         initDatas();
-        initTitleBar();
-    }
-
-    private void initTitleBar() {
-        if (title_bar == null) return;
-        if (url.startsWith(Constants.h5_myinvite)) {
-            title_bar.setRightIcon(R.mipmap.mall_search_icon);
-            title_bar.setRightIconStatus(View.VISIBLE);
-            title_bar.setOnRightClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ForwardUtils.target(RefreshWebViewActivity.this, Constants.h5_bindsearch);
-                }
-            });
-        }
     }
 
     private void initView() {
-        mLRecyclerView = (LRecyclerView) findViewById(R.id.three_tab_rv);
-        progress = (ProgressBar) findViewById(R.id.progress);
+        pullToRefreshBridgeWebView = (PullToRefreshBridgeWebView) findViewById(R.id.pullToRefreshBridgeWebView);
+        headLoadingView = new WebviewHeadLoadingView(this);
+        pullToRefreshBridgeWebView.setHeaderLayout(headLoadingView);
         title_bar = (MyTitleBar) findViewById(R.id.title_bar);
+        pullToRefreshBridgeWebView.setPullToRefreshOverScrollEnabled(false);
+        webview = pullToRefreshBridgeWebView.getRefreshableView();
+        progress = (ProgressBar) findViewById(R.id.progress);
+
+        pullToRefreshBridgeWebView.setOnRefreshListener(this);
     }
 
     private void initDatas() {
-        initHeader();
-        initAdapter();
         initWebView();
-    }
-
-    private void initAdapter() {
-        mAdapter = new FoundAdapter(this);
-        mLayoutManager = new GridLayoutManager(this, 1);
-        mLRecyclerView.setLayoutManager(mLayoutManager);
-        mLRecyclerView.setRefreshHeader(new MineRefreshHeader(this));
-        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
-        mLRecyclerViewAdapter.addHeaderView(mHeadView);
-        mLRecyclerView.setAdapter(mLRecyclerViewAdapter);
-        //去掉footview
-        mLRecyclerViewAdapter.removeFooterView();
-
-        mLRecyclerView.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mLRecyclerView.refreshComplete(0);
-                        webview.loadUrl(url);
-                    }
-                }, 1000);
-            }
-        });
-
-    }
-
-    private void initHeader() {
-        mHeadView = getLayoutInflater().inflate(R.layout.refresh_webview_title_layout, null, false);
-//        ViewGroup.LayoutParams mParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
-//        mHeadView.setLayoutParams(mParams);
-        webview = (WebView) mHeadView.findViewById(R.id.refresh_webView_title);
     }
 
     private void initWebView() {
@@ -215,7 +160,13 @@ public class RefreshWebViewActivity extends BaseActivity implements
         webViewClient = new H5WebViewClient(this, payHandler, (BridgeWebView) webview);
         webViewClient.enableLogging();
         webview.setWebViewClient(webViewClient);
-
+        ((H5WebViewClient)webViewClient).setListener(new IActionListener() {
+            @Override
+            public void action() {
+                headLoadingView.getLoadImageView().setVisibility(View.GONE);
+                pullToRefreshBridgeWebView.onRefreshComplete();
+            }
+        });
 
         if (BuildConfig.DEBUG && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(true);       //允许调试
@@ -242,16 +193,26 @@ public class RefreshWebViewActivity extends BaseActivity implements
         webview.loadUrl(url);
     }
 
-    String phoneUrl;
+    @Override
+    public void onPullDownToRefresh(PullToRefreshBase refreshView) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                webview.loadUrl(url);
+            }
+        }, 1000);
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+
+    }
 
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
-        if (requestCode == REQUEST_CODE_PERMISSION_CALL && perms.size() == 1) {
-            // 调用扫描的二维码
-            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(phoneUrl));
-            startActivity(intent);
-        }
+
     }
+
 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
@@ -275,23 +236,6 @@ public class RefreshWebViewActivity extends BaseActivity implements
             webview.goBack();
         } else {
             super.onBackPressed();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //页面激活
-        webViewClient.callHandler("reActive");
-
-        if (needResum) {
-            webview.reload();
-        } else {
-            for (String item : needResumUrl) {
-                if (url.contains(item)) {
-                    needResum = true;
-                }
-            }
         }
     }
 
@@ -335,13 +279,28 @@ public class RefreshWebViewActivity extends BaseActivity implements
 
     private boolean syncCookie() {
         CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.setCookie(url, "IsLive=" + (isLive ? 1 : 0));
-        cookieManager.setCookie(url, "AccessToken=" + accessToken);
         String newCookie = cookieManager.getCookie(url);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             CookieSyncManager cookieSyncManager = CookieSyncManager.createInstance(getApplicationContext());
             cookieSyncManager.sync();
         }
         return !TextUtils.isEmpty(newCookie);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //页面激活
+        webViewClient.callHandler("reActive");
+
+        if (needResum) {
+            webview.reload();
+        } else {
+            for (String item : needResumUrl) {
+                if (url.contains(item)) {
+                    needResum = true;
+                }
+            }
+        }
     }
 }
