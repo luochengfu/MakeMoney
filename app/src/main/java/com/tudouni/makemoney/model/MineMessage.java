@@ -1,5 +1,7 @@
 package com.tudouni.makemoney.model;
 
+import com.tudouni.makemoney.R;
+
 /**
  * Created by ZhangPeng on 2018/4/26.
  */
@@ -9,9 +11,11 @@ public class MineMessage {
     private String id;
     private long time;
     private String title;
-    private int type;
+    private int type = -1;
     private String content;
     private String url;
+    private String showTitle;
+    private int showIcon = R.mipmap.ic_note_system;
 
     public int getUid() {
         return uid;
@@ -67,5 +71,42 @@ public class MineMessage {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getShowTitle() {
+        return showTitle;
+    }
+
+    public void setShowTitle(String showTitle) {
+        this.showTitle = showTitle;
+    }
+
+    public int getShowIcon() {
+        return showIcon;
+    }
+
+    public void setShowIcon(int showIcon) {
+        this.showIcon = showIcon;
+    }
+
+    public void setShowTitle() {
+        switch (type) {
+            case 0:
+                showTitle = "系统公告";
+                showIcon = R.mipmap.ic_note_system;
+                break;
+            case 1:
+                showTitle = "活动通知";
+                showIcon = R.mipmap.ic_note_system;
+                break;
+            case 2:
+                showTitle = "升级";
+                showIcon = R.mipmap.ic_note_up_leve;
+                break;
+            case 3:
+                showTitle = "佣金提示";
+                showIcon = R.mipmap.ic_note_money;
+                break;
+        }
     }
 }

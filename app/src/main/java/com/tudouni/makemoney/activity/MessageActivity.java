@@ -66,8 +66,13 @@ public class MessageActivity extends AppCompatActivity {
                     mDataForSys.addAll(messageResponsBean.getSysmsg());
                     msgpage++;
                 }
+                mData.clear();
                 mData.addAll(mDataForGsys);
                 mData.addAll(mDataForSys);
+                if (mData != null && !mData.isEmpty())
+                    for (MineMessage mDatum : mData) {
+                        mDatum.setShowTitle();
+                    }
                 mMessageAdapter.addData(mData);
             }
 

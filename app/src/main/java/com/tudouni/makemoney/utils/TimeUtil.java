@@ -496,9 +496,9 @@ public class TimeUtil {
                         } else if (dTime < tDay && tDate.after(yesterday)) {
                             display = (int) Math.ceil(dTime / tHour) + "小时前";
                         } else if (tDate.after(beforeYes) && tDate.before(yesterday)) {
-                            display = "昨天" + new SimpleDateFormat("HH:mm").format(tDate);
+                            display = "昨天 " + new SimpleDateFormat("HH:mm").format(tDate);
                         } else {
-                            display = halfDf.format(tDate);
+                            display = time;
                         }
                     }
                 }

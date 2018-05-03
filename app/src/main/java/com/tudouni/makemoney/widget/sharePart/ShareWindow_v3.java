@@ -2,6 +2,7 @@ package com.tudouni.makemoney.widget.sharePart;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
@@ -41,6 +42,16 @@ public class ShareWindow_v3 extends BottomPushPopupWindow<Void> implements OnCli
     private ArrayList<Map<String, Object>> dataList;
     private SimpleAdapter adapter;
     private GridView gridView;
+
+    private boolean canClick = true;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
+            canClick = true;
+        }
+    };
+
 
     /**
      * 分享窗口
@@ -104,6 +115,9 @@ public class ShareWindow_v3 extends BottomPushPopupWindow<Void> implements OnCli
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (!canClick) return;
+                canClick = false;
+                handler.postDelayed(null, 500);
                 iteamOnclick((Integer) dataList.get(position).get("img"));
             }
         });
