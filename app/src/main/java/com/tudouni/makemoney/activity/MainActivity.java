@@ -264,15 +264,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
+    private SearchGoodDialog dialog = null;
     @Subscriber(tag = "search_good_action", mode = ThreadMode.MAIN)
     private void searchGoodAction(String url)
     {
         if(MyApplication.sCurrActivity.getClass().getName().startsWith("com.tudouni") && !(MyApplication.sCurrActivity instanceof SearchGoodActivity) && !(MyApplication.sCurrActivity instanceof LoginActivity) &&
                 !(MyApplication.sCurrActivity instanceof TelLoginActivity) && !(MyApplication.sCurrActivity instanceof PwdActivity) &&
                 !(MyApplication.sCurrActivity instanceof SplashActivity) && !(MyApplication.sCurrActivity instanceof BindInvitationCodeActivity)) {
-            SearchGoodDialog dialog = new SearchGoodDialog(MyApplication.sCurrActivity, url, false);
-            dialog.show();
-
+            try {
+                if(dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                dialog = new SearchGoodDialog(MyApplication.sCurrActivity, url, false);
+                dialog.show();
+            } catch (Exception e) {}
         }
     }
 

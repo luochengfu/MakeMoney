@@ -144,7 +144,7 @@ public class FaceToFaceActivity extends BaseActivity implements View.OnClickList
                     }
                     TuDouLogUtils.e("", "扫描结果：" + result);
                 } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
-                    Toast.makeText(this, "未发现土豆泥二维码", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "未发现赚赚二维码", Toast.LENGTH_LONG).show();
                 }
             }
         }

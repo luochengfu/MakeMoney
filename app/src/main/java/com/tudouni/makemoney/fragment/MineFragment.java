@@ -352,7 +352,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                     }
                     TuDouLogUtils.i("", "扫描结果：" + result);
                 } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
-                    Toast.makeText(getContext(), "未发现土豆泥二维码", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "未发现赚赚二维码", Toast.LENGTH_LONG).show();
                 }
             }
         }

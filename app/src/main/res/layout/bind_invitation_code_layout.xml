@@ -128,7 +128,7 @@
         android:layout_marginLeft="14dp"
         android:layout_marginRight="14dp"
         android:textSize="12sp"
-        android:text="1.土豆泥邀请机制是基于平等自愿原则下进行的，请用户接受邀请时认真确认。"/>
+        android:text="1.赚赚邀请机制是基于平等自愿原则下进行的，请用户接受邀请时认真确认。"/>
 
     <TextView
         android:id="@+id/bind_invitation_code_layout_text3"
@@ -140,7 +140,7 @@
         android:layout_marginLeft="14dp"
         android:layout_marginRight="14dp"
         android:textSize="12sp"
-        android:text="2.土豆泥官方不会以任何形式要求您接受任何邀请码。"/>
+        android:text="2.赚赚官方不会以任何形式要求您接受任何邀请码。"/>
 
     <TextView
         android:id="@+id/bind_invitation_code_layout_text4"
