@@ -25,6 +25,7 @@ import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.utils.AndroidBug5497Workaround;
 import com.tudouni.makemoney.utils.Constants;
+import com.tudouni.makemoney.utils.ForwardUtils;
 import com.tudouni.makemoney.utils.H5WebViewClient;
 import com.tudouni.makemoney.utils.InjectView;
 import com.tudouni.makemoney.utils.TDLog;
@@ -203,6 +204,23 @@ public class H5Activity extends BaseActivity implements
         }
         syncCookie();
         webview.loadUrl(url);
+
+        initTitleBar();
+    }
+
+    private void initTitleBar() {
+        if (title_bar == null) return;
+        if (url.startsWith(Constants.h5_myinvite)) {
+            title_bar.setRightIcon(R.mipmap.mall_search_icon);
+            title_bar.setRightIconStatus(View.VISIBLE);
+            title_bar.setOnRightClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String url = Constants.h5_bindsearch + "?unionid="+MyApplication.getLoginUser().getUnionid() + "&token="+MyApplication.getLoginUser().getToken()+"&uid="+MyApplication.getLoginUser().getUid();
+                    ForwardUtils.target(H5Activity.this, url);
+                }
+            });
+        }
     }
 
     String phoneUrl;

@@ -242,6 +242,12 @@ public class H5WebViewClient extends WVJBWebViewClient
                     try {
                         JSONObject ja = new JSONObject(data.toString());
                         String url = ja.getString("url");
+                        String refreshStatus = "0";
+                        try {
+                            refreshStatus = ja.getString("refreshStatus");
+                        } catch (Exception e) {
+                            refreshStatus = "0";
+                        }
                         if(url.contains("?")){
                             url = url + "&unionid="+MyApplication.getLoginUser().getUnionid() + "&token="+MyApplication.getLoginUser().getToken()+"&uid="+MyApplication.getLoginUser().getUid();
                         } else {
@@ -249,7 +255,7 @@ public class H5WebViewClient extends WVJBWebViewClient
                         }
                         if(url.startsWith("tudouni://tudouni/home") || url.startsWith("\"tudouni://tudouni/back\"")) {
                             mActivity.finish();
-                        } else if(url.startsWith(NetConfig.getBaseTuDouNiH5Url())){
+                        } else if(url.startsWith(NetConfig.getBaseTuDouNiH5Url()) && refreshStatus.equals("1")){
                             Intent intent = new Intent(mActivity, WebvewRefreshActivity.class);
                             intent.putExtra("url", url);
                             if(url.contains("/shopHome/sousuo.html")) {

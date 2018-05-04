@@ -14,12 +14,12 @@
     <com.github.lzyzsd.jsbridge.BridgeWebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
     <ProgressBar
         android:id="@+id/progress"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="3dp"
+        android:layout_height="1dp"
         android:indeterminateDrawable="@drawable/progressbar" />
 </LinearLayout>

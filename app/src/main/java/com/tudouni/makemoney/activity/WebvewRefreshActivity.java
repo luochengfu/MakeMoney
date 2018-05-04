@@ -27,6 +27,7 @@ import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.interfaces.IActionListener;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.utils.Constants;
+import com.tudouni.makemoney.utils.ForwardUtils;
 import com.tudouni.makemoney.utils.H5WebViewClient;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.WVJBWebViewClient;
@@ -86,6 +87,20 @@ public class WebvewRefreshActivity extends BaseActivity
         }
     };
 
+    private void initTitleBar() {
+        if (title_bar == null) return;
+        if (url.startsWith(Constants.h5_myinvite)) {
+            title_bar.setRightIcon(R.mipmap.mall_search_icon);
+            title_bar.setRightIconStatus(View.VISIBLE);
+            title_bar.setOnRightClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ForwardUtils.target(WebvewRefreshActivity.this, Constants.h5_bindsearch);
+                }
+            });
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +110,7 @@ public class WebvewRefreshActivity extends BaseActivity
         setContentView(R.layout.webview_refresh_layout);
         initView();
         initDatas();
+        initTitleBar();
     }
 
     private void initView() {
