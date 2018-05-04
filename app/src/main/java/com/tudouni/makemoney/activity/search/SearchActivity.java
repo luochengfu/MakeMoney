@@ -1,9 +1,11 @@
 package com.tudouni.makemoney.activity.search;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.inputmethod.InputMethodManager;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -94,16 +96,22 @@ public class SearchActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        loadHistory();
+        parseSearchHistory();
     }
 
     private void toSearchResultPage(String keyWord) {
+        hideSoftBoard();
         Intent intent = new Intent(this,H5Activity.class);
         intent.putExtra("url", NetConfig.getBaseTuDouNiH5Url() + "html/resultlist.html" + "?uid=" + MyApplication.getLoginUser().getUid()
                 + "&token=" + MyApplication.getLoginUser().getToken()
                 + "&unionid=" + MyApplication.getLoginUser().getUnionid()
                 + "&search=" + keyWord);
         startActivity(intent);
+    }
+
+    private void hideSoftBoard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     /**
