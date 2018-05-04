@@ -118,7 +118,7 @@ public class GoodCategoryFragment extends BaseFragment {
                     //填充左侧品类数据
                     mNameAdapter.replaceData(categoryNameList);
                     //填充Banner数据
-                    mHeaderImageBinding.setImageUrl(categoryNameList.get(0).getCategorys().get(0).getImgUrl());
+                    mHeaderImageBinding.setImageUrl(categoryNameList.get(0).getImgUrl());
                     //填充右侧品类数据
                     mGoodListAdapter.replaceData(categoryNameList.get(0).getCategorys());
                 }
