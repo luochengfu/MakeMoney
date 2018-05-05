@@ -1,11 +1,17 @@
 package com.tudouni.makemoney.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
@@ -29,6 +35,7 @@ import com.tudouni.makemoney.view.MineRefreshHeader;
 import com.tudouni.makemoney.view.MyTitleBar;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
+import com.zhouwei.mzbanner.holder.MZViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,6 +136,10 @@ public class MainTabThreeFragment extends BaseFragment
                 startActivity(intent);
             }
         });
+
+        int height = ScreenUtils.getScreenWidth(getContext()) * 102 / 187 + ScreenUtils.dp2px(getContext(),8);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,height);
+        mBanner.setLayoutParams(params);
     }
 
     private void reflash() {
@@ -154,6 +165,11 @@ public class MainTabThreeFragment extends BaseFragment
                     if (bannerList.size() == 1) {
                         mHeadImageView.setVisibility(View.VISIBLE);
                         mBanner.setVisibility(View.GONE);
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                                ScreenUtils.getScreenWidth(getContext()) * 102 / 187 + ScreenUtils.dp2px(getContext(),8));
+                        params.setMargins(0,0,0, ScreenUtils.dp2px(getContext(),10));
+                        mHeadImageView.setLayoutParams(params);
+
                         GlideUtil.getInstance().loadImage(getContext(),bannerList.get(0).getImageUrl(),mHeadImageView,R.mipmap.found_default_banner);
                     } else {
                         mHeadImageView.setVisibility(View.GONE);
@@ -176,6 +192,8 @@ public class MainTabThreeFragment extends BaseFragment
             @Override
             public void OnSuccess(List<RecommendTopicBean> banners) {
                 mAdapter.clear();
+//                for (RecommendTopicBean bean : banners)
+//                    bean.setImageUrl("http://dev-sbzhibo-image.oss-cn-hangzhou.aliyuncs.com/common/67900100ce4d43c7b8a77daaed68553d.jpg");
                 mAdapter.addData(banners);
                 mLRecyclerView.refreshComplete(banners.size());
             }
@@ -194,10 +212,9 @@ public class MainTabThreeFragment extends BaseFragment
         CommonScene.getFoundTopic(new BaseObserver<List<FoundTopicBean>>() {
             @Override
             public void OnSuccess(List<FoundTopicBean> recommendTopicBeans) {
+//                for (FoundTopicBean bean : recommendTopicBeans)
+//                    bean.setImageUrl("http://dev-sbzhibo-image.oss-cn-hangzhou.aliyuncs.com/common/67900100ce4d43c7b8a77daaed68553d.jpg");
                 mTopticAdapter.addData(recommendTopicBeans);
-//                FoundItemBean bean = new FoundItemBean();
-//                bean.setBean(recommendTopicBeans);
-//                mAdapter.addFirst(bean);
             }
         });
     }
@@ -206,9 +223,9 @@ public class MainTabThreeFragment extends BaseFragment
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
             if (parent.getChildAdapterPosition(view) % 2 == 1) {
-                outRect.left = ScreenUtils.dp2px(getContext(), 3);
+                outRect.left = ScreenUtils.dp2px(getContext(), 4);
             } else {
-                outRect.right = ScreenUtils.dp2px(getContext(), 3);
+                outRect.right = ScreenUtils.dp2px(getContext(), 4);
             }
             outRect.bottom = ScreenUtils.dp2px(getContext(),6);
         }

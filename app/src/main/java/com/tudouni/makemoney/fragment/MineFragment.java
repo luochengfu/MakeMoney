@@ -27,6 +27,7 @@ import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.TuDouLogUtils;
 import com.tudouni.makemoney.utils.TuDouTextUtil;
 import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
+import com.tudouni.makemoney.view.MyStatusBar;
 import com.tudouni.makemoney.widget.callBack.ApiCallback;
 import com.tudouni.makemoney.widget.callBack.ServiceException;
 import com.tudouni.makemoney.widget.sharePart.ShareUtil;
@@ -117,6 +118,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         view.findViewById(R.id.ly_new_user_raiders).setOnClickListener(this);
         view.findViewById(R.id.ly_common_problem).setOnClickListener(this);
         view.findViewById(R.id.ll_sao).setOnClickListener(this);
+
     }
 
     @Override
