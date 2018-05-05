@@ -54,7 +54,7 @@
                     android:drawableTop="@drawable/tab_mall_icon"
                     android:gravity="center"
                     android:text="@string/shop_main_tab1"
-                    android:textColor="@drawable/selector_tab"
+                    android:textColor="@color/color_999999"
                     android:textSize="@dimen/text_size_10" />
             </RelativeLayout>
 
@@ -79,7 +79,7 @@
                     android:drawableTop="@drawable/tab_category_icon"
                     android:gravity="center"
                     android:text="@string/shop_main_tab2"
-                    android:textColor="@drawable/selector_tab"
+                    android:textColor="@color/color_999999"
                     android:textSize="@dimen/text_size_10" />
             </RelativeLayout>
 
@@ -102,7 +102,7 @@
                     android:drawableTop="@drawable/tab_find_icon"
                     android:gravity="center"
                     android:text="@string/shop_main_tab3"
-                    android:textColor="@drawable/selector_tab"
+                    android:textColor="@color/color_999999"
                     android:textSize="@dimen/text_size_10" />
 
 
@@ -127,7 +127,7 @@
                     android:drawableTop="@drawable/tab_mine_icon"
                     android:gravity="center"
                     android:text="@string/shop_main_tab4"
-                    android:textColor="@drawable/selector_tab"
+                    android:textColor="@color/color_999999"
                     android:textSize="@dimen/text_size_10" />
 
             </RelativeLayout>

@@ -17,6 +17,7 @@ import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.ToastUtil;
+import com.tudouni.makemoney.utils.base.AppUtils;
 import com.tudouni.makemoney.view.MyTitleBar;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -222,6 +223,9 @@ public class PwdActivity extends BaseActivity implements View.OnClickListener {
         } else if (mPageType.equals("3")) {
             uid = mUserId;
             token = mToken;
+        } else if(mPageType.equals("4")) {
+            uid = MyApplication.getLoginUser().getUid();
+            token = MyApplication.getLoginUser().getToken();
         }
 
         CommonScene.setPWD(etPwd.getText().toString(),uid,token, new BaseObserver<String>() {

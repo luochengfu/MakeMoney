@@ -248,7 +248,7 @@ public class MyApplication extends BaseApplication implements ClipboardUtil.OnPr
                     activity.startActivity(intent);*/
 
                     } else if (mClipStr != null && !mClipStr.equals("") && mClipStr.trim().length() > 15 && !PatternUtil.matchClipStr(mClipStr.trim()) &&
-                            !PatternUtil.matchURL(mClipStr.trim()) && !ValidateUtil.isMobileNO(mClipStr) && !mClipStr.startsWith("#bind")) {
+                            !PatternUtil.matchURL(mClipStr.trim()) && !ValidateUtil.isMobileNO(mClipStr) && !mClipStr.startsWith("#bind") && !mClipStr.contains("邀请您加入赚赚")) {
                         EventBus.getDefault().post(mClipStr, "search_good_action");
                        /* Intent intent = new Intent(getContext(), SearchGoodActivity.class);
                         intent.putExtra("url", mClipStr);

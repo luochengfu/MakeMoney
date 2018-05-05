@@ -26,6 +26,7 @@ import com.tudouni.makemoney.utils.ScreenUtils;
 import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
 import com.tudouni.makemoney.view.MZBannerViewHolder;
 import com.tudouni.makemoney.view.MineRefreshHeader;
+import com.tudouni.makemoney.view.MyTitleBar;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 
@@ -47,6 +48,7 @@ public class MainTabThreeFragment extends BaseFragment
     private TopicAdapter mTopticAdapter;
     private FoundAdapter mAdapter;
     private GridLayoutManager mLayoutManager;
+    private MyTitleBar title_bar;
     private List<Banner> bannerList = new ArrayList<>();
 
     @Override
@@ -57,10 +59,13 @@ public class MainTabThreeFragment extends BaseFragment
     @Override
     protected void initView(View view) {
         mLRecyclerView = (LRecyclerView) view.findViewById(R.id.three_tab_rv);
+        title_bar = (MyTitleBar) view.findViewById(R.id.title_bar);
     }
 
     @Override
     protected void initData() {
+        title_bar.setMiddleText("发现");
+        title_bar.setLeftVisible(View.GONE);
         initBanner();
         initAdapter();
         getBanner();

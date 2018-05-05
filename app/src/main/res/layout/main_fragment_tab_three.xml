@@ -6,6 +6,11 @@
     android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
 
+    <com.tudouni.makemoney.view.MyTitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <com.github.jdsjlzx.recyclerview.LRecyclerView
         android:id="@+id/three_tab_rv"
         android:layout_width="match_parent"

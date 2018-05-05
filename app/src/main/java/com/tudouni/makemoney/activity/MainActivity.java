@@ -14,6 +14,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tudouni.makemoney.R;
@@ -45,6 +46,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private final int PERMISSION_REQUEST_CODE = 123;
     private final int PERMISSION_REQUEST_CODE_VIDEO = 124;
     private RelativeLayout tab1, tab2, tab3, tab4;
+    private TextView tabTV1, tabTV2, tabTV3, tabTV4;
     private MallFragment mTabOne;
     private GoodCategoryFragment mTabTwo;
     private MainTabThreeFragment mTabThree;
@@ -84,6 +86,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tab2 = (RelativeLayout) findViewById(R.id.tab2);
         tab3 = (RelativeLayout) findViewById(R.id.tab3);
         tab4 = (RelativeLayout) findViewById(R.id.tab4);
+        tabTV1 = (TextView) findViewById(R.id.gt_home);
+        tabTV2 = (TextView) findViewById(R.id.gt_im);
+        tabTV3 = (TextView) findViewById(R.id.gt_mall);
+        tabTV4 = (TextView) findViewById(R.id.gt_mine);
     }
 
     private void initDatas() {
@@ -202,6 +208,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (index == 0) {
             tab1.setSelected(true);
             tab1.startAnimation(animationSet);
+            tabTV1.setTextColor(getResources().getColor(R.color.color_F23648));
+            tabTV2.setTextColor(getResources().getColor(R.color.color_999999));
+            tabTV3.setTextColor(getResources().getColor(R.color.color_999999));
+            tabTV4.setTextColor(getResources().getColor(R.color.color_999999));
 
             tab2.setSelected(false);
             tab3.setSelected(false);
@@ -209,6 +219,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         } else if (index == 1) {
             tab2.setSelected(true);
             tab2.startAnimation(animationSet);
+            tabTV2.setTextColor(getResources().getColor(R.color.color_F23648));
+            tabTV1.setTextColor(getResources().getColor(R.color.color_999999));
+            tabTV3.setTextColor(getResources().getColor(R.color.color_999999));
+            tabTV4.setTextColor(getResources().getColor(R.color.color_999999));
 
             tab1.setSelected(false);
             tab3.setSelected(false);
@@ -216,6 +230,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         } else if (index == 2) {
             tab3.setSelected(true);
             tab3.startAnimation(animationSet);
+            tabTV3.setTextColor(getResources().getColor(R.color.color_F23648));
+            tabTV2.setTextColor(getResources().getColor(R.color.color_999999));
+            tabTV1.setTextColor(getResources().getColor(R.color.color_999999));
+            tabTV4.setTextColor(getResources().getColor(R.color.color_999999));
 
             tab1.setSelected(false);
             tab2.setSelected(false);
@@ -223,6 +241,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         } else if (index == 3) {
             tab4.setSelected(true);
             tab4.startAnimation(animationSet);
+            tabTV4.setTextColor(getResources().getColor(R.color.color_F23648));
+            tabTV2.setTextColor(getResources().getColor(R.color.color_999999));
+            tabTV3.setTextColor(getResources().getColor(R.color.color_999999));
+            tabTV1.setTextColor(getResources().getColor(R.color.color_999999));
 
             tab1.setSelected(false);
             tab2.setSelected(false);
@@ -264,15 +286,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
+    private SearchGoodDialog dialog = null;
     @Subscriber(tag = "search_good_action", mode = ThreadMode.MAIN)
     private void searchGoodAction(String url)
     {
         if(MyApplication.sCurrActivity.getClass().getName().startsWith("com.tudouni") && !(MyApplication.sCurrActivity instanceof SearchGoodActivity) && !(MyApplication.sCurrActivity instanceof LoginActivity) &&
                 !(MyApplication.sCurrActivity instanceof TelLoginActivity) && !(MyApplication.sCurrActivity instanceof PwdActivity) &&
                 !(MyApplication.sCurrActivity instanceof SplashActivity) && !(MyApplication.sCurrActivity instanceof BindInvitationCodeActivity)) {
-            SearchGoodDialog dialog = new SearchGoodDialog(MyApplication.sCurrActivity, url, false);
-            dialog.show();
-
+            try {
+                if(dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                dialog = new SearchGoodDialog(MyApplication.sCurrActivity, url, false);
+                dialog.show();
+            } catch (Exception e) {}
         }
     }
 

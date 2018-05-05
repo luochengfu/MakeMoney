@@ -164,7 +164,7 @@ public class UpdateAPKUtil {
 
     private static void install(Context context, UpDialog updialog) {
         if (!checkAppPackageLegitimate(context, new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "zhuanzhuanshop.apk"))) {
-            updialog.installError("安装程序异常，请到各大应用市场搜索土豆泥直播或关注官方微信公众号“豆播网”进行下载安装!");
+            updialog.installError("安装程序异常，请到各大应用市场搜索赚赚直播或关注官方微信公众号“豆播网”进行下载安装!");
             return;
         }
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -183,7 +183,7 @@ public class UpdateAPKUtil {
     }
 
     /**
-     * 获取包名是否合法（是否是土豆泥的APP）
+     * 获取包名是否合法（是否是赚赚的APP）
      *
      * @param file
      * @return

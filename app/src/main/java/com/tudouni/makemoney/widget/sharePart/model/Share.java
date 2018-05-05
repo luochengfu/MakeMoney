@@ -17,7 +17,7 @@ import java.net.URLEncoder;
  */
 public class Share implements Serializable {
 
-    public static final String SHARE_TITLE = "快来玩转土豆泥";
+    public static final String SHARE_TITLE = "快来玩转赚赚";
     public static final String SHARE_INVITE = "tudouni/html/invistor.html?code=%1$s&nickName=%2$s&unionid=%3$s";
     public static final String SHARE_USER = Constants.BASE_H5_URL + "/tudouni/html/ucenter.html?uid=%1$s";
     public static final String SHARE_LIVE = Constants.BASE_H5_URL + "/m/live.html?lid=%1$s&category=%2$s";
@@ -169,7 +169,7 @@ public class Share implements Serializable {
      */
     public static Share obtainPotatoesImage(Bitmap bitmap) {
 //        String title = App.getLoginUser().getNickName() + "带你玩转土豆泥直播";
-        Share share = new Share(SHARE_TITLE, "土豆泥", null, null, null);
+        Share share = new Share(SHARE_TITLE, "赚赚", null, null, null);
         share.setMinePotatoes(bitmap);
         return share;
     }

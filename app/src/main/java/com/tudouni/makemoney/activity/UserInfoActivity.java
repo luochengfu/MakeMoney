@@ -164,7 +164,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void saveUserInfo() {
-        if (StringUtil.isNullOrEmpty(etName.getText().toString())) {
+        if (StringUtil.isNullOrEmpty(etName.getText().toString().trim())) {
             Toast.makeText(this, "昵称不能为空", Toast.LENGTH_SHORT).show();
             return;
         }

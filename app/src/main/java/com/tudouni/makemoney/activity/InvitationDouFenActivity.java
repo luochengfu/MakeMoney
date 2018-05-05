@@ -91,10 +91,10 @@ public class InvitationDouFenActivity extends BaseActivity implements View.OnCli
             case R.id.bt_copy_invitation_code:
                 MobclickAgent.onEvent(this, "me_indfcopy");
                 if (!TextUtils.isEmpty(mTvInvitationCode.getText().toString())) {
-                    String copyStr = MyApplication.getLoginUser().getNickName() + "邀请您加入土豆泥，自动搜索淘宝天猫优惠券！先领券，再购物，更划算！\n" +
+                    String copyStr = MyApplication.getLoginUser().getNickName() + "邀请您加入赚赚，自动搜索淘宝天猫优惠券！先领券，再购物，更划算！\n" +
                             "---下载链接： http://url.cn/5qwJJtP -----\n" +
                             "复制邀请码： " + mTvInvitationCode.getText().toString() + " \n" +
-                            "打开土豆泥，注册领取优惠券";
+                            "打开赚赚，注册领取优惠券";
                     AppUtils.copyToClipboard(InvitationDouFenActivity.this, copyStr);
                     showToast("复制成功");
                 }

@@ -64,10 +64,7 @@ public class ForwardUtils {
             } else if (url.startsWith(Constants.MESSAGE)) {//系统消息
                 Intent intent = new Intent(oriActivity, MessageActivity.class);
                 toIntent(oriActivity, url, intent);
-            } else if (url.startsWith(Constants.h5_bindsearch)) {
-                Intent intent = new Intent(oriActivity, WebvewRefreshActivity.class);
-                toH5Intent(oriActivity, url, intent);
-            } else if (url.startsWith("http") || url.startsWith(Constants.h5_myinvite)) {//本次判断放在最后
+            } else if (url.startsWith("http") || url.startsWith(Constants.h5_myinvite) || url.startsWith("https") || url.startsWith(Constants.h5_bindsearch)) {//本次判断放在最后
                 Intent intent = new Intent(oriActivity, H5Activity.class);
                 toH5Intent(oriActivity, url, intent);
             }

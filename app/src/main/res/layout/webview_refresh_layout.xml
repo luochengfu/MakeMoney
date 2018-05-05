@@ -1,4 +1,4 @@
-<LinearLayout
+<RelativeLayout
     android:id="@+id/main"
     xmlns:android="http://schemas.android.com/apk/res/android" xmlns:ptr="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,30 +8,23 @@
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
-
-    <RelativeLayout
-        android:id="@+id/comm_head"
+    <com.tudouni.makemoney.view.MyTitleBar
+        android:id="@+id/title_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content" />
 
-        <com.tudouni.makemoney.view.MyTitleBar
-            android:id="@+id/title_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <ProgressBar
+        android:id="@+id/progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_alignParentBottom="true"
+        android:indeterminateDrawable="@drawable/progressbar"/>
 
-        <ProgressBar
-            android:id="@+id/progress"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_alignParentBottom="true"
-            android:visibility="gone"
-            android:indeterminateDrawable="@drawable/progressbar"/>
-
-    </RelativeLayout>
     <com.tudouni.makemoney.view.PullToRefreshBridgeWebView
         android:id="@+id/pullToRefreshBridgeWebView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/title_bar"
         ptr:ptrMode="pullDownFromTop"/>
-</LinearLayout>
+</RelativeLayout>
