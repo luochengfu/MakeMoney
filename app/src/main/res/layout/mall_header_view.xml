@@ -102,14 +102,21 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_horizontal"
-            android:drawableLeft="@drawable/mall_recommend_left"
-            android:drawableRight="@drawable/mall_recommend_right"
-            android:gravity="center"
+            android:gravity="bottom"
             android:text="  商品推荐  "
-            android:textColor="#e61c3a"
-            android:textSize="14sp" />
+            android:textColor="#333333"
+            android:textSize="15sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Top好物带来惊喜收获"
+            android:textColor="#999999"
+            android:textSize="12sp"
+            android:paddingBottom="10dp"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 </layout>
