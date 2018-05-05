@@ -277,7 +277,7 @@
 
                     <TextView
                         style="@style/mine_item"
-                        android:text="邀请豆粉一起玩，轻松赚现金" />
+                        android:text="邀请粉丝一起玩，轻松赚现金" />
 
                     <ImageView
                         android:layout_width="13dp"
@@ -385,7 +385,6 @@
                 android:background="@mipmap/ticket_background"
                 android:orientation="vertical">
 
-                <View style="@style/horizontalLine" />
                 <!--我的邀请码-->
                 <LinearLayout
                     android:id="@+id/ly_mine_invitation"
@@ -604,7 +603,6 @@
                 android:background="@mipmap/ticket_background"
                 android:orientation="vertical">
 
-                <View style="@style/horizontalLine" />
                 <!--新手攻略-->
                 <LinearLayout
                     android:id="@+id/ly_new_user_raiders"

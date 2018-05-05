@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="39dp"
-            android:text="邀请您成为TA的豆粉"
+            android:text="邀请您成为TA的粉丝"
             android:textColor="@color/black"
             android:textSize="16sp" />
 

@@ -11,7 +11,7 @@
     <style name="MyAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/color_E81534</item>
+        <item name="colorPrimaryDark">@color/color_212121</item>
         <item name="colorAccent">@color/color_212121</item>
         <item name="android:textColorPrimary">@color/color_212121</item>
         <item name="android:windowContentOverlay">@null</item>
