@@ -21,31 +21,30 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@drawable/shape_mall_title_bg">
+            android:background="@color/white">
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:visibility="gone"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:src="@mipmap/ic_launcher" />
 
             <TextView
                 android:id="@+id/tv_search_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="60dp"
-                android:layout_marginRight="60dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/shape_mall_search_bg"
-                android:drawableLeft="@mipmap/mall_search_icon"
-                android:gravity="center|left"
-                android:padding="6dp"
-                android:paddingLeft="15dp"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="60dp"
                 android:text="    粘贴宝贝标题，先领券再购物"
-                android:textColor="@color/white"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:paddingLeft="10dp"
+                android:drawableLeft="@mipmap/category_search_icon"
+                android:gravity="center|left"
+                android:background="@drawable/shape_category_search_bg"
+                android:textColor="@color/black"
+                android:layout_height="30dp" />
 
             <ImageView
                 android:id="@+id/iv_msg"
