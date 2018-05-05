@@ -61,6 +61,9 @@ public class MallFragment extends BaseFragment {
         if (mBannerData.size() > 1 && mMallHeaderViewBinding != null) {
             mMallHeaderViewBinding.mzMallBanner.start();
         }
+        if (mMallViewModel != null) {
+            mMallViewModel.hasUnreadMsg();
+        }
     }
 
     @Override
