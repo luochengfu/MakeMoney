@@ -7,19 +7,37 @@
         <variable
             name="item"
             type="com.tudouni.makemoney.model.Category"/>
+        <import type="android.view.View"/>
     </data>
 
-    <TextView
-        android:id="@+id/tv_name_item"
+    <LinearLayout
+        android:background="@{item.selected ? @color/white : @color/category_bg}"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:gravity="center"
-        android:padding="5dp"
-        android:background="@{item.selected ? @drawable/shape_category_name_selected : null}"
-        android:text="@{item.name}"
-        android:textColor="@{item.selected ?  @color/white : @color/black}"
-        android:textSize="15sp"
-        tools:text="日常用品" />
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_gravity="center_vertical"
+            android:layout_width="5dp"
+            android:visibility="@{item.selected ? View.VISIBLE : View.INVISIBLE}"
+            android:background="#ef394d"
+            android:layout_height="20dp"/>
+
+        <TextView
+            android:paddingLeft="20dp"
+            android:id="@+id/tv_name_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@{item.name}"
+            android:textColor="@{item.selected ?  @color/black : @color/gray02}"
+            android:textSize="15sp"
+            tools:text="日常用品" />
+
+    </LinearLayout>
+
+
 
 </layout>
