@@ -113,15 +113,13 @@ public class MallFragment extends BaseFragment {
     }
 
     private void loadMore() {
-        loadRecommendGood(mCurrentPage++,Constants.DEFAULT_PAGE_SIZE);
+        mCurrentPage++;
+        loadRecommendGood(mCurrentPage,Constants.DEFAULT_PAGE_SIZE);
     }
 
     @Override
     protected void initData() {
         loadMallData();
-        if (mMallViewModel != null) {
-            mMallViewModel.hasUnreadMsg();
-        }
     }
 
     private void loadMallData() {
