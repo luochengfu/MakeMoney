@@ -489,12 +489,20 @@ public class TimeUtil {
                     if (tDate.before(thisYear)) {
                         display = new SimpleDateFormat("yyyy年MM月dd日").format(tDate);
                     } else {
-                        if (dTime < tMin) {
-                            display = "刚刚";
-                        } else if (dTime < tHour) {
-                            display = (int) Math.ceil(dTime / tMin) + "分钟前";
-                        } else if (dTime < tDay && tDate.after(yesterday)) {
-                            display = (int) Math.ceil(dTime / tHour) + "小时前";
+//                        if (dTime < tMin) {
+//                            display = "刚刚";
+//                        } else if (dTime < tHour) {
+//                            display = (int) Math.ceil(dTime / tMin) + "分钟前";
+//                        } else if (dTime < tDay && tDate.after(yesterday)) {
+//                            display = (int) Math.ceil(dTime / tHour) + "小时前";
+//                        } else if (tDate.after(beforeYes) && tDate.before(yesterday)) {
+//                            display = "昨天 " + new SimpleDateFormat("HH:mm").format(tDate);
+//                        } else {
+//                            display = time;
+//                        }
+
+                        if (dTime < tMin || (dTime < tHour) || (dTime < tDay && tDate.after(yesterday))) {
+                            display = new SimpleDateFormat("HH:mm").format(tDate);
                         } else if (tDate.after(beforeYes) && tDate.before(yesterday)) {
                             display = "昨天 " + new SimpleDateFormat("HH:mm").format(tDate);
                         } else {
