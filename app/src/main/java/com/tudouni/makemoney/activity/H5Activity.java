@@ -187,9 +187,9 @@ public class H5Activity extends BaseActivity implements
         }
 
         //把http换成https
-        if (url != null && url.toLowerCase().startsWith("http://h5.tudouni.doubozhibo.com")) {
+        /*if (url.toLowerCase().startsWith("http://h5.tudouni.doubozhibo.com")) {
             url = "https" + url.substring(4);
-        }
+        }*/
 
         if (url != null && url.toLowerCase().startsWith("taobao")) {
             url = "https" + url.substring(6);
