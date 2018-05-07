@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.google.gson.Gson;
@@ -36,25 +37,27 @@ public class SearchActivity extends BaseActivity {
     private Gson mGson = new Gson();
     private SearchHistoryAdapter mSearchHistoryAdapter;
     private SearchViewModel mSearchViewModel;
+    private ActivitySearchBinding mSearchBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivitySearchBinding searchBinding = DataBindingUtil.setContentView(this, R.layout.activity_search);
+
+        mSearchBinding = DataBindingUtil.setContentView(this, R.layout.activity_search);
         mSearchHistoryAdapter = new SearchHistoryAdapter(getLayoutInflater());
         mSearchHistoryAdapter.setOnItemClickListener((position, itemData) -> toSearchResultPage(itemData));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        searchBinding.recycler.setLayoutManager(layoutManager);
-        searchBinding.recycler.setAdapter(mSearchHistoryAdapter);
+        mSearchBinding.recycler.setLayoutManager(layoutManager);
+        mSearchBinding.recycler.setAdapter(mSearchHistoryAdapter);
 
         mSearchViewModel = new SearchViewModel();
 
         loadHistory();
         parseSearchHistory();
-        searchBinding.tvSearch.setOnClickListener(l -> {
-            String keyWord = searchBinding.etSearch.getText().toString();
-            if (StringUtil.isEmpty(keyWord)){
+        mSearchBinding.tvSearch.setOnClickListener(l -> {
+            String keyWord = mSearchBinding.etSearch.getText().toString();
+            if (StringUtil.isEmpty(keyWord)) {
                 ToastUtil.show("搜索关键字不能为空~");
                 return;
             }
@@ -63,15 +66,15 @@ public class SearchActivity extends BaseActivity {
             toSearchResultPage(keyWord);
         });
 
-        searchBinding.ivClearSearch.setOnClickListener(l -> clearSearchHistory());
+        mSearchBinding.ivClearSearch.setOnClickListener(l -> clearSearchHistory());
 
-        searchBinding.ivBack.setOnClickListener(l -> finish());
+        mSearchBinding.ivBack.setOnClickListener(l -> finish());
 
     }
 
     private void saveHistoryToService(String searchKey) {
         if (mSearchViewModel != null) {
-            mSearchViewModel.saveSearchHistoryToService("ssk",searchKey);
+            mSearchViewModel.saveSearchHistoryToService("ssk", searchKey);
         }
     }
 
@@ -100,8 +103,8 @@ public class SearchActivity extends BaseActivity {
     }
 
     private void toSearchResultPage(String keyWord) {
-        hideSoftBoard();
-        Intent intent = new Intent(this,H5Activity.class);
+        hideSoftBoard(mSearchBinding.etSearch);
+        Intent intent = new Intent(this, H5Activity.class);
         intent.putExtra("url", NetConfig.getBaseTuDouNiH5Url() + "html/resultlist.html" + "?uid=" + MyApplication.getLoginUser().getUid()
                 + "&token=" + MyApplication.getLoginUser().getToken()
                 + "&unionid=" + MyApplication.getLoginUser().getUnionid()
@@ -109,13 +112,17 @@ public class SearchActivity extends BaseActivity {
         startActivity(intent);
     }
 
-    private void hideSoftBoard() {
+    private void hideSoftBoard(View view) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        boolean isOpen = imm.isActive();
+        if (isOpen) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+        }
     }
 
     /**
      * 缓存历史记录到本地【弃用】
+     *
      * @param keyWord
      */
     private void cacheSearchHistory(String keyWord) {
@@ -125,7 +132,7 @@ public class SearchActivity extends BaseActivity {
             }
         }
         mSearchhistory.add(keyWord);
-        SPUtil.putString(this,"search_history",mGson.toJson(mSearchhistory));
+        SPUtil.putString(this, "search_history", mGson.toJson(mSearchhistory));
     }
 
     /**
@@ -133,28 +140,28 @@ public class SearchActivity extends BaseActivity {
      */
     private void parseSearchHistory() {
         mSearchhistory.clear();
-        String searchHistoryJson = SPUtil.getString(this,"search_history");
-        TDLog.e(searchHistoryJson,"searchHistoryJson");
+        String searchHistoryJson = SPUtil.getString(this, "search_history");
+        TDLog.e(searchHistoryJson, "searchHistoryJson");
         if (searchHistoryJson == null || StringUtil.isEmpty(searchHistoryJson)) {
             return;
         }
         JsonParser parser = new JsonParser();
         JsonArray searchArr = parser.parse(searchHistoryJson).getAsJsonArray();
         for (JsonElement item : searchArr) {
-            String itemStr = mGson.fromJson(item,String.class);
+            String itemStr = mGson.fromJson(item, String.class);
             mSearchhistory.add(itemStr);
         }
         if (mSearchHistoryAdapter != null) {
             mSearchHistoryAdapter.replaceData(mSearchhistory);
         }
-        TDLog.e(mSearchHistoryAdapter,mSearchhistory);
+        TDLog.e(mSearchHistoryAdapter, mSearchhistory);
     }
 
-    private void clearSearchHistory(){
+    private void clearSearchHistory() {
         mSearchhistory.clear();
         if (mSearchHistoryAdapter != null) {
             mSearchHistoryAdapter.replaceData(mSearchhistory);
         }
-        SPUtil.putString(getApplicationContext(),"search_history","[]");
+        SPUtil.putString(getApplicationContext(), "search_history", "[]");
     }
 }
