@@ -55,7 +55,6 @@ public class MallViewModel extends LoadingViewModel {
         CommonScene.getMallAlbumData(new BaseObserver<List<MallAlbumModel>>() {
             @Override
             public void OnSuccess(List<MallAlbumModel> models) {
-                TDLog.e(models);
                 if (callback != null) {
                     callback.onSuccess(models);
                 }
@@ -63,7 +62,6 @@ public class MallViewModel extends LoadingViewModel {
 
             @Override
             public void OnFail(int code, String err) {
-                TDLog.e(code,err);
                 if (callback != null) {
                     callback.onFailure();
                 }
@@ -75,7 +73,6 @@ public class MallViewModel extends LoadingViewModel {
         CommonScene.getSelfGood(new BaseObserver<ObservableArrayList<MallAlbumModel>>() {
             @Override
             public void OnSuccess(ObservableArrayList<MallAlbumModel> models) {
-                TDLog.e(models);
                 if (callback != null) {
                     callback.onSuccess(models);
                 }
@@ -84,7 +81,6 @@ public class MallViewModel extends LoadingViewModel {
             @Override
             public void OnFail(int code, String err) {
                 super.OnFail(code, err);
-                TDLog.e(code,err);
                 if (callback != null) {
                     callback.onFailure();
                 }
@@ -96,7 +92,7 @@ public class MallViewModel extends LoadingViewModel {
         CommonScene.getRecommendGood(new BaseObserver<List<MallGoodItem>>() {
             @Override
             public void OnSuccess(List<MallGoodItem> items) {
-                TDLog.e(items);
+                TDLog.e(page,pageSize,items);
                 if (callback != null) {
                     callback.onSuccess(items);
                 }
@@ -117,7 +113,6 @@ public class MallViewModel extends LoadingViewModel {
         CommonScene.isThereUnreadMsg(new BaseObserver<MessageResponsBean>() {
             @Override
             public void OnSuccess(MessageResponsBean bean) {
-                TDLog.e(bean);
                 if (bean != null) {
                     hasUnreadMsg.set(bean.isRes());
                 }

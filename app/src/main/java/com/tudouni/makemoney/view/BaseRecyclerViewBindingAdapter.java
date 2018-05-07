@@ -32,12 +32,10 @@ public abstract class BaseRecyclerViewBindingAdapter<T> extends RecyclerView.Ada
     public void addData(List<T> data) {
         int startPosition = this.data.size();
         if (data != null) {
+
             this.data.addAll(data);
-            if (startPosition == 0) {
-                notifyDataSetChanged();
-            } else {
-                notifyItemRangeChanged(startPosition - 1, data.size());
-            }
+            notifyDataSetChanged();
+
         }
     }
 
