@@ -642,7 +642,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         if (user.getUser() == null || user.getNewer()) {
                             skipTelephoneLogin(user, "6");
                         } else if (null == user.getUser().getPhone() || "".equals(user.getUser().getPhone())) {//老用户没有手机号码
-                            skipTelephoneLogin(user, "6");
+                            skipTelephoneLogin(user, "7");
                         } else {
                             saveLoginInfo(user.getUser());
                             //防止点击第三方登录取消在点击密码登录的功能
