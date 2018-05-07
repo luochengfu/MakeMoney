@@ -120,7 +120,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
             title_bar.setMiddleText(getResources().getString(R.string.telbandin));
             tvLogin.setText(getResources().getString(R.string.sure));
         } else if(pageType.equals("7")) {
-            MyApplication.saveLoginUser((User) getIntent().getSerializableExtra("loginUser"));
+//            MyApplication.saveLoginUser((User) getIntent().getSerializableExtra("loginUser"));
             title_bar.setMiddleText(getResources().getString(R.string.telbandin));
             tvLogin.setText(getResources().getString(R.string.sure));
             /*title_bar.setRightText("跳过");
