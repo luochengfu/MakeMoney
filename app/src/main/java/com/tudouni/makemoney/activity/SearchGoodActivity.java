@@ -82,7 +82,7 @@ public class SearchGoodActivity extends FragmentActivity implements View.OnClick
                 MobclickAgent.onEvent(SearchGoodActivity.this, "mall_clicksch");
                 try {
                     String url = NetConfig.getBaseTuDouNiH5Url() + "/shopHome/search-ending.html?unionid=" + MyApplication.getLoginUser().getUnionid()+"&search=" + URLEncoder.encode(MyApplication.mClipStr,"utf-8").replaceAll("\\+",  "%20");
-                    Intent intent = new Intent(this, WebvewRefreshActivity.class);
+                    Intent intent = new Intent(this, H5Activity.class);
                     intent.putExtra("titleStatus",1);
                     intent.putExtra("url", url);
                     startActivity(intent);

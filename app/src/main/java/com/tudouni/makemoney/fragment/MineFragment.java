@@ -251,6 +251,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
             @Override
             public void OnFail(int code, String err) {
+                super.OnFail(code,err);
                 TuDouLogUtils.e(TAG, "Get UserInfo Error：" + err + "  error code=" + code);
             }
         });
