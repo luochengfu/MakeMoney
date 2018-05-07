@@ -123,7 +123,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
             MyApplication.saveLoginUser((User) getIntent().getSerializableExtra("loginUser"));
             title_bar.setMiddleText(getResources().getString(R.string.telbandin));
             tvLogin.setText(getResources().getString(R.string.sure));
-            title_bar.setRightText("跳过");
+            /*title_bar.setRightText("跳过");
             title_bar.setOnRightClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -134,7 +134,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                     startActivity(SplashActivity.createIntent(mContext));
                     finish();
                 }
-            });
+            });*/
 
             title_bar.setOnLeftClickListener(new View.OnClickListener() {
                 @Override

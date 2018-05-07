@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tudouni.makemoney.R;
+import com.tudouni.makemoney.activity.H5Activity;
 import com.tudouni.makemoney.activity.WebvewRefreshActivity;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.NetConfig;
@@ -89,7 +90,7 @@ public class SearchGoodDialog extends Dialog implements View.OnClickListener
             case R.id.tvYes:
                 try {
                     String url = NetConfig.getBaseTuDouNiH5Url() + "html/resultlist.html?unionid=" + MyApplication.getLoginUser().getUnionid()+"&search=" + URLEncoder.encode(MyApplication.mClipStr,"utf-8").replaceAll("\\+",  "%20");
-                    Intent intent = new Intent(mContext, WebvewRefreshActivity.class);
+                    Intent intent = new Intent(mContext, H5Activity.class);
                     intent.putExtra("titleStatus",1);
                     intent.putExtra("url", url);
                     mContext.startActivity(intent);

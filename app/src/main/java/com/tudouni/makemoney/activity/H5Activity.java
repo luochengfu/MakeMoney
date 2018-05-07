@@ -212,7 +212,7 @@ public class H5Activity extends BaseActivity implements
     private void initTitleBar() {
         if (title_bar == null) return;
         if (url.startsWith(Constants.h5_myinvite)) {
-            title_bar.setRightIcon(R.mipmap.mall_search_icon);
+            title_bar.setRightIcon(R.mipmap.category_search_icon);
             title_bar.setRightIconStatus(View.VISIBLE);
             title_bar.setOnRightClickListener(new View.OnClickListener() {
                 @Override

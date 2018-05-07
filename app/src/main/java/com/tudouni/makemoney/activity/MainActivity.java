@@ -324,6 +324,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      */
     private void doLogOut() {
         try {
+            finish();
             MyApplication.logout();
         } catch (Exception e) {
             e.printStackTrace();
