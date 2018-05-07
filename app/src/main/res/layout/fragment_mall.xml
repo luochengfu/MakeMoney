@@ -53,7 +53,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:src="@{mallViewModel.hasUnreadMsg ? @drawable/mall_msg_with_dot : @drawable/user_chat}" />
+                android:src="@{mallViewModel.hasUnreadMsg ? @drawable/mall_msg_with_dot : @drawable/mall_msg}" />
 
 
         </RelativeLayout>

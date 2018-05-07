@@ -46,7 +46,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     public void onBindViewHolder(MessageViewHolder holder, int position) {
         MineMessage itemBean = mDatas.get(position);
         holder.mIcon.setImageResource(itemBean.getShowIcon());
-        TuDouTextUtil.setTextToTextView(holder.mTvTitle, itemBean.getShowTitle());
+        TuDouTextUtil.setTextToTextView(holder.mTvTitle, itemBean.getTitle());
         TuDouTextUtil.setTextToTextView(holder.mMessageContent, itemBean.getContent());
         try {
             TuDouTextUtil.setTextToTextView(holder.mTvTime,
