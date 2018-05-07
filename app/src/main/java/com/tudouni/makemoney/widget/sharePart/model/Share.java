@@ -18,7 +18,7 @@ import java.net.URLEncoder;
 public class Share implements Serializable {
 
     public static final String SHARE_TITLE = "快来玩转赚赚";
-    public static final String SHARE_INVITE = "tudouni/html/invistor.html?code=%1$s&nickName=%2$s&unionid=%3$s";
+    public static final String SHARE_INVITE = "shoplite/html/invistor.html?code=%1$s&nickName=%2$s&unionid=%3$s";
     public static final String SHARE_USER = Constants.BASE_H5_URL + "/tudouni/html/ucenter.html?uid=%1$s";
     public static final String SHARE_LIVE = Constants.BASE_H5_URL + "/m/live.html?lid=%1$s&category=%2$s";
     public static final String SHARE_DYNAMIC = Constants.BASE_H5_URL + "/tudouni/html/dynamics.html?did=%1$s&type=%2$s";

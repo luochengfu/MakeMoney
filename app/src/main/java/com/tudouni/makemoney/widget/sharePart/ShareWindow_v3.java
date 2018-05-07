@@ -117,7 +117,7 @@ public class ShareWindow_v3 extends BottomPushPopupWindow<Void> implements OnCli
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (!canClick) return;
                 canClick = false;
-                handler.postDelayed(null, 500);
+                handler.postDelayed(null, 1500);
                 iteamOnclick((Integer) dataList.get(position).get("img"));
             }
         });

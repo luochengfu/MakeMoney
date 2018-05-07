@@ -5,6 +5,7 @@ import android.databinding.BindingAdapter;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.tudouni.makemoney.utils.CornersTransform;
 
 /**
  * Created by ZhangPeng on 2018/4/20.
@@ -45,7 +46,18 @@ public class GlideUtil {
                 .error(defaultImg)
                 .fallback(defaultImg)
                 .crossFade()
-                .centerCrop()
+                .into(imageView);
+    }
+
+
+
+    public void loadImage(Context context, String url, ImageView imageView, float redis,int defaultImg) {
+        if (imageView == null) return;
+        Glide.with(context)
+                .load(url)
+                .transform(new CornersTransform(context,redis))
+                .error(defaultImg)
+                .fallback(defaultImg)
                 .into(imageView);
     }
 

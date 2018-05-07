@@ -6,9 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.model.RecommendTopicBean;
+import com.tudouni.makemoney.utils.CornersTransform;
+import com.tudouni.makemoney.utils.ScreenUtils;
 import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
 
 import java.util.ArrayList;
@@ -22,9 +25,12 @@ public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.FoundViewHol
 {
     private Context mContext;
     private List<RecommendTopicBean> mDatas = new ArrayList<>();
+    private int width, height;
 
     public FoundAdapter(Context context) {
         mContext = context;
+        width = ScreenUtils.getScreenWidth(context);
+        height = width * 24 / 75;
     }
 
     @Override
@@ -36,7 +42,8 @@ public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.FoundViewHol
     @Override
     public void onBindViewHolder(FoundViewHolder holder, int position) {
         RecommendTopicBean itemBean = mDatas.get(position);
-        GlideUtil.getInstance().loadImage(mContext,itemBean.getImageUrl(),holder.itemIV,R.mipmap.found_default_banner);
+        holder.itemIV.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,height));
+        GlideUtil.getInstance().loadImage(mContext,itemBean.getImageUrl(),holder.itemIV,ScreenUtils.dp2px(mContext,6),R.mipmap.found_default_banner);
     }
 
     @Override

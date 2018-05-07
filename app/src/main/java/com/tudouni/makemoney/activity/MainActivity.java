@@ -274,15 +274,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
+    private BindInvitationCodeDialog dialogCode;
+
     @Subscriber(tag = "bind_code_action", mode = ThreadMode.MAIN)
     private void bindCodeAction(BindUserBean bindUserBean)
     {
         if(MyApplication.sCurrActivity.getClass().getName().startsWith("com.tudouni") && !(MyApplication.sCurrActivity instanceof SearchGoodActivity) && !(MyApplication.sCurrActivity instanceof LoginActivity) &&
                 !(MyApplication.sCurrActivity instanceof TelLoginActivity) && !(MyApplication.sCurrActivity instanceof PwdActivity) &&
                 !(MyApplication.sCurrActivity instanceof SplashActivity) && !(MyApplication.sCurrActivity instanceof BindInvitationCodeActivity)) {
-            BindInvitationCodeDialog dialog = new BindInvitationCodeDialog(MyApplication.sCurrActivity, bindUserBean, false);
-            dialog.show();
-
+            try{
+                if(dialogCode != null && dialogCode.isShowing()) {
+                    dialogCode.dismiss();
+                }
+                dialogCode = new BindInvitationCodeDialog(MyApplication.sCurrActivity, bindUserBean, false);
+                dialogCode.show();
+            } catch (Exception e) {}
         }
     }
 

@@ -30,7 +30,7 @@ public class ForwardUtils {
             if (url.startsWith(Constants.BINDING_FACE_TO_FACE)) {//面对面绑定
                 Intent intent = new Intent(oriActivity, FaceToFaceActivity.class);
                 toIntent(oriActivity, url, intent);
-            } else if (MyApplication.appConfig.isShareInvistor(url)) {//绑定界面
+            } else if (MyApplication.appConfig != null && MyApplication.appConfig.isShareInvistor(url)) {//绑定界面
                 Intent intent = new Intent(oriActivity, BindingInvitationActivity.class);
                 toIntent(oriActivity, url, intent);
             } else if (url.startsWith(Constants.INVISIT_POSTER)) {//分享海报界面

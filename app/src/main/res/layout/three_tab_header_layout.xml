@@ -13,8 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="160dp"
         app:canLoop="true"
-        app:indicatorAlign="center"
+        app:indicatorAlign="right"
         app:middle_page_cover="false"
+        app:indicatorPaddingRight="6dp"
         app:open_mz_mode="false" />
 
     <ImageView
@@ -29,8 +30,8 @@
         android:id="@+id/three_tab_rv_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"/>
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"/>
 
 
 </LinearLayout>
