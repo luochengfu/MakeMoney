@@ -91,7 +91,10 @@ public class MallFragment extends BaseFragment {
         mRecommendGoodItemAdapter = new RecommendGoodItemAdapter(getActivity().getLayoutInflater());
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mRecommendGoodItemAdapter);
         mMallBinding.lrvHome.setAdapter(mLRecyclerViewAdapter);
-        mMallBinding.lrvHome.setOnRefreshListener(this::loadMallData);
+        mMallBinding.lrvHome.setOnRefreshListener(()->{
+            mCurrentPage = 1;
+            loadMallData();
+        });
         mMallBinding.lrvHome.setLoadMoreEnabled(true);
         mMallBinding.lrvHome.setOnLoadMoreListener(this::loadMore);
 
@@ -164,7 +167,6 @@ public class MallFragment extends BaseFragment {
                 public void onSuccess(List<MallGoodItem> data) {
                         if (mRecommendGoodItemAdapter != null) {
                             if (page == 1) {
-                                mCurrentPage = 1;
                                 mRecommendGoodItemAdapter.replaceData(data);
                             }else{
                                 mRecommendGoodItemAdapter.addData(data);
