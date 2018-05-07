@@ -30,7 +30,6 @@ public abstract class BaseRecyclerViewBindingAdapter<T> extends RecyclerView.Ada
     }
 
     public void addData(List<T> data) {
-        int startPosition = this.data.size();
         if (data != null) {
 
             this.data.addAll(data);

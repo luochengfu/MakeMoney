@@ -118,7 +118,8 @@ public class H5Activity extends BaseActivity implements
         isLive = getIntent().getBooleanExtra("isLive", false);
         accessToken = getIntent().getStringExtra("accessToken");
 
-        if (url.contains(Constants.MY_INVITE)) {
+
+        if (url != null && url.contains(Constants.MY_INVITE)) {
             title_bar.setStatusBackground(ContextCompat.getColor(this, R.color.color_FDCE00));
             title_bar.setHeadBackground(ContextCompat.getColor(this, R.color.color_FDCE00));
             title_bar.setMiddleTextColor(ContextCompat.getColor(this, R.color.white));
@@ -186,17 +187,17 @@ public class H5Activity extends BaseActivity implements
         }
 
         //把http换成https
-        if (url.toLowerCase().startsWith("http://h5.tudouni.doubozhibo.com")) {
+        if (url != null && url.toLowerCase().startsWith("http://h5.tudouni.doubozhibo.com")) {
             url = "https" + url.substring(4);
         }
 
-        if (url.toLowerCase().startsWith("taobao")) {
+        if (url != null && url.toLowerCase().startsWith("taobao")) {
             url = "https" + url.substring(6);
         }
 
         //如果是登录状态加上token 和 uid
         if (MyApplication.getLoginUser() != null) {
-            if (url.contains("?")) {
+            if (url != null && url.contains("?")) {
                 url = url + "&token=" + MyApplication.getLoginUser().getToken() + "&uid=" + MyApplication.getLoginUser().getUid() + "&tdid=" + MyApplication.getLoginUser().getUnumber();
             } else {
                 url = url + "?token=" + MyApplication.getLoginUser().getToken() + "&uid=" + MyApplication.getLoginUser().getUid() + "&tdid=" + MyApplication.getLoginUser().getUnumber();

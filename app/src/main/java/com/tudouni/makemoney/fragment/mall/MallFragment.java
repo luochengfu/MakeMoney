@@ -139,7 +139,6 @@ public class MallFragment extends BaseFragment {
                 public void onSuccess(ObservableArrayList<MallAlbumModel> data) {
                     if (mMallHeaderViewBinding != null) {
                         //编译器提示错误，不影响实际运行
-//                        mBannerData = data;
                         mMallHeaderViewBinding.setSelfData(data);
                     }
                 }
@@ -155,7 +154,7 @@ public class MallFragment extends BaseFragment {
     public void onSelfCategoryClick(View view, MallAlbumModel albumModel) {
         if (albumModel != null) {
             Intent intent = new Intent(getActivity(), H5Activity.class);
-            intent.putExtra("url", albumModel.getUrl());
+            intent.putExtra("url", albumModel.getUrl() == null ? "" : albumModel.getUrl());
             startActivity(intent);
         }
     }
@@ -240,14 +239,14 @@ public class MallFragment extends BaseFragment {
         mMallHeaderViewBinding.rvAlbum.setAdapter(mAlbumItemAdapter);
         mAlbumItemAdapter.setOnItemClickListener((position, itemData) -> {
             Intent intent = new Intent(getActivity(), H5Activity.class);
-            intent.putExtra("url", itemData.getUrl());
+            intent.putExtra("url", itemData.getUrl() == null ? "" : itemData.getUrl());
             startActivity(intent);
         });
 
         mMallHeaderViewBinding.mzMallBanner.setBannerPageClickListener((view, i) -> {
             TDLog.e("onBannerPageClick",i);
             Intent intent = new Intent(getActivity(), H5Activity.class);
-            intent.putExtra("url", mBannerData.get(i).getUrl());
+            intent.putExtra("url", mBannerData.get(i).getUrl() == null ? "" : mBannerData.get(i).getUrl());
             startActivity(intent);
         });
 
