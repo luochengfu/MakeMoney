@@ -61,7 +61,7 @@ public class NetConfig {
     /**
      * 直播api基础地址数组
      */
-    private static final String[] BASE_URLS = {"https://api.tudouni.doubozhibo.com", "http://118.31.9.209:8080"};
+    private static final String[] BASE_URLS = {"https://zhanapi.tudouni.doubozhibo.com", "http://118.31.9.209:8080"};
 
     /**
      * 商城H5基础地址数组

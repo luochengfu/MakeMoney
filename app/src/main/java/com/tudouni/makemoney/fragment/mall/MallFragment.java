@@ -210,6 +210,8 @@ public class MallFragment extends BaseFragment {
             mMallViewModel.loadMallBannerData(new VMResultCallback<List<MallAlbumModel>>() {
                 @Override
                 public void onSuccess(List<MallAlbumModel> data) {
+                    if(null == data || data.size() == 0)
+                        return;
                     TDLog.e(data);
                     mBannerData = data;
                     mMallHeaderViewBinding.mzMallBanner.setPages(data, () -> new MallBannerViewHolder());
