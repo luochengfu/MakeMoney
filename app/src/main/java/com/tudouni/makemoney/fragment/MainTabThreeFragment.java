@@ -121,7 +121,7 @@ public class MainTabThreeFragment extends BaseFragment
         mTopticAdapter.setItemClickListener(new IItemClickListener() {
             @Override
             public void action(String url) {
-                Intent intent = new Intent(getActivity(), WebvewRefreshActivity.class);
+                Intent intent = new Intent(getActivity(), H5Activity.class);
                 intent.putExtra("url",url);
                 startActivity(intent);
             }
@@ -192,8 +192,6 @@ public class MainTabThreeFragment extends BaseFragment
             @Override
             public void OnSuccess(List<RecommendTopicBean> banners) {
                 mAdapter.clear();
-//                for (RecommendTopicBean bean : banners)
-//                    bean.setImageUrl("http://dev-sbzhibo-image.oss-cn-hangzhou.aliyuncs.com/common/67900100ce4d43c7b8a77daaed68553d.jpg");
                 mAdapter.addData(banners);
                 mLRecyclerView.refreshComplete(banners.size());
             }
@@ -212,8 +210,6 @@ public class MainTabThreeFragment extends BaseFragment
         CommonScene.getFoundTopic(new BaseObserver<List<FoundTopicBean>>() {
             @Override
             public void OnSuccess(List<FoundTopicBean> recommendTopicBeans) {
-//                for (FoundTopicBean bean : recommendTopicBeans)
-//                    bean.setImageUrl("http://dev-sbzhibo-image.oss-cn-hangzhou.aliyuncs.com/common/67900100ce4d43c7b8a77daaed68553d.jpg");
                 mTopticAdapter.addData(recommendTopicBeans);
             }
         });

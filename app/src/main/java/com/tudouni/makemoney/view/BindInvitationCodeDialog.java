@@ -71,11 +71,11 @@ public class BindInvitationCodeDialog extends Dialog implements View.OnClickList
         if(null != mBindUserBean) {
             String mBindStr = "你的粘贴板存在邀请码  " + mBindUserBean.getUserCode();
             SpannableStringBuilder ssb = new SpannableStringBuilder(mBindStr);
-            ssb.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.color_FF9933)), 10, mBindStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ssb.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.color_FEED00)), 10, mBindStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             mBindNumView.setText(ssb);
-            GlideUtil.bindImage(mHeadView, mBindUserBean.getAvatar());
+            GlideUtil.getInstance().loadCircle(getContext(), mBindUserBean.getAvatar(), mHeadView, R.mipmap.default_head);
             mNickView.setText(mBindUserBean.getNickname());
-            mNumView.setText("土豆号： " + mBindUserBean.getUserCode());
+            mNumView.setText("ID： " + mBindUserBean.getUserCode());
         }
     }
 
