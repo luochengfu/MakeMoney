@@ -488,7 +488,6 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:text="我的账本"
-                        android:textColor="@color/black"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -521,7 +520,9 @@
                         <TextView
                             android:id="@+id/tv_balance"
                             style="@style/text_cons_style_for_user"
-                            android:text="0元" />
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="5dp"
+                            android:text="0" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -553,7 +554,9 @@
                         <TextView
                             android:id="@+id/tv_economizes"
                             style="@style/text_cons_style_for_user"
-                            android:text="0元" />
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="5dp"
+                            android:text="0" />
 
                         <TextView
                             android:layout_width="wrap_content"
