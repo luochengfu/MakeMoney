@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 
 import com.google.gson.Gson;
@@ -55,21 +56,31 @@ public class SearchActivity extends BaseActivity {
 
         loadHistory();
         parseSearchHistory();
-        mSearchBinding.tvSearch.setOnClickListener(l -> {
-            String keyWord = mSearchBinding.etSearch.getText().toString();
-            if (StringUtil.isEmpty(keyWord)) {
-                ToastUtil.show("搜索关键字不能为空~");
-                return;
+        mSearchBinding.tvSearch.setOnClickListener(l -> search());
+
+        mSearchBinding.etSearch.setOnEditorActionListener((v,actionId,event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+               search();
+               return true;
             }
-            cacheSearchHistory(keyWord);
-            saveHistoryToService(keyWord);
-            toSearchResultPage(keyWord);
+            return false;
         });
 
         mSearchBinding.ivClearSearch.setOnClickListener(l -> clearSearchHistory());
 
         mSearchBinding.ivBack.setOnClickListener(l -> finish());
 
+    }
+
+    private void search() {
+        String keyWord = mSearchBinding.etSearch.getText().toString();
+        if (StringUtil.isEmpty(keyWord)) {
+            ToastUtil.show("搜索关键字不能为空~");
+            return;
+        }
+        cacheSearchHistory(keyWord);
+        saveHistoryToService(keyWord);
+        toSearchResultPage(keyWord);
     }
 
     private void saveHistoryToService(String searchKey) {

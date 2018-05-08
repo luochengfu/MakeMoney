@@ -28,10 +28,12 @@
                 android:layout_width="0dp"
                 android:layout_height="32dp"
                 android:layout_weight="1"
+                android:imeOptions="actionSearch"
                 android:background="#eeeeee"
                 android:drawableLeft="@mipmap/category_search_icon"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="10dp"
+                android:singleLine="true"
                 android:hint=" 粘贴宝贝标题，先领券再购物"
                 android:textColor="@color/hint02Color"
                 android:textSize="12sp" />
