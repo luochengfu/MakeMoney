@@ -374,32 +374,32 @@ public class User implements Serializable {
      */
     public void refulshData(User userNewInfo) {
         if (userNewInfo == null) return;
-        setCity(getCity());
-        setBirthday(getBirthday());
-        setFollows(getFollows());
-        setGrade(getGrade());
-        setNickName(getNickName());
-        setPhone(getPhone());
-        setPhoto(getPhoto());
-        setSignature(getSignature());
-        setUnumber(getUnumber());
-        setInvistCode(getInvistCode());
-        setGradeName(getGradeName());
-        setExpense(getExpense());
-        setBackground(getBackground());
-        setProfit(getProfit());
-        setExperience(getExperience());
-        setSex(getSex());
+        setCity(userNewInfo.getCity());
+        setBirthday(userNewInfo.getBirthday());
+        setFollows(userNewInfo.getFollows());
+        setGrade(userNewInfo.getGrade());
+        setNickName(userNewInfo.getNickName());
+        setPhone(userNewInfo.getPhone());
+        setPhoto(userNewInfo.getPhoto());
+        setSignature(userNewInfo.getSignature());
+        setUnumber(userNewInfo.getUnumber());
+        setInvistCode(userNewInfo.getInvistCode());
+        setGradeName(userNewInfo.getGradeName());
+        setExpense(userNewInfo.getExpense());
+        setBackground(userNewInfo.getBackground());
+        setProfit(userNewInfo.getProfit());
+        setExperience(userNewInfo.getExperience());
+        setSex(userNewInfo.getSex());
 
-        setUnionid(getUnionid());
-        setHeadAgent(getHeadAgent());
-        setAgentSeries(getAgentSeries());
-        setAgentSeriesName(getAgentSeriesName());
-        setInviteCount(getInviteCount());
-        setBindPhoneStatus(getBindPhoneStatus());
-        setNewUser(isNewUser());
-        setPwd(getPwd());
-        setUid(getUid());
-        setUnumber(getUnumber());
+        setUnionid(userNewInfo.getUnionid());
+        setHeadAgent(userNewInfo.getHeadAgent());
+        setAgentSeries(userNewInfo.getAgentSeries());
+        setAgentSeriesName(userNewInfo.getAgentSeriesName());
+        setInviteCount(userNewInfo.getInviteCount());
+        setBindPhoneStatus(userNewInfo.getBindPhoneStatus());
+        setNewUser(userNewInfo.isNewUser());
+        setPwd(userNewInfo.getPwd());
+        setUid(userNewInfo.getUid());
+        setUnumber(userNewInfo.getUnumber());
     }
 }
