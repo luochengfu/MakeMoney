@@ -304,10 +304,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 !(MyApplication.sCurrActivity instanceof TelLoginActivity) && !(MyApplication.sCurrActivity instanceof PwdActivity) &&
                 !(MyApplication.sCurrActivity instanceof SplashActivity) && !(MyApplication.sCurrActivity instanceof BindInvitationCodeActivity)) {
             try {
+                String searchStr = "";
                 if(dialog != null && dialog.isShowing()) {
                     dialog.dismiss();
                 }
-                dialog = new SearchGoodDialog(MyApplication.sCurrActivity, url, false);
+                if(null != url || !"".equals(url)) {
+                    searchStr = url;
+                }
+
+                dialog = new SearchGoodDialog(MyApplication.sCurrActivity, searchStr, false);
                 dialog.show();
             } catch (Exception e) {}
         }
