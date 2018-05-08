@@ -246,7 +246,19 @@ public class MallFragment extends BaseFragment {
         mMallHeaderViewBinding.mzMallBanner.setBannerPageClickListener((view, i) -> {
             TDLog.e("onBannerPageClick",i);
             Intent intent = new Intent(getActivity(), H5Activity.class);
-            intent.putExtra("url", mBannerData.get(i).getUrl() == null ? "" : mBannerData.get(i).getUrl());
+            MallAlbumModel bean = mBannerData.get(i);
+            String itemId = bean.getItemId();
+            if(null == itemId || "".equals(itemId))
+            {
+                intent.putExtra("url", mBannerData.get(i).getUrl() == null ? "" : mBannerData.get(i).getUrl());
+            } else {
+                String url = NetConfig.getBaseTuDouNiH5Url() + "html/detail.html" + "?uid=" + MyApplication.getLoginUser().getUid()
+                        + "&token=" + MyApplication.getLoginUser().getToken() + "&unionid=" +
+                        MyApplication.getLoginUser().getUnionid() + "&itemid=" + itemId
+                        + "&source=tm";
+                intent.putExtra("url",url);
+            }
+
             startActivity(intent);
         });
 

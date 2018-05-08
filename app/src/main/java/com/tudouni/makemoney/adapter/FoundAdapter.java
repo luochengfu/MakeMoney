@@ -59,7 +59,7 @@ public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.FoundViewHol
     }
 
     public String getUrl(int position) {
-        return mDatas.get(position).getUrl() + "?title=" + mDatas.get(position).getTitle();
+        return mDatas.get(position).getUrl();
     }
 
     public void removeData(int position) {

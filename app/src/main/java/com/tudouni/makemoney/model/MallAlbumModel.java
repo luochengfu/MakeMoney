@@ -13,6 +13,8 @@ public class MallAlbumModel {
     private String url;
     private String locationKey;
     private int playIndex;
+    private String itemId;
+
 
     public String getId() {
         return id;
@@ -60,6 +62,14 @@ public class MallAlbumModel {
 
     public void setPlayIndex(int playIndex) {
         this.playIndex = playIndex;
+    }
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
     }
 
     @Override

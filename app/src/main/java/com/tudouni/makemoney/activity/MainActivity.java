@@ -1,6 +1,7 @@
 package com.tudouni.makemoney.activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -13,11 +14,13 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tudouni.makemoney.R;
+import com.tudouni.makemoney.activity.search.SearchActivity;
 import com.tudouni.makemoney.fragment.mall.MallFragment;
 import com.tudouni.makemoney.fragment.MainTabThreeFragment;
 import com.tudouni.makemoney.fragment.category.GoodCategoryFragment;
@@ -30,6 +33,7 @@ import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.Constants;
 import com.tudouni.makemoney.utils.ForwardUtils;
 import com.tudouni.makemoney.view.BindInvitationCodeDialog;
+import com.tudouni.makemoney.view.MyStatusBar;
 import com.tudouni.makemoney.view.SearchGoodDialog;
 import com.tudouni.makemoney.view.Tip_dialog;
 import com.tudouni.makemoney.widget.versionUpdate.UpdateAPKUtil;
@@ -303,8 +307,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 if(dialog != null && dialog.isShowing()) {
                     dialog.dismiss();
                 }
-                dialog = new SearchGoodDialog(MyApplication.sCurrActivity, url, false);
-                dialog.show();
+                if(MyApplication.sCurrActivity instanceof SearchActivity) {
+                    try{
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        boolean isOpen = imm.isActive();
+                        if (isOpen) {
+                            imm.hideSoftInputFromWindow(((SearchActivity)MyApplication.sCurrActivity).getmSearchBinding().getWindowToken(),0);
+                            dialog = new SearchGoodDialog(MyApplication.sCurrActivity, url, false);
+                            dialog.show();
+                        }
+                    } catch (Exception e) {}
+
+                }
+//                dialog = new SearchGoodDialog(MyApplication.sCurrActivity, url, false);
+//                dialog.show();
             } catch (Exception e) {}
         }
     }
