@@ -202,7 +202,8 @@ public class PwdActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private boolean checkPasswrod(String input) {
-        String regEx = "^[^\\u4e00-\\u9fa5]{6,16}$";
+//        String regEx = "^[^\\u4e00-\\u9fa5]{6,16}$";
+        String regEx = "^[0-9a-zA-Z]{6,16}$";
 
         Pattern pattern = Pattern.compile(regEx);
         Matcher matcher = pattern.matcher(input);

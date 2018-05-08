@@ -209,7 +209,8 @@ public class AccountSecurityActivity extends BaseActivity implements View.OnClic
                 }
                 break;
             case R.id.llPhone:
-                if (null == info)
+                ToastUtil.show("暂不支持更换绑定手机");
+                /*if (null == info)
                     return;
                 if (info != null && "0".equals(info.getPhone())) {
                     Intent intent = new Intent(this, TelLoginActivity.class);
@@ -219,7 +220,7 @@ public class AccountSecurityActivity extends BaseActivity implements View.OnClic
                     Intent intent = new Intent(this, TelLoginActivity.class);
                     intent.putExtra("type", "4");
                     startActivity(intent);
-                }
+                }*/
                 break;
             case R.id.llAlipay:
 //                startAuthAlipay();
