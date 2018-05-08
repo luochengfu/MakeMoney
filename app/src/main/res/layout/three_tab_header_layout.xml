@@ -4,9 +4,7 @@
     android:id="@+id/three_tab_header_layout"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="4dp">
-
+    android:layout_height="match_parent">
 
     <com.zhouwei.mzbanner.MZBannerView
         android:id="@+id/banner"
@@ -31,6 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="12dp"
+        android:layout_gravity="center"
         android:paddingRight="12dp"/>
 
 

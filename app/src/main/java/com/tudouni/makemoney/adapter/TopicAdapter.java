@@ -39,7 +39,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.FoundViewHol
     public TopicAdapter(Context context) {
         mContext = context;
         width = (ScreenUtils.getScreenWidth(context) - ScreenUtils.dp2px(context,20)) / 2;
-        heigh = width * 63 / 158;
+        heigh = width * 77 / 166;
     }
 
     @Override
@@ -53,6 +53,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.FoundViewHol
     public void onBindViewHolder(FoundViewHolder holder, int position) {
         FoundTopicBean itemBean = mDatas.get(position);
         holder.itemIV.setLayoutParams(new FrameLayout.LayoutParams(width ,heigh));
+        holder.mCardView.setCardBackgroundColor(mContext.getResources().getColor(R.color.province_line_border));
 
         GlideUtil.getInstance().loadImage(mContext,itemBean.getImageUrl(),holder.itemIV,R.mipmap.found_default_banner);
         holder.itemIV.setOnClickListener(new View.OnClickListener() {

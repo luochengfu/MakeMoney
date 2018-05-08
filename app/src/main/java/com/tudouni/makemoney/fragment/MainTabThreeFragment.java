@@ -2,6 +2,7 @@ package com.tudouni.makemoney.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -104,7 +105,10 @@ public class MainTabThreeFragment extends BaseFragment
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getActivity(), H5Activity.class);
                 try {
-                    String url = URLEncoder.encode(mAdapter.getUrl(position),"utf-8");
+                    String oldUrl = mAdapter.getUrl(position);
+                    if(oldUrl == null)
+                        return;
+                    String url = URLEncoder.encode(oldUrl,"utf-8");
                     url = url.replaceAll("%3D","=").replaceAll("%3A",":").
                             replaceAll("%2F","\\/").replaceAll("%3F","?").
                             replaceAll("%26","&").replaceAll("%25","%")
@@ -139,6 +143,8 @@ public class MainTabThreeFragment extends BaseFragment
                 startActivity(intent);
             }
         });
+
+        mBanner.setIndicatorRes(R.mipmap.banner_white_icon,R.mipmap.banner_red_icon);
 
         mBanner.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
             @Override
@@ -182,6 +188,16 @@ public class MainTabThreeFragment extends BaseFragment
                                 ScreenUtils.getScreenWidth(getContext()) * 102 / 187 + ScreenUtils.dp2px(getContext(),8));
                         params.setMargins(0,0,0, ScreenUtils.dp2px(getContext(),10));
                         mHeadImageView.setLayoutParams(params);
+
+                        mHeadImageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Banner banner = data.get(0);
+                                Intent intent = new Intent(getActivity(), H5Activity.class);
+                                intent.putExtra("url",banner.getUrl() + "?title=" + banner.getTitle());
+                                startActivity(intent);
+                            }
+                        });
 
                         GlideUtil.getInstance().loadImage(getContext(),bannerList.get(0).getImageUrl(),mHeadImageView,R.mipmap.found_default_banner);
                     } else {
@@ -236,7 +252,8 @@ public class MainTabThreeFragment extends BaseFragment
             } else {
                 outRect.right = ScreenUtils.dp2px(getContext(), 4);
             }
-            outRect.bottom = ScreenUtils.dp2px(getContext(),6);
+            outRect.bottom = ScreenUtils.dp2px(getContext(),2);
+            outRect.top = ScreenUtils.dp2px(getContext(),2);
         }
     };
 

@@ -302,8 +302,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     {
         if(MyApplication.sCurrActivity.getClass().getName().startsWith("com.tudouni") && !(MyApplication.sCurrActivity instanceof SearchGoodActivity) && !(MyApplication.sCurrActivity instanceof LoginActivity) &&
                 !(MyApplication.sCurrActivity instanceof TelLoginActivity) && !(MyApplication.sCurrActivity instanceof PwdActivity) &&
-                !(MyApplication.sCurrActivity instanceof SplashActivity) && !(MyApplication.sCurrActivity instanceof BindInvitationCodeActivity) &&
-                !(MyApplication.sCurrActivity instanceof SearchActivity)) {
+                !(MyApplication.sCurrActivity instanceof SplashActivity) && !(MyApplication.sCurrActivity instanceof BindInvitationCodeActivity)) {
             try {
                 if(dialog != null && dialog.isShowing()) {
                     dialog.dismiss();
