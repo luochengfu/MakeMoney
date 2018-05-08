@@ -56,8 +56,10 @@ public class SearchActivity extends BaseActivity {
 
         loadHistory();
         parseSearchHistory();
+        //搜索
         mSearchBinding.tvSearch.setOnClickListener(l -> search());
 
+        //软键盘搜索
         mSearchBinding.etSearch.setOnEditorActionListener((v,actionId,event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                search();
@@ -66,6 +68,7 @@ public class SearchActivity extends BaseActivity {
             return false;
         });
 
+        //清除搜索历史记录
         mSearchBinding.ivClearSearch.setOnClickListener(l -> clearSearchHistory());
 
         mSearchBinding.ivBack.setOnClickListener(l -> finish());

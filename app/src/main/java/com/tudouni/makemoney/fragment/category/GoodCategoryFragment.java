@@ -15,6 +15,7 @@ import com.tudouni.makemoney.fragment.BaseFragment;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.NetConfig;
+import com.tudouni.makemoney.utils.ScreenUtils;
 import com.tudouni.makemoney.viewModel.GoodCategoryViewModel;
 import com.tudouni.makemoney.viewModel.VMResultCallback;
 
@@ -72,6 +73,7 @@ public class GoodCategoryFragment extends BaseFragment {
         mGoodListAdapter = new GoodListAdapter(getActivity().getLayoutInflater());
         LRecyclerViewAdapter lRecyclerViewAdapter = new LRecyclerViewAdapter(mGoodListAdapter);
         mHeaderImageBinding = DataBindingUtil.inflate(getActivity().getLayoutInflater(), R.layout.item_category_header_image,mCategoryBinding.rvGood,false);
+        mHeaderImageBinding.ivBanner.getLayoutParams().height = ScreenUtils.dp2px(getContext(),102);
         lRecyclerViewAdapter.addHeaderView(mHeaderImageBinding.getRoot());
         mCategoryBinding.rvGood.setAdapter(lRecyclerViewAdapter);
 
