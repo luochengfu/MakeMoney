@@ -8,11 +8,13 @@
         android:orientation="vertical">
 
 
-        <TextView
+        <EditText
             android:id="@+id/tv_search_bar"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_marginLeft="60dp"
+            android:focusable="false"
+            android:imeOptions="actionSearch"
             android:layout_marginRight="60dp"
             android:text="    粘贴宝贝标题，先领券再购物"
             android:textSize="13sp"

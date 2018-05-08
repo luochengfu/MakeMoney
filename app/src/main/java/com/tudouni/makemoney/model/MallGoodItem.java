@@ -140,7 +140,7 @@ public class MallGoodItem {
         double commissionRate = Double.valueOf(commission);
         double price = Double.valueOf(this.price);
         double commission = (commissionRate/100.0 * price)/2;
-        DecimalFormat numberFormat = new DecimalFormat("#.00");
+        DecimalFormat numberFormat = new DecimalFormat("#0.00");
         return numberFormat.format(commission);
     }
 
