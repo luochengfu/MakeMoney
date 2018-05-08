@@ -243,6 +243,7 @@ public class MallFragment extends BaseFragment {
             startActivity(intent);
         });
 
+        mMallHeaderViewBinding.mzMallBanner.setIndicatorRes(R.mipmap.banner_white_icon,R.mipmap.banner_red_icon);
         mMallHeaderViewBinding.mzMallBanner.setBannerPageClickListener((view, i) -> {
             TDLog.e("onBannerPageClick",i);
             Intent intent = new Intent(getActivity(), H5Activity.class);
