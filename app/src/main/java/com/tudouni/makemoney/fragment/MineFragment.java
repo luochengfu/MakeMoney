@@ -259,7 +259,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             @Override
             public void OnSuccess(AgentInfo agentInfo) {
                 if (agentInfo != null) {
-                    TuDouTextUtil.setTextToTextView(tv_balance, agentInfo.getBalance());
+                    TuDouTextUtil.setTextToTextView(tv_balance, agentInfo.getIncome());
                     TuDouTextUtil.setTextToTextView(tv_economizes, agentInfo.getEconomizes());
                 }
             }
