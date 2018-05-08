@@ -63,6 +63,7 @@
         <activity
             android:name=".activity.H5Activity"
             android:label="H5页"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.tudouni.action.H5Activity" />

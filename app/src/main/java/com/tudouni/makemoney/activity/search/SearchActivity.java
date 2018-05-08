@@ -135,10 +135,6 @@ public class SearchActivity extends BaseActivity {
         }
     }
 
-    public EditText getmSearchBinding() {
-        return mSearchBinding.etSearch;
-    }
-
     /**
      * 缓存历史记录到本地【弃用】
      *
