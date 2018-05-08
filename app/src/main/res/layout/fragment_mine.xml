@@ -522,7 +522,7 @@
                             style="@style/text_cons_style_for_user"
                             android:layout_marginBottom="5dp"
                             android:layout_marginTop="5dp"
-                            android:text="0" />
+                            android:text="¥0.00" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -556,7 +556,7 @@
                             style="@style/text_cons_style_for_user"
                             android:layout_marginBottom="5dp"
                             android:layout_marginTop="5dp"
-                            android:text="0" />
+                            android:text="¥0.00" />
 
                         <TextView
                             android:layout_width="wrap_content"
