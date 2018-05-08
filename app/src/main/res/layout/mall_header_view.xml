@@ -48,6 +48,8 @@
 
             <ImageView
                 android:id="@+id/iv_self_category0"
+                android:scaleType="fitXY"
+
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -67,6 +69,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:scaleType="fitXY"
+
                     android:background="#2200ff00"
                     android:onClick="@{(v) -> selfCategory.onSelfCategoryClick(v,selfData[1])}"
                     app:loadImage="@{selfData[1].imageUrl}" />
@@ -80,6 +84,7 @@
                     <ImageView
                         android:id="@+id/iv_self_category2"
                         android:layout_width="0dp"
+                        android:scaleType="fitXY"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="#220000ff"
@@ -92,6 +97,8 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="3dp"
                         android:layout_weight="1"
+                        android:scaleType="fitXY"
+
                         android:background="#22eeaadd"
                         android:onClick="@{(v) -> selfCategory.onSelfCategoryClick(v,selfData[3])}"
                         app:loadImage="@{selfData[3].imageUrl}" />

@@ -13,6 +13,7 @@
         android:id="@+id/iv_banner"
         android:layout_width="match_parent"
         android:layout_height="102dp"
+        android:scaleType="fitXY"
         app:roundImageUrl="@{imageUrl}"
         app:roundImageCornerRadius="@{String.valueOf(4)}"
        />

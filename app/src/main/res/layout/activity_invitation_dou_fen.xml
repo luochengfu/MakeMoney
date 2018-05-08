@@ -16,7 +16,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
-        android:background="#FFE58E"
+        android:background="#FFE0E0"
         android:gravity="center"
         android:orientation="horizontal">
 
