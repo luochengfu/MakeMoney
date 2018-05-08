@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -132,6 +133,10 @@ public class SearchActivity extends BaseActivity {
         if (isOpen) {
             imm.hideSoftInputFromWindow(view.getWindowToken(),0);
         }
+    }
+
+    public EditText getmSearchBinding() {
+        return mSearchBinding.etSearch;
     }
 
     /**

@@ -37,6 +37,8 @@ import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,8 +103,17 @@ public class MainTabThreeFragment extends BaseFragment
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getActivity(), H5Activity.class);
-                intent.putExtra("url",mAdapter.getUrl(position));
-                startActivity(intent);
+                try {
+                    String url = URLEncoder.encode(mAdapter.getUrl(position),"utf-8");
+                    url = url.replaceAll("%3D","=").replaceAll("%3A",":").
+                            replaceAll("%2F","\\/").replaceAll("%3F","?").
+                            replaceAll("%26","&").replaceAll("%25","%")
+                            .replaceAll("%23","#").replaceAll("%2F ","\\+").replaceAll("\\+",  "%20");
+                    intent.putExtra("url", url);
+                    startActivity(intent);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -117,6 +128,8 @@ public class MainTabThreeFragment extends BaseFragment
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mRecyclerView.setAdapter(mTopticAdapter);
         mRecyclerView.addItemDecoration(mItemDecoration);
+
+        mLRecyclerView.addItemDecoration(mItemDecoration2);
 
         mTopticAdapter.setItemClickListener(new IItemClickListener() {
             @Override
@@ -224,6 +237,13 @@ public class MainTabThreeFragment extends BaseFragment
                 outRect.right = ScreenUtils.dp2px(getContext(), 4);
             }
             outRect.bottom = ScreenUtils.dp2px(getContext(),6);
+        }
+    };
+
+    private RecyclerView.ItemDecoration mItemDecoration2 = new RecyclerView.ItemDecoration() {
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            outRect.bottom = ScreenUtils.dp2px(getContext(),8);
         }
     };
 }
