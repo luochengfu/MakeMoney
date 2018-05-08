@@ -467,11 +467,8 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
         if (pageType.equals("1") || pageType.equals("6") || pageType.equals("5")) {
             getMsgCode();
         } else if (pageType.equals("2") || pageType.equals("4") || pageType.equals("3") || pageType.equals("7")) {
-            String url = "";
-
-            Map<String, String> params = new HashMap<String, String>();
             if (pageType.equals("2") || pageType.equals("4") || pageType.equals("7")) {
-                getVerifCode();
+                getVerifCode(pageType);
             } else if (pageType.equals("3")) {
                 getPasswordCode();
             }
@@ -505,8 +502,18 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
         });
     }
 
-    private void getVerifCode() {
-        CommonScene.getVerifCode(etTelNumber.getText().toString(),  new BaseObserver<String>() {
+    private void getVerifCode(String type) {
+        String token = null;
+        String uid = null;
+        if(type.equals("7")) {
+            User user = (User) getIntent().getSerializableExtra("loginUser");
+            token = user.getToken();
+            uid = user.getUid();
+        } else {
+            token = MyApplication.getLoginUser().getToken();
+            uid = MyApplication.getLoginUser().getUid();
+        }
+        CommonScene.getVerifCode(etTelNumber.getText().toString(),uid, token,  new BaseObserver<String>() {
             @Override
             public void OnSuccess(String s) {
                 if (null != loadingDialog) {

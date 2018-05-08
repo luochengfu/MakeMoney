@@ -302,25 +302,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     {
         if(MyApplication.sCurrActivity.getClass().getName().startsWith("com.tudouni") && !(MyApplication.sCurrActivity instanceof SearchGoodActivity) && !(MyApplication.sCurrActivity instanceof LoginActivity) &&
                 !(MyApplication.sCurrActivity instanceof TelLoginActivity) && !(MyApplication.sCurrActivity instanceof PwdActivity) &&
-                !(MyApplication.sCurrActivity instanceof SplashActivity) && !(MyApplication.sCurrActivity instanceof BindInvitationCodeActivity)) {
+                !(MyApplication.sCurrActivity instanceof SplashActivity) && !(MyApplication.sCurrActivity instanceof BindInvitationCodeActivity) &&
+                !(MyApplication.sCurrActivity instanceof SearchActivity)) {
             try {
                 if(dialog != null && dialog.isShowing()) {
                     dialog.dismiss();
                 }
-                if(MyApplication.sCurrActivity instanceof SearchActivity) {
-                    try{
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        boolean isOpen = imm.isActive();
-                        if (isOpen) {
-                            imm.hideSoftInputFromWindow(((SearchActivity)MyApplication.sCurrActivity).getmSearchBinding().getWindowToken(),0);
-                            dialog = new SearchGoodDialog(MyApplication.sCurrActivity, url, false);
-                            dialog.show();
-                        }
-                    } catch (Exception e) {}
-
-                }
-//                dialog = new SearchGoodDialog(MyApplication.sCurrActivity, url, false);
-//                dialog.show();
+                dialog = new SearchGoodDialog(MyApplication.sCurrActivity, url, false);
+                dialog.show();
             } catch (Exception e) {}
         }
     }

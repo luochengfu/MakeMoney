@@ -39,8 +39,8 @@ public class CommonScene extends RetrofitUtils {
         setSubscribe(commonApi.getMsgCode(phone), observer);
     }
 
-    public static void getVerifCode(String phone, BaseObserver<String> observer) {
-        setSubscribe(commonApi.getVerifCode(phone), observer);
+    public static void getVerifCode(String phone, String uid,String token, BaseObserver<String> observer) {
+        setSubscribe(commonApi.getVerifCode(phone,uid,token), observer);
     }
 
     /**

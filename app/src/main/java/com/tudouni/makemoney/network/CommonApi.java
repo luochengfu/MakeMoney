@@ -48,7 +48,9 @@ public interface CommonApi {
 
     @FormUrlEncoded
     @POST(NetConfig.VERIFCODE)
-    Observable<Result<String>> getVerifCode(@Field("phone") String phone);
+    Observable<Result<String>> getVerifCode(@Field("phone") String phone,
+                                            @Field("uid") String uid,
+                                            @Field("token") String token);
 
     @FormUrlEncoded
     @POST(NetConfig.PASSWORD_MSG_CODE)
