@@ -14,6 +14,7 @@
         android:background="@{item.selected ? @color/white : @color/category_bg}"
         android:layout_width="match_parent"
         android:orientation="horizontal"
+        android:id="@+id/ll_item"
         android:layout_height="wrap_content">
 
         <View

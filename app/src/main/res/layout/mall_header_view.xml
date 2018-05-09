@@ -28,8 +28,6 @@
             android:layout_height="150dp"
             android:background="#33eaba00"
             app:canLoop="true"
-            app:indicatorAlign="center"
-            app:indicatorPaddingLeft="10dp"
             app:middle_page_cover="false"
             app:open_mz_mode="false" />
 
