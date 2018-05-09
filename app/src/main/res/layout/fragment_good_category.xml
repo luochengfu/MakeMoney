@@ -22,7 +22,7 @@
             android:drawableLeft="@mipmap/category_search_icon"
             android:gravity="center|left"
             android:background="@drawable/shape_category_search_bg"
-            android:textColor="@color/black"
+            android:textColor="#c7c7c9"
             android:layout_height="30dp" />
 
         <View

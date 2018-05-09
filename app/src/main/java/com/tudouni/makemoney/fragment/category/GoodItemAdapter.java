@@ -30,7 +30,6 @@ public class GoodItemAdapter extends BaseRecyclerViewBindingAdapter<Category> {
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        TDLog.e(this.data.get(position).getImgUrl());
         ItemGoodBinding itemGoodBinding = ((ItemGoodBinding)holder.getBinding());
         itemGoodBinding.setItem(this.data.get(position));
         ViewGroup.LayoutParams goodPicLayoutParams = itemGoodBinding.ivGoodPic.getLayoutParams();
