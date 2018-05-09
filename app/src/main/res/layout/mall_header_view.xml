@@ -43,7 +43,7 @@
             android:background="#f8f8f8"
             android:layout_width="match_parent"
             android:padding="10dp"
-            android:layout_height="170dp"
+            android:layout_height="188dp"
             android:orientation="horizontal">
 
             <ImageView
