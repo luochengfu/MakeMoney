@@ -306,8 +306,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             try {
                 String searchStr = "";
                 if(dialog != null && dialog.isShowing()) {
-                    dialog.dismiss();
+                    if(dialog.getDialogContext() != MyApplication.sCurrActivity){
+                        dialog.dismiss();
+                    } else
+                        return;
                 }
+
+
                 if(null != url || !"".equals(url)) {
                     searchStr = url;
                 }

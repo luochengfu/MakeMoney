@@ -48,6 +48,10 @@ public class SearchGoodDialog extends Dialog implements View.OnClickListener
         this.searchStr = search;
     }
 
+    public Context getDialogContext() {
+        return mContext;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
