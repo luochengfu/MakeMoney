@@ -470,28 +470,30 @@
                 android:background="@mipmap/ticket_background"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/default_user_view_height"
-                    android:background="@color/white"
-                    android:gravity="center"
-                    android:paddingLeft="15dp">
+                    android:background="@color/white">
 
                     <ImageView
                         android:layout_width="22dp"
                         android:layout_height="22dp"
-                        android:src="@mipmap/ic_my_account_book" />
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="7dp"
+                        android:layout_toLeftOf="@+id/my_count"
+                        android:src="@mipmap/ic_my_account_book"
+                        android:visibility="visible" />
 
                     <TextView
+                        android:id="@+id/my_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
+                        android:layout_centerInParent="true"
                         android:text="我的账本"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
-                </LinearLayout>
+                </RelativeLayout>
 
                 <View style="@style/horizontalLine" />
 
