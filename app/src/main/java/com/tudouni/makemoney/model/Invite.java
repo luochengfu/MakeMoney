@@ -23,7 +23,10 @@ public class Invite {
     /**
      * 用户code
      */
-    @SerializedName(value = "code", alternate = {"userCode"})
+    @SerializedName(value = "code")
+    private String code;
+
+    @SerializedName(value = "userCode")
     private String userCode;
     /**
      * 用户等级
@@ -102,5 +105,13 @@ public class Invite {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

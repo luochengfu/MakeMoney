@@ -155,7 +155,7 @@ public class BindingInvitationActivity extends BaseActivity implements View.OnCl
                 Glide.with(BindingInvitationActivity.this).load(invite.getPhoto()).error(R.mipmap.default_head2).fallback(R.mipmap.default_head2).into(mIvSaoHead);
                 mImSaoUserGender.setImageResource(("1".equals(invite.getSex())) ? R.mipmap.public_gender_man : R.mipmap.public_gender_woman);
                 TuDouTextUtil.setTextToTextView(mTvSaoUserName, invite.getNickname());
-                TuDouTextUtil.setTextToTextView(mTvSaoUserCode, invite.getInviteCode());
+                TuDouTextUtil.setTextToTextView(mTvSaoUserCode, invite.getUserCode());
             }
 
             @Override
