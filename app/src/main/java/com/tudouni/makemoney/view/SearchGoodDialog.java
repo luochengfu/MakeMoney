@@ -32,7 +32,7 @@ public class SearchGoodDialog extends Dialog implements View.OnClickListener
     private LinearLayout parentLayout;
     private RelativeLayout imgLayout;
     private TextView tvMsg, mNoButton, mYesButton;
-    private String url;
+    private String searchStr;
 
     public SearchGoodDialog(Context context) {
         this(context, null, true);
@@ -42,11 +42,14 @@ public class SearchGoodDialog extends Dialog implements View.OnClickListener
         this(context, msg, true);
     }
 
-    public SearchGoodDialog(Context context, String url, boolean cancelable) {
+    public SearchGoodDialog(Context context, String search, boolean cancelable) {
         super(context, R.style.loading_dialog);
-        this.url = url;
         this.mContext = context;
+        this.searchStr = search;
+    }
 
+    public Context getDialogContext() {
+        return mContext;
     }
 
     @Override
@@ -68,7 +71,7 @@ public class SearchGoodDialog extends Dialog implements View.OnClickListener
     }
 
     private void initDatas() {
-        tvMsg.setText(url);
+        tvMsg.setText(searchStr);
         mNoButton.setOnClickListener(this);
         mYesButton.setOnClickListener(this);
 
@@ -92,7 +95,7 @@ public class SearchGoodDialog extends Dialog implements View.OnClickListener
                 break;
             case R.id.tvYes:
                 try {
-                    String url = NetConfig.getBaseTuDouNiH5Url() + "html/resultlist.html?unionid=" + MyApplication.getLoginUser().getUnionid()+"&search=" + URLEncoder.encode(MyApplication.mClipStr,"utf-8").replaceAll("\\+",  "%20");
+                    String url = NetConfig.getBaseTuDouNiH5Url() + "html/resultlist.html?unionid=" + MyApplication.getLoginUser().getUnionid()+"&search=" + URLEncoder.encode(searchStr,"utf-8").replaceAll("\\+",  "%20");
                     Intent intent = new Intent(mContext, H5Activity.class);
                     intent.putExtra("titleStatus",1);
                     intent.putExtra("url", url);
