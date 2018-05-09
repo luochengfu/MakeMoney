@@ -8,6 +8,7 @@ import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.databinding.ItemGoodBinding;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.utils.ScreenUtils;
+import com.tudouni.makemoney.utils.TDLog;
 import com.tudouni.makemoney.view.BaseRecyclerViewBindingAdapter;
 
 
@@ -29,6 +30,7 @@ public class GoodItemAdapter extends BaseRecyclerViewBindingAdapter<Category> {
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
+        TDLog.e(this.data.get(position).getImgUrl());
         ItemGoodBinding itemGoodBinding = ((ItemGoodBinding)holder.getBinding());
         itemGoodBinding.setItem(this.data.get(position));
         ViewGroup.LayoutParams goodPicLayoutParams = itemGoodBinding.ivGoodPic.getLayoutParams();
