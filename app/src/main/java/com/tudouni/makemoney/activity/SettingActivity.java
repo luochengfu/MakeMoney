@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tudouni.makemoney.model.LogOut;
+import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.utils.CleanMessageUtil;
 import com.tudouni.makemoney.utils.Constants;
 import com.tudouni.makemoney.utils.FileCacheUtils;
@@ -29,6 +30,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     long[] mHits = new long[5];
     @InjectView(id=R.id.llAccount)
     private LinearLayout llAccount;
+    @InjectView(id=R.id.llRealname)
+    private LinearLayout llRealname;
     @InjectView(id = R.id.llClear)
     private LinearLayout llClear;//清理缓存
     @InjectView(id = R.id.llAboutUs)
@@ -101,6 +104,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     private void initView() {
         llAccount.setOnClickListener(this);
+        llRealname.setOnClickListener(this);
         llClear.setOnClickListener(this);//清理缓存
         llAboutUs.setOnClickListener(this);
         llContactUs.setOnClickListener(this);
@@ -123,6 +127,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         switch (v.getId()) {
             case R.id.llAccount: //账号与安全
                 ForwardUtils.target(SettingActivity.this, Constants.ACCOUNT_SECURITY);
+                break;
+            case R.id.llRealname: //实名认证
+                if (MyApplication.getLoginUser().getRole().equals("0")) {
+                    ForwardUtils.target(SettingActivity.this, Constants.REALNAME);
+                } else {
+                    ForwardUtils.target(SettingActivity.this, Constants.REALNAME_FINAL);
+                }
                 break;
             case R.id.llClear://清理缓存
                 clearAppCache();

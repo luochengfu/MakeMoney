@@ -121,6 +121,14 @@
             android:name=".activity.ModifyPasswordActivity"
             android:label="个人-修改密码"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.realname.RealnameFinalActivity"
+            android:label="实名认证已认证"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.realname.RealnameActivity"
+            android:label="实名认证未认证"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="UMENG_APPKEY"

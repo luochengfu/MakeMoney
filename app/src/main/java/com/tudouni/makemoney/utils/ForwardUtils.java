@@ -9,6 +9,8 @@ import com.tudouni.makemoney.activity.BindingInvitationActivity;
 import com.tudouni.makemoney.activity.FaceToFaceActivity;
 import com.tudouni.makemoney.activity.H5Activity;
 import com.tudouni.makemoney.activity.InvitationDouFenActivity;
+import com.tudouni.makemoney.activity.realname.RealnameActivity;
+import com.tudouni.makemoney.activity.realname.RealnameFinalActivity;
 import com.tudouni.makemoney.activity.LoginActivity;
 import com.tudouni.makemoney.activity.MainActivity;
 import com.tudouni.makemoney.activity.MessageActivity;
@@ -50,6 +52,12 @@ public class ForwardUtils {
                 toIntent(oriActivity, url, intent);
             } else if (url.startsWith(Constants.ACCOUNT_SECURITY)) {
                 Intent intent = new Intent(oriActivity, AccountSecurityActivity.class);
+                toIntent(oriActivity, url, intent);
+            } else if (url.startsWith(Constants.REALNAME)) {
+                Intent intent = new Intent(oriActivity, RealnameActivity.class);
+                toIntent(oriActivity, url, intent);
+            } else if (url.startsWith(Constants.REALNAME_FINAL)) {
+                Intent intent = new Intent(oriActivity, RealnameFinalActivity.class);
                 toIntent(oriActivity, url, intent);
             } else if (url.startsWith(Constants.LOGIN)) {
                 Intent intent = new Intent(oriActivity, LoginActivity.class);

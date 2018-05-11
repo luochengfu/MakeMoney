@@ -50,7 +50,6 @@
 
 #保留本地native方法不被混淆
 -keepclasseswithmembernames class * {
-   #保持native方法不被混淆
      native <methods>;
 }
 
@@ -97,7 +96,6 @@ public static *** e(...);
 }
 #Parcelable的子类和Creator静态成员变量不混淆，否则会产生Android.os.BadParcelableException异常；
 -keep class * implements Android.os.Parcelable {
-    # 保持Parcelable不被混淆
     public static final Android.os.Parcelable$Creator *;
 }
 #使用enum类型时需要注意避免以下两个方法混淆，因为enum类的特殊性，以下两个方法会被反射调用。
