@@ -4,6 +4,7 @@ package com.tudouni.makemoney.network;
 import android.text.TextUtils;
 
 
+import com.google.gson.Gson;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.security.DouBoInterfaceLevel;
 import com.tudouni.makemoney.network.security.MobileSecurity;
@@ -15,6 +16,7 @@ import com.tudouni.makemoney.utils.base.AppUtils;
 import com.tudouni.makemoney.utils.base.SHA1Utils;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.TreeMap;
 
@@ -37,6 +39,8 @@ public class NetInterceptor implements Interceptor {
     private static final String TAG = "NetIntercepter";
     private int maxAge = 60 * 60; // 有网络时 设置缓存超时时间1个小时
     private int maxStale = 60 * 60 * 24 * 28; // 无网络时，设置超时为4周
+    private Gson mGson = new Gson();
+    private static final MediaType JSON_TYPE = MediaType.parse("application/json; charset=utf-8");
 //    HashMap<String, String> mDefaultRequestBodyParamesMap;
 
     @Override
@@ -56,6 +60,8 @@ public class NetInterceptor implements Interceptor {
             requestBuilder = oldRequest.newBuilder().method(oldRequest.method(), oldRequest.body());
 
         if ("POST".equals(oldRequest.method())) {
+            RequestBody requestBody = oldRequest.body();
+            HashMap<String, Object> rootMap = null;//适配retrofit body的方式
             TreeMap<String, String> mRequestBodyMap = new TreeMap<>();
             initDefaultRequestParamesMap(mRequestBodyMap);//初始化默认的请求体参数信息
             TuDouLogUtils.d(TAG, "显示mDefaultRequestBodyParamesMap=" + mRequestBodyMap.toString());
@@ -65,14 +71,30 @@ public class NetInterceptor implements Interceptor {
                 FormBody body = (FormBody) oldRequest.body();
                 for (int i = 0; i < body.size(); i++)
                     mRequestBodyMap.put(body.name(i), body.value(i));
+            } else {
+                //buffer流
+                Buffer buffer = new Buffer();
+                requestBody.writeTo(buffer);
+                String oldParamsJson = buffer.readUtf8();
+                rootMap = mGson.fromJson(oldParamsJson, HashMap.class);  //原始参数
             }
-            concatParams(sb, newFormBody, mRequestBodyMap);
-            String sbString = sb.toString();
-            String sign = SHA1Utils.shaEncrypt(sb.toString());//获取签名
-            TuDouLogUtils.d(TAG, "post --------->   sign=" + sign + ";;params=" + sbString + ";;url=" + urlStr);
-            initDefaultRequestHeaderInfo(requestBuilder, sign);//添加默认的头部信息
-            requestBuilder.method(oldRequest.method(), newFormBody.build());
-            newRequest = requestBuilder.build();
+
+            if (rootMap != null && !rootMap.isEmpty()) {//请求中以JSON发送给后台
+                rootMap.putAll(mRequestBodyMap);  //重新组装
+                String newJsonParams = mGson.toJson(rootMap);  //装换成json字符串
+                concatParams(sb, newFormBody, mRequestBodyMap);
+                String sign = SHA1Utils.shaEncrypt(sb.toString());//获取签名
+                initDefaultRequestHeaderInfo(requestBuilder, sign);//添加默认的头部信息
+                newRequest = requestBuilder.post(RequestBody.create(JSON_TYPE, newJsonParams)).build();
+            } else {
+                concatParams(sb, newFormBody, mRequestBodyMap);
+                String sbString = sb.toString();
+                String sign = SHA1Utils.shaEncrypt(sb.toString());//获取签名
+                TuDouLogUtils.d(TAG, "post --------->   sign=" + sign + ";;params=" + sbString + ";;url=" + urlStr);
+                initDefaultRequestHeaderInfo(requestBuilder, sign);//添加默认的头部信息
+                requestBuilder.method(oldRequest.method(), newFormBody.build());
+                newRequest = requestBuilder.build();
+            }
         } else if ("GET".equals(oldRequest.method())) {
             HttpUrl.Builder httpBuilder = oldRequest.url().newBuilder();
             //拼接参数

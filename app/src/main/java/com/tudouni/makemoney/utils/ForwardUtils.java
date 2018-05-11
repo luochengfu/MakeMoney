@@ -27,6 +27,7 @@ import java.net.URLDecoder;
 public class ForwardUtils {
     public static void target(Activity oriActivity, String url) {
         try {
+            if (TextUtils.isEmpty(url)) return;
             if (url.startsWith(Constants.BINDING_FACE_TO_FACE)) {//面对面绑定
                 Intent intent = new Intent(oriActivity, FaceToFaceActivity.class);
                 toIntent(oriActivity, url, intent);
