@@ -2,8 +2,11 @@ package com.tudouni.makemoney.widget.sharePart;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,6 +18,7 @@ import android.widget.SimpleAdapter;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.base.AppUtils;
+import com.tudouni.makemoney.utils.base.FileUtils;
 import com.tudouni.makemoney.widget.callBack.ApiCallback;
 import com.tudouni.makemoney.widget.callBack.ServiceException;
 import com.tudouni.makemoney.widget.pop.BottomPushPopupWindow;
@@ -23,6 +27,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.utils.CommonUtil;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +49,8 @@ public class ShareWindow_v3 extends BottomPushPopupWindow<Void> implements OnCli
     private GridView gridView;
 
     private boolean canClick = true;
+    private boolean mIsShareMultiplemages = false;//是否是多图片分享
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -186,26 +193,36 @@ public class ShareWindow_v3 extends BottomPushPopupWindow<Void> implements OnCli
 
 
     private void doShare(SHARE_MEDIA platform) {
-        ShareUtil.shareURL2(activity, mType == Share.Type.IMAGE_POTATOES, platform, mShare, new ApiCallback<Share>() {
-            @Override
-            public void onSuccess(Share data) {
-                if (mCallback != null) {
-                    mCallback.onSuccess(data);
-                } else {
-                    ToastUtil.show(mActivity, "分享成功");
+        if (mIsShareMultiplemages) {  //多图片分享
+            String fileName = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsoluteFile() +
+                    File.separator + "豆播" + File.separator + "豆播相册" +
+                    File.separator + "我的土豆海报.jpg";
+            Uri[] uri = new Uri[2];
+            uri[0] = FileUtils.getUri(context, fileName);
+            uri[1] = FileUtils.getUri(context, fileName);
+            ShareUtil.shareMultiplemages(context, uri, platform, null);
+        } else {
+            ShareUtil.shareURL2(activity, mType == Share.Type.IMAGE_POTATOES, platform, mShare, new ApiCallback<Share>() {
+                @Override
+                public void onSuccess(Share data) {
+                    if (mCallback != null) {
+                        mCallback.onSuccess(data);
+                    } else {
+                        ToastUtil.show(mActivity, "分享成功");
+                    }
+                    dismiss();
                 }
-                dismiss();
-            }
 
-            @Override
-            public void onFailure(ServiceException e) {
-                super.onFailure(e);
-                if (mCallback != null)
-                    mCallback.onFailure(e);
-                else
-                    ToastUtil.show(mActivity, "分享失败");
-            }
-        });
+                @Override
+                public void onFailure(ServiceException e) {
+                    super.onFailure(e);
+                    if (mCallback != null)
+                        mCallback.onFailure(e);
+                    else
+                        ToastUtil.show(mActivity, "分享失败");
+                }
+            });
+        }
     }
 
     private void doCopy() {
@@ -218,4 +235,7 @@ public class ShareWindow_v3 extends BottomPushPopupWindow<Void> implements OnCli
         }
     }
 
+    public void setmIsShareMultiplemages(boolean mIsShareMultiplemages) {
+        this.mIsShareMultiplemages = mIsShareMultiplemages;
+    }
 }

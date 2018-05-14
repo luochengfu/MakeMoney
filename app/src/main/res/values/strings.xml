@@ -40,4 +40,12 @@
     <string name="commission">预估佣金</string>
     <string name="rmb">￥</string>
     <string name="fix2">.00</string>
+    
+    <string name="share_weixin">com.tencent.mm</string>
+    <string name="share_multi_image_to_weixin">com.tencent.mm.ui.tools.ShareImgUI</string>
+    <string name="share_multi_image_to_weixin_circle">com.tencent.mm.ui.tools.ShareToTimeLineUI</string>
+
+    <string name="share_QQ">com.tencent.mobileqq</string>
+    <string name="share_multi_image_to_QQ">com.tencent.mobileqq.activity.JumpActivity</string>
+
 </resources>
