@@ -63,8 +63,8 @@
         <activity
             android:name=".activity.H5Activity"
             android:label="H5页"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="com.tudouni.action.H5Activity" />
 
@@ -148,7 +148,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="tencent100424468" />
+                <data android:scheme="tencent1106781729" />
             </intent-filter>
         </activity>
         <activity
