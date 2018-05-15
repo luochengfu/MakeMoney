@@ -1,8 +1,10 @@
 package com.tudouni.makemoney.widget.sharePart;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -18,6 +20,8 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
+
+import java.util.ArrayList;
 
 /**
  * Created by ZhangPeng on 2018/4/21.
@@ -96,6 +100,37 @@ public class ShareUtil {
     public static void shareURL2(Activity activity, SHARE_MEDIA platform, Share share,
                                  ApiCallback<Share> apiCallback) {
         shareURL2(activity, false, platform, share, apiCallback);
+    }
+
+    /**
+     * 多图片分享 1.1.0
+     *
+     * @param context
+     * @param uri
+     */
+    public static void shareMultiplemages(Context context, Uri[] uri, SHARE_MEDIA platform, String content) {
+        try {
+            String packageName = context.getResources().getString((platform == SHARE_MEDIA.QQ) ? R.string.share_QQ : R.string.share_weixin);
+            String className = context.getResources().getString(R.string.share_multi_image_to_QQ);
+            if (platform == SHARE_MEDIA.WEIXIN || platform == SHARE_MEDIA.WEIXIN_CIRCLE)
+                className = context.getResources().getString((platform == SHARE_MEDIA.WEIXIN) ? R.string.share_multi_image_to_weixin : R.string.share_multi_image_to_weixin_circle);
+            Intent shareIntent = new Intent();
+            ComponentName mComponentName = new ComponentName(packageName, className);
+            if (platform == SHARE_MEDIA.WEIXIN_CIRCLE && !TextUtils.isEmpty(content))//分享到朋友圈添加描述
+                shareIntent.putExtra("Kdescription", content);
+            shareIntent.setComponent(mComponentName);
+            shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
+            shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            shareIntent.setType("image/*");
+            ArrayList<Uri> imageUris = new ArrayList<Uri>();
+            for (int i = 0; i < uri.length; i++) {
+                imageUris.add(uri[i]);
+            }
+            shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, imageUris);
+            context.startActivity(Intent.createChooser(shareIntent, "分享图片"));
+        } catch (Exception e) {
+            TuDouLogUtils.e("ShareUtil", "分享多张图片报错：" + e.getMessage());
+        }
     }
 
 

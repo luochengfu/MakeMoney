@@ -114,4 +114,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
         void onLongClick(int position);
     }
+
+    public void removeIteam(int position) {
+        if (mDatas == null || mDatas.size() <= position) return;
+        mDatas.remove(position);
+        notifyItemRemoved(position);
+    }
 }

@@ -8,12 +8,14 @@ import android.view.View;
 
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.adapter.MessageAdapter;
+import com.tudouni.makemoney.model.DeleteSyaMsgRequestBean;
 import com.tudouni.makemoney.model.MessageResponsBean;
 import com.tudouni.makemoney.model.MineMessage;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.Constants;
+import com.tudouni.makemoney.utils.DialogUtils;
 import com.tudouni.makemoney.utils.ForwardUtils;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.TuDouLogUtils;
@@ -29,10 +31,11 @@ public class MessageActivity extends AppCompatActivity {
     private RecyclerView mRcMessage;
     private MessageAdapter mMessageAdapter;
     private ArrayList<MineMessage> mData;
-    private ArrayList<MineMessage> mDataForSys;//非全局消息
     private ArrayList<MineMessage> mDataForGsys;//全局的消息
+    private ArrayList<MineMessage> mDataForSys;//非全局消息
     private int msgpage = 1;
     private int gmsgpage = 1;
+    private ArrayList<Integer> deletePositionArray;//要删除的下标
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,8 @@ public class MessageActivity extends AppCompatActivity {
             mDataForSys = new ArrayList<>();
         if (mDataForGsys == null)
             mDataForGsys = new ArrayList<>();
+        if (deletePositionArray == null)
+            deletePositionArray = new ArrayList<>();
         CommonScene.getSysMsg(MyApplication.getLoginUser().getUid(), msgpage, gmsgpage, new BaseObserver<MessageResponsBean>() {
             @Override
             public void OnSuccess(MessageResponsBean messageResponsBean) {
@@ -112,7 +117,13 @@ public class MessageActivity extends AppCompatActivity {
 
             @Override
             public void onLongClick(int position) {
-
+                deletePositionArray.add(position);
+                DialogUtils.showCommonDialog(MessageActivity.this, "确定要删除本条消息？", "确定", "取消", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteMsg();
+                    }
+                }, null);
             }
         });
         mRcMessage.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -137,6 +148,37 @@ public class MessageActivity extends AppCompatActivity {
 //        mRcMessage.setIte
     }
 
+    /**
+     * 删除消息
+     */
+    private void deleteMsg() {
+        ArrayList<String> arrayList = new ArrayList<>();
+        for (int integer : deletePositionArray)
+            arrayList.add(mData.get(integer).getType() + ":" + mData.get(integer).getId());
+        CommonScene.deleteSysMsg(new DeleteSyaMsgRequestBean(MyApplication.getLoginUser().getUid(), arrayList), new BaseObserver<Object>() {
+//        CommonScene.deleteSysMsgNew(MyApplication.getLoginUser().getUid(), arrayList, new BaseObserver<Object>() {
+
+            @Override
+            public void OnSuccess(Object o) {
+                ToastUtil.show("删除成功！");
+                for (Integer position : deletePositionArray) {
+                    mData.remove(position);
+                    if (position < mDataForGsys.size())
+                        mDataForGsys.remove(position);
+                    else
+                        mDataForSys.remove(position);
+                    mMessageAdapter.removeIteam(position);
+                }
+            }
+
+            @Override
+            public void OnFail(int code, String err) {
+                super.OnFail(code, err);
+                ToastUtil.show("删除失败！");
+            }
+        });
+    }
+
 
     /**
      * 上报已读消息
@@ -159,4 +201,6 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

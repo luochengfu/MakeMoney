@@ -9,6 +9,7 @@ import com.tudouni.makemoney.model.Banner;
 import com.tudouni.makemoney.model.BindInfo;
 import com.tudouni.makemoney.model.BindUserBean;
 import com.tudouni.makemoney.model.Category;
+import com.tudouni.makemoney.model.DeleteSyaMsgRequestBean;
 import com.tudouni.makemoney.model.FoundTopicBean;
 import com.tudouni.makemoney.model.Invite;
 import com.tudouni.makemoney.model.LoginBean;
@@ -19,11 +20,13 @@ import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.RecommendTopicBean;
 import com.tudouni.makemoney.model.SearchHistory;
 import com.tudouni.makemoney.model.User;
+import com.tudouni.makemoney.model.Zma;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.upload.UploadInfo;
 import com.tudouni.makemoney.widget.versionUpdate.Upinfo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,8 +42,8 @@ public class CommonScene extends RetrofitUtils {
         setSubscribe(commonApi.getMsgCode(phone), observer);
     }
 
-    public static void getVerifCode(String phone, String uid,String token, BaseObserver<String> observer) {
-        setSubscribe(commonApi.getVerifCode(phone,uid,token), observer);
+    public static void getVerifCode(String phone, String uid, String token, BaseObserver<String> observer) {
+        setSubscribe(commonApi.getVerifCode(phone, uid, token), observer);
     }
 
     /**
@@ -57,8 +60,8 @@ public class CommonScene extends RetrofitUtils {
         setSubscribe(commonApi.telCodeLogin(phone, code, model, brand), observer);
     }
 
-    public static void setPWD(String password,String uid, String token, BaseObserver<String> observer) {
-        setSubscribe(commonApi.setPWD(password,uid,token), observer);
+    public static void setPWD(String password, String uid, String token, BaseObserver<String> observer) {
+        setSubscribe(commonApi.setPWD(password, uid, token), observer);
     }
 
     public static void getConfig(BaseObserver<AppConfig> observer) {
@@ -102,6 +105,17 @@ public class CommonScene extends RetrofitUtils {
      */
     public static void bindNewPhone(String phone, String code, String model, String brand, String handleToken, BaseObserver<User> observer) {
         setSubscribe(commonApi.bindNewPhone(phone, code, model, brand, handleToken), observer);
+    }
+
+    /**
+     * 芝麻认证
+     */
+    public static void genCertUrl(String idNumber,String realname, String authFaceType, BaseObserver<Zma> observer) {
+        setSubscribe(commonApi.genCertUrl(idNumber, realname, authFaceType), observer);
+    }
+
+    public static void zmxyCall(String idNumber,String realname, String bizNo, BaseObserver<String> observer) {
+        setSubscribe(commonApi.zmxyCall(idNumber, realname, bizNo), observer);
     }
 
     /**
@@ -251,22 +265,22 @@ public class CommonScene extends RetrofitUtils {
     /**
      * 商城首页专题
      */
-    public static void getMallAlbumData(BaseObserver<List<MallAlbumModel>> observer){
-        setSubscribe(commonApi.getMallAlbumData(),observer);
+    public static void getMallAlbumData(BaseObserver<List<MallAlbumModel>> observer) {
+        setSubscribe(commonApi.getMallAlbumData(), observer);
     }
 
     /**
      * 商城首页推荐
      */
-    public static void getRecommendGood(BaseObserver<List<MallGoodItem>> observer,int page,int pageSize){
-        setSubscribe(commonApi.getRecommendGood(page,pageSize),observer);
+    public static void getRecommendGood(BaseObserver<List<MallGoodItem>> observer, int page, int pageSize) {
+        setSubscribe(commonApi.getRecommendGood(page, pageSize), observer);
     }
 
     /**
      * 自营分类
      */
-    public static void getSelfGood(BaseObserver<ObservableArrayList<MallAlbumModel>> observer){
-        setSubscribe(commonApi.getSelfGood(),observer);
+    public static void getSelfGood(BaseObserver<ObservableArrayList<MallAlbumModel>> observer) {
+        setSubscribe(commonApi.getSelfGood(), observer);
     }
 
     /**
@@ -317,6 +331,21 @@ public class CommonScene extends RetrofitUtils {
     }
 
     /**
+     * 删除消息
+     */
+    public static void deleteSysMsg(DeleteSyaMsgRequestBean deleteSyaMsgRequestBean, BaseObserver<Object> observer) {
+        setSubscribe(commonApi.deleteSysMsg(deleteSyaMsgRequestBean), observer);
+    }
+
+    /**
+     * 删除消息
+     */
+//    public static void deleteSysMsgNew(String uid, ArrayList<String> deleteSyaMsgRequestBean, BaseObserver<Object> observer) {
+//        setSubscribe(commonApi.deleteSysMsg(uid, deleteSyaMsgRequestBean), observer);
+//    }
+
+
+    /**
      * 邀请绑定用户数据
      */
     public static void getBindUserInfo(String userCode, BaseObserver<BindUserBean> observer) {
@@ -331,11 +360,11 @@ public class CommonScene extends RetrofitUtils {
     }
 
 
-    public static void loadSearchHistory(String unionId,BaseObserver<List<SearchHistory>> observer){
-        setSubscribe(commonApi.loadSearchHistory(unionId),observer);
+    public static void loadSearchHistory(String unionId, BaseObserver<List<SearchHistory>> observer) {
+        setSubscribe(commonApi.loadSearchHistory(unionId), observer);
     }
 
-    public static void saveSearchHistoryToService(String unionId,String source,String deviceModel,String content,BaseObserver<Object> observer){
-        setSubscribe(commonApi.saveSearchHistoryToService(unionId,source,deviceModel,content),observer);
+    public static void saveSearchHistoryToService(String unionId, String source, String deviceModel, String content, BaseObserver<Object> observer) {
+        setSubscribe(commonApi.saveSearchHistoryToService(unionId, source, deviceModel, content), observer);
     }
 }

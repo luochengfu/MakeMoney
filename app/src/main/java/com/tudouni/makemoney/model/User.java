@@ -18,6 +18,7 @@ public class User implements Serializable {
     @SerializedName(value = "nickName", alternate = {"nickname"})
     private String nickName;
     private String photo;
+    private String role;  //0非主播  1主播  2官方
     private String sex;
     private String signature;
     private String token;
@@ -239,6 +240,14 @@ public class User implements Serializable {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getSex() {

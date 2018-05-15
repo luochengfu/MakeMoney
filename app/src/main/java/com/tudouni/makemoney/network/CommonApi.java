@@ -9,6 +9,7 @@ import com.tudouni.makemoney.model.Banner;
 import com.tudouni.makemoney.model.BindInfo;
 import com.tudouni.makemoney.model.BindUserBean;
 import com.tudouni.makemoney.model.Category;
+import com.tudouni.makemoney.model.DeleteSyaMsgRequestBean;
 import com.tudouni.makemoney.model.FoundTopicBean;
 import com.tudouni.makemoney.model.Invite;
 import com.tudouni.makemoney.model.LoginBean;
@@ -19,12 +20,15 @@ import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.RecommendTopicBean;
 import com.tudouni.makemoney.model.SearchHistory;
 import com.tudouni.makemoney.model.User;
+import com.tudouni.makemoney.model.Zma;
 import com.tudouni.makemoney.utils.upload.UploadInfo;
 import com.tudouni.makemoney.widget.versionUpdate.Upinfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -111,6 +115,18 @@ public interface CommonApi {
                                           @Field("model") String model,
                                           @Field("brand") String brand,
                                           @Field("handleToken") String handleToken);
+
+    @FormUrlEncoded
+    @POST(NetConfig.GEN_CERT_URL)
+    Observable<Result<Zma>> genCertUrl(@Field("idNumber") String idNumber,
+                                       @Field("realname") String realname,
+                                       @Field("authFaceType") String authFaceType);
+
+    @FormUrlEncoded
+    @POST(NetConfig.ZMXY_CALL)
+    Observable<Result<String>> zmxyCall(@Field("idNumber") String idNumber,
+                                       @Field("realname") String realname,
+                                       @Field("bizNo") String bizNo);
 
     @POST(NetConfig.GETUSERINFO)
     Observable<Result<User>> getUserInfo();
@@ -286,6 +302,23 @@ public interface CommonApi {
     @FormUrlEncoded
     @POST("/zzshop/updateMsgReadInfo")
     Observable<Result<Object>> updateMsgReadInfo(@Field("sysmsgtime") long sysmsgtime, @Field("gsysmsgtime") long gsysmsgtime);
+
+    /**
+     * 删除消息 zp
+     *
+     * @return
+     */
+    @POST("/zzshop/delMsg ")
+    Observable<Result<Object>> deleteSysMsg(@Body DeleteSyaMsgRequestBean deleteSyaMsgRequestBean);
+
+//    /**
+//     * 删除消息 zp
+//     *
+//     * @return
+//     */
+//    @FormUrlEncoded
+//    @POST("/zzshop/delMsg")
+//    Observable<Result<Object>> deleteSysMsg(@Field("uid") String uid, @Field("msgList[]") List<String> msgList);
 
     @POST("zzshop/gethotcatalog")
     Observable<Result<List<MallAlbumModel>>> getMallAlbumData();

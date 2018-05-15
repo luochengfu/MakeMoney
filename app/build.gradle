@@ -1,6 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
 
     dataBinding {
         enabled = true
@@ -64,11 +69,11 @@ android {
         }
 
         debug {
-            zipAlignEnabled true
-            shrinkResources true
+//            zipAlignEnabled true
+//            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             jniDebuggable false
-            minifyEnabled true
+            minifyEnabled false
             signingConfig signingConfigs.release
         }
 
@@ -120,7 +125,7 @@ dependencies {
     implementation 'com.android.support:design:25.3.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     compile 'com.trello:rxlifecycle:0.6.1'
-//    compile 'com.squareup.okhttp3:okhttp:3.9.0'
+    //    compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile 'com.lzy.net:okgo:2.1.4'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'io.reactivex.rxjava2:rxjava:2.0.4'
@@ -145,7 +150,6 @@ dependencies {
     compile 'cn.jiguang.sdk:jpush:3.1.1'
     compile 'pub.devrel:easypermissions:0.2.1'
     compile 'com.github.lzyzsd:jsbridge:1.0.4'
-
     // 此处以JCore 1.1.9 版本为例。
     compile 'cn.jiguang.sdk:jcore:1.1.9'
     compile 'com.github.pinguo-zhouwei:MZBannerView:v2.0.1'
@@ -157,4 +161,6 @@ dependencies {
     implementation files('libs/umeng-sharetool-6.9.1.jar')
     implementation files('libs/aliyun-oss-sdk-android-2.3.0.jar')
     implementation files('libs/xutils-3.5.0.jar')
+    // 芝麻认证，人脸认证sdk
+    compile(name: 'ZMCert_SDK', ext: 'aar')
 }
