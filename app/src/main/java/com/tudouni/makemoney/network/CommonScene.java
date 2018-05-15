@@ -16,6 +16,7 @@ import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.model.MallAlbumModel;
 import com.tudouni.makemoney.model.MallGoodItem;
 import com.tudouni.makemoney.model.MessageResponsBean;
+import com.tudouni.makemoney.model.NineRecommendBean;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.RecommendTopicBean;
 import com.tudouni.makemoney.model.SearchHistory;
@@ -285,6 +286,16 @@ public class CommonScene extends RetrofitUtils {
 
     public static void getRecommendTopic(BaseObserver<List<RecommendTopicBean>> observer) {
         setSubscribe(commonApi.getRecommendTopic(), observer);
+    }
+
+
+    /**
+     * zp
+     * 九宫格商品推荐
+     */
+
+    public static void getNineRecommend(BaseObserver<List<NineRecommendBean>> observer) {
+        setSubscribe(commonApi.getNineRecommend(), observer);
     }
 
     /**

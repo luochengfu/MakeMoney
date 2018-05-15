@@ -16,6 +16,7 @@ import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.model.MallAlbumModel;
 import com.tudouni.makemoney.model.MallGoodItem;
 import com.tudouni.makemoney.model.MessageResponsBean;
+import com.tudouni.makemoney.model.NineRecommendBean;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.RecommendTopicBean;
 import com.tudouni.makemoney.model.SearchHistory;
@@ -333,4 +334,12 @@ public interface CommonApi {
     @FormUrlEncoded
     @POST("zzshop/searchRecord/save")
     Observable<Result<Object>> saveSearchHistoryToService(@Field("unionid") String unionId, @Field("source") String source, @Field("deviceModel") String model, @Field("content") String content);
+
+    /**
+     * 九宫格商品推荐
+     *
+     * @return
+     */
+    @POST(NetConfig.NINE_RECOMMEND)
+    Observable<Result<List<NineRecommendBean>>> getNineRecommend();
 }

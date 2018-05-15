@@ -26,10 +26,12 @@ import com.tudouni.makemoney.adapter.TopicAdapter;
 import com.tudouni.makemoney.interfaces.IItemClickListener;
 import com.tudouni.makemoney.model.Banner;
 import com.tudouni.makemoney.model.FoundTopicBean;
+import com.tudouni.makemoney.model.NineRecommendBean;
 import com.tudouni.makemoney.model.RecommendTopicBean;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.ScreenUtils;
+import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
 import com.tudouni.makemoney.view.MZBannerViewHolder;
 import com.tudouni.makemoney.view.MineRefreshHeader;
@@ -47,8 +49,7 @@ import java.util.List;
  * Created by Administrator on 2018/4/20 0020.
  */
 
-public class MainTabThreeFragment extends BaseFragment
-{
+public class MainTabThreeFragment extends BaseFragment {
     private MZBannerView mBanner;
     private View mHeadView;
     private LRecyclerView mLRecyclerView;
@@ -103,21 +104,23 @@ public class MainTabThreeFragment extends BaseFragment
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(getActivity(), H5Activity.class);
-                try {
-                    String oldUrl = mAdapter.getUrl(position);
-                    if(oldUrl == null)
-                        return;
-                    String url = URLEncoder.encode(oldUrl,"utf-8");
-                    url = url.replaceAll("%3D","=").replaceAll("%3A",":").
-                            replaceAll("%2F","\\/").replaceAll("%3F","?").
-                            replaceAll("%26","&").replaceAll("%25","%")
-                            .replaceAll("%23","#").replaceAll("%2F ","\\+").replaceAll("\\+",  "%20");
-                    intent.putExtra("url", url);
-                    startActivity(intent);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
+//                Intent intent = new Intent(getActivity(), H5Activity.class);
+//                try {
+//                    String oldUrl = mAdapter.getUrl(position);
+//                    if(oldUrl == null)
+//                        return;
+//                    String url = URLEncoder.encode(oldUrl,"utf-8");
+//                    url = url.replaceAll("%3D","=").replaceAll("%3A",":").
+//                            replaceAll("%2F","\\/").replaceAll("%3F","?").
+//                            replaceAll("%26","&").replaceAll("%25","%")
+//                            .replaceAll("%23","#").replaceAll("%2F ","\\+").replaceAll("\\+",  "%20");
+//                    intent.putExtra("url", url);
+//                    startActivity(intent);
+//                } catch (UnsupportedEncodingException e) {
+//                    e.printStackTrace();
+//                }
+                if (view.getId() != R.id.share_ly) return;
+                doShaer(position);
             }
         });
     }
@@ -139,25 +142,25 @@ public class MainTabThreeFragment extends BaseFragment
             @Override
             public void action(String url) {
                 Intent intent = new Intent(getActivity(), H5Activity.class);
-                intent.putExtra("url",url);
+                intent.putExtra("url", url);
                 startActivity(intent);
             }
         });
 
-        mBanner.setIndicatorRes(R.mipmap.banner_white_icon,R.mipmap.banner_red_icon);
+        mBanner.setIndicatorRes(R.mipmap.banner_white_icon, R.mipmap.banner_red_icon);
 
         mBanner.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
             @Override
             public void onPageClick(View view, int position) {
                 Banner banner = bannerList.get(position);
                 Intent intent = new Intent(getActivity(), H5Activity.class);
-                intent.putExtra("url",banner.getUrl() + "?title=" + banner.getTitle());
+                intent.putExtra("url", banner.getUrl() + "?title=" + banner.getTitle());
                 startActivity(intent);
             }
         });
 
-        int height = ScreenUtils.getScreenWidth(getContext()) * 102 / 187 + ScreenUtils.dp2px(getContext(),8);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,height);
+        int height = ScreenUtils.getScreenWidth(getContext()) * 102 / 187 + ScreenUtils.dp2px(getContext(), 8);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
         mBanner.setLayoutParams(params);
     }
 
@@ -176,7 +179,7 @@ public class MainTabThreeFragment extends BaseFragment
             public void OnSuccess(List<Banner> data) {
                 bannerList.clear();
                 bannerList.addAll(data);
-                if(bannerList.size() == 0) {
+                if (bannerList.size() == 0) {
                     mHeadImageView.setVisibility(View.GONE);
                     mBanner.setVisibility(View.GONE);
                 }
@@ -185,8 +188,8 @@ public class MainTabThreeFragment extends BaseFragment
                         mHeadImageView.setVisibility(View.VISIBLE);
                         mBanner.setVisibility(View.GONE);
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                                ScreenUtils.getScreenWidth(getContext()) * 102 / 187 + ScreenUtils.dp2px(getContext(),8));
-                        params.setMargins(0,0,0, ScreenUtils.dp2px(getContext(),10));
+                                ScreenUtils.getScreenWidth(getContext()) * 102 / 187 + ScreenUtils.dp2px(getContext(), 8));
+                        params.setMargins(0, 0, 0, ScreenUtils.dp2px(getContext(), 10));
                         mHeadImageView.setLayoutParams(params);
 
                         mHeadImageView.setOnClickListener(new View.OnClickListener() {
@@ -194,12 +197,12 @@ public class MainTabThreeFragment extends BaseFragment
                             public void onClick(View v) {
                                 Banner banner = data.get(0);
                                 Intent intent = new Intent(getActivity(), H5Activity.class);
-                                intent.putExtra("url",banner.getUrl() + "?title=" + banner.getTitle());
+                                intent.putExtra("url", banner.getUrl() + "?title=" + banner.getTitle());
                                 startActivity(intent);
                             }
                         });
 
-                        GlideUtil.getInstance().loadImage(getContext(),bannerList.get(0).getImageUrl(),mHeadImageView,R.mipmap.found_default_banner);
+                        GlideUtil.getInstance().loadImage(getContext(), bannerList.get(0).getImageUrl(), mHeadImageView, R.mipmap.found_default_banner);
                     } else {
                         mHeadImageView.setVisibility(View.GONE);
                         mBanner.setVisibility(View.VISIBLE);
@@ -217,9 +220,9 @@ public class MainTabThreeFragment extends BaseFragment
     }
 
     private void getRecommendTopic() {
-        CommonScene.getRecommendTopic(new BaseObserver<List<RecommendTopicBean>>() {
+        CommonScene.getNineRecommend(new BaseObserver<List<NineRecommendBean>>() {
             @Override
-            public void OnSuccess(List<RecommendTopicBean> banners) {
+            public void OnSuccess(List<NineRecommendBean> banners) {
                 mAdapter.clear();
                 mAdapter.addData(banners);
                 mLRecyclerView.refreshComplete(banners.size());
@@ -244,6 +247,25 @@ public class MainTabThreeFragment extends BaseFragment
         });
     }
 
+
+    /**
+     * 分享
+     */
+    private void doShaer(int position) {
+        CommonScene.getFoundTopic(new BaseObserver<List<FoundTopicBean>>() {
+            @Override
+            public void OnSuccess(List<FoundTopicBean> recommendTopicBeans) {
+                mTopticAdapter.addData(recommendTopicBeans);
+            }
+
+            @Override
+            public void OnFail(int code, String err) {
+//                super.OnFail(code, err);
+                ToastUtil.showError("获取分享地址：" + err, code);
+            }
+        });
+    }
+
     private RecyclerView.ItemDecoration mItemDecoration = new RecyclerView.ItemDecoration() {
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
@@ -252,15 +274,15 @@ public class MainTabThreeFragment extends BaseFragment
             } else {
                 outRect.right = ScreenUtils.dp2px(getContext(), 4);
             }
-            outRect.bottom = ScreenUtils.dp2px(getContext(),2);
-            outRect.top = ScreenUtils.dp2px(getContext(),2);
+            outRect.bottom = ScreenUtils.dp2px(getContext(), 2);
+            outRect.top = ScreenUtils.dp2px(getContext(), 2);
         }
     };
 
     private RecyclerView.ItemDecoration mItemDecoration2 = new RecyclerView.ItemDecoration() {
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            outRect.bottom = ScreenUtils.dp2px(getContext(),8);
+            outRect.bottom = ScreenUtils.dp2px(getContext(), 8);
         }
     };
 }
