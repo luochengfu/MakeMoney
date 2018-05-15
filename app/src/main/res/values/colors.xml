@@ -50,4 +50,14 @@
     <color name="fkyellow">#F74266</color>
     <color name="hint02Color">#9C9C9C</color>
     <color name="category_bg">#fbfafa</color>
+
+    <!--登录底部横条颜色-->
+    <color name="gray_normal">#999999</color>
+    <color name="color_kefu">#5C6A91</color>
+    <color name="color_feac4b">#FCCD00</color>
+    <color name="hintColor">#BDBDBD</color>
+    <color name="third_login_text_color">#999999</color>
+    <color name="gray03">#e7e7e7</color>
+    <color name="switchyellow">#EEE499</color>
+    <color name="theme_background">#fccd02</color>
 </resources>

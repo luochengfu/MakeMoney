@@ -63,8 +63,8 @@
         <activity
             android:name=".activity.H5Activity"
             android:label="H5页"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="com.tudouni.action.H5Activity" />
 
@@ -129,6 +129,18 @@
             android:name=".activity.realname.RealnameActivity"
             android:label="实名认证未认证"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.realname.IdentificationActivity"
+            android:label="实名认证人工认证"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.realname.RealTelBandingActivity"
+            android:label="实名认证绑定手机号"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.realname.RealnameActivity2"
+            android:label="实名认证真实姓名"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="UMENG_APPKEY"
@@ -156,7 +168,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="tencent100424468" />
+                <data android:scheme="tencent1106781729" />
             </intent-filter>
         </activity>
         <activity

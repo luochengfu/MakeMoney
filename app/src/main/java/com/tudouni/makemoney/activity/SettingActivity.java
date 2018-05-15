@@ -9,6 +9,7 @@ import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.tudouni.makemoney.BuildConfig;
 import com.tudouni.makemoney.model.LogOut;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.utils.CleanMessageUtil;
@@ -32,6 +33,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private LinearLayout llAccount;
     @InjectView(id=R.id.llRealname)
     private LinearLayout llRealname;
+    @InjectView(id=R.id.tvRealnameStatus)
+    private TextView tvRealnameStatus;
     @InjectView(id = R.id.llClear)
     private LinearLayout llClear;//清理缓存
     @InjectView(id = R.id.llAboutUs)
@@ -114,6 +117,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         ll_onlineService = (LinearLayout) findViewById(R.id.ll_onlineService);
         ll_onlineService.setOnClickListener(this);
         llAppVersion.setOnClickListener(this);
+        if (!MyApplication.getLoginUser().getRole().equals("0")) {
+            tvRealnameStatus.setText("已认证");
+        }
     }
 
     @Override
@@ -132,7 +138,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 if (MyApplication.getLoginUser().getRole().equals("0")) {
                     ForwardUtils.target(SettingActivity.this, Constants.REALNAME);
                 } else {
-                    ForwardUtils.target(SettingActivity.this, Constants.REALNAME_FINAL);
+                    if (BuildConfig.DEBUG) {
+                        ForwardUtils.target(SettingActivity.this, Constants.REALNAME);
+                    } else {
+                        ForwardUtils.target(SettingActivity.this, Constants.REALNAME_FINAL);
+                    }
                 }
                 break;
             case R.id.llClear://清理缓存

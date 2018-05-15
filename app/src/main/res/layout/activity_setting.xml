@@ -59,6 +59,7 @@
                 android:id="@+id/llRealname"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/listview"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -74,6 +75,7 @@
                     android:text="实名认证" />
 
                 <TextView
+                    android:id="@+id/tvRealnameStatus"
                     style="@style/tab_black_16_style"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
