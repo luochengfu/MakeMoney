@@ -21,6 +21,7 @@ import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.RecommendTopicBean;
 import com.tudouni.makemoney.model.SearchHistory;
 import com.tudouni.makemoney.model.User;
+import com.tudouni.makemoney.model.Zma;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.upload.UploadInfo;
@@ -105,6 +106,17 @@ public class CommonScene extends RetrofitUtils {
      */
     public static void bindNewPhone(String phone, String code, String model, String brand, String handleToken, BaseObserver<User> observer) {
         setSubscribe(commonApi.bindNewPhone(phone, code, model, brand, handleToken), observer);
+    }
+
+    /**
+     * 芝麻认证
+     */
+    public static void genCertUrl(String idNumber,String realname, String authFaceType, BaseObserver<Zma> observer) {
+        setSubscribe(commonApi.genCertUrl(idNumber, realname, authFaceType), observer);
+    }
+
+    public static void zmxyCall(String idNumber,String realname, String bizNo, BaseObserver<String> observer) {
+        setSubscribe(commonApi.zmxyCall(idNumber, realname, bizNo), observer);
     }
 
     /**

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.tudouni.makemoney.view.MyTitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:middleText="@string/realname" />
+
+    <ImageView
+        android:id="@+id/real_icon"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/set_cetr_icon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        />
+
+    <TextView
+        android:id="@+id/real_name_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/real_name_detail"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:textSize="12sp"
+        android:layout_below="@id/real_icon"
+        android:layout_marginTop="31dp"
+        android:textColor="#999999"
+        />
+
+    <TextView
+        android:id="@+id/real_name_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/real_name_text"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:textSize="12sp"
+        android:layout_below="@id/real_name_detail"
+        android:textColor="#999999"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/real_name_text"
+        android:layout_marginTop="110dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_prove"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/realname_start"
+            android:gravity="center_horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="开始认证"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_prove"
+            android:layout_below="@+id/tv_prove"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="10dp"
+            android:text="开始认证即代表同意"
+            android:textColor="@color/gray_normal"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_kefu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/artificial_attestation"
+            android:drawablePadding="5dp"
+            android:text="进行人工认证"
+            android:textColor="@color/color_kefu"
+            android:textSize="14sp"
+            android:visibility="visible" />
+    </RelativeLayout>
+
+</RelativeLayout>

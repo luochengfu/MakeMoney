@@ -25,10 +25,15 @@
     <string name="telbandinnew">绑定新手机号</string>
     <string name="telLogin">短信验证码登录</string>
     <string name="sezhi">设置</string>
+    <string name="realname">实名认证</string>
     <string name="logout">退出登录</string>
     <string name="can_not_find_version_name">未知版本号</string>
     <string name="accountSecurity">账号与安全</string>
     <string name="password_login">登录密码</string>
+
+    <string name="real_name_detail">根据相关法规，开启直播需要进行实名认证</string>
+    <string name="real_name">真实姓名</string>
+    <string name="real_name_text">土豆泥将严格保密用户认证信息</string>
 
     <string name="password_not_same_error_hint">输入密码不一致</string>
     <string name="password_format_error_hint">登录密码仅支持数字和字母，区分大小写，不允许包含空格</string>

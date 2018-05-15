@@ -21,6 +21,7 @@ import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.RecommendTopicBean;
 import com.tudouni.makemoney.model.SearchHistory;
 import com.tudouni.makemoney.model.User;
+import com.tudouni.makemoney.model.Zma;
 import com.tudouni.makemoney.utils.upload.UploadInfo;
 import com.tudouni.makemoney.widget.versionUpdate.Upinfo;
 
@@ -115,6 +116,18 @@ public interface CommonApi {
                                           @Field("model") String model,
                                           @Field("brand") String brand,
                                           @Field("handleToken") String handleToken);
+
+    @FormUrlEncoded
+    @POST(NetConfig.GEN_CERT_URL)
+    Observable<Result<Zma>> genCertUrl(@Field("idNumber") String idNumber,
+                                       @Field("realname") String realname,
+                                       @Field("authFaceType") String authFaceType);
+
+    @FormUrlEncoded
+    @POST(NetConfig.ZMXY_CALL)
+    Observable<Result<String>> zmxyCall(@Field("idNumber") String idNumber,
+                                       @Field("realname") String realname,
+                                       @Field("bizNo") String bizNo);
 
     @POST(NetConfig.GETUSERINFO)
     Observable<Result<User>> getUserInfo();

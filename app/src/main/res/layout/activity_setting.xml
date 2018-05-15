@@ -55,6 +55,41 @@
                     android:src="@mipmap/icon_go" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/llRealname"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/listview"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    style="@style/tab_black_16_style"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|left"
+                    android:text="实名认证" />
+
+                <TextView
+                    android:id="@+id/tvRealnameStatus"
+                    style="@style/tab_black_16_style"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:text="未认证" />
+
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@mipmap/icon_go" />
+            </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/llClear"

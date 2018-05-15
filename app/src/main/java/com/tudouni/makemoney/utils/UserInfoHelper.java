@@ -58,6 +58,7 @@ public class UserInfoHelper {
         mUser.setGrade(sharedPreferences.getString("grade", ""));
         mUser.setNickName(sharedPreferences.getString("nickName", ""));
         mUser.setPhoto(sharedPreferences.getString("photo", ""));
+        mUser.setRole(sharedPreferences.getString("role",""));
         mUser.setSex(sharedPreferences.getString("sex", ""));
         mUser.setSignature(sharedPreferences.getString("signature", ""));
         mUser.setToken(sharedPreferences.getString("token", ""));
