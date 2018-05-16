@@ -1,47 +1,47 @@
 package com.tudouni.makemoney.fragment;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Rect;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.tudouni.makemoney.R;
+import com.tudouni.makemoney.activity.AccountSecurityActivity;
 import com.tudouni.makemoney.activity.H5Activity;
-import com.tudouni.makemoney.activity.WebvewRefreshActivity;
 import com.tudouni.makemoney.adapter.FoundAdapter;
 import com.tudouni.makemoney.adapter.TopicAdapter;
+import com.tudouni.makemoney.interfaces.DownFileCallBack;
 import com.tudouni.makemoney.interfaces.IItemClickListener;
 import com.tudouni.makemoney.model.Banner;
 import com.tudouni.makemoney.model.FoundTopicBean;
 import com.tudouni.makemoney.model.NineRecommendBean;
-import com.tudouni.makemoney.model.RecommendTopicBean;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseObserver;
+import com.tudouni.makemoney.utils.Constants;
 import com.tudouni.makemoney.utils.ScreenUtils;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
+import com.tudouni.makemoney.view.CenterLoadingView;
 import com.tudouni.makemoney.view.MZBannerViewHolder;
 import com.tudouni.makemoney.view.MineRefreshHeader;
 import com.tudouni.makemoney.view.MyTitleBar;
+import com.tudouni.makemoney.widget.downLoad.DownloadItem;
+import com.tudouni.makemoney.widget.downLoad.DownloadManager;
+import com.tudouni.makemoney.widget.sharePart.ShareWindow_v3;
+import com.tudouni.makemoney.widget.sharePart.model.Share;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
-import com.zhouwei.mzbanner.holder.MZViewHolder;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +61,27 @@ public class MainTabThreeFragment extends BaseFragment {
     private GridLayoutManager mLayoutManager;
     private MyTitleBar title_bar;
     private List<Banner> bannerList = new ArrayList<>();
+    private CenterLoadingView loadingDialog = null;
+    private ShareWindow_v3 shareWindow_v3 = null;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case Constants.GET_SHARE_IMAGE_START:
+                    loadingDialog.show();
+                    break;
+                case Constants.GET_SHARE_IMAGE_END:
+                    loadingDialog.dismiss();
+                    if (msg.obj == null) return;
+                    Share share = new Share((ArrayList<String>) msg.obj);
+                    if (shareWindow_v3 == null)
+                        shareWindow_v3 = new ShareWindow_v3(getActivity(), Share.Type.IMAGE_MULTIPL, share, null, null);
+                    shareWindow_v3.show(getActivity());
+                    break;
+            }
+        }
+    };
 
     @Override
     protected int getContentView() {
@@ -93,6 +114,7 @@ public class MainTabThreeFragment extends BaseFragment {
 
     private void initAdapter() {
         mAdapter = new FoundAdapter(getContext());
+        mAdapter.setHandler(handler);
         mLayoutManager = new GridLayoutManager(getActivity(), 1);
         mLRecyclerView.setLayoutManager(mLayoutManager);
         mLRecyclerView.setRefreshHeader(new MineRefreshHeader(getContext()));
@@ -119,13 +141,15 @@ public class MainTabThreeFragment extends BaseFragment {
 //                } catch (UnsupportedEncodingException e) {
 //                    e.printStackTrace();
 //                }
-                if (view.getId() != R.id.share_ly) return;
-                doShaer(position);
             }
         });
     }
 
     private void initBanner() {
+        if (null == loadingDialog) {
+            loadingDialog = new CenterLoadingView(getActivity());
+            loadingDialog.setTitle("正在加载");
+        }
         mHeadView = getActivity().getLayoutInflater().inflate(R.layout.three_tab_header_layout, null, false);
         mBanner = (MZBannerView) mHeadView.findViewById(R.id.banner);
         mRecyclerView = (RecyclerView) mHeadView.findViewById(R.id.three_tab_rv_2);
@@ -243,25 +267,6 @@ public class MainTabThreeFragment extends BaseFragment {
             @Override
             public void OnSuccess(List<FoundTopicBean> recommendTopicBeans) {
                 mTopticAdapter.addData(recommendTopicBeans);
-            }
-        });
-    }
-
-
-    /**
-     * 分享
-     */
-    private void doShaer(int position) {
-        CommonScene.getFoundTopic(new BaseObserver<List<FoundTopicBean>>() {
-            @Override
-            public void OnSuccess(List<FoundTopicBean> recommendTopicBeans) {
-                mTopticAdapter.addData(recommendTopicBeans);
-            }
-
-            @Override
-            public void OnFail(int code, String err) {
-//                super.OnFail(code, err);
-                ToastUtil.showError("获取分享地址：" + err, code);
             }
         });
     }

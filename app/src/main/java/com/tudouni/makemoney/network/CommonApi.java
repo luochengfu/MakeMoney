@@ -19,6 +19,7 @@ import com.tudouni.makemoney.model.MessageResponsBean;
 import com.tudouni.makemoney.model.NineRecommendBean;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.RecommendTopicBean;
+import com.tudouni.makemoney.model.RequestNineRecommendShareBean;
 import com.tudouni.makemoney.model.SearchHistory;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.model.Zma;
@@ -126,8 +127,8 @@ public interface CommonApi {
     @FormUrlEncoded
     @POST(NetConfig.ZMXY_CALL)
     Observable<Result<String>> zmxyCall(@Field("idNumber") String idNumber,
-                                       @Field("realname") String realname,
-                                       @Field("bizNo") String bizNo);
+                                        @Field("realname") String realname,
+                                        @Field("bizNo") String bizNo);
 
     @POST(NetConfig.GETUSERINFO)
     Observable<Result<User>> getUserInfo();
@@ -355,4 +356,12 @@ public interface CommonApi {
      */
     @POST(NetConfig.NINE_RECOMMEND)
     Observable<Result<List<NineRecommendBean>>> getNineRecommend();
+
+    /**
+     * 九宫格商品推荐 分享 图片链接
+     *
+     * @return
+     */
+    @POST(NetConfig.NINE_RECOMMEND_SHARE_DATA)
+    Observable<Result<List<String>>> getNineRecommendShareData(@Body RequestNineRecommendShareBean requestNineRecommendShareBean);
 }

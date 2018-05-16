@@ -5,9 +5,14 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 
+
+import com.tudouni.makemoney.utils.Constants;
+import com.tudouni.makemoney.utils.TuDouLogUtils;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -1202,4 +1207,54 @@ public final class FileUtils {
         }
         return uri;
     }
+
+    public static String getSdDirPath() {
+        File sdDir = null;
+        boolean sdCardExist = sdExist();// 判断sd卡是否存在
+        if (sdCardExist) {
+            sdDir = Environment.getExternalStorageDirectory();
+            return sdDir.getAbsolutePath();
+        }
+        return null;
+    }
+
+    /**
+     * 获取手机相册路径
+     *
+     * @return
+     */
+    public static String getSdDICMDirPath() {
+        File sdDir = null;
+        boolean sdCardExist = sdExist();// 判断sd卡是否存在
+        if (sdCardExist) {
+            sdDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsoluteFile();
+            return sdDir.getAbsolutePath();
+        }
+        return null;
+    }
+
+    public static boolean sdExist() {
+        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+    }
+
+
+    /**
+     * 返回临时下载目录
+     *
+     * @param fileName 等于null返回文件夹的路径，不等于null为具体的文件路径
+     * @return
+     */
+    public static String getDownloadTemporaryPath(String fileName) {
+
+        String dir = getSdDICMDirPath() + File.separatorChar + Constants.IMAGE_DOWN_DIR_PRE;
+        File file = new File(dir);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        if (!TextUtils.isEmpty(fileName))
+            return (dir + File.separatorChar + fileName).trim();
+
+        return dir;
+    }
+
 }

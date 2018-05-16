@@ -10,6 +10,8 @@ import com.tudouni.makemoney.utils.TuDouLogUtils;
 
 import java.io.Serializable;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 分享内容
@@ -57,7 +59,12 @@ public class Share implements Serializable {
         /**
          * 分享海报
          */
-        IMAGE_POTATOES;
+        IMAGE_POTATOES,
+
+        /**
+         * 多图片分享
+         */
+        IMAGE_MULTIPL;
 
         /**
          * 分享窗口是否有保存选项
@@ -75,6 +82,7 @@ public class Share implements Serializable {
     private String targetUrl;
     private String targetId;
     private Bitmap minePotatoes;//海报
+    private List<String> imageS = null;
 
     public String getContent() {
         return content;
@@ -108,6 +116,14 @@ public class Share implements Serializable {
         this.title = title;
     }
 
+    public List<String> getImageS() {
+        return imageS;
+    }
+
+    public void setImageS(List<String> imageS) {
+        this.imageS = imageS;
+    }
+
     public String getCircleContent() {
         return TextUtils.isEmpty(circleContent) ? content : circleContent;
     }
@@ -137,6 +153,12 @@ public class Share implements Serializable {
         this.cover = cover;
         this.targetUrl = targetUrl;
         this.circleContent = circleContent;
+    }
+
+    public Share(List<String> images) {
+        if (images == null || images.isEmpty()) return;
+        if (this.imageS == null) this.imageS = new ArrayList<>();
+        this.imageS.addAll(images);
     }
 
     public Bitmap getMinePotatoes() {

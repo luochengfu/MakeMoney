@@ -32,6 +32,7 @@ import com.tudouni.makemoney.utils.UserInfoHelper;
 import com.tudouni.makemoney.utils.ValidateUtil;
 import com.tudouni.makemoney.utils.base.BaseFrameworkInit;
 import com.tudouni.makemoney.utils.base.IBaseRequirement;
+import com.tudouni.makemoney.widget.downLoad.DownloadManager;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
@@ -214,6 +215,7 @@ public class MyApplication extends BaseApplication implements ClipboardUtil.OnPr
     public static void logout() {
         mLoginUser = null;
         UserInfoHelper.clearLoginUser(sContext);
+        DownloadManager.getInstance().releaseDownLoadManager();
     }
 
     @Override

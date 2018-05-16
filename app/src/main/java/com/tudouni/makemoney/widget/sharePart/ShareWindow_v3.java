@@ -193,13 +193,12 @@ public class ShareWindow_v3 extends BottomPushPopupWindow<Void> implements OnCli
 
 
     private void doShare(SHARE_MEDIA platform) {
-        if (mIsShareMultiplemages) {  //多图片分享
-            String fileName = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsoluteFile() +
-                    File.separator + "豆播" + File.separator + "豆播相册" +
-                    File.separator + "我的土豆海报.jpg";
-            Uri[] uri = new Uri[2];
-            uri[0] = FileUtils.getUri(context, fileName);
-            uri[1] = FileUtils.getUri(context, fileName);
+        if (mType == Share.Type.IMAGE_MULTIPL) {  //多图片分享
+            List<String> imageS = mShare.getImageS();
+            if (imageS == null || imageS.isEmpty()) return;
+            Uri[] uri = new Uri[imageS.size()];
+            for (int i = 0; i < imageS.size(); i++)
+                uri[i] = FileUtils.getUri(context, imageS.get(i));
             ShareUtil.shareMultiplemages(context, uri, platform, null);
         } else {
             ShareUtil.shareURL2(activity, mType == Share.Type.IMAGE_POTATOES, platform, mShare, new ApiCallback<Share>() {

@@ -1,6 +1,8 @@
 package com.tudouni.makemoney.adapter;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,16 +16,23 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.tudouni.makemoney.R;
+import com.tudouni.makemoney.interfaces.DownFileCallBack;
 import com.tudouni.makemoney.model.NineRecommendBean;
 import com.tudouni.makemoney.model.NineRecommendGoodsBean;
 import com.tudouni.makemoney.model.RecommendTopicBean;
+import com.tudouni.makemoney.network.CommonScene;
+import com.tudouni.makemoney.network.rx.BaseObserver;
+import com.tudouni.makemoney.utils.Constants;
 import com.tudouni.makemoney.utils.CornersTransform;
 import com.tudouni.makemoney.utils.ScreenUtils;
 import com.tudouni.makemoney.utils.TimeUtil;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.TuDouTextUtil;
+import com.tudouni.makemoney.utils.base.FileUtils;
 import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
 import com.tudouni.makemoney.view.NineRevommendGoodsLayout;
+import com.tudouni.makemoney.widget.downLoad.DownloadItem;
+import com.tudouni.makemoney.widget.downLoad.DownloadManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,6 +48,11 @@ public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.FoundViewHol
     private Context mContext;
     private List<NineRecommendBean> mDatas = new ArrayList<>();
     private int width, height;
+    private Handler handler;
+
+    public void setHandler(Handler handler) {
+        this.handler = handler;
+    }
 
     public FoundAdapter(Context context) {
         mContext = context;
@@ -84,6 +98,11 @@ public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.FoundViewHol
         notifyDataSetChanged();
     }
 
+    public NineRecommendBean getData(int position) {
+        if (mDatas == null || position >= mDatas.size()) return null;
+        return mDatas.get(position);
+    }
+
     public void clear() {
         mDatas.clear();
         notifyDataSetChanged();
@@ -92,8 +111,46 @@ public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.FoundViewHol
     @Override
     public void onClick(View v) {
         int position = (int) v.getTag();
-        ToastUtil.show("点击了分享~" + position);
+        doShaer(position);
+    }
 
+    /**
+     * 分享
+     */
+    private void doShaer(int position) {
+        NineRecommendBean nineRecommendBean = getData(position);
+        if (nineRecommendBean == null) return;
+        if (handler != null)
+            handler.sendEmptyMessage(Constants.GET_SHARE_IMAGE_START);
+        CommonScene.getNineRecommendShareData(nineRecommendBean.getRequestNineRecommendShareBean(),
+                new BaseObserver<List<String>>() {
+                    @Override
+                    public void OnSuccess(List<String> recommendTopicBeans) {
+                        DownloadManager manager = DownloadManager.getInstance();
+                        manager.setDownFileCallBack(new DownFileCallBack() {
+                            @Override
+                            public void onFinish() {
+                                ToastUtil.show("分享图片下载完成！");
+                                if (handler != null) {
+                                    List<String> sharePath = new ArrayList<>();
+                                    for (String url : recommendTopicBeans)
+                                        sharePath.add(FileUtils.getDownloadTemporaryPath(url.substring(url.lastIndexOf("/") + 1, url.length())));
+                                    Message message = handler.obtainMessage(Constants.GET_SHARE_IMAGE_END);
+                                    message.obj = sharePath;
+                                    handler.sendMessage(message);
+                                }
+                            }
+                        });
+                        manager.addTask(recommendTopicBeans);
+                    }
+
+                    @Override
+                    public void OnFail(int code, String err) {
+                        ToastUtil.showError("获取分享地址：" + err, code);
+                        if (handler != null)
+                            handler.sendEmptyMessage(Constants.GET_SHARE_IMAGE_END);
+                    }
+                });
     }
 
     public static class FoundViewHolder extends RecyclerView.ViewHolder {
@@ -117,4 +174,5 @@ public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.FoundViewHol
             this.mContentLy = (NineRevommendGoodsLayout) itemView.findViewById(R.id.content_ly);
         }
     }
+
 }

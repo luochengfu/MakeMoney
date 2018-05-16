@@ -22,6 +22,7 @@ public class NineRecommendGoodsBean {
     private String name;
     private String commis;
     private String qcodeurl;
+    private String source;
 
     public String getPicurl() {
         return picurl;
@@ -77,5 +78,13 @@ public class NineRecommendGoodsBean {
 
     public void setQcodeurl(String qcodeurl) {
         this.qcodeurl = qcodeurl;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 }

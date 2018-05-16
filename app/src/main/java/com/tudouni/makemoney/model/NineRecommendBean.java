@@ -1,6 +1,9 @@
 package com.tudouni.makemoney.model;
 
+import com.tudouni.makemoney.utils.TuDouLogUtils;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -101,5 +104,25 @@ public class NineRecommendBean implements Serializable {
 
     public void setList(List<NineRecommendGoodsBean> list) {
         this.list = list;
+    }
+
+    /**
+     * 获取请求分享的图片的Bean
+     *
+     * @return
+     */
+    public RequestNineRecommendShareBean getRequestNineRecommendShareBean() {
+        RequestNineRecommendShareBean requestNineRecommendShareBean = null;
+        try {
+            List<RequestNineRecommendShareBean.ItemsBean> items = new ArrayList<>();
+            for (NineRecommendGoodsBean nineRecommendGoodsBean : list) {
+                items.add(new RequestNineRecommendShareBean.ItemsBean(nineRecommendGoodsBean.getItemid(), nineRecommendGoodsBean.getSource()));
+            }
+            requestNineRecommendShareBean = new RequestNineRecommendShareBean(items);
+        } catch (Exception e) {
+            TuDouLogUtils.e("NineRecommendBean", "获取请求Bean报错：" + e.getMessage());
+        } finally {
+            return requestNineRecommendShareBean;
+        }
     }
 }

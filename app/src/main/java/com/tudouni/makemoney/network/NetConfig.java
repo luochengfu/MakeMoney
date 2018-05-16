@@ -52,6 +52,7 @@ public class NetConfig {
 
     public static final String RECOMMEND_TOPIC = "/zzshop/discovery/getRecommendTopic";
     public static final String NINE_RECOMMEND = "/zzshop/discovery/choice/list";//九宫格推荐
+    public static final String NINE_RECOMMEND_SHARE_DATA = "/zzshop/discovery/choice/share";//九宫格推荐 分享图片链接
     public static final String FOUND_TOPIC = "/zzshop/discovery/getTopic";
 
 

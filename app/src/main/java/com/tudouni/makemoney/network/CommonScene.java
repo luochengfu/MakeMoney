@@ -19,6 +19,7 @@ import com.tudouni.makemoney.model.MessageResponsBean;
 import com.tudouni.makemoney.model.NineRecommendBean;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.RecommendTopicBean;
+import com.tudouni.makemoney.model.RequestNineRecommendShareBean;
 import com.tudouni.makemoney.model.SearchHistory;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.model.Zma;
@@ -111,11 +112,11 @@ public class CommonScene extends RetrofitUtils {
     /**
      * 芝麻认证
      */
-    public static void genCertUrl(String idNumber,String realname, String authFaceType, BaseObserver<Zma> observer) {
+    public static void genCertUrl(String idNumber, String realname, String authFaceType, BaseObserver<Zma> observer) {
         setSubscribe(commonApi.genCertUrl(idNumber, realname, authFaceType), observer);
     }
 
-    public static void zmxyCall(String idNumber,String realname, String bizNo, BaseObserver<String> observer) {
+    public static void zmxyCall(String idNumber, String realname, String bizNo, BaseObserver<String> observer) {
         setSubscribe(commonApi.zmxyCall(idNumber, realname, bizNo), observer);
     }
 
@@ -308,6 +309,16 @@ public class CommonScene extends RetrofitUtils {
 
     public static void getNineRecommend(BaseObserver<List<NineRecommendBean>> observer) {
         setSubscribe(commonApi.getNineRecommend(), observer);
+    }
+
+    /**
+     * zp
+     * 九宫格商品推荐 分享的图片地址
+     */
+
+    public static void getNineRecommendShareData(RequestNineRecommendShareBean requestNineRecommendShareBean, BaseObserver<List<String>> observer) {
+        if (requestNineRecommendShareBean == null) return;
+        setSubscribe(commonApi.getNineRecommendShareData(requestNineRecommendShareBean), observer);
     }
 
     /**
