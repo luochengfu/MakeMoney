@@ -31,6 +31,7 @@ import com.tudouni.makemoney.utils.PatternUtil;
 import com.tudouni.makemoney.utils.UserInfoHelper;
 import com.tudouni.makemoney.utils.ValidateUtil;
 import com.tudouni.makemoney.utils.base.BaseFrameworkInit;
+import com.tudouni.makemoney.utils.base.FileUtils;
 import com.tudouni.makemoney.utils.base.IBaseRequirement;
 import com.tudouni.makemoney.widget.downLoad.DownloadManager;
 import com.umeng.analytics.MobclickAgent;
@@ -42,6 +43,7 @@ import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import org.simple.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ListIterator;
 import java.util.Set;
 
@@ -51,7 +53,7 @@ import cn.jpush.android.api.JPushInterface;
  * Created by ZhangPeng on 2018/4/19.
  */
 
-public class MyApplication extends BaseApplication implements ClipboardUtil.OnPrimaryClipChangedListener{
+public class MyApplication extends BaseApplication implements ClipboardUtil.OnPrimaryClipChangedListener {
     private static MyApplication sContext;
     private static User mLoginUser;
     public static String mNewUserClipPhone = "";
@@ -59,6 +61,7 @@ public class MyApplication extends BaseApplication implements ClipboardUtil.OnPr
     public static Activity sCurrActivity = null;
     private ClipboardUtil mClipboard;
     public static String mClipStr = "";
+    private int activityCount;//activity的count数
 
 
     @Override
@@ -185,6 +188,11 @@ public class MyApplication extends BaseApplication implements ClipboardUtil.OnPr
     private void registerActivityLifecycleCallbacks() {
         registerActivityLifecycleCallbacks(new DBLifecycleHandler() {
             @Override
+            public void onActivityStarted(Activity activity) {
+                activityCount++;
+            }
+
+            @Override
             public void onActivityResumed(Activity activity) {
                 super.onActivityResumed(activity);
 
@@ -197,6 +205,16 @@ public class MyApplication extends BaseApplication implements ClipboardUtil.OnPr
             public void onActivityPaused(Activity activity) {
                 super.onActivityPaused(activity);
 
+            }
+
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+                activityCount--;
+                if (0 == activityCount) {
+                    DownloadManager.getInstance().releaseDownLoadManager();
+                    FileUtils.deleteFilesInDir(FileUtils.getDownloadTemporaryPath(null));
+                }
             }
         });
     }
@@ -256,7 +274,8 @@ public class MyApplication extends BaseApplication implements ClipboardUtil.OnPr
                         intent.putExtra("url", mClipStr);
                         activity.startActivity(intent);*/
                     }
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                }
             }
         }
 

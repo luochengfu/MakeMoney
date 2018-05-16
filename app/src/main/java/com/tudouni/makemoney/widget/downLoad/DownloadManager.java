@@ -10,6 +10,7 @@ import com.tudouni.makemoney.interfaces.DownFileCallBack;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.utils.Constants;
 import com.tudouni.makemoney.utils.TuDouLogUtils;
+import com.tudouni.makemoney.utils.base.FileUtils;
 
 import java.io.File;
 import java.util.HashMap;
@@ -53,6 +54,7 @@ public class DownloadManager implements OnProgressListener {
                 }
             }
         }
+        FileUtils.deleteFilesInDir(FileUtils.getDownloadTemporaryPath(null));
         return instance;
     }
 
