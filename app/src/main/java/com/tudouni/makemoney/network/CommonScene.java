@@ -121,6 +121,17 @@ public class CommonScene extends RetrofitUtils {
     }
 
     /**
+     * 人工认证
+     */
+    public static void setAuthInfo(String realname, String idNumber, String frontPhoto, String backPhoto, BaseObserver<String> observer) {
+        setSubscribe(commonApi.setAuthInfo(realname, idNumber, frontPhoto, backPhoto), observer);
+    }
+
+    public static void payRate(BaseObserver<String> observer) {
+        setSubscribe(commonApi.payRate("100", "alipay"), observer);
+    }
+
+    /**
      * 获取用户数据接口
      */
     public static void getUserInfo(BaseObserver<User> observer) {

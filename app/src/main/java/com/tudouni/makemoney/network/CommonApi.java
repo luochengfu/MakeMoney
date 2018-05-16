@@ -125,6 +125,18 @@ public interface CommonApi {
                                        @Field("authFaceType") String authFaceType);
 
     @FormUrlEncoded
+    @POST(NetConfig.SET_AUTH_INFO)
+    Observable<Result<String>> setAuthInfo(@Field("realname") String realname,
+                                           @Field("idNumber") String idNumber,
+                                           @Field("frontPhoto") String frontPhoto,
+                                           @Field("backPhoto") String backPhoto);
+
+    @FormUrlEncoded
+    @POST(NetConfig.PAY_RATE)
+    Observable<Result<String>> payRate(@Field("amount") String amount,
+                                       @Field("type") String type);
+
+    @FormUrlEncoded
     @POST(NetConfig.ZMXY_CALL)
     Observable<Result<String>> zmxyCall(@Field("idNumber") String idNumber,
                                         @Field("realname") String realname,

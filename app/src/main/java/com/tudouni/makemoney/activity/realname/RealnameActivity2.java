@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,10 @@ import com.tudouni.makemoney.model.Zma;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseObserver;
+import com.tudouni.makemoney.utils.ColorUtil;
+import com.tudouni.makemoney.utils.CommonUtil;
+import com.tudouni.makemoney.utils.Constants;
+import com.tudouni.makemoney.utils.ForwardUtils;
 import com.tudouni.makemoney.utils.InjectView;
 import com.tudouni.makemoney.utils.base.ACache;
 import com.tudouni.makemoney.view.CenterLoadingView;
@@ -38,6 +43,8 @@ public class RealnameActivity2 extends BaseActivity implements ZMCertificationLi
     private EditText etCode;
     @InjectView(id = R.id.tvLogin)
     private TextView tvLogin;
+    @InjectView(id = R.id.tv_kefu)
+    private TextView tv_kefu;
     private ZMCertification zmCertification;
     private static final String MERCHANTID = "268821000000400246461";  //商户号
     private CenterLoadingView loading;
@@ -90,6 +97,7 @@ public class RealnameActivity2 extends BaseActivity implements ZMCertificationLi
                     tvLogin.setTextColor(Color.WHITE);
                 } else if (s.length() < 18) {
                     tvLogin.setBackgroundResource(R.drawable.login_btn_back_01);
+                    tvLogin.setTextColor(ColorUtil.black());
                 }
             }
         });
@@ -101,21 +109,20 @@ public class RealnameActivity2 extends BaseActivity implements ZMCertificationLi
                 Toast.makeText(RealnameActivity2.this, "请输入姓名", Toast.LENGTH_LONG).show();
                 return;
             }
-            if (!isIDCard(idNumber)) {
+            if (!CommonUtil.isIDCard(idNumber)) {
                 Toast.makeText(RealnameActivity2.this, "请检查身份证号", Toast.LENGTH_LONG).show();
                 return;
             }
             geturl();
         });
-    }
 
-    // 判断是否符合身份证号码的规范
-    public static boolean isIDCard(String IDCard) {
-        if (IDCard != null) {
-            String IDCardRegex = "(^\\d{15}$)|(^\\d{18}$)|(^\\d{17}(\\d|X|x|Y|y)$)";
-            return IDCard.matches(IDCardRegex);
-        }
-        return false;
+        tv_kefu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ForwardUtils.target(RealnameActivity2.this, Constants.UPLOAD_IDCARD);
+                finish();
+            }
+        });
     }
 
     private void geturl() {
@@ -139,6 +146,7 @@ public class RealnameActivity2 extends BaseActivity implements ZMCertificationLi
                 User user = MyApplication.getLoginUser();
                 user.setZma(true);
                 MyApplication.saveLoginUser(user);
+                Toast.makeText(RealnameActivity2.this, err, Toast.LENGTH_SHORT).show();
                 super.OnFail(code, err);
             }
         });

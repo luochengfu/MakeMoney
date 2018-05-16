@@ -25,8 +25,10 @@ public class NetConfig {
     public static final String BINDPHONE2 = "/zzshop/auth/user/bindPhone_V2";
     public static final String BIND_NEW_PHONE = "/zzshop/login/thirdPartySNS/bindingPhone";
     public static final String VERIFCODE = "/zzshop/auth/user/getVerifCode";
-    public static final String GEN_CERT_URL = "zzshop/auth/user/zmxy/genCertUrl";
-    public static final String ZMXY_CALL = "zzshop/auth/user/zmxy/call";
+    public static final String GEN_CERT_URL = "/zzshop/auth/user/zmxy/genCertUrl";
+    public static final String SET_AUTH_INFO = "/zzshop/auth/user/setAuthInfo";
+    public static final String PAY_RATE = "/zzshop/auth/pay/rate";
+    public static final String ZMXY_CALL = "/zzshop/auth/user/zmxy/call";
     public static final String PASSWORD_MSG_CODE = "/zzshop/user/getVerifCode";
     public static final String GETUSERINFO = "/zzshop/auth/user/info";
     public static final String ACCOUNT_BIND = "/zzshop/auth/user/bindStatus";

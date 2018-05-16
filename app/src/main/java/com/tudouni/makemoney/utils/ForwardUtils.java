@@ -20,6 +20,8 @@ import com.tudouni.makemoney.activity.MessageActivity;
 import com.tudouni.makemoney.activity.SettingActivity;
 import com.tudouni.makemoney.activity.UserInfoActivity;
 import com.tudouni.makemoney.activity.WebvewRefreshActivity;
+import com.tudouni.makemoney.activity.withdrawmoney.TelAuthenticationActivity;
+import com.tudouni.makemoney.activity.withdrawmoney.WithdrawMoneyActivity;
 import com.tudouni.makemoney.myApplication.MyApplication;
 
 import java.net.URLDecoder;
@@ -70,6 +72,12 @@ public class ForwardUtils {
                 toIntent(oriActivity, url, intent);
             } else if (url.equals(Constants.REALNAME2)) {
                 Intent intent = new Intent(oriActivity, RealnameActivity2.class);
+                toIntent(oriActivity, url, intent);
+            } else if (url.equals(Constants.WITHDRAW_MONEY)) {
+                Intent intent = new Intent(oriActivity, WithdrawMoneyActivity.class);
+                toIntent(oriActivity, url, intent);
+            } else if (url.equals(Constants.WITHDRAW_TEL)) {
+                Intent intent = new Intent(oriActivity, TelAuthenticationActivity.class);
                 toIntent(oriActivity, url, intent);
             } else if (url.startsWith(Constants.LOGIN)) {
                 Intent intent = new Intent(oriActivity, LoginActivity.class);
