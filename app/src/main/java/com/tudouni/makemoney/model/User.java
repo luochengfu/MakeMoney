@@ -53,6 +53,7 @@ public class User implements Serializable {
     private String bindPhoneStatus;
     private String pwd;
     private boolean setAlias;//是否设置过别名
+    private String parent;//绑定的上级id
 
     public int getSeq() {
         return seq;
@@ -376,6 +377,14 @@ public class User implements Serializable {
         this.setAlias = setAlias;
     }
 
+    public String getParent() {
+        return parent;
+    }
+
+    public void setParent(String parent) {
+        this.parent = parent;
+    }
+
     /**
      * 刷新用户接口数据
      *
@@ -410,5 +419,6 @@ public class User implements Serializable {
         setPwd(userNewInfo.getPwd());
         setUid(userNewInfo.getUid());
         setUnumber(userNewInfo.getUnumber());
+        setParent(userNewInfo.getParent());
     }
 }
