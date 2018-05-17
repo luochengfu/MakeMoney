@@ -34,6 +34,16 @@ public class RealnameFinalActivity extends BaseActivity {
                 if (idNumber != null && idNumber.length() == 18) {
                     idNumber = idNumber.substring(0, 3)
                             + "***********" + idNumber.substring(14);
+
+                }
+
+                if (idNumber != null && idNumber.length() == 15) {
+                    idNumber = idNumber.substring(0, 3)
+                            + "********" + idNumber.substring(11);
+
+                }
+
+                if (idNumber != null) {
                     etCode.setText(idNumber);
                 }
             }

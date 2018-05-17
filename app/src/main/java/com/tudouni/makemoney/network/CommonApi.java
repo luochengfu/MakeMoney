@@ -10,30 +10,34 @@ import com.tudouni.makemoney.model.BindInfo;
 import com.tudouni.makemoney.model.BindUserBean;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.model.DeleteSyaMsgRequestBean;
+import com.tudouni.makemoney.model.EarningsRank;
 import com.tudouni.makemoney.model.FoundTopicBean;
 import com.tudouni.makemoney.model.Invite;
 import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.model.MallAlbumModel;
 import com.tudouni.makemoney.model.MallGoodItem;
 import com.tudouni.makemoney.model.MessageResponsBean;
+import com.tudouni.makemoney.model.MyEarnings;
 import com.tudouni.makemoney.model.NineRecommendBean;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.RecommendTopicBean;
 import com.tudouni.makemoney.model.RequestNineRecommendShareBean;
 import com.tudouni.makemoney.model.SearchHistory;
 import com.tudouni.makemoney.model.User;
+import com.tudouni.makemoney.model.Withdraw;
 import com.tudouni.makemoney.model.Zma;
 import com.tudouni.makemoney.utils.upload.UploadInfo;
 import com.tudouni.makemoney.widget.versionUpdate.Upinfo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * Created by Administrator on 2018/4/20 0020.
@@ -125,10 +129,32 @@ public interface CommonApi {
                                        @Field("authFaceType") String authFaceType);
 
     @FormUrlEncoded
+    @POST(NetConfig.SET_AUTH_INFO)
+    Observable<Result<String>> setAuthInfo(@Field("realname") String realname,
+                                           @Field("idNumber") String idNumber,
+                                           @Field("frontPhoto") String frontPhoto,
+                                           @Field("backPhoto") String backPhoto);
+
+    @FormUrlEncoded
+    @POST(NetConfig.PAY_RATE)
+    Observable<Result<String>> payRate(@Field("amount") String amount,
+                                       @Field("type") String type);
+
+    @FormUrlEncoded
+    @POST(NetConfig.PAY_CASH)
+    Observable<Result<String>> payCash(@Field("type") String type,
+                                       @Field("money") String money);
+
+    @FormUrlEncoded
     @POST(NetConfig.ZMXY_CALL)
     Observable<Result<String>> zmxyCall(@Field("idNumber") String idNumber,
                                         @Field("realname") String realname,
                                         @Field("bizNo") String bizNo);
+
+    @FormUrlEncoded
+    @POST(NetConfig.INCOME_HISTORY)
+    Observable<Result<List<Withdraw>>> incomeHistory(@Field("page") String page,
+                                               @Field("pageSize") String pageSize);
 
     @POST(NetConfig.GETUSERINFO)
     Observable<Result<User>> getUserInfo();
@@ -349,6 +375,14 @@ public interface CommonApi {
     @POST("zzshop/searchRecord/save")
     Observable<Result<Object>> saveSearchHistoryToService(@Field("unionid") String unionId, @Field("source") String source, @Field("deviceModel") String model, @Field("content") String content);
 
+    @GET("zzshop/income/profile")
+    Observable<Result<MyEarnings>> loadIncomeProfile(@Query("uid") String uid);
+
+    @GET("zzshop/income/top_income")
+    Observable<Result<List<EarningsRank>>> loadEarningsRank(@Query("top") int top);
+
+    @GET("zzshop/income/top_economizes")
+    Observable<Result<List<EarningsRank>>> loadSavingsRank(@Query("top") int top);
     /**
      * 九宫格商品推荐
      *

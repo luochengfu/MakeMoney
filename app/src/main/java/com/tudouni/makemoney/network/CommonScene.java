@@ -2,6 +2,7 @@ package com.tudouni.makemoney.network;
 
 import android.databinding.ObservableArrayList;
 
+import com.tudouni.makemoney.activity.BaseActivity;
 import com.tudouni.makemoney.model.AgentInfo;
 import com.tudouni.makemoney.model.AliAuth;
 import com.tudouni.makemoney.model.AppConfig;
@@ -10,18 +11,21 @@ import com.tudouni.makemoney.model.BindInfo;
 import com.tudouni.makemoney.model.BindUserBean;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.model.DeleteSyaMsgRequestBean;
+import com.tudouni.makemoney.model.EarningsRank;
 import com.tudouni.makemoney.model.FoundTopicBean;
 import com.tudouni.makemoney.model.Invite;
 import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.model.MallAlbumModel;
 import com.tudouni.makemoney.model.MallGoodItem;
 import com.tudouni.makemoney.model.MessageResponsBean;
+import com.tudouni.makemoney.model.MyEarnings;
 import com.tudouni.makemoney.model.NineRecommendBean;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.RecommendTopicBean;
 import com.tudouni.makemoney.model.RequestNineRecommendShareBean;
 import com.tudouni.makemoney.model.SearchHistory;
 import com.tudouni.makemoney.model.User;
+import com.tudouni.makemoney.model.Withdraw;
 import com.tudouni.makemoney.model.Zma;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.rx.BaseObserver;
@@ -118,6 +122,34 @@ public class CommonScene extends RetrofitUtils {
 
     public static void zmxyCall(String idNumber, String realname, String bizNo, BaseObserver<String> observer) {
         setSubscribe(commonApi.zmxyCall(idNumber, realname, bizNo), observer);
+    }
+
+    /**
+     * 人工认证
+     */
+    public static void setAuthInfo(String realname, String idNumber, String frontPhoto, String backPhoto, BaseObserver<String> observer) {
+        setSubscribe(commonApi.setAuthInfo(realname, idNumber, frontPhoto, backPhoto), observer);
+    }
+
+    /**
+     * 获取阿里提现手续费率
+     */
+    public static void payRate(BaseObserver<String> observer) {
+        setSubscribe(commonApi.payRate("100", "alipay"), observer);
+    }
+
+    /**
+     * 提现
+     */
+    public static void payCash(String money, BaseObserver<String> observer) {
+        setSubscribe(commonApi.payCash("alipay", money), observer);
+    }
+
+    /**
+     * 获取用户提现列表
+     */
+    public static void incomeHistory(String page, BaseObserver<List<Withdraw>> observer) {
+        setSubscribe(commonApi.incomeHistory(page, "20"), observer);
     }
 
     /**
@@ -389,4 +421,20 @@ public class CommonScene extends RetrofitUtils {
     public static void saveSearchHistoryToService(String unionId, String source, String deviceModel, String content, BaseObserver<Object> observer) {
         setSubscribe(commonApi.saveSearchHistoryToService(unionId, source, deviceModel, content), observer);
     }
+
+    public static void loadIncomeProfile(String uid, BaseObserver<MyEarnings> observer) {
+        setSubscribe(commonApi.loadIncomeProfile(uid), observer);
+    }
+
+    public static void loadEarningsRank(int top, BaseObserver<List<EarningsRank>> observer) {
+        setSubscribe(commonApi.loadEarningsRank(top), observer);
+    }
+
+    public static void loadSavingsRank(int top, BaseObserver<List<EarningsRank>> observer) {
+        setSubscribe(commonApi.loadSavingsRank(top), observer);
+    }
+
+
+
+
 }

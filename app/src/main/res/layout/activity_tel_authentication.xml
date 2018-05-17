@@ -6,94 +6,86 @@
     android:orientation="vertical">
 
     <com.tudouni.makemoney.view.MyTitleBar
-        android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:middleText="@string/realname" />
+        app:middleText="短信验证" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/sysBg"
-        android:orientation="vertical">
-
-        <TextView
+        android:orientation="vertical"
+        android:layout_marginTop="19dp">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:gravity="center_vertical|left"
-            android:text="身份信息（必填）"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:layout_marginLeft="13dp"/>
+            android:layout_height="40dp"
+            android:background="@color/white"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical|center">
+
+            <TextView
+                android:id="@+id/etTelNumber"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:textColorHint="@color/hintColor"
+                android:textScaleX="0.99"
+                android:textSize="13sp"
+                android:layout_marginLeft="13dp"
+                android:gravity="left|center"/>
+
+            <TextView
+                android:id="@+id/tvCode"
+                android:layout_width="78dp"
+                android:layout_height="28dp"
+                android:layout_marginRight="13dp"
+                android:background="@drawable/login_btn_back_01"
+                android:gravity="center"
+                android:text="获取验证码"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/split_line"
+            android:layout_above="@+id/main_bottom" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@color/white">
-            <EditText
-                android:id="@+id/etTelNumber"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@null"
-                android:hint="请填写真实姓名"
-                android:imeOptions="actionNext"
-                android:inputType="text"
-                android:maxLength="20"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text=""
-                android:textColor="@color/black"
-                android:textColorHint="@color/hintColor"
-                android:textScaleX="0.99"
-                android:textSize="13sp"
-                android:layout_marginLeft="13dp"/>
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/white"
-            android:layout_marginTop="2dp">
             <EditText
                 android:id="@+id/etCode"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@null"
-                android:digits="0123456789Xx"
-                android:hint="请填写身份证号（将加密处理）"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:maxLength="18"
+                android:hint="请输入短信验证码"
+                android:inputType="number"
+                android:maxLength="6"
                 android:textColor="@color/black"
                 android:textColorHint="@color/hintColor"
                 android:textScaleX="0.99"
-                android:textSize="13sp"
-                android:layout_marginLeft="13dp"/>
+                android:textSize="12sp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"/>
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tvLogin"
+            android:id="@+id/tvSubmit"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="13dp"
             android:layout_marginRight="13dp"
-            android:background="@drawable/login_btn_back_01"
+            android:background="@drawable/login_btn_back_03"
             android:gravity="center"
-            android:text="下一步 芝麻认证"
-            android:textColor="@color/black"
-            android:textSize="13sp" />
-
-        <TextView
-            android:id="@+id/tv_kefu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:text="进行人工认证"
-            android:textColor="@color/color_F23648"
+            android:text="提交提现申请"
+            android:textColor="@color/white"
             android:textSize="13sp"/>
     </LinearLayout>
 

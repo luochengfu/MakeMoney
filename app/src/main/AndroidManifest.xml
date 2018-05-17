@@ -92,6 +92,39 @@
             android:name=".activity.FaceToFaceActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.realname.RealnameFinalActivity"
+            android:label="实名认证已认证"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.realname.RealnameActivity"
+            android:label="实名认证未认证"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.realname.IdentificationActivity"
+            android:label="实名认证人工认证"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.realname.RealTelBandingActivity"
+            android:label="实名认证绑定手机号"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.realname.RealnameActivity2"
+            android:label="实名认证真实姓名"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.withdrawmoney.WithdrawMoneyActivity"
+            android:label="申请提现界面"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.withdrawmoney.TelAuthenticationActivity"
+            android:label="申请提现手机验证码"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.withdrawmoney.IncomeActivity"
+            android:label="提现记录界面"
+            android:screenOrientation="portrait" />
+
         <!-- =========================APP中的 Activity End========================= -->
         <!-- =========================友盟集成 Start========================= -->
         <activity
@@ -120,26 +153,6 @@
         <activity
             android:name=".activity.ModifyPasswordActivity"
             android:label="个人-修改密码"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.realname.RealnameFinalActivity"
-            android:label="实名认证已认证"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.realname.RealnameActivity"
-            android:label="实名认证未认证"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.realname.IdentificationActivity"
-            android:label="实名认证人工认证"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.realname.RealTelBandingActivity"
-            android:label="实名认证绑定手机号"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.realname.RealnameActivity2"
-            android:label="实名认证真实姓名"
             android:screenOrientation="portrait" />
 
         <meta-data
@@ -320,7 +333,9 @@
         <activity android:name=".activity.BindingInvitationActivity" />
         <activity android:name=".activity.UserInfoActivity" />
         <activity android:name=".activity.MessageActivity"></activity>
-        <activity android:name=".activity.search.SearchActivity" />
+        <activity android:name=".activity.search.SearchActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.MyEarningsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.MySavingsActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
