@@ -15,10 +15,13 @@
     <string name="password_login_input_hint">请输入密码</string>
     <string name="vcode">验证码</string>
     <string name="login">登录</string>
+    <string name="login_qq">QQ</string>
+    <string name="login_weixin">微信登录</string>
     <string name="lossPasswordhint">忘记密码？</string>
     <string name="tudouni_password_login_change">密码登录</string>
     <string name="telbandin">绑定手机号</string>
     <string name="verification">验证</string>
+    <string name="pass_word">密 码</string>
     <string name="find_passsword_hint">找回密码</string>
     <string name="next_step">下一步</string>
     <string name="removetelbandin">验证原手机号</string>
@@ -45,7 +48,7 @@
     <string name="commission">预估佣金</string>
     <string name="rmb">￥</string>
     <string name="fix2">.00</string>
-    
+
     <string name="share_weixin">com.tencent.mm</string>
     <string name="share_multi_image_to_weixin">com.tencent.mm.ui.tools.ShareImgUI</string>
     <string name="share_multi_image_to_weixin_circle">com.tencent.mm.ui.tools.ShareToTimeLineUI</string>
