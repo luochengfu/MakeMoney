@@ -85,7 +85,11 @@ public class MyEarningsActivity extends BaseActivity {
         });
 
         mHeaderMyEarningsBinding.tvRecord.setOnClickListener(l -> {
+            //提现记录
+        });
 
+        mHeaderMyEarningsBinding.tvWithdraw.setOnClickListener(l -> {
+            //提现
         });
 
 
