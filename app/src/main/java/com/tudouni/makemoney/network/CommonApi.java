@@ -24,6 +24,7 @@ import com.tudouni.makemoney.model.RecommendTopicBean;
 import com.tudouni.makemoney.model.RequestNineRecommendShareBean;
 import com.tudouni.makemoney.model.SearchHistory;
 import com.tudouni.makemoney.model.User;
+import com.tudouni.makemoney.model.Withdraw;
 import com.tudouni.makemoney.model.Zma;
 import com.tudouni.makemoney.utils.upload.UploadInfo;
 import com.tudouni.makemoney.widget.versionUpdate.Upinfo;
@@ -128,10 +129,32 @@ public interface CommonApi {
                                        @Field("authFaceType") String authFaceType);
 
     @FormUrlEncoded
+    @POST(NetConfig.SET_AUTH_INFO)
+    Observable<Result<String>> setAuthInfo(@Field("realname") String realname,
+                                           @Field("idNumber") String idNumber,
+                                           @Field("frontPhoto") String frontPhoto,
+                                           @Field("backPhoto") String backPhoto);
+
+    @FormUrlEncoded
+    @POST(NetConfig.PAY_RATE)
+    Observable<Result<String>> payRate(@Field("amount") String amount,
+                                       @Field("type") String type);
+
+    @FormUrlEncoded
+    @POST(NetConfig.PAY_CASH)
+    Observable<Result<String>> payCash(@Field("type") String type,
+                                       @Field("money") String money);
+
+    @FormUrlEncoded
     @POST(NetConfig.ZMXY_CALL)
     Observable<Result<String>> zmxyCall(@Field("idNumber") String idNumber,
                                         @Field("realname") String realname,
                                         @Field("bizNo") String bizNo);
+
+    @FormUrlEncoded
+    @POST(NetConfig.INCOME_HISTORY)
+    Observable<Result<List<Withdraw>>> incomeHistory(@Field("page") String page,
+                                               @Field("pageSize") String pageSize);
 
     @POST(NetConfig.GETUSERINFO)
     Observable<Result<User>> getUserInfo();

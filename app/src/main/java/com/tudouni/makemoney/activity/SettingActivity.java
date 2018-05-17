@@ -132,21 +132,29 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.llAccount: //账号与安全
-                ForwardUtils.target(SettingActivity.this, Constants.ACCOUNT_SECURITY);
+                if (BuildConfig.DEBUG) {
+                    ForwardUtils.target(SettingActivity.this, Constants.WITHDRAW_MONEY);
+                } else {
+                    ForwardUtils.target(SettingActivity.this, Constants.ACCOUNT_SECURITY);
+                }
                 break;
             case R.id.llRealname: //实名认证
                 if (MyApplication.getLoginUser().getRole().equals("0")) {
-                    ForwardUtils.target(SettingActivity.this, Constants.REALNAME);
+                    ForwardUtils.target(SettingActivity.this, Constants.REALNAME2);
                 } else {
                     if (BuildConfig.DEBUG) {
-                        ForwardUtils.target(SettingActivity.this, Constants.REALNAME);
+                        ForwardUtils.target(SettingActivity.this, Constants.REALNAME2);
                     } else {
                         ForwardUtils.target(SettingActivity.this, Constants.REALNAME_FINAL);
                     }
                 }
                 break;
             case R.id.llClear://清理缓存
-                clearAppCache();
+                if (BuildConfig.DEBUG) {
+                    ForwardUtils.target(SettingActivity.this, Constants.NATIVE_INCOME);
+                } else {
+                    clearAppCache();
+                }
                 break;
             case R.id.llAboutUs: //关于我们
                 ForwardUtils.target(SettingActivity.this, Constants.ABOUTUS);

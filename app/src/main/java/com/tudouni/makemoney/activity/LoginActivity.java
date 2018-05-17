@@ -3,11 +3,13 @@ package com.tudouni.makemoney.activity;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.PermissionChecker;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -45,12 +47,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private final String TAG = "LoginActivity";
 
     private Context mContext = this;
-    private ImageView iv_WechatLogin, iv_QqLogin;
-    private TextView loginModeChangeView, mLossPasswordView;
-    private TextView submitBtn, tvCode, mLossPasswordBtn, mTaghint;
-    private EditText mPhoneNumberInput, mPasswrodInput, mPhoneNumberInput2, mPhoneCodeInput;
-    private View mLine1, mLine2,mline3,mLine4;
-    private LinearLayout mTelLogin1, mTelLogin2,mPWLayout1, mPWLayout2,buttomTV;
+    private LinearLayout iv_WechatLogin, iv_QqLogin, tv_phone_login;
+
+    private TextView mTaghint;
+    private LinearLayout buttomTV;
     private UMShareAPI mShareAPI = null;
     private CenterLoadingView loadingDialog = null;
     private final String[] permissionManifest = {
@@ -58,7 +58,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE
     };
-    private int mLoginModeStatus = 2;//登录方式切换状态
+
     public int state = 1; //状态 1 表示未启动线程或正在运行线程。0 停止线程
     private ExecutorService mExecutouService;
     private String mPhoneNum;
@@ -68,7 +68,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        permissionCheck();
         mShareAPI = UMShareAPI.get(this);
         initView();
         initDatas();
@@ -101,23 +101,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
         });
 
-        tvCode.setOnClickListener(new NoDoubleClickListener() {
-            @Override
-            protected void onNoDoubleClick(View v) {
-                String input = mPhoneNumberInput2.getText().toString();
-                if(null == input || "".equals(input) ||  !ValidateUtil.isMobileNO(input))
-                    return;
-                MobclickAgent.onEvent(LoginActivity.this, "lg_sms");
-                generateCode();
-            }
-        });
 
         buttomTV.setOnClickListener(new NoDoubleClickListener() {
             @Override
             protected void onNoDoubleClick(View v) {
                 MobclickAgent.onEvent(LoginActivity.this, "lg_deal");
-                Intent intent = new Intent(LoginActivity.this,H5Activity.class);
-                intent.putExtra("url", NetConfig.getBaseTuDouNiH5Url()+"mycenter/protocol.html");
+                Intent intent = new Intent(LoginActivity.this, H5Activity.class);
+                intent.putExtra("url", NetConfig.getBaseTuDouNiH5Url() + "mycenter/protocol.html");
                 startActivity(intent);
             }
         });
@@ -132,56 +122,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void initView() {
-        iv_WechatLogin = (ImageView) findViewById(R.id.iv_WechatLogin);
-        iv_QqLogin = (ImageView) findViewById(R.id.iv_QqLogin);
+        iv_WechatLogin = (LinearLayout) findViewById(R.id.iv_WechatLogin);
+        iv_QqLogin = (LinearLayout) findViewById(R.id.iv_QqLogin);
+        tv_phone_login = (LinearLayout) findViewById(R.id.tv_phone_login);
+        tv_phone_login.setOnClickListener(this);
         buttomTV = (LinearLayout) findViewById(R.id.xy);
-        loginModeChangeView = (TextView) findViewById(R.id.login_mode_change_view);
-        mPhoneNumberInput = (EditText) findViewById(R.id.phone_number_et);
-        mPasswrodInput = (EditText) findViewById(R.id.comfirm_pasword_et);
-        mLine1 = findViewById(R.id.password_login_child_layout_line);
-        mLine4 = findViewById(R.id.password_login_child_layout_line2);
-        mline3 = findViewById(R.id.tel_login_line1);
-        mLine2 = findViewById(R.id.tel_login_line);
-        mPhoneNumberInput2 = (EditText) findViewById(R.id.etTelNumber);
-        mPhoneCodeInput = (EditText) findViewById(R.id.etCode);
-        mTelLogin1 = (LinearLayout) findViewById(R.id.tel_phone_ll_layout_1);
-        mTelLogin2 = (LinearLayout) findViewById(R.id.tel_phone_ll_layout_2);
-        mPWLayout1 = (LinearLayout) findViewById(R.id.password_layout_1);
-        mPWLayout2 = (LinearLayout) findViewById(R.id.password_layout_2);
-        mLossPasswordView = (TextView) findViewById(R.id.loss_password_tv);
-        submitBtn = (TextView) findViewById(R.id.tv_commit);
-        tvCode = (TextView) findViewById(R.id.tvCode);
-        mLossPasswordBtn = (TextView) findViewById(R.id.loss_password_tv);
         mTaghint = (TextView) findViewById(R.id.activity_login_tv);
     }
 
     private void initDatas() {
         mActivityStatus = true;
         mExecutouService = Executors.newSingleThreadExecutor();
-        loginModeChangeView.setOnClickListener(this);
-        submitBtn.setOnClickListener(this);
-        mLossPasswordBtn.setOnClickListener(this);
-        mTaghint.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG );
-        //获取设备ID
-        /*if (!permissionCheck()) {
-            if (Build.VERSION.SDK_INT >= 23) {
-                ActivityCompat.requestPermissions(this, permissionManifest, 0);
-            }
-        } else {
-//            App.setDeviceId();
-        }*/
+        mTaghint.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+
         //是否有更新
         UpdateAPKUtil.uptateAPK(this);
         //如果维护中
         /*if (App.appConfig.isMaintain()) {
             new MaintinDialog(this, App.appConfig.getShutdownMaintainMsg()).show();
         }*/
-
-        //密码登录监听
-        passwordLoginStatus();
-        //验证码登录
-        telLoginStatus();
-//        initEnvironmentButton();
         noDoubleClick();
     }
 
@@ -190,336 +149,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View v) {
         String statisticsType = null;
         switch (v.getId()) {
-            case R.id.login_mode_change_view:
-                if (mLoginModeStatus == 1) {
-                    mLoginModeStatus = 2;
-                } else if (mLoginModeStatus == 2) {
-                    mLoginModeStatus = 1;
-                }
-                loginModeChange();
-                break;
-            case R.id.tv_commit:
-                if (mLoginModeStatus == 1) {
-                    passwordSubmit();
-                    statisticsType = "lg_shaclick";
-                } else if (mLoginModeStatus == 2) {
-                    codeSubmit();
-                    statisticsType = "lg_lgclick";
-                }
-                break;
-            case R.id.loss_password_tv:
-                Intent intent = new Intent(LoginActivity.this, TelLoginActivity.class);
-                intent.putExtra("type", "3");
-                startActivity(intent);
+            case R.id.tv_phone_login:
+                skipTelephoneLogin(null, "1");
                 break;
         }
 
         if (!TextUtils.isEmpty(statisticsType))
             MobclickAgent.onEvent(this, statisticsType);
-    }
-
-    /**
-     * 验证码登录
-     */
-    private void codeSubmit() {
-        String phone = mPhoneNumberInput2.getText().toString();
-        String code = mPhoneCodeInput.getText().toString();
-
-        boolean bool = ValidateUtil.isMobileNO(phone);
-        if (!bool) {
-            return;
-        }
-
-        if (phone == null || code == null || phone.equals("") || code.equals(""))
-            return;
-        if (null == loadingDialog) {
-            loadingDialog = new CenterLoadingView(LoginActivity.this);
-        }
-        loadingDialog.setTitle("登录中...");
-        loadingDialog.show();
-
-        CommonScene.telCodeLogin(phone, code, Build.MODEL, Build.BRAND, new BaseObserver<User>() {
-            @Override
-            public void OnSuccess(User user) {
-                if (null != loadingDialog) {
-                    loadingDialog.dismiss();
-                }
-                if ("0".equals(user.getPwd())) {//没有设置登录密码
-                    Intent intent1 = new Intent(LoginActivity.this, PwdActivity.class);
-                    intent1.putExtra("type", "1");
-                    intent1.putExtra("user", user);
-                    startActivity(intent1);
-                } else {//设置了登录密码
-                    saveLoginInfo(user);
-                    startActivity(new Intent(LoginActivity.this, SplashActivity.class));
-                    finish();
-                }
-            }
-
-            @Override
-            public void OnFail(int code, String err) {
-                ToastUtil.show(err);
-                if (null != loadingDialog) {
-                    loadingDialog.dismiss();
-                }
-            }
-        });
-    }
-
-
-    /**
-     * 密码登录
-     */
-    private void passwordSubmit() {
-        String userName = mPhoneNumberInput.getText().toString();
-        String password = mPasswrodInput.getText().toString();
-
-        boolean bool = ValidateUtil.isMobileNO(userName);
-        if (!bool) {
-            return;
-        }
-
-        if (userName == null || userName.trim().equals("") ||
-                password == null || password.trim().equals("")
-                || password.length() < 6 || password.length() > 16 || userName.length() != 11) {
-            return;
-        }
-        if (null == loadingDialog) {
-            loadingDialog = new CenterLoadingView(LoginActivity.this);
-        }
-        loadingDialog.setTitle("登录中");
-        loadingDialog.show();
-
-        CommonScene.passwordLogin(userName, password, Build.MODEL, Build.BRAND, new BaseObserver<User>() {
-            @Override
-            public void OnSuccess(User user) {
-                MyApplication.saveLoginUser(user);
-                if (null != loadingDialog) {
-                    loadingDialog.dismiss();
-                }
-                saveLoginInfo(user);
-                Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-
-                startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
-                finish();
-            }
-
-            @Override
-            public void OnFail(int code, String err) {
-                super.OnFail(code, err);
-                if (null != loadingDialog) {
-                    loadingDialog.dismiss();
-                }
-            }
-        });
-    }
-
-    /**
-     * 点击切换
-     */
-    private void loginModeChange() {
-        if (mLoginModeStatus == 1) {
-            mPhoneNumberInput.setText(mPhoneNum);
-            setLoginBtnStatus(mPhoneNumberInput, mPasswrodInput);
-            loginModeChangeView.setText(getResources().getString(R.string.telLogin));
-            mPhoneNumberInput.setVisibility(View.VISIBLE);
-            mPasswrodInput.setVisibility(View.VISIBLE);
-            mLine1.setVisibility(View.VISIBLE);
-            mLine4.setVisibility(View.VISIBLE);
-            mLossPasswordView.setVisibility(View.VISIBLE);
-            mPWLayout1.setVisibility(View.VISIBLE);
-            mPWLayout2.setVisibility(View.VISIBLE);
-
-            mTelLogin1.setVisibility(View.GONE);
-            mTelLogin2.setVisibility(View.GONE);
-            mLine2.setVisibility(View.GONE);
-            mline3.setVisibility(View.GONE);
-        } else if (mLoginModeStatus == 2) {
-            mPhoneNumberInput2.setText(mPhoneNum);
-            loginModeChangeView.setText(getResources().getString(R.string.tudouni_password_login_change));
-            mPhoneNumberInput.setVisibility(View.GONE);
-            mPasswrodInput.setVisibility(View.GONE);
-            mLine1.setVisibility(View.GONE);
-            mLine4.setVisibility(View.GONE);
-            mLossPasswordView.setVisibility(View.GONE);
-            mPWLayout1.setVisibility(View.GONE);
-            mPWLayout2.setVisibility(View.GONE);
-
-            mTelLogin1.setVisibility(View.VISIBLE);
-            mTelLogin2.setVisibility(View.VISIBLE);
-            mLine2.setVisibility(View.VISIBLE);
-            mline3.setVisibility(View.VISIBLE);
-            setLoginBtnStatus(mPhoneNumberInput2, mPhoneCodeInput);
-        }
-    }
-
-    /**
-     * 设置登录按钮状态
-     */
-    private void setLoginBtnStatus(EditText editText1, EditText editText2) {
-        String number = editText1.getText().toString();
-        String password = editText2.getText().toString();
-        if ((null != number && !number.equals(""))
-                && (null != password && !password.equals(""))
-                && (number.length() == 11) && (password.length() >= 6) && password.length() <= 16) {
-            submitBtn.setSelected(true);
-            submitBtn.setTextColor(getResources().getColor(R.color.color_333333));
-        } else {
-            submitBtn.setSelected(false);
-            submitBtn.setTextColor(getResources().getColor(R.color.color_999999));
-        }
-    }
-
-    /**
-     * 密码登录模块监听
-     */
-    private void passwordLoginStatus() {
-        mPhoneNumberInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String number = s.toString();
-                mPhoneNum = number;
-                String password = mPasswrodInput.getText().toString();
-                if ((null != number && !number.equals(""))
-                        && (null != password && !password.equals(""))
-                        && (number.length() == 11) && (password.length() >= 6)
-                        && password.length() <= 16 && ValidateUtil.isMobileNO(number)) {
-                    submitBtn.setSelected(true);
-                    submitBtn.setTextColor(getResources().getColor(R.color.color_333333));
-                } else {
-                    submitBtn.setSelected(false);
-                    submitBtn.setTextColor(getResources().getColor(R.color.color_999999));
-                }
-            }
-        });
-
-        mPasswrodInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String number = mPhoneNumberInput.getText().toString();
-                String password = s.toString();
-                if ((null != number && !number.equals(""))
-                        && (null != password && !password.equals(""))
-                        && (number.length() == 11) && (password.length() >= 6)
-                        && password.length() <= 16 && ValidateUtil.isMobileNO(number)) {
-                    enableTvLogin();
-                } else {
-                    disenableTvLogin();
-                }
-            }
-        });
-
-    }
-
-    private void telLoginStatus() {
-        mPhoneNumberInput2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String phone = s.toString();
-                mPhoneNum = phone;
-                boolean bool = ValidateUtil.isMobileNO(phone);
-                String code = mPhoneCodeInput.getText().toString();
-                if (bool) {
-                    enableTvCode();
-                } else {
-                    disenableTvCode();
-                }
-
-                if (bool && !TextUtils.isEmpty(code) && code.length() > 3) {
-                    enableTvLogin();
-                } else {
-                    disenableTvLogin();
-                }
-            }
-        });
-
-        mPhoneCodeInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String phone = mPhoneNumberInput2.getText().toString();
-                boolean bool = ValidateUtil.isMobileNO(phone);
-                String code = s.toString();
-                if (bool && !TextUtils.isEmpty(code) && code.length() > 3) {
-                    enableTvLogin();
-                } else {
-                    disenableTvLogin();
-                }
-            }
-        });
-
-    }
-
-    private void disenableTvLogin() {
-        submitBtn.setTextColor(getResources().getColor(R.color.color_999999));
-        submitBtn.setSelected(false);
-    }
-
-    private void enableTvLogin() {
-        submitBtn.setTextColor(getResources().getColor(R.color.white));
-        submitBtn.setSelected(true);
-    }
-
-    private void disenableTvCode() {
-        tvCode.setClickable(false);
-        tvCode.setTextColor(getResources().getColor(R.color.color_999999));
-        tvCode.setBackgroundDrawable(getResources().getDrawable(R.drawable.get_vcode_style_01));
-    }
-
-    private void enableTvCode() {
-        String input = mPhoneNumberInput2.getText().toString();
-        if(input == null || "".equals(input) ||  !ValidateUtil.isMobileNO(input)){
-            disenableTvCode();
-        } else {
-            tvCode.setClickable(true);
-            tvCode.setTextColor(getResources().getColor(R.color.white));
-            tvCode.setBackgroundDrawable(getResources().getDrawable(R.drawable.get_vcode_style_02));
-        }
-    }
-
-    private void enableClickCode() {
-        tvCode.setClickable(false);
     }
 
     /**
@@ -664,10 +300,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void skipTelephoneLogin(LoginBean user, String type) {
         Intent intent = new Intent(LoginActivity.this, TelLoginActivity.class);
         intent.putExtra("type", type);
-        intent.putExtra("handleToken", user.getHandleToken());
-        if (type.equals("7")) {
+        if (user != null)
+            intent.putExtra("handleToken", user.getHandleToken());
+        if (type.equals("7"))
             intent.putExtra("loginUser", user.getUser());
-        }
         startActivity(intent);
     }
 
@@ -694,7 +330,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     /**
      * 权限检查（适配6.0以上手机）
      */
-   /* private boolean permissionCheck() {
+    private boolean permissionCheck() {
         int permissionCheck = PackageManager.PERMISSION_GRANTED;
         String permission;
         for (int i = 0; i < permissionManifest.length; i++) {
@@ -712,177 +348,85 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
 
-    private void initEnvironmentButton() {
-        final Button button = (Button) findViewById(R.id.btn_net_env);
-        final Runnable setBtnText = new Runnable() {
-            @Override
-            public void run() {
-                button.setText("网络环境：" + NetConfig.getEnvironmentName() + "\n(点击以修改。测试用，正式发布会删除)");
-            }
-        };
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new MenuDialog(v.getContext()).setMenuText(NetConfig.ENVIRONMENT_NAMES)
-                        .setOnItemClickListener(new MenuDialog.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(MenuDialog dialog, int index) {
-                                NetConfig.setEnvironment(index);
-                                setBtnText.run();
-                                Tip_dialog tip_dialog = new Tip_dialog(dialog.getContext(), "网络环境已设置为：[" + NetConfig.getEnvironmentName() +
-                                        "]");
-                                tip_dialog.setCancelable(false);
-                                tip_dialog.setCanceledOnTouchOutside(false);
-                                tip_dialog.setLinstener(new Tip_dialog.BtnClickLinstener() {
-                                    @Override
-                                    public void clickOk() {
-                                        if(App.sCurrActivity != null){
-                                            App.sCurrActivity.finish();
-                                        }
-                                        System.exit(0);
-                                    }
+    /* private void initEnvironmentButton() {
+      final Button button = (Button) findViewById(R.id.btn_net_env);
+      final Runnable setBtnText = new Runnable() {
+          @Override
+          public void run() {
+              button.setText("网络环境：" + NetConfig.getEnvironmentName() + "\n(点击以修改。测试用，正式发布会删除)");
+          }
+      };
+      button.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              new MenuDialog(v.getContext()).setMenuText(NetConfig.ENVIRONMENT_NAMES)
+                      .setOnItemClickListener(new MenuDialog.OnItemClickListener() {
+                          @Override
+                          public void onItemClick(MenuDialog dialog, int index) {
+                              NetConfig.setEnvironment(index);
+                              setBtnText.run();
+                              Tip_dialog tip_dialog = new Tip_dialog(dialog.getContext(), "网络环境已设置为：[" + NetConfig.getEnvironmentName() +
+                                      "]");
+                              tip_dialog.setCancelable(false);
+                              tip_dialog.setCanceledOnTouchOutside(false);
+                              tip_dialog.setLinstener(new Tip_dialog.BtnClickLinstener() {
+                                  @Override
+                                  public void clickOk() {
+                                      if(App.sCurrActivity != null){
+                                          App.sCurrActivity.finish();
+                                      }
+                                      System.exit(0);
+                                  }
 
-                                    @Override
-                                    public void clickCancel() {
+                                  @Override
+                                  public void clickCancel() {
 
-                                    }
-                                });
-                                tip_dialog.show();
-                            }
-                        }).show();
-            }
-        });
-        setBtnText.run();
-        if (!"release".equals(BuildConfig.BUILD_TYPE)) {
-            button.setVisibility(View.VISIBLE);
-        }
+                                  }
+                              });
+                              tip_dialog.show();
+                          }
+                      }).show();
+          }
+      });
+      setBtnText.run();
+      if (!"release".equals(BuildConfig.BUILD_TYPE)) {
+          button.setVisibility(View.VISIBLE);
+      }
 
-        // 秘籍：背景区域点击“上上下下左右左右BABA”显示网络环境按钮及开启Log。触碰点靠近外框为“上下左右”，触碰点x方向不那么靠边时按左右为“AB”
-        final int[] asx = {3, 5, 6, 4}; // L,A,B,R
-        final int[] asy = {1, 0, 0, 2}; // U,*,*,D
-        View view = findViewById(R.id.activity_login);
-        view.setTag(0L);
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    int[] loc = new int[2];
-                    v.getLocationOnScreen(loc);
-                    float px = (event.getRawX() - loc[0]) / v.getWidth();       // persent
-                    float py = (event.getRawY() - loc[1]) / v.getHeight();
-                    int qx = Math.min(Math.max((int) (px * 4), 0), asx.length); // quarter
-                    int qy = Math.min(Math.max((int) (py * 4), 0), asy.length);
-                    int action = asy[qy] > 0 ? asy[qy] : asx[qx];               // action this time
-                    long actions = (Long) v.getTag();
-                    actions = ((actions << 4) | action) & 0xffffffffffffL;      // actions queue
-                    v.setTag(actions);
-                    if (actions == 0x112234346565L) { // UUDDLRLRBABA
-                        button.setVisibility(View.VISIBLE);
-                        LogUtil.setLogLevel(LogUtil.VERBOSE);
-                        ToastUtils.showToast(v.getContext(), "Log已开启");
-                    }
-                }
-                return false;
-            }
-        });
-    }*/
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (!"".equals(MyApplication.mNewUserClipPhone)) {
-            mPhoneNumberInput2.setText(MyApplication.mNewUserClipPhone);
-            MyApplication.mNewUserClipPhone = "";
-        }
-    }
-
+      // 秘籍：背景区域点击“上上下下左右左右BABA”显示网络环境按钮及开启Log。触碰点靠近外框为“上下左右”，触碰点x方向不那么靠边时按左右为“AB”
+      final int[] asx = {3, 5, 6, 4}; // L,A,B,R
+      final int[] asy = {1, 0, 0, 2}; // U,*,*,D
+      View view = findViewById(R.id.activity_login);
+      view.setTag(0L);
+      view.setOnTouchListener(new View.OnTouchListener() {
+          @Override
+          public boolean onTouch(View v, MotionEvent event) {
+              if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                  int[] loc = new int[2];
+                  v.getLocationOnScreen(loc);
+                  float px = (event.getRawX() - loc[0]) / v.getWidth();       // persent
+                  float py = (event.getRawY() - loc[1]) / v.getHeight();
+                  int qx = Math.min(Math.max((int) (px * 4), 0), asx.length); // quarter
+                  int qy = Math.min(Math.max((int) (py * 4), 0), asy.length);
+                  int action = asy[qy] > 0 ? asy[qy] : asx[qx];               // action this time
+                  long actions = (Long) v.getTag();
+                  actions = ((actions << 4) | action) & 0xffffffffffffL;      // actions queue
+                  v.setTag(actions);
+                  if (actions == 0x112234346565L) { // UUDDLRLRBABA
+                      button.setVisibility(View.VISIBLE);
+                      LogUtil.setLogLevel(LogUtil.VERBOSE);
+                      ToastUtils.showToast(v.getContext(), "Log已开启");
+                  }
+              }
+              return false;
+          }
+      });
+  }*/
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         if (0 != (Intent.FLAG_ACTIVITY_CLEAR_TOP & intent.getFlags())) {
             finish();
-        }
-    }
-
-    /**
-     * 获取验证码
-     */
-    private void generateCode() {
-        String phone = mPhoneNumberInput2.getText().toString();
-        if (null == phone || "".equals(phone))
-            return;
-
-        if (null == loadingDialog) {
-            loadingDialog = new CenterLoadingView(LoginActivity.this);
-        }
-        loadingDialog.setTitle("获取中");
-        loadingDialog.show();
-        CommonScene.getMsgCode(phone, new BaseObserver<String>() {
-            @Override
-            public void OnSuccess(String s) {
-                if (null != loadingDialog) {
-                    loadingDialog.dismiss();
-                }
-                mExecutouService.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        new MyAsyncTask().execute();
-                    }
-                });
-            }
-
-            @Override
-            public void OnFail(int code, String err) {
-                if (null != loadingDialog) {
-                    loadingDialog.dismiss();
-                }
-                Toast.makeText(LoginActivity.this, err, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
-    /**
-     * 定义任务类，用于实现倒计时功能
-     */
-    public class MyAsyncTask extends AsyncTask {
-
-        @Override
-        protected Object doInBackground(Object[] objects) {
-            for (int i = 60; i > 0; i--) {
-                if (state == 0 || !mActivityStatus) { // 停止线程
-                    return null;
-                }
-                if (i == 1) {
-                    publishProgress("获取验证码");
-                } else {
-                    // 剩余多少秒
-                    publishProgress("" + (i - 1) + "");
-                }
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Object result) {
-            super.onPostExecute(result);
-        }
-
-        @Override
-        protected void onProgressUpdate(Object... values) {
-            super.onProgressUpdate(values);
-            if (values.length > 0 && values[0] != null) {
-                if ("获取验证码".equals(values[0])) {
-                    enableTvCode();
-                } else {
-                    enableClickCode();
-                }
-                tvCode.setText(values[0].toString());
-            }
         }
     }
 }

@@ -4,6 +4,7 @@ package com.tudouni.makemoney.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -11,23 +12,19 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.interfaces.NoDoubleClickListener;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.CommonScene;
-import com.tudouni.makemoney.network.NetConfig;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.InjectView;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.ValidateUtil;
 import com.tudouni.makemoney.view.CenterLoadingView;
 import com.tudouni.makemoney.view.MyTitleBar;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,10 +40,21 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
     private MyTitleBar title_bar;
 
     @InjectView(id = R.id.etTelNumber)
-    EditText etTelNumber;
+    EditText etTelNumberTypeForCode;//验证码方式
+    @InjectView(id = R.id.phone_number_et)
+    EditText mPhoneNumberInputTypeForPwd;//手机号方式
 
     @InjectView(id = R.id.etCode)
-    EditText etCode;
+    EditText etCode;//验证码方式
+    @InjectView(id = R.id.comfirm_pasword_et)
+    EditText mPasswrodInput;//手机号方式
+    @InjectView(id = R.id.code_login_ly)
+    View mCodeLoginLy;//手机号方式
+    @InjectView(id = R.id.pwd_login_ly)
+    View mPwdLoginLy;
+    @InjectView(id = R.id.other_login_ly)
+    View mOtherLoginLy;
+
 
     @InjectView(id = R.id.etInvitCode)
     EditText etInvitCode;
@@ -57,9 +65,13 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
 
     @InjectView(id = R.id.tvLogin)
     TextView tvLogin;
+    @InjectView(id = R.id.login_mode_change_view, onClick = true)
+    private TextView loginModeChangeView;
+    @InjectView(id = R.id.loss_password_tv, onClick = true)
+    private TextView mLossPasswordView;
 
     //手机登录(1)、绑定手机号码(2)、找回密码(3)、解除原手机号(4)、绑定新手机号(5)、新用户注册绑定手机号(6)、登录时第三方老用户没有绑定手机号码(7)
-    private  CenterLoadingView loadingDialog = null;
+    private CenterLoadingView loadingDialog = null;
     private String pageType;
     private InputMethodManager inputMethodManager;
     private Context mContext;
@@ -70,6 +82,10 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
     private boolean mCodeBtnStatus = true;
     private boolean mActivityStatus;
 
+    private int mLoginModeStatus = 2;//登录方式切换状态
+    private String mPhoneNum;//手机号
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,9 +95,19 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
         initData();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!"".equals(MyApplication.mNewUserClipPhone)) {
+            etTelNumberTypeForCode.setText(MyApplication.mNewUserClipPhone);
+            MyApplication.mNewUserClipPhone = "";
+        }
+    }
+
 
     private void initView() {
-
+//        mPwdLoginLy = findViewById(R.id.pwd_login_ly);
+//        mCodeLoginLy = findViewById(R.id.code_login_ly);
     }
 
     @Override
@@ -97,10 +123,10 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
         mActivityStatus = true;
         Intent intent = getIntent();
         pageType = intent.getStringExtra("type");
-        if(pageType.equals("6")) {
+        if (pageType.equals("6")) {
             handleToken = intent.getStringExtra("handleToken");
         }
-
+        mOtherLoginLy.setVisibility(pageType.equals("1") ? View.VISIBLE : View.GONE);
         if (pageType.equals("1")) {
             title_bar.setMiddleText(getResources().getString(R.string.telLogin));
         } else if (pageType.equals("2")) {
@@ -116,10 +142,10 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
             verifyToken = getIntent().getStringExtra("verifyToken");
             title_bar.setMiddleText(getResources().getString(R.string.telbandinnew));
             tvLogin.setText(getResources().getString(R.string.verification));
-        } else if(pageType.equals("6")) {
+        } else if (pageType.equals("6")) {
             title_bar.setMiddleText(getResources().getString(R.string.telbandin));
             tvLogin.setText(getResources().getString(R.string.sure));
-        } else if(pageType.equals("7")) {
+        } else if (pageType.equals("7")) {
 //            MyApplication.saveLoginUser((User) getIntent().getSerializableExtra("loginUser"));
             title_bar.setMiddleText(getResources().getString(R.string.telbandin));
             tvLogin.setText(getResources().getString(R.string.sure));
@@ -150,8 +176,8 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
         tvCode.setOnClickListener(new NoDoubleClickListener() {
             @Override
             protected void onNoDoubleClick(View v) {
-                String input = etTelNumber.getText().toString();
-                if(null == input || "".equals(input) ||  !ValidateUtil.isMobileNO(input)|| !mCodeBtnStatus)
+                String input = etTelNumberTypeForCode.getText().toString();
+                if (null == input || "".equals(input) || !ValidateUtil.isMobileNO(input) || !mCodeBtnStatus)
                     return;
                 generateCode();
             }
@@ -165,6 +191,11 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
             }
         });
         tvLogin.setOnClickListener(this);
+
+        //密码登录监听
+        passwordLoginStatus();
+        //验证码登录
+        telLoginStatus();
     }
 
     @Override
@@ -192,7 +223,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
 
             @Override
             public void afterTextChanged(Editable editable) {
-                String phone = etTelNumber.getText().toString();
+                String phone = etTelNumberTypeForCode.getText().toString();
                 boolean bool = ValidateUtil.isMobileNO(phone);
                 if (bool) {
                     enableTvCode();
@@ -200,14 +231,14 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                     disenableTvCode();
                 }
                 String code = etCode.getText().toString();
-                if(bool && code.length() > 3) {
+                if (bool && code.length() > 3) {
                     enableTvLogin();
                 } else {
                     disenableTvLogin();
                 }
             }
         };
-        etTelNumber.addTextChangedListener(mTelNumberWatcher);
+        etTelNumberTypeForCode.addTextChangedListener(mTelNumberWatcher);
 
         mCodeWatcher = new TextWatcher() {
             @Override
@@ -222,7 +253,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
 
             @Override
             public void afterTextChanged(Editable editable) {
-                String phone = etTelNumber.getText().toString();
+                String phone = etTelNumberTypeForCode.getText().toString();
                 boolean bool = ValidateUtil.isMobileNO(phone);
                 String code = etCode.getText().toString();
                 if (bool && !TextUtils.isEmpty(code) && code.length() > 3) {
@@ -238,7 +269,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void onDestroy() {
-        etTelNumber.removeTextChangedListener(mTelNumberWatcher);
+        etTelNumberTypeForCode.removeTextChangedListener(mTelNumberWatcher);
         etCode.removeTextChangedListener(mCodeWatcher);
         mTelNumberWatcher = null;
         mCodeWatcher = null;
@@ -265,8 +296,8 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
 
 
     private void enableTvCode() {
-        String input = etTelNumber.getText().toString();
-        if(input == null || "".equals(input) ||  !ValidateUtil.isMobileNO(input)){
+        String input = etTelNumberTypeForCode.getText().toString();
+        if (input == null || "".equals(input) || !ValidateUtil.isMobileNO(input)) {
             disenableTvCode();
         } else {
             tvCode.setClickable(true);
@@ -283,17 +314,23 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 generateCode();
                 break;
             case R.id.tvLogin:
-                String phone = etTelNumber.getText().toString();
-                boolean bool = ValidateUtil.isMobileNO(phone);
-                String code = etCode.getText().toString();
-                if (!bool && TextUtils.isEmpty(code) && code.length() < 3) {
-                    return;
-                }
                 if (pageType.equals("1")) {
                     login("登录中");
                 } else if (pageType.equals("2") || pageType.equals("3") || pageType.equals("4") || pageType.equals("5") || pageType.equals("6") || pageType.equals("7")) {
                     login("请稍候");
                 }
+                break;
+            case R.id.login_mode_change_view:
+                if (mLoginModeStatus == 1)
+                    mLoginModeStatus = 2;
+                else if (mLoginModeStatus == 2)
+                    mLoginModeStatus = 1;
+                loginModeChange();
+                break;
+            case R.id.loss_password_tv:
+                Intent intent = new Intent(TelLoginActivity.this, TelLoginActivity.class);
+                intent.putExtra("type", "3");
+                startActivity(intent);
                 break;
 
         }
@@ -306,17 +343,19 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
         loadingDialog.setTitle(hint);
         loadingDialog.show();
         final Map<String, String> params = new HashMap<String, String>();
-
-        if (pageType.equals("2") || pageType.equals("7")) {
+        if (pageType.equals("1")) {
+            if (mLoginModeStatus == 2) codeSubmit();
+            else passwordSubmit();
+        } else if (pageType.equals("2") || pageType.equals("7")) {
             bindPhone();
         } else if (pageType.equals("4")) {
             verifcodeChange();
         } else if (pageType.equals("5")) {
-           bindPhone2();
+            bindPhone2();
         } else if (pageType.equals("3")) {//找回密码
             findPassword();
-        } else if(pageType.equals("6")) {
-           bindNewPhone();
+        } else if (pageType.equals("6")) {
+            bindNewPhone();
         }
     }
 
@@ -324,7 +363,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
      * 新用户注册绑定手机号
      */
     private void bindNewPhone() {
-        CommonScene.bindNewPhone(etTelNumber.getText().toString(), etCode.getText().toString(), android.os.Build.MODEL, android.os.Build.BRAND, handleToken, new BaseObserver<User>() {
+        CommonScene.bindNewPhone(etTelNumberTypeForCode.getText().toString(), etCode.getText().toString(), android.os.Build.MODEL, android.os.Build.BRAND, handleToken, new BaseObserver<User>() {
             @Override
             public void OnSuccess(User user) {
                 if (null != loadingDialog) {
@@ -332,7 +371,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 }
 
                 saveLoginInfo(user);
-                startActivityForResult(SplashActivity.createIntent(mContext),0x200);
+                startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
             }
 
             @Override
@@ -349,7 +388,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
      * 找回密码
      */
     private void findPassword() {
-        CommonScene.findPassword(etTelNumber.getText().toString(), etCode.getText().toString(), android.os.Build.MODEL, android.os.Build.BRAND, new BaseObserver<User>() {
+        CommonScene.findPassword(etTelNumberTypeForCode.getText().toString(), etCode.getText().toString(), android.os.Build.MODEL, android.os.Build.BRAND, new BaseObserver<User>() {
             @Override
             public void OnSuccess(User user) {
                 if (null != loadingDialog) {
@@ -377,7 +416,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
      * 绑定新手机号
      */
     private void bindPhone2() {
-        CommonScene.bindPhone2(etTelNumber.getText().toString(), etCode.getText().toString(), android.os.Build.MODEL, android.os.Build.BRAND, verifyToken, new BaseObserver<User>() {
+        CommonScene.bindPhone2(etTelNumberTypeForCode.getText().toString(), etCode.getText().toString(), android.os.Build.MODEL, android.os.Build.BRAND, verifyToken, new BaseObserver<User>() {
             @Override
             public void OnSuccess(User user) {
                 if (null != loadingDialog) {
@@ -403,7 +442,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
      * 解除原手机号
      */
     private void verifcodeChange() {
-        CommonScene.verifcodeChange(etTelNumber.getText().toString(), etCode.getText().toString(), android.os.Build.MODEL, android.os.Build.BRAND, new BaseObserver<User>() {
+        CommonScene.verifcodeChange(etTelNumberTypeForCode.getText().toString(), etCode.getText().toString(), android.os.Build.MODEL, android.os.Build.BRAND, new BaseObserver<User>() {
             @Override
             public void OnSuccess(User user) {
                 if (null != loadingDialog) {
@@ -411,7 +450,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 }
 
                 Intent intent = new Intent(TelLoginActivity.this, TelLoginActivity.class);
-                intent.putExtra("verifyToken",user.getVerifyToken());
+                intent.putExtra("verifyToken", user.getVerifyToken());
                 intent.putExtra("type", "5");
                 startActivityForResult(intent, 0x201);
             }
@@ -425,8 +464,9 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
             }
         });
     }
+
     private void bindPhone() {
-        CommonScene.bindPhone(etTelNumber.getText().toString(), etCode.getText().toString(), android.os.Build.MODEL, android.os.Build.BRAND, new BaseObserver<User>() {
+        CommonScene.bindPhone(etTelNumberTypeForCode.getText().toString(), etCode.getText().toString(), android.os.Build.MODEL, android.os.Build.BRAND, new BaseObserver<User>() {
             @Override
             public void OnSuccess(User user) {
                 if (null != loadingDialog) {
@@ -435,12 +475,12 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
 
                 if (pageType.equals("2")) {//绑定手机号
                     finish();
-                } else if(pageType.equals("7")) {
+                } else if (pageType.equals("7")) {
                     Intent intent = new Intent(TelLoginActivity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     saveLoginInfo(user);
-                    startActivityForResult(SplashActivity.createIntent(mContext),0x200);
+                    startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
                 }
             }
 
@@ -480,7 +520,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
      * 重置密码获取验证码
      */
     private void getPasswordCode() {
-        CommonScene.getPasswordCode(etTelNumber.getText().toString(),  new BaseObserver<String>() {
+        CommonScene.getPasswordCode(etTelNumberTypeForCode.getText().toString(), new BaseObserver<String>() {
             @Override
             public void OnSuccess(String s) {
                 if (null != loadingDialog) {
@@ -505,7 +545,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
     private void getVerifCode(String type) {
         String token = null;
         String uid = null;
-        if(type.equals("7")) {
+        if (type.equals("7")) {
             User user = (User) getIntent().getSerializableExtra("loginUser");
             token = user.getToken();
             uid = user.getUid();
@@ -513,7 +553,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
             token = MyApplication.getLoginUser().getToken();
             uid = MyApplication.getLoginUser().getUid();
         }
-        CommonScene.getVerifCode(etTelNumber.getText().toString(),uid, token,  new BaseObserver<String>() {
+        CommonScene.getVerifCode(etTelNumberTypeForCode.getText().toString(), uid, token, new BaseObserver<String>() {
             @Override
             public void OnSuccess(String s) {
                 if (null != loadingDialog) {
@@ -539,7 +579,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
      * 获取验证码
      */
     private void getMsgCode() {
-        CommonScene.getMsgCode(etTelNumber.getText().toString(),  new BaseObserver<String>() {
+        CommonScene.getMsgCode(etTelNumberTypeForCode.getText().toString(), new BaseObserver<String>() {
             @Override
             public void OnSuccess(String s) {
                 if (null != loadingDialog) {
@@ -561,6 +601,220 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
         });
     }
 
+    /**
+     * 点击切换
+     */
+    private void loginModeChange() {
+        if (mLoginModeStatus == 1)
+            mPhoneNumberInputTypeForPwd.setText(mPhoneNum);
+        else if (mLoginModeStatus == 2)
+            etTelNumberTypeForCode.setText(mPhoneNum);
+        setLoginBtnStatus((mLoginModeStatus == 1) ? mPhoneNumberInputTypeForPwd : etTelNumberTypeForCode, (mLoginModeStatus == 1) ? mPasswrodInput : etCode);
+        mLossPasswordView.setVisibility((mLoginModeStatus == 1) ? View.VISIBLE : View.GONE);
+        loginModeChangeView.setText(getResources().getString((mLoginModeStatus == 1) ? R.string.telLogin : R.string.tudouni_password_login_change));
+        mPwdLoginLy.setVisibility((mLoginModeStatus == 1) ? View.VISIBLE : View.GONE);
+        mCodeLoginLy.setVisibility((mLoginModeStatus == 1) ? View.GONE : View.VISIBLE);
+    }
+
+    /**
+     * 设置登录按钮状态
+     */
+    private void setLoginBtnStatus(EditText editText1, EditText editText2) {
+        String number = editText1.getText().toString();
+        String password = editText2.getText().toString();
+        changeLoginStata(ValidateUtil.isMobileNO(number), password);
+    }
+
+    /**
+     * 验证码登录
+     */
+    private void codeSubmit() {
+        String phone = etTelNumberTypeForCode.getText().toString();
+        String code = etCode.getText().toString();
+        boolean bool = ValidateUtil.isMobileNO(phone);
+        if ((!bool) || phone == null || code == null || phone.equals("") || code.equals("")) {
+            loadingDialog.dismiss();
+            return;
+        }
+        if (null == loadingDialog) {
+            loadingDialog = new CenterLoadingView(TelLoginActivity.this);
+        }
+        loadingDialog.setTitle("登录中...");
+        loadingDialog.show();
+
+        CommonScene.telCodeLogin(phone, code, Build.MODEL, Build.BRAND, new BaseObserver<User>() {
+            @Override
+            public void OnSuccess(User user) {
+                if (null != loadingDialog) {
+                    loadingDialog.dismiss();
+                }
+                if ("0".equals(user.getPwd())) {//没有设置登录密码
+                    Intent intent1 = new Intent(TelLoginActivity.this, PwdActivity.class);
+                    intent1.putExtra("type", "1");
+                    intent1.putExtra("user", user);
+                    startActivity(intent1);
+                } else {//设置了登录密码
+                    saveLoginInfo(user);
+                    startActivity(new Intent(TelLoginActivity.this, SplashActivity.class));
+                    finish();
+                }
+            }
+
+            @Override
+            public void OnFail(int code, String err) {
+                ToastUtil.show(err);
+                if (null != loadingDialog) {
+                    loadingDialog.dismiss();
+                }
+            }
+        });
+    }
+
+
+    /**
+     * 密码登录
+     */
+    private void passwordSubmit() {
+        String userName = mPhoneNumberInputTypeForPwd.getText().toString();
+        String password = mPasswrodInput.getText().toString();
+        boolean bool = ValidateUtil.isMobileNO(userName);
+        if ((!bool) || userName == null || userName.trim().equals("") ||
+                password == null || password.trim().equals("")
+                || password.length() < 6 || password.length() > 16 || userName.length() != 11) {
+            loadingDialog.dismiss();
+            return;
+        }
+        if (null == loadingDialog) {
+            loadingDialog = new CenterLoadingView(TelLoginActivity.this);
+        }
+        loadingDialog.setTitle("登录中");
+        loadingDialog.show();
+
+        CommonScene.passwordLogin(userName, password, Build.MODEL, Build.BRAND, new BaseObserver<User>() {
+            @Override
+            public void OnSuccess(User user) {
+                MyApplication.saveLoginUser(user);
+                if (null != loadingDialog) {
+                    loadingDialog.dismiss();
+                }
+                saveLoginInfo(user);
+                Intent intent = new Intent(TelLoginActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+
+                startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
+                finish();
+            }
+
+            @Override
+            public void OnFail(int code, String err) {
+                super.OnFail(code, err);
+                if (null != loadingDialog) {
+                    loadingDialog.dismiss();
+                }
+            }
+        });
+    }
+
+    /**
+     * 密码登录模块监听
+     */
+    private void passwordLoginStatus() {
+        mPhoneNumberInputTypeForPwd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mPhoneNum = s.toString();
+                changeLoginStata(ValidateUtil.isMobileNO(mPhoneNum), mPasswrodInput.getText().toString());
+            }
+        });
+
+        mPasswrodInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                changeLoginStata(ValidateUtil.isMobileNO(mPhoneNumberInputTypeForPwd.getText().toString()), s.toString());
+            }
+        });
+
+    }
+
+    /**
+     * 修改登录按钮的状态
+     *
+     * @param password
+     * @param bool
+     */
+    private void changeLoginStata(boolean bool, String password) {
+        if (bool && !TextUtils.isEmpty(password) && password.length() > 5) {
+            enableTvLogin();
+        } else {
+            disenableTvLogin();
+        }
+    }
+
+    private void telLoginStatus() {
+        etTelNumberTypeForCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String phone = s.toString();
+                mPhoneNum = phone;
+                boolean bool = ValidateUtil.isMobileNO(phone);
+                if (bool) {
+                    enableTvCode();
+                } else {
+                    disenableTvCode();
+                }
+                changeLoginStata(bool, etCode.getText().toString());
+            }
+        });
+
+        etCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                changeLoginStata(ValidateUtil.isMobileNO(etTelNumberTypeForCode.getText().toString()), s.toString());
+            }
+        });
+
+    }
 
     public int state = 1; //状态 1 表示未启动线程或正在运行线程。0 停止线程
     private MyThread myThread;

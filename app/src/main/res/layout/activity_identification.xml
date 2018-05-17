@@ -19,64 +19,231 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@color/sysBg"
-            android:orientation="vertical"
-            android:layout_marginLeft="13dp">
-            <LinearLayout
+            android:orientation="vertical">
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/white">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|left"
-                    android:text="身份信息（必填）"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"/>
-            </LinearLayout>
+                android:layout_height="43dp"
+                android:gravity="center_vertical|left"
+                android:text="身份信息（必填）"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:layout_marginLeft="13dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:background="@color/white">
                 <EditText
-                    android:id="@+id/etTelNumber"
+                    android:id="@+id/mEdName"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:hint="请输入真实姓名"
+                    android:hint="请填写真实姓名"
                     android:imeOptions="actionNext"
                     android:inputType="text"
                     android:maxLength="20"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:text=""
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/black"
                     android:textColorHint="@color/hintColor"
                     android:textScaleX="0.99"
-                    android:textSize="15sp" />
+                    android:textSize="13sp"
+                    android:layout_marginLeft="13dp"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/white">
+                android:layout_height="40dp"
+                android:background="@color/white"
+                android:layout_marginTop="2dp">
                 <EditText
-                    android:id="@+id/etCode"
+                    android:id="@+id/mIdcard"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@null"
                     android:digits="0123456789Xx"
-                    android:hint="请输入身份证号"
+                    android:hint="请填写身份证号（将加密处理）"
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:maxLength="18"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/black"
                     android:textColorHint="@color/hintColor"
                     android:textScaleX="0.99"
-                    android:textSize="15sp" />
+                    android:textSize="13sp"
+                    android:layout_marginLeft="13dp"/>
             </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:gravity="center_vertical|left"
+                android:text="手持身份证照片（选填）"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_marginLeft="13dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="289dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="114dp"
+                    android:layout_marginTop="15dp">
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                    <ImageView
+                        android:id="@+id/iv_upload_1"
+                        android:layout_width="170dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="@drawable/positive_id"
+                        android:scaleType="centerCrop" />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                    <ImageView
+                        android:id="@+id/iv_upload_2"
+                        android:layout_width="170dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="@drawable/id_cardback"
+                        android:scaleType="centerCrop" />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:background="@color/white">
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="170dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="示例"
+                        android:textColor="@color/gray"
+                        android:textSize="12sp"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="170dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="示例"
+                        android:textColor="@color/gray"
+                        android:textSize="12sp"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:background="@color/white">
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                    <ImageView
+                        android:layout_width="106dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="@drawable/example"
+                        android:scaleType="centerCrop"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginRight="32dp"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                    <ImageView
+                        android:layout_width="106dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="@drawable/samplediagramontheback"
+                        android:scaleType="centerCrop"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginRight="32dp"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="28dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/white">
+                    <ImageView
+                        android:layout_width="11dp"
+                        android:layout_height="11dp"
+                        android:layout_gravity="top"
+                        android:background="@drawable/tips"
+                        android:scaleType="centerCrop"
+                        android:layout_marginLeft="13dp"
+                        android:layout_marginRight="3dp"
+                        android:layout_marginTop="2dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="top"
+                        android:text="温馨提示：拍摄清晰的本人手持身份证正面照片，身份证背面需要清晰拍摄有效期限位置，身份证有效期需要一个月以上。"
+                        android:textColor="@color/gray"
+                        android:textSize="11sp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvLogin"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:background="@drawable/login_btn_back_01"
+                android:gravity="center|bottom"
+                android:paddingBottom="17dp"
+                android:text="提交"
+                android:textColor="@color/black"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="提交身份信息即代表同意《赚赚用户协议》"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="* 本认证功能仅限大陆地区用户使用，暂未支持港澳地区用户认证"
+                android:textColor="@color/gray02"
+                android:textSize="11sp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="10dp"/>
         </LinearLayout>
 
     </ScrollView>
