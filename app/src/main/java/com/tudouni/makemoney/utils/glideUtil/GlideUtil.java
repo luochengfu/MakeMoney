@@ -86,5 +86,14 @@ public class GlideUtil {
         Glide.with(imageView.getContext()).load(url).crossFade().bitmapTransform(new GlideRoundTransform(imageView.getContext(), dpInt)).into(imageView);
     }
 
+    @BindingAdapter("loadCircleImage")
+    public static void circleImage(ImageView imageView, String url){
+        Glide.with(imageView.getContext())
+                .load(url)
+                .crossFade()
+                .bitmapTransform(new GlideCircleTransform(imageView.getContext()))
+                .into(imageView);
+    }
+
 
 }

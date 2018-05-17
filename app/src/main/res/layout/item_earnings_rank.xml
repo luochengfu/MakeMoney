@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="item"
+            type="com.tudouni.makemoney.model.EarningsRank"/>
+    </data>
+    
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <RelativeLayout
+            android:id="@+id/rv_rank"
+            android:layout_width="50dp"
+            android:layout_height="40dp">
+            <TextView
+                android:id="@+id/tv_rank"
+                android:layout_marginLeft="28dp"
+                android:layout_width="40dp"
+                android:textColor="#666666"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:textSize="12sp"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/iv_rank"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/iv_head_img"
+            app:loadCircleImage="@{item.photo}"
+            android:layout_width="28dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/rv_rank"
+            android:src="@drawable/shape_earnings_withdraw"
+            android:layout_height="28dp" />
+
+        <TextView
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/iv_head_img"
+            android:id="@+id/tv_nickname"
+            android:layout_width="wrap_content"
+            android:text="@{item.nickname}"
+            android:maxLines="1"
+            android:gravity="center_vertical"
+            android:ellipsize="end"
+            android:maxLength="8"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="40dp"
+            android:text="@{item.phone}"
+            android:layout_height="match_parent" />
+
+
+    </RelativeLayout>
+
+</layout>

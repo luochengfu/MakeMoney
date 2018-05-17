@@ -1,6 +1,7 @@
 package com.tudouni.makemoney.network;
 
 import android.databinding.ObservableArrayList;
+import android.databinding.ObservableField;
 
 import com.tudouni.makemoney.model.AgentInfo;
 import com.tudouni.makemoney.model.AliAuth;
@@ -10,12 +11,14 @@ import com.tudouni.makemoney.model.BindInfo;
 import com.tudouni.makemoney.model.BindUserBean;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.model.DeleteSyaMsgRequestBean;
+import com.tudouni.makemoney.model.EarningsRank;
 import com.tudouni.makemoney.model.FoundTopicBean;
 import com.tudouni.makemoney.model.Invite;
 import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.model.MallAlbumModel;
 import com.tudouni.makemoney.model.MallGoodItem;
 import com.tudouni.makemoney.model.MessageResponsBean;
+import com.tudouni.makemoney.model.MyEarnings;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.RecommendTopicBean;
 import com.tudouni.makemoney.model.SearchHistory;
@@ -31,7 +34,9 @@ import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * Created by Administrator on 2018/4/20 0020.
@@ -346,4 +351,10 @@ public interface CommonApi {
     @FormUrlEncoded
     @POST("zzshop/searchRecord/save")
     Observable<Result<Object>> saveSearchHistoryToService(@Field("unionid") String unionId, @Field("source") String source, @Field("deviceModel") String model, @Field("content") String content);
+
+    @GET("zzshop/income/profile")
+    Observable<Result<MyEarnings>> loadIncomeProfile(@Query("uid") String uid);
+
+    @GET("zzshop/income/top_income")
+    Observable<Result<List<EarningsRank>>> loadEarningsRank(@Query("top") int top);
 }
