@@ -1,6 +1,7 @@
 package com.tudouni.makemoney.activity.withdrawmoney;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -96,7 +97,11 @@ public class WithdrawMoneyActivity extends BaseActivity {
         });
 
         tvNextStep.setOnClickListener(view -> {
-            ForwardUtils.target(WithdrawMoneyActivity.this, Constants.WITHDRAW_TEL);
+            String phoneNumber = etMoneyNumber.getText().toString().trim();
+            Intent intent = new Intent(WithdrawMoneyActivity.this, TelAuthenticationActivity.class);
+            intent.putExtra("moneyNumber", phoneNumber);
+            WithdrawMoneyActivity.this.startActivity(intent);
+            finish();
         });
     }
 

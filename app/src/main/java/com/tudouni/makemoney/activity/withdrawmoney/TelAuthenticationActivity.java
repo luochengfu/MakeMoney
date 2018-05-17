@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import com.tudouni.makemoney.utils.ColorUtil;
 import com.tudouni.makemoney.utils.InjectView;
 import com.tudouni.makemoney.utils.ValidateUtil;
 import com.tudouni.makemoney.view.CenterLoadingView;
+import com.tudouni.makemoney.view.ConfirmDialog;
 
 public class TelAuthenticationActivity extends BaseActivity {
     @InjectView(id = R.id.etTelNumber)
@@ -34,11 +36,28 @@ public class TelAuthenticationActivity extends BaseActivity {
     @InjectView(id = R.id.tvSubmit)
     private TextView tvSubmit;
     private CenterLoadingView loadingDialog = null;
+    private String moneyNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tel_authentication);
+        Bundle extras = null;
+        try {
+            extras = getIntent().getExtras();
+        } catch (Exception e) {
+            finish();
+            return;
+        }
+        if (extras == null) {
+            finish();
+            return;
+        }
+        moneyNumber = extras.getString("moneyNumber");
+        if (null == moneyNumber) {
+            finish();
+            return;
+        }
         initview();
     }
 
@@ -60,13 +79,47 @@ public class TelAuthenticationActivity extends BaseActivity {
             disableTvCode();
         });
 
-        tvSubmit.setOnClickListener(view -> {
+        tvSubmit.setOnClickListener((View view) -> {
             String phoneCode = etCode.getText().toString().trim();
             if (TextUtils.isEmpty(phoneCode)) {
                 Toast.makeText(TelAuthenticationActivity.this,
                         "请输入短信验证码",
                         Toast.LENGTH_LONG);
+                return;
             }
+
+            if (null == loadingDialog) {
+                loadingDialog = new CenterLoadingView(TelAuthenticationActivity.this);
+            }
+            loadingDialog.setTitle("提交申请中");
+            loadingDialog.show();
+
+            CommonScene.payCash(moneyNumber, new BaseObserver<String>() {
+                @Override
+                public void OnSuccess(String s) {
+                    if (null != loadingDialog) {
+                        loadingDialog.dismiss();
+                    }
+                    ConfirmDialog confirmDialog = new ConfirmDialog(TelAuthenticationActivity.this,
+                            "提交成功",
+                            "您的提现申请已提交，预计1-3个工作日到账，敬请留意");
+                    confirmDialog.setLinstener(new ConfirmDialog.BtnClickLinstener(){
+                        @Override
+                        public void clickOk(){
+                            finish();
+                        }
+                    });
+                    confirmDialog.show();
+                }
+
+                @Override
+                public void OnFail(int code, String err) {
+                    if (null != loadingDialog) {
+                        loadingDialog.dismiss();
+                    }
+                    Toast.makeText(TelAuthenticationActivity.this, err, Toast.LENGTH_SHORT).show();
+                }
+            });
         });
     }
 

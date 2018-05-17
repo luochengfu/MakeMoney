@@ -54,6 +54,7 @@ public class Constants {
     public static final String USERINFO = BASE_PRE + "setinfo";
     public static final String WITHDRAW_MONEY = BASE_PRE + "withdraw_money";
     public static final String WITHDRAW_TEL = BASE_PRE + "withdraw_tel";
+    public static final String NATIVE_INCOME = BASE_PRE + "native_income";
 
     public static final String UPTYPE_IMGHEADER = "img-header";
     public static final String UPTYPE_IMGCOMMON = "img-common";

@@ -163,4 +163,5 @@ dependencies {
     implementation files('libs/xutils-3.5.0.jar')
     // 芝麻认证，人脸认证sdk
     compile(name: 'ZMCert_SDK', ext: 'aar')
+    compile 'com.wang.avi:library:1.0.1'
 }

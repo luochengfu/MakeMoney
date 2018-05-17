@@ -23,6 +23,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 import java.lang.reflect.Field;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -234,6 +235,19 @@ public class CommonUtil {
             return IDCard.matches(IDCardRegex);
         }
         return false;
+    }
+
+    /**
+     * 返回钱格式
+     * @param value
+     * @return
+     */
+    public static String getMoney(double value) {
+        if (value <= 0) {
+            value=0.00;
+            return new DecimalFormat("0.00").format(value);
+        }
+        return new DecimalFormat("0.00").format(value);
     }
 }
 

@@ -120,6 +120,10 @@
             android:name=".activity.withdrawmoney.TelAuthenticationActivity"
             android:label="申请提现手机验证码"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.withdrawmoney.IncomeActivity"
+            android:label="提现记录界面"
+            android:screenOrientation="portrait" />
 
         <!-- =========================APP中的 Activity End========================= -->
         <!-- =========================友盟集成 Start========================= -->

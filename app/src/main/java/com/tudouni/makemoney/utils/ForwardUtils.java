@@ -20,6 +20,7 @@ import com.tudouni.makemoney.activity.MessageActivity;
 import com.tudouni.makemoney.activity.SettingActivity;
 import com.tudouni.makemoney.activity.UserInfoActivity;
 import com.tudouni.makemoney.activity.WebvewRefreshActivity;
+import com.tudouni.makemoney.activity.withdrawmoney.IncomeActivity;
 import com.tudouni.makemoney.activity.withdrawmoney.TelAuthenticationActivity;
 import com.tudouni.makemoney.activity.withdrawmoney.WithdrawMoneyActivity;
 import com.tudouni.makemoney.myApplication.MyApplication;
@@ -78,6 +79,9 @@ public class ForwardUtils {
                 toIntent(oriActivity, url, intent);
             } else if (url.equals(Constants.WITHDRAW_TEL)) {
                 Intent intent = new Intent(oriActivity, TelAuthenticationActivity.class);
+                toIntent(oriActivity, url, intent);
+            } else if (url.equals(Constants.NATIVE_INCOME)) {
+                Intent intent = new Intent(oriActivity, IncomeActivity.class);
                 toIntent(oriActivity, url, intent);
             } else if (url.startsWith(Constants.LOGIN)) {
                 Intent intent = new Intent(oriActivity, LoginActivity.class);

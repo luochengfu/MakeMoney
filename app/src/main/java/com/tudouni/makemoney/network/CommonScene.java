@@ -2,6 +2,7 @@ package com.tudouni.makemoney.network;
 
 import android.databinding.ObservableArrayList;
 
+import com.tudouni.makemoney.activity.BaseActivity;
 import com.tudouni.makemoney.model.AgentInfo;
 import com.tudouni.makemoney.model.AliAuth;
 import com.tudouni.makemoney.model.AppConfig;
@@ -24,6 +25,7 @@ import com.tudouni.makemoney.model.RecommendTopicBean;
 import com.tudouni.makemoney.model.RequestNineRecommendShareBean;
 import com.tudouni.makemoney.model.SearchHistory;
 import com.tudouni.makemoney.model.User;
+import com.tudouni.makemoney.model.Withdraw;
 import com.tudouni.makemoney.model.Zma;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.rx.BaseObserver;
@@ -129,8 +131,25 @@ public class CommonScene extends RetrofitUtils {
         setSubscribe(commonApi.setAuthInfo(realname, idNumber, frontPhoto, backPhoto), observer);
     }
 
+    /**
+     * 获取阿里提现手续费率
+     */
     public static void payRate(BaseObserver<String> observer) {
         setSubscribe(commonApi.payRate("100", "alipay"), observer);
+    }
+
+    /**
+     * 提现
+     */
+    public static void payCash(String money, BaseObserver<String> observer) {
+        setSubscribe(commonApi.payCash("alipay", money), observer);
+    }
+
+    /**
+     * 获取用户提现列表
+     */
+    public static void incomeHistory(String page, BaseObserver<List<Withdraw>> observer) {
+        setSubscribe(commonApi.incomeHistory(page, "20"), observer);
     }
 
     /**

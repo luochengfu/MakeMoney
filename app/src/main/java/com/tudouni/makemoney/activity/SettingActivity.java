@@ -150,7 +150,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 }
                 break;
             case R.id.llClear://清理缓存
-                clearAppCache();
+                if (BuildConfig.DEBUG) {
+                    ForwardUtils.target(SettingActivity.this, Constants.NATIVE_INCOME);
+                } else {
+                    clearAppCache();
+                }
                 break;
             case R.id.llAboutUs: //关于我们
                 ForwardUtils.target(SettingActivity.this, Constants.ABOUTUS);

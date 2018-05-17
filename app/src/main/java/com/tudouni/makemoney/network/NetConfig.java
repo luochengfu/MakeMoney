@@ -28,6 +28,8 @@ public class NetConfig {
     public static final String GEN_CERT_URL = "/zzshop/auth/user/zmxy/genCertUrl";
     public static final String SET_AUTH_INFO = "/zzshop/auth/user/setAuthInfo";
     public static final String PAY_RATE = "/zzshop/auth/pay/rate";
+    public static final String PAY_CASH = "/zzshop/auth/pay/cash";
+    public static final String INCOME_HISTORY = "/zzshop/income/history";
     public static final String ZMXY_CALL = "/zzshop/auth/user/zmxy/call";
     public static final String PASSWORD_MSG_CODE = "/zzshop/user/getVerifCode";
     public static final String GETUSERINFO = "/zzshop/auth/user/info";
