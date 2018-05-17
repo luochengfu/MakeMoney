@@ -329,7 +329,9 @@
         <activity android:name=".activity.BindingInvitationActivity" />
         <activity android:name=".activity.UserInfoActivity" />
         <activity android:name=".activity.MessageActivity"></activity>
-        <activity android:name=".activity.search.SearchActivity" />
+        <activity android:name=".activity.search.SearchActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.MyEarningsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.MySavingsActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

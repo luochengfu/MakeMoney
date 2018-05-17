@@ -95,13 +95,23 @@ public class GlideUtil {
         Glide.with(imageView.getContext()).load(url).crossFade().bitmapTransform(new GlideRoundTransform(imageView.getContext(), dpInt)).into(imageView);
     }
 
+    @BindingAdapter("loadCircleImage")
+    public static void circleImage(ImageView imageView, String url) {
+        Glide.with(imageView.getContext())
+                .load(url)
+                .crossFade()
+                .bitmapTransform(new GlideCircleTransform(imageView.getContext()))
+                .into(imageView);
+    }
+
     /**
      * Glide保存图片
      *
      * @param context
      * @param url
      */
-    public static void savePicture(Context context, String url, final DownFileCallBack downFileCallBack) {
+    public static void savePicture(Context context, String url,
+                                   final DownFileCallBack downFileCallBack) {
         String fileName = url.substring(url.lastIndexOf("/", url.length()));
         Glide.with(context).load(url).asBitmap().toBytes().into(new SimpleTarget<byte[]>() {
             @Override
@@ -123,7 +133,8 @@ public class GlideUtil {
      * @param bytes
      * @throws Exception
      */
-    public static void savaFileToSD(Context context, String filename, byte[] bytes, DownFileCallBack downFileCallBack) throws Exception {
+    public static void savaFileToSD(Context context, String filename,
+                                    byte[] bytes, DownFileCallBack downFileCallBack) throws Exception {
         //如果手机已插入sd卡,且app具有读写sd卡的权限
         String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath()
                 + File.separator + "豆播" + File.separator + "豆播相册";

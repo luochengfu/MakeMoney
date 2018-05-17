@@ -207,9 +207,9 @@ public class MyApplication extends BaseApplication implements ClipboardUtil.OnPr
 
             }
 
-
             @Override
-            public void onActivityStopped(Activity activity) {
+            public void onActivityDestroyed(Activity activity) {
+                super.onActivityDestroyed(activity);
                 activityCount--;
                 if (0 == activityCount) {
                     DownloadManager.getInstance().releaseDownLoadManager();

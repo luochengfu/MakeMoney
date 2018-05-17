@@ -14,8 +14,8 @@
         android:id="@+id/second_content_ly"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="@dimen/nine_remommend_goods_margen"
+        android:layout_marginTop="@dimen/nine_remommend_goods_margen"
         android:orientation="horizontal" />
 
     <LinearLayout
