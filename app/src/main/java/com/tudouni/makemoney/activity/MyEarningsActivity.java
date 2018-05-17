@@ -88,12 +88,6 @@ public class MyEarningsActivity extends BaseActivity {
             //提现记录
         });
 
-        mHeaderMyEarningsBinding.tvWithdraw.setOnClickListener(l -> {
-            //提现
-        });
-
-
-
     }
 
     public interface IncomeDataCallback{

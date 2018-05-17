@@ -65,6 +65,7 @@
                     android:id="@+id/tv_withdraw"
                     android:background="@drawable/shape_earnings_withdraw"
                     android:textSize="13sp"
+                    android:onClick="@{()->earnings.toWithdrawPage()}"
                     android:paddingLeft="10dp"
                     android:paddingTop="2dp"
                     android:paddingBottom="2dp"

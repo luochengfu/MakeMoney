@@ -54,5 +54,15 @@ public class MyEarningsViewModel extends LoadingViewModel {
         });
     }
 
+    public void toWithdrawPage(){
+        Activity currActivity = MyApplication.sCurrActivity;
+        double balance = earnings.get().getBalance();
+        if (currActivity != null) {
+            //TODO:
+            Intent intent = new Intent();
+            currActivity.startActivity(intent);
+        }
+    }
+
 
 }
