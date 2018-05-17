@@ -6,6 +6,7 @@ import android.databinding.ObservableField;
 
 import com.tudouni.makemoney.activity.H5Activity;
 import com.tudouni.makemoney.activity.MyEarningsActivity;
+import com.tudouni.makemoney.activity.withdrawmoney.WithdrawMoneyActivity;
 import com.tudouni.makemoney.model.EarningsBean;
 import com.tudouni.makemoney.model.EarningsRank;
 import com.tudouni.makemoney.model.MyEarnings;
@@ -58,8 +59,8 @@ public class MyEarningsViewModel extends LoadingViewModel {
         Activity currActivity = MyApplication.sCurrActivity;
         double balance = earnings.get().getBalance();
         if (currActivity != null) {
-            //TODO:
-            Intent intent = new Intent();
+            Intent intent = new Intent(currActivity, WithdrawMoneyActivity.class);
+            intent.putExtra("balance",balance);
             currActivity.startActivity(intent);
         }
     }
