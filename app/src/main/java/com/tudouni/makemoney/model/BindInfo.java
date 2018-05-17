@@ -12,6 +12,7 @@ public class BindInfo implements Serializable {
     private String sina;
     private String weixin;
     private String phoneHid;
+    private String phoneNum;
 
     public String getQq() {
         return qq;
@@ -51,5 +52,13 @@ public class BindInfo implements Serializable {
 
     public void setPhoneHid(String phoneHid) {
         this.phoneHid = phoneHid;
+    }
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
     }
 }

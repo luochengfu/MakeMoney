@@ -141,8 +141,8 @@ public class CommonScene extends RetrofitUtils {
     /**
      * 提现
      */
-    public static void payCash(String money, BaseObserver<String> observer) {
-        setSubscribe(commonApi.payCash("alipay", money), observer);
+    public static void payCash(String money, String phone, String code, BaseObserver<String> observer) {
+        setSubscribe(commonApi.payCash("alipay", money, phone, code), observer);
     }
 
     /**

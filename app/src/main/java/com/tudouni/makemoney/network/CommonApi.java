@@ -143,7 +143,9 @@ public interface CommonApi {
     @FormUrlEncoded
     @POST(NetConfig.PAY_CASH)
     Observable<Result<String>> payCash(@Field("type") String type,
-                                       @Field("money") String money);
+                                       @Field("money") String money,
+                                       @Field("phone") String phone,
+                                       @Field("code") String code);
 
     @FormUrlEncoded
     @POST(NetConfig.ZMXY_CALL)

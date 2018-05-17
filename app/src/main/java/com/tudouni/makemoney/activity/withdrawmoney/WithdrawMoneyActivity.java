@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tudouni.makemoney.BuildConfig;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.activity.BaseActivity;
 import com.tudouni.makemoney.activity.realname.RealnameActivity2;
@@ -42,13 +43,25 @@ public class WithdrawMoneyActivity extends BaseActivity {
     @InjectView(id = R.id.tvPayRate)
     private TextView tvPayRate;
 
-    private float allNumber;
+    private double allNumber;
     private String payRate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_withdraw_money);
+        Bundle extras = null;
+        try {
+            extras = getIntent().getExtras();
+        } catch (Exception e) {
+            finish();
+            return;
+        }
+        if (extras == null) {
+            finish();
+            return;
+        }
+        allNumber = extras.getDouble("balance");
         initview();
         initData();
     }
@@ -91,6 +104,8 @@ public class WithdrawMoneyActivity extends BaseActivity {
                        },
                 200);
 
+        tvMaxNumber.setText("可提现金额" + allNumber + "元");
+
         tvAllNumber.setOnClickListener(view -> {
             DecimalFormat df = new DecimalFormat("##.##");
             etMoneyNumber.setText(df.format(allNumber));
@@ -106,7 +121,6 @@ public class WithdrawMoneyActivity extends BaseActivity {
     }
 
     private void initData() {
-        allNumber = 0;
         CommonScene.payRate(new BaseObserver<String>() {
             @Override
             public void OnSuccess(String s) {
