@@ -3,6 +3,8 @@ package com.tudouni.makemoney.utils;
 import com.tudouni.makemoney.network.NetConfig;
 import com.tudouni.makemoney.utils.base.AppUtils;
 
+import java.io.File;
+
 /**
  * 该框架定义的常量
  */
@@ -66,4 +68,19 @@ public class Constants {
     public static final String h5_faq = BASE_H5_URL + "mycenter/faq.html";//常见问题
     public static final String MESSAGE = BASE_PRE + "message";//消息列表
     public static final String h5_inviterule = BASE_H5_URL + "mycenter/inviterule.html";//邀请规则
+    public static final String IMAGE_DOWN_DIR = "豆播" + File.separator + "豆播相册";//图片下载地址
+    public static final String IMAGE_DOWN_DIR_PRE = IMAGE_DOWN_DIR + File.separator + "temporary";//图片下载地址
+
+    public static final int STATE_ING = 0;
+    public static final int STATE_SUCESS = 1;
+    public static final int STATE_FILED = 2;
+    public static final int STATE_WAIT = 3;
+    public static final int STATE_STOP = 4;
+    public static final int STATE_REPORT_FILED = 5;
+    public static final int INVALID_STATE = -1;// 无效的状态
+
+    public static final int GET_SHARE_IMAGE_START = 111;//获取图片分享开始
+    public static final int GET_SHARE_IMAGE_END = 112;// 获取图片分享结束
+
+
 }

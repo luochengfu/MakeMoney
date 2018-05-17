@@ -1,7 +1,6 @@
 package com.tudouni.makemoney.network;
 
 import android.databinding.ObservableArrayList;
-import android.databinding.ObservableField;
 
 import com.tudouni.makemoney.model.AgentInfo;
 import com.tudouni.makemoney.model.AliAuth;
@@ -19,15 +18,16 @@ import com.tudouni.makemoney.model.MallAlbumModel;
 import com.tudouni.makemoney.model.MallGoodItem;
 import com.tudouni.makemoney.model.MessageResponsBean;
 import com.tudouni.makemoney.model.MyEarnings;
+import com.tudouni.makemoney.model.NineRecommendBean;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.RecommendTopicBean;
+import com.tudouni.makemoney.model.RequestNineRecommendShareBean;
 import com.tudouni.makemoney.model.SearchHistory;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.model.Zma;
 import com.tudouni.makemoney.utils.upload.UploadInfo;
 import com.tudouni.makemoney.widget.versionUpdate.Upinfo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -130,8 +130,8 @@ public interface CommonApi {
     @FormUrlEncoded
     @POST(NetConfig.ZMXY_CALL)
     Observable<Result<String>> zmxyCall(@Field("idNumber") String idNumber,
-                                       @Field("realname") String realname,
-                                       @Field("bizNo") String bizNo);
+                                        @Field("realname") String realname,
+                                        @Field("bizNo") String bizNo);
 
     @POST(NetConfig.GETUSERINFO)
     Observable<Result<User>> getUserInfo();
@@ -360,4 +360,19 @@ public interface CommonApi {
 
     @GET("zzshop/income/top_economizes")
     Observable<Result<List<EarningsRank>>> loadSavingsRank(@Query("top") int top);
+    /**
+     * 九宫格商品推荐
+     *
+     * @return
+     */
+    @POST(NetConfig.NINE_RECOMMEND)
+    Observable<Result<List<NineRecommendBean>>> getNineRecommend();
+
+    /**
+     * 九宫格商品推荐 分享 图片链接
+     *
+     * @return
+     */
+    @POST(NetConfig.NINE_RECOMMEND_SHARE_DATA)
+    Observable<Result<List<String>>> getNineRecommendShareData(@Body RequestNineRecommendShareBean requestNineRecommendShareBean);
 }

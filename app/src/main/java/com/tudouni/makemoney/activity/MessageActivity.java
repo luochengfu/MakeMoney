@@ -166,9 +166,10 @@ public class MessageActivity extends AppCompatActivity {
                     if (position < mDataForGsys.size())
                         mDataForGsys.remove(position);
                     else
-                        mDataForSys.remove(position);
+                        mDataForSys.remove(position - mDataForGsys.size());
                     mMessageAdapter.removeIteam(position);
                 }
+                deletePositionArray.clear();
             }
 
             @Override

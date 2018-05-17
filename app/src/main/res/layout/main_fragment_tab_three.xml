@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/color_F7F7F7"
     android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
 
@@ -14,5 +14,6 @@
     <com.github.jdsjlzx.recyclerview.LRecyclerView
         android:id="@+id/three_tab_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:overScrollMode="never" />
 </LinearLayout>
