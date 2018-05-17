@@ -12,8 +12,10 @@ import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.interfaces.IActionListener;
 import com.tudouni.makemoney.interfaces.IItemClickListener;
@@ -29,8 +31,7 @@ import java.util.List;
  * Created by Administrator on 2018/4/25 0025.
  */
 
-public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.FoundViewHolder>
-{
+public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.FoundViewHolder> {
     private Context mContext;
     private List<FoundTopicBean> mDatas = new ArrayList<>();
     private IItemClickListener mItemClickListener;
@@ -38,7 +39,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.FoundViewHol
 
     public TopicAdapter(Context context) {
         mContext = context;
-        width = (ScreenUtils.getScreenWidth(context) - ScreenUtils.dp2px(context,20)) / 2;
+        width = (ScreenUtils.getScreenWidth(context)) / 2;
         heigh = width * 77 / 166;
     }
 
@@ -52,16 +53,18 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.FoundViewHol
     @Override
     public void onBindViewHolder(FoundViewHolder holder, int position) {
         FoundTopicBean itemBean = mDatas.get(position);
-        holder.itemIV.setLayoutParams(new FrameLayout.LayoutParams(width ,heigh));
+//        holder.itemIV.setLayoutParams(new LinearLayout.LayoutParams(width, heigh));
+        holder.itemIV.getLayoutParams().height = heigh;
 //        holder.mCardView.setCardBackgroundColor(mContext.getResources().getColor(R.color.province_line_border));
 
-        GlideUtil.getInstance().loadImage(mContext,itemBean.getImageUrl(),holder.itemIV,R.mipmap.found_default_banner);
+//        GlideUtil.getInstance().loadImage(mContext, itemBean.getImageUrl(), holder.itemIV, R.mipmap.found_default_banner);
+        Glide.with(mContext).load(itemBean.getImageUrl()).into(holder.itemIV);
         holder.itemIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(null != mItemClickListener) {
-                    String url = itemBean.getUrl() + "?title="+itemBean.getTitle();
-                    if(itemBean.getHasSubTopic() == 1) {
+                if (null != mItemClickListener) {
+                    String url = itemBean.getUrl() + "?title=" + itemBean.getTitle();
+                    if (itemBean.getHasSubTopic() == 1) {
                         url = url + "&id=" + itemBean.getId();
                     }
                     mItemClickListener.action(url);
@@ -93,14 +96,12 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.FoundViewHol
         notifyDataSetChanged();
     }
 
-    public static class FoundViewHolder extends RecyclerView.ViewHolder
-    {
+    public static class FoundViewHolder extends RecyclerView.ViewHolder {
         public ImageView itemIV;
-        public CardView mCardView;
+
         public FoundViewHolder(View itemView) {
             super(itemView);
             this.itemIV = (ImageView) itemView.findViewById(R.id.found_item_iv);
-            this.mCardView = (CardView) itemView.findViewById(R.id.cardview_layout);
         }
     }
 

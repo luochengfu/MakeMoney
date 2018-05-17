@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +37,7 @@ import com.tudouni.makemoney.view.CenterLoadingView;
 import com.tudouni.makemoney.view.MZBannerViewHolder;
 import com.tudouni.makemoney.view.MineRefreshHeader;
 import com.tudouni.makemoney.view.MyTitleBar;
+import com.tudouni.makemoney.view.RecyclerViewDivider;
 import com.tudouni.makemoney.widget.downLoad.DownloadItem;
 import com.tudouni.makemoney.widget.downLoad.DownloadManager;
 import com.tudouni.makemoney.widget.sharePart.ShareWindow_v3;
@@ -123,26 +126,6 @@ public class MainTabThreeFragment extends BaseFragment {
         mLRecyclerView.setAdapter(mLRecyclerViewAdapter);
         //去掉footview
         mLRecyclerViewAdapter.removeFooterView();
-        mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-//                Intent intent = new Intent(getActivity(), H5Activity.class);
-//                try {
-//                    String oldUrl = mAdapter.getUrl(position);
-//                    if(oldUrl == null)
-//                        return;
-//                    String url = URLEncoder.encode(oldUrl,"utf-8");
-//                    url = url.replaceAll("%3D","=").replaceAll("%3A",":").
-//                            replaceAll("%2F","\\/").replaceAll("%3F","?").
-//                            replaceAll("%26","&").replaceAll("%25","%")
-//                            .replaceAll("%23","#").replaceAll("%2F ","\\+").replaceAll("\\+",  "%20");
-//                    intent.putExtra("url", url);
-//                    startActivity(intent);
-//                } catch (UnsupportedEncodingException e) {
-//                    e.printStackTrace();
-//                }
-            }
-        });
     }
 
     private void initBanner() {
@@ -158,10 +141,7 @@ public class MainTabThreeFragment extends BaseFragment {
         mTopticAdapter = new TopicAdapter(getContext());
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mRecyclerView.setAdapter(mTopticAdapter);
-        mRecyclerView.addItemDecoration(mItemDecoration);
-
-        mLRecyclerView.addItemDecoration(mItemDecoration2);
-
+        mRecyclerView.addItemDecoration(new RecyclerViewDivider(1));
         mTopticAdapter.setItemClickListener(new IItemClickListener() {
             @Override
             public void action(String url) {
@@ -183,7 +163,7 @@ public class MainTabThreeFragment extends BaseFragment {
             }
         });
 
-        int height = ScreenUtils.getScreenWidth(getContext()) * 102 / 187 + ScreenUtils.dp2px(getContext(), 8);
+        int height = ScreenUtils.getScreenWidth(getContext()) * 177 / 375 + ScreenUtils.dp2px(getContext(), 8);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
         mBanner.setLayoutParams(params);
     }
@@ -212,8 +192,8 @@ public class MainTabThreeFragment extends BaseFragment {
                         mHeadImageView.setVisibility(View.VISIBLE);
                         mBanner.setVisibility(View.GONE);
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                                ScreenUtils.getScreenWidth(getContext()) * 102 / 187 + ScreenUtils.dp2px(getContext(), 8));
-                        params.setMargins(0, 0, 0, ScreenUtils.dp2px(getContext(), 10));
+                                ScreenUtils.getScreenWidth(getContext()) * 177 / 375 + ScreenUtils.dp2px(getContext(), 8));
+//                        params.setMargins(0, 0, 0, ScreenUtils.dp2px(getContext(), 10));
                         mHeadImageView.setLayoutParams(params);
 
                         mHeadImageView.setOnClickListener(new View.OnClickListener() {
@@ -288,6 +268,7 @@ public class MainTabThreeFragment extends BaseFragment {
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
             outRect.bottom = ScreenUtils.dp2px(getContext(), 8);
+            outRect.top = 0;
         }
     };
 }

@@ -130,7 +130,6 @@ public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.FoundViewHol
                         manager.setDownFileCallBack(new DownFileCallBack() {
                             @Override
                             public void onFinish() {
-                                ToastUtil.show("分享图片下载完成！");
                                 if (handler != null) {
                                     List<String> sharePath = new ArrayList<>();
                                     for (String url : recommendTopicBeans)

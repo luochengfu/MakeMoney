@@ -1,6 +1,7 @@
 package com.tudouni.makemoney.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +11,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tudouni.makemoney.R;
+import com.tudouni.makemoney.activity.H5Activity;
 import com.tudouni.makemoney.model.NineRecommendGoodsBean;
+import com.tudouni.makemoney.myApplication.MyApplication;
+import com.tudouni.makemoney.network.NetConfig;
 import com.tudouni.makemoney.utils.ScreenUtils;
+import com.tudouni.makemoney.utils.TDLog;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.TuDouTextUtil;
 import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
@@ -31,8 +36,8 @@ public class NineRevommendGoodsLayout extends LinearLayout implements View.OnCli
     private LinearLayout mThurdContetnLy;//第三行容器
     private int itemSize;
     private int margenSize;
-    private int margenSizeDp = 10;//本布局Margen
-    private int parentMargenSizeDp = 20;//父布局Margen
+    private int margenSizePx = 0;//本布局Margen
+    private int parentMargenSizePx = 20;//父布局Margen
 
     private List<NineRecommendGoodsBean> mData;
 
@@ -55,8 +60,10 @@ public class NineRevommendGoodsLayout extends LinearLayout implements View.OnCli
     }
 
     private void initView() {
-        margenSize = ScreenUtils.dp2px(context, margenSizeDp);
-        itemSize = (ScreenUtils.getScreenWidth(context) - ScreenUtils.dp2px(context, parentMargenSizeDp + margenSizeDp * 2)) / 3;
+        margenSizePx = (int) context.getResources().getDimension(R.dimen.nine_remommend_goods_margen) * 2;
+        parentMargenSizePx = (int) context.getResources().getDimension(R.dimen.found_item_padding) * 2;
+        margenSize = margenSizePx / 2;
+        itemSize = (ScreenUtils.getScreenWidth(context) - parentMargenSizePx - margenSizePx) / 3;
         mView = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.nine_recommend_goods_layout11, null);
         mFristContetnLy = (LinearLayout) mView.findViewById(R.id.frist_content_ly);
         mSecondContetnLy = (LinearLayout) mView.findViewById(R.id.second_content_ly);
@@ -114,8 +121,8 @@ public class NineRevommendGoodsLayout extends LinearLayout implements View.OnCli
                 linearLayout = mThurdContetnLy;
             layoutParams.setMargins(((i % 3 == 1) ? margenSize : 0), 0, ((i % 3 == 1) ? margenSize : 0), 0);
             RelativeLayout view = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.item_nine_recommend_goods_layout, null);
+            view.setTag(i);
             view.setOnClickListener(this);
-            view.getTag(i);
             view.setLayoutParams(layoutParams);
             GlideUtil.getInstance().loadImage(context, item.getPicurl(), ((ImageView) view.getChildAt(0)), R.mipmap.ic_launcher);
             TuDouTextUtil.setTextToTextView(((TextView) ((LinearLayout) view.getChildAt(1)).getChildAt(0)), "¥" + item.getPrice());
@@ -127,7 +134,17 @@ public class NineRevommendGoodsLayout extends LinearLayout implements View.OnCli
 
     @Override
     public void onClick(View v) {
-//        int position = (Integer) v.getTag();
+        int position = (int) v.getTag();
+        NineRecommendGoodsBean nineRecommendGoodsBean = mData.get(position);
         ToastUtil.show("点击商品");
+
+        Intent intent = new Intent(context, H5Activity.class);
+        String url = NetConfig.getBaseTuDouNiH5Url() + "html/detail.html" + "?uid=" + MyApplication.getLoginUser().getUid()
+                + "&token=" + MyApplication.getLoginUser().getToken() + "&unionid=" +
+                MyApplication.getLoginUser().getUnionid() + "&itemid=" + nineRecommendGoodsBean.getItemid()
+                + "&source=" + nineRecommendGoodsBean.getSource();
+        intent.putExtra("url", url);
+        TDLog.e(url);
+        context.startActivity(intent);
     }
 }
