@@ -378,6 +378,10 @@ public class CommonScene extends RetrofitUtils {
         setSubscribe(commonApi.loadEarningsRank(top), observer);
     }
 
+    public static void loadSavingsRank(int top, BaseObserver<List<EarningsRank>> observer) {
+        setSubscribe(commonApi.loadSavingsRank(top), observer);
+    }
+
 
 
 

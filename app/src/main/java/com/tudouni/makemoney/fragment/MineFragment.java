@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.activity.MyEarningsActivity;
+import com.tudouni.makemoney.activity.MySavingsActivity;
 import com.tudouni.makemoney.model.AgentInfo;
 import com.tudouni.makemoney.model.MessageResponsBean;
 import com.tudouni.makemoney.model.User;
@@ -200,8 +201,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(), MyEarningsActivity.class));
                 break;
             case R.id.ly_tv_economizes: //我省的钱
-                statisticsType = "me_tran";
-                ForwardUtils.target(getActivity(), Constants.h5_savemoney + para);
+//                statisticsType = "me_tran";
+//                ForwardUtils.target(getActivity(), Constants.h5_savemoney + para);
+                startActivity(new Intent(getActivity(), MySavingsActivity.class));
                 break;
             case R.id.ly_shop_level://我的等级
             case R.id.ly_top_shop_level:

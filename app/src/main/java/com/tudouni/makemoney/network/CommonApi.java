@@ -357,4 +357,7 @@ public interface CommonApi {
 
     @GET("zzshop/income/top_income")
     Observable<Result<List<EarningsRank>>> loadEarningsRank(@Query("top") int top);
+
+    @GET("zzshop/income/top_economizes")
+    Observable<Result<List<EarningsRank>>> loadSavingsRank(@Query("top") int top);
 }
