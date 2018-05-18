@@ -410,6 +410,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void OnFail(int code, String err) {
                 ToastUtil.show(err + "（" + code + "）");
+                loadingDialog.dismiss();
             }
         });
     }
