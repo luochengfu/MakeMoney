@@ -10,8 +10,6 @@ import com.tudouni.makemoney.activity.FaceToFaceActivity;
 import com.tudouni.makemoney.activity.H5Activity;
 import com.tudouni.makemoney.activity.InvitationDouFenActivity;
 import com.tudouni.makemoney.activity.realname.IdentificationActivity;
-import com.tudouni.makemoney.activity.realname.RealTelBandingActivity;
-import com.tudouni.makemoney.activity.realname.RealnameActivity;
 import com.tudouni.makemoney.activity.realname.RealnameActivity2;
 import com.tudouni.makemoney.activity.realname.RealnameFinalActivity;
 import com.tudouni.makemoney.activity.LoginActivity;
@@ -19,7 +17,6 @@ import com.tudouni.makemoney.activity.MainActivity;
 import com.tudouni.makemoney.activity.MessageActivity;
 import com.tudouni.makemoney.activity.SettingActivity;
 import com.tudouni.makemoney.activity.UserInfoActivity;
-import com.tudouni.makemoney.activity.WebvewRefreshActivity;
 import com.tudouni.makemoney.activity.withdrawmoney.IncomeActivity;
 import com.tudouni.makemoney.activity.withdrawmoney.TelAuthenticationActivity;
 import com.tudouni.makemoney.activity.withdrawmoney.WithdrawMoneyActivity;
@@ -59,17 +56,11 @@ public class ForwardUtils {
             } else if (url.startsWith(Constants.ACCOUNT_SECURITY)) {
                 Intent intent = new Intent(oriActivity, AccountSecurityActivity.class);
                 toIntent(oriActivity, url, intent);
-            } else if (url.equals(Constants.REALNAME)) {
-                Intent intent = new Intent(oriActivity, RealnameActivity.class);
-                toIntent(oriActivity, url, intent);
             } else if (url.equals(Constants.REALNAME_FINAL)) {
                 Intent intent = new Intent(oriActivity, RealnameFinalActivity.class);
                 toIntent(oriActivity, url, intent);
             } else if (url.equals(Constants.UPLOAD_IDCARD)) {
                 Intent intent = new Intent(oriActivity, IdentificationActivity.class);
-                toIntent(oriActivity, url, intent);
-            } else if (url.equals(Constants.REALNAME_TEL_BANDING)) {
-                Intent intent = new Intent(oriActivity, RealTelBandingActivity.class);
                 toIntent(oriActivity, url, intent);
             } else if (url.equals(Constants.REALNAME2)) {
                 Intent intent = new Intent(oriActivity, RealnameActivity2.class);

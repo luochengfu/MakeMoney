@@ -9,6 +9,10 @@
         android:layout_height="21dp"
         android:layout_marginTop="33dp"
         android:gravity="center_horizontal|bottom">
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="@drawable/check"/>
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
