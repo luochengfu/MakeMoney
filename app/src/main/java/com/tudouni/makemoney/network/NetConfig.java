@@ -37,7 +37,8 @@ public class NetConfig {
     public static final String PAY_STATUS = "/zzshop/auth/pay/status";
     public static final String UNBUNDTHREE = "/zzshop/auth/user/unBindThird";
     public static final String BINDACCCOUNT = "/zzshop/auth/user/bindAccount";
-    public static final String ALIAUTH = "/auth/alipay/info";
+    public static final String ALIAUTH = "/zzshop/auth/alipay/info";
+    public static final String BINDALIPAY = "/zzshop/auth/pay/bindAlipay";
 
     public static final String VERIFPWD = "/zzshop/auth/user/verifPwd";
     public static final String USERNAME_PASSWOED_LOGIN = "/zzshop/loginPwd";

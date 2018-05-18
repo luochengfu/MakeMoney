@@ -14,6 +14,8 @@ import com.tudouni.makemoney.model.EarningsBean;
 import com.tudouni.makemoney.model.EarningsRank;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.NetConfig;
+import com.tudouni.makemoney.utils.Constants;
+import com.tudouni.makemoney.utils.ForwardUtils;
 import com.tudouni.makemoney.viewModel.MyEarningsViewModel;
 import com.tudouni.makemoney.viewModel.VMResultCallback;
 
@@ -86,6 +88,7 @@ public class MyEarningsActivity extends BaseActivity {
 
         mHeaderMyEarningsBinding.tvRecord.setOnClickListener(l -> {
             //提现记录
+            ForwardUtils.target(MyEarningsActivity.this, Constants.NATIVE_INCOME);
         });
 
     }

@@ -117,7 +117,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         ll_onlineService = (LinearLayout) findViewById(R.id.ll_onlineService);
         ll_onlineService.setOnClickListener(this);
         llAppVersion.setOnClickListener(this);
-        if (!MyApplication.getLoginUser().getRole().equals("0")) {
+        if (MyApplication.getLoginUser().getRole().equals("1")) {
             tvRealnameStatus.setText("已认证");
         }
     }
@@ -132,29 +132,17 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.llAccount: //账号与安全
-                if (BuildConfig.DEBUG) {
-                    ForwardUtils.target(SettingActivity.this, Constants.WITHDRAW_MONEY);
-                } else {
-                    ForwardUtils.target(SettingActivity.this, Constants.ACCOUNT_SECURITY);
-                }
+                ForwardUtils.target(SettingActivity.this, Constants.ACCOUNT_SECURITY);
                 break;
             case R.id.llRealname: //实名认证
-                if (MyApplication.getLoginUser().getRole().equals("0")) {
-                    ForwardUtils.target(SettingActivity.this, Constants.REALNAME2);
+                if (MyApplication.getLoginUser().getRole().equals("1")) {
+                    ForwardUtils.target(SettingActivity.this, Constants.REALNAME_FINAL);
                 } else {
-                    if (BuildConfig.DEBUG) {
-                        ForwardUtils.target(SettingActivity.this, Constants.REALNAME2);
-                    } else {
-                        ForwardUtils.target(SettingActivity.this, Constants.REALNAME_FINAL);
-                    }
+                    ForwardUtils.target(SettingActivity.this, Constants.REALNAME2);
                 }
                 break;
             case R.id.llClear://清理缓存
-                if (BuildConfig.DEBUG) {
-                    ForwardUtils.target(SettingActivity.this, Constants.NATIVE_INCOME);
-                } else {
-                    clearAppCache();
-                }
+                clearAppCache();
                 break;
             case R.id.llAboutUs: //关于我们
                 ForwardUtils.target(SettingActivity.this, Constants.ABOUTUS);

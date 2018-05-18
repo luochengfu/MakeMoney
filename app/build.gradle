@@ -154,6 +154,7 @@ dependencies {
     compile 'cn.jiguang.sdk:jcore:1.1.9'
     compile 'com.github.pinguo-zhouwei:MZBannerView:v2.0.1'
     compile project(path: ':QrCodeModel:lib-zxing')
+    implementation files('libs/alipaySdk.jar')
     implementation files('libs/umeng-debug-1.0.0.jar')
     implementation files('libs/umeng-share-core-6.9.1.jar')
     implementation files('libs/umeng-share-QQ-simplify-6.9.1.jar')
