@@ -109,6 +109,7 @@ public class WithdrawMoneyActivity extends BaseActivity {
         tvAllNumber.setOnClickListener(view -> {
             DecimalFormat df = new DecimalFormat("##.##");
             etMoneyNumber.setText(df.format(allNumber));
+            etMoneyNumber.setSelection(etMoneyNumber.getText().length());
         });
 
         tvNextStep.setOnClickListener(view -> {
