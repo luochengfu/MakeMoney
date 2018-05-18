@@ -123,7 +123,12 @@ public class MessageActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         deleteMsg();
                     }
-                }, null);
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deletePositionArray.remove((Integer) position);
+                    }
+                });
             }
         });
         mRcMessage.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -161,7 +166,7 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void OnSuccess(Object o) {
                 ToastUtil.show("删除成功！");
-                for (Integer position : deletePositionArray) {
+                for (int position : deletePositionArray) {
                     mData.remove(position);
                     if (position < mDataForGsys.size())
                         mDataForGsys.remove(position);
