@@ -336,6 +336,23 @@
         <activity android:name=".activity.search.SearchActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.MyEarningsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.MySavingsActivity" android:screenOrientation="portrait"/>
+
+        <!-- =========================支付宝 Start========================= -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <!-- =========================支付宝 End========================= -->
     </application>
 
 </manifest>

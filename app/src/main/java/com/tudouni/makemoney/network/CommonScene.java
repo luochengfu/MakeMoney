@@ -196,6 +196,13 @@ public class CommonScene extends RetrofitUtils {
     }
 
     /**
+     * 支付宝保存授权
+     */
+    public static void bindAlipay(String authCode, BaseObserver<String> observer) {
+        setSubscribe(commonApi.bindAlipay(authCode), observer);
+    }
+
+    /**
      * 修改密码
      */
     public static void verifyPassword(String password, BaseObserver<String> observer) {

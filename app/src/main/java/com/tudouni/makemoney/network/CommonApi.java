@@ -184,6 +184,10 @@ public interface CommonApi {
     Observable<Result<AliAuth>> aliAuth();
 
     @FormUrlEncoded
+    @POST(NetConfig.BINDALIPAY)
+    Observable<Result<String>> bindAlipay(@Field("authCode") String authCode);
+
+    @FormUrlEncoded
     @POST(NetConfig.VERIFPWD)
     Observable<Result<String>> verifyPassword(@Field("password") String password);
 

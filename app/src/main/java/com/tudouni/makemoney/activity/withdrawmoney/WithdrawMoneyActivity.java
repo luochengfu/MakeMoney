@@ -112,11 +112,19 @@ public class WithdrawMoneyActivity extends BaseActivity {
         });
 
         tvNextStep.setOnClickListener(view -> {
-            String phoneNumber = etMoneyNumber.getText().toString().trim();
-            Intent intent = new Intent(WithdrawMoneyActivity.this, TelAuthenticationActivity.class);
-            intent.putExtra("moneyNumber", phoneNumber);
-            WithdrawMoneyActivity.this.startActivity(intent);
-            finish();
+            try {
+                String moneyNumber = etMoneyNumber.getText().toString().trim();
+                double doubleNumber = Double.parseDouble(moneyNumber);
+                if (doubleNumber < 10.0) {
+                    Toast.makeText(WithdrawMoneyActivity.this, "提现金额应该大于10元", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Intent intent = new Intent(WithdrawMoneyActivity.this, TelAuthenticationActivity.class);
+                intent.putExtra("moneyNumber", moneyNumber);
+                WithdrawMoneyActivity.this.startActivity(intent);
+                finish();
+            } catch (Exception e) {}
         });
     }
 
