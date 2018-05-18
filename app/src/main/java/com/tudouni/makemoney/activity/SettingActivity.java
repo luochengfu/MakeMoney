@@ -64,6 +64,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onResume() {
         super.onResume();
+        if (MyApplication.getLoginUser().getRole().equals("1")) {
+            tvRealnameStatus.setText("已认证");
+        }
     }
 
     private void initCache() {
@@ -117,9 +120,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         ll_onlineService = (LinearLayout) findViewById(R.id.ll_onlineService);
         ll_onlineService.setOnClickListener(this);
         llAppVersion.setOnClickListener(this);
-        if (MyApplication.getLoginUser().getRole().equals("1")) {
-            tvRealnameStatus.setText("已认证");
-        }
     }
 
     @Override

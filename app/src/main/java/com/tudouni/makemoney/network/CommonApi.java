@@ -7,6 +7,7 @@ import com.tudouni.makemoney.model.AliAuth;
 import com.tudouni.makemoney.model.AppConfig;
 import com.tudouni.makemoney.model.Banner;
 import com.tudouni.makemoney.model.BindInfo;
+import com.tudouni.makemoney.model.BindPayInfo;
 import com.tudouni.makemoney.model.BindUserBean;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.model.DeleteSyaMsgRequestBean;
@@ -409,4 +410,7 @@ public interface CommonApi {
 
     @GET("/zzshop/income/economizes")
     Observable<Result<SavingsProfile>> loadSavingsProfile(@Query("uid") String uid);
+
+    @GET("/zzshop/auth/pay/status")
+    Observable<Result<BindPayInfo>> checkBindAlipay(@Query("uid") String uid, @Query("token") String token);
 }

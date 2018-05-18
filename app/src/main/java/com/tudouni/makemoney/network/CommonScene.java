@@ -8,6 +8,7 @@ import com.tudouni.makemoney.model.AliAuth;
 import com.tudouni.makemoney.model.AppConfig;
 import com.tudouni.makemoney.model.Banner;
 import com.tudouni.makemoney.model.BindInfo;
+import com.tudouni.makemoney.model.BindPayInfo;
 import com.tudouni.makemoney.model.BindUserBean;
 import com.tudouni.makemoney.model.Category;
 import com.tudouni.makemoney.model.DeleteSyaMsgRequestBean;
@@ -445,6 +446,12 @@ public class CommonScene extends RetrofitUtils {
     public static void loadSavingsProfile(String uid, BaseObserver<SavingsProfile> observer){
         setSubscribe(commonApi.loadSavingsProfile(uid),observer);
     }
+
+    public static void checkBindAlipay(String uid, BaseObserver<BindPayInfo> observer){
+        setSubscribe(commonApi.checkBindAlipay(uid,MyApplication.getLoginUser().getToken()),observer);
+    }
+
+
 
 
 

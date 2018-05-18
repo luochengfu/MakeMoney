@@ -30,22 +30,7 @@ public class RealnameFinalActivity extends BaseActivity {
             @Override
             public void OnSuccess(User user) {
                 realname.setText(user.getRealname());
-                String idNumber = user.getIdNumber();
-                if (idNumber != null && idNumber.length() == 18) {
-                    idNumber = idNumber.substring(0, 3)
-                            + "***********" + idNumber.substring(14);
-
-                }
-
-                if (idNumber != null && idNumber.length() == 15) {
-                    idNumber = idNumber.substring(0, 3)
-                            + "********" + idNumber.substring(11);
-
-                }
-
-                if (idNumber != null) {
-                    etCode.setText(idNumber);
-                }
+                etCode.setText(user.getIdNumber());
             }
 
             @Override

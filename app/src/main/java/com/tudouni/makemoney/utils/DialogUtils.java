@@ -1,5 +1,6 @@
 package com.tudouni.makemoney.utils;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.Gravity;
@@ -10,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.tudouni.makemoney.R;
+import com.wang.avi.AVLoadingIndicatorView;
 
 
 /**
@@ -74,6 +76,23 @@ public class DialogUtils {
         if (isShow)
             dialog.show();
         return dialog;
+    }
+
+    public static Dialog showVerify(Activity activity,String title,String okMsg ,String cancelMsg){
+        Dialog sDialog =  new Dialog(activity);
+        sDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view  = inflater.inflate(R.layout.dialog_verify,null);
+        sDialog.setContentView(view);
+        Window window = sDialog.getWindow();
+        if (window != null) {
+            window.setBackgroundDrawableResource(android.R.color.transparent);
+            int layoutSize = (int) ScreenUtils.dp2px(activity, 110);
+            window.setLayout(layoutSize,layoutSize);
+        }
+        sDialog.setCancelable(false);
+        sDialog.show();
+        return sDialog;
     }
 
 

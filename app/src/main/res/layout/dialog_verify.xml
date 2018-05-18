@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/shap_progress_bg"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:layout_marginTop="40dp"
+            android:text="您未实名认证"
+            android:id="@+id/tv_title"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/tv_content"
+            android:text="为了您的资金安全请先实名认证"
+            android:textSize="12sp"
+            android:textColor="#666666"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/divider"
+            android:layout_height="1px"/>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="56dp">
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="#999999"
+                android:textSize="15sp"
+                android:text="取消"
+                android:gravity="center"
+                android:layout_height="match_parent" />
+
+            <View
+                android:layout_width="1px"
+                android:background="@drawable/divider"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:id="@+id/tv_ok"
+                android:textColor="#f23468"
+                android:textSize="15sp"
+                android:text="去认证"
+                android:gravity="center"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+</layout>
