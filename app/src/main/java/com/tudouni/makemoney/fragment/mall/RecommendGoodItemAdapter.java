@@ -1,6 +1,7 @@
 package com.tudouni.makemoney.fragment.mall;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -40,5 +41,7 @@ public class RecommendGoodItemAdapter extends BaseRecyclerViewBindingAdapter<Mal
         recommendGoodBinding.rlImg.setLayoutParams(layoutParams);
         recommendGoodBinding.setItem(this.data.get(position));
         recommendGoodBinding.executePendingBindings();
+
+        recommendGoodBinding.tvOriginPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);
     }
 }

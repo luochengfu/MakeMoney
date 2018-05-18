@@ -12,22 +12,22 @@ import com.tudouni.makemoney.databinding.HeaderSavingsBinding;
 import com.tudouni.makemoney.model.EarningsRank;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseObserver;
+import com.tudouni.makemoney.viewModel.SavingsViewModel;
 
 import java.util.List;
 
 public class MySavingsActivity extends BaseActivity {
-    private ActivitySavingsBinding mSavingsBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSavingsBinding = DataBindingUtil.setContentView(this, R.layout.activity_savings);
+        ActivitySavingsBinding savingsBinding = DataBindingUtil.setContentView(this, R.layout.activity_savings);
 
         EarningsRankAdapter earningsRankAdapter = new EarningsRankAdapter(getLayoutInflater());
         LRecyclerViewAdapter lRecyclerViewAdapter = new LRecyclerViewAdapter(earningsRankAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
 
-        mSavingsBinding.lrvSavings.setLayoutManager(linearLayoutManager);
-        mSavingsBinding.lrvSavings.setAdapter(lRecyclerViewAdapter);
+        savingsBinding.lrvSavings.setLayoutManager(linearLayoutManager);
+        savingsBinding.lrvSavings.setAdapter(lRecyclerViewAdapter);
 
         HeaderSavingsBinding headerSavingsBinding = DataBindingUtil.inflate(getLayoutInflater(),R.layout.header_savings,null,false);
         lRecyclerViewAdapter.addHeaderView(headerSavingsBinding.getRoot());
@@ -39,6 +39,11 @@ public class MySavingsActivity extends BaseActivity {
                 earningsRankAdapter.replaceData(earningsRanks);
             }
         });
+
+        SavingsViewModel savingsViewModel = new SavingsViewModel();
+        savingsViewModel.loadSavings();
+
+        headerSavingsBinding.setSavings(savingsViewModel);
 
 
     }
