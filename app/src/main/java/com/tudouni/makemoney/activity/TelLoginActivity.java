@@ -178,6 +178,8 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
         } else if (pageType.equals("8")) {
             mInvitationCodeLy.setVisibility(View.VISIBLE);
             mLoginLayout.setVisibility(View.GONE);
+            tvLogin.setVisibility(View.GONE);
+            title_bar.setMiddleText("请输入邀请码");
         }
         focusAndUnFocus();
 
@@ -688,9 +690,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
 //                }
                 //判断有没有绑定上级
                 if (TextUtils.isEmpty(user.getParent())) {
-                    //绑定邀请码
-                    mInvitationCodeLy.setVisibility(View.VISIBLE);
-                    mLoginLayout.setVisibility(View.GONE);
+                    changInputInvitationCodePage();
                 } else {
                     startActivity(new Intent(TelLoginActivity.this, SplashActivity.class));
                     finish();
@@ -730,6 +730,18 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
         });
     }
 
+    /**
+     * 切换为输入邀请码界面
+     */
+    private void changInputInvitationCodePage() {
+        mInvitationCodeLy.setVisibility(View.VISIBLE);
+        mLoginLayout.setVisibility(View.GONE);
+        mOtherLoginLy.setVisibility(View.GONE);
+        tvLogin.setText(getResources().getString(R.string.sure));
+        title_bar.setMiddleText("请输入邀请码");
+        pageType = "8";
+    }
+
 
     /**
      * 密码登录
@@ -760,8 +772,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 //判断有没有绑定上级
                 if (TextUtils.isEmpty(user.getParent())) {
                     //绑定邀请码
-                    mInvitationCodeLy.setVisibility(View.VISIBLE);
-                    mLoginLayout.setVisibility(View.GONE);
+                    changInputInvitationCodePage();
                 } else {
                     Intent intent = new Intent(TelLoginActivity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
