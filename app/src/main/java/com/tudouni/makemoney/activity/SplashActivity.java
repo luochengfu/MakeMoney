@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.myApplication.MyApplication;
@@ -22,7 +23,7 @@ public class SplashActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0){
+        if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0) {
             finish();
             return;
         }
@@ -60,7 +61,8 @@ public class SplashActivity extends Activity {
     }
 
     private void nextPage() {
-        if (null != MyApplication.getLoginUser() && CommonUtil.isNetworkAvailable(mContext)) {
+        //没有上级跳转到登录界面
+        if (null != MyApplication.getLoginUser() && CommonUtil.isNetworkAvailable(mContext) && !TextUtils.isEmpty(MyApplication.getLoginUser().getParent())) {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
             finish();
         } else {  //跳转到登录

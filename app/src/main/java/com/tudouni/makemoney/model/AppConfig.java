@@ -51,7 +51,7 @@ public class AppConfig implements Serializable {
             return true;
         if (unvalidInviteShareQcodeDomain != null || !unvalidInviteShareQcodeDomain.isEmpty()) {
             for (String s : unvalidInviteShareQcodeDomain) {
-                if (url.startsWith(mInviteShareQcodeDomain)) {
+                if (url.startsWith(s)) {
                     back = true;
                     break;
                 }

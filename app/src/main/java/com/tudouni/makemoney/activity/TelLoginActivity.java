@@ -91,7 +91,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
     private int mLoginModeStatus = 2;//登录方式切换状态
     private String mPhoneNum;//手机号
 
-    private User userPre;//临时存储接口返回的用户信息
+//    private User userPre;//临时存储接口返回的用户信息
 
 
     @Override
@@ -183,7 +183,6 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
             mOtherLoginLy.setVisibility(View.GONE);
             title_bar.setMiddleText("请输入邀请码");
             tvLogin.setText(getResources().getString(R.string.sure));
-            userPre = (User) getIntent().getSerializableExtra("loginUser");
         }
         focusAndUnFocus();
 
@@ -409,7 +408,8 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void OnSuccess(Result result) {
                 ToastUtil.show("绑定成功");
-                MyApplication.saveLoginUser(userPre);
+                MyApplication.getLoginUser().setParent(etInvitCode.getText().toString());
+                MyApplication.saveLoginUser(MyApplication.getLoginUser());
                 startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
             }
 
@@ -686,12 +686,12 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 if (null != loadingDialog) {
                     loadingDialog.dismiss();
                 }
-                userPre = user;
+                saveLoginInfo(user);
                 //判断有没有绑定上级
                 if (TextUtils.isEmpty(user.getParent())) {
                     changInputInvitationCodePage();
                 } else {
-                    saveLoginInfo(userPre);
+
                     startActivity(new Intent(TelLoginActivity.this, SplashActivity.class));
                     finish();
                 }
@@ -717,6 +717,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
         tvLogin.setText(getResources().getString(R.string.sure));
         title_bar.setMiddleText("请输入邀请码");
         pageType = "8";
+        etInvitCode.setText("");
     }
 
 
@@ -745,13 +746,13 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 if (null != loadingDialog) {
                     loadingDialog.dismiss();
                 }
-                userPre = user;
+                MyApplication.saveLoginUser(user);
                 //判断有没有绑定上级
                 if (TextUtils.isEmpty(user.getParent())) {
                     //绑定邀请码
                     changInputInvitationCodePage();
                 } else {
-                    MyApplication.saveLoginUser(userPre);
+
                     Intent intent = new Intent(TelLoginActivity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
