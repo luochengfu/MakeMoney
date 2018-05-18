@@ -28,6 +28,8 @@ public class MySavingsActivity extends BaseActivity {
 
         savingsBinding.lrvSavings.setLayoutManager(linearLayoutManager);
         savingsBinding.lrvSavings.setAdapter(lRecyclerViewAdapter);
+        savingsBinding.lrvSavings.setPullRefreshEnabled(false);
+        savingsBinding.lrvSavings.setLoadMoreEnabled(false);
 
         HeaderSavingsBinding headerSavingsBinding = DataBindingUtil.inflate(getLayoutInflater(),R.layout.header_savings,null,false);
         lRecyclerViewAdapter.addHeaderView(headerSavingsBinding.getRoot());
