@@ -178,8 +178,9 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
         } else if (pageType.equals("8")) {
             mInvitationCodeLy.setVisibility(View.VISIBLE);
             mLoginLayout.setVisibility(View.GONE);
-            tvLogin.setVisibility(View.GONE);
+            mOtherLoginLy.setVisibility(View.GONE);
             title_bar.setMiddleText("请输入邀请码");
+            tvLogin.setText(getResources().getString(R.string.sure));
         }
         focusAndUnFocus();
 
