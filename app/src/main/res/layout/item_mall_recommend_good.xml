@@ -26,43 +26,16 @@
                 android:layout_height="wrap_content"
                 app:loadImage="@{item.pic_url}" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="#f23648"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="4dp"
-                    android:text="预估佣金"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="4dp"
-                    android:text="@{@string/rmb + item.calcCommission()}"
-                    android:textColor="#fce333"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
 
         </RelativeLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:padding="10dp"
-            android:background="@drawable/shape_stoke_mall_good"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="@drawable/shape_stoke_mall_good"
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -79,61 +52,111 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
 
-                <TextView
+                <LinearLayout
+                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{@string/tb_price + item.org_price}"
-                    android:textColor="#868686"
-                    android:textSize="12sp" />
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="￥"
+                            android:textColor="#fc5622"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{item.price}"
+                            android:textColor="#fc5622"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_origin_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{@string/tb_price + item.org_price}"
+                        android:textColor="#868686"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_width="80dp"
+                    android:layout_height="22dp"
                     android:layout_alignParentRight="true"
-                    android:text="@{item.calcSalesCount()}"
-                    android:textColor="#868686"
-                    android:textSize="12sp" />
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/ic_coupon"
+                    android:gravity="center_vertical|left"
+                    android:paddingLeft="12dp"
+                    android:text="@{@string/rmb + item.coupon_price + @string/fix2}"
+                    android:textColor="#fedaa0"
+                    android:textSize="11sp" />
+
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="10dp">
 
                 <LinearLayout
-                    android:layout_marginTop="10dp"
+                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/estimate_earnings_bg"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="￥"
-                        android:textColor="#fc5622"
-                        android:textSize="12sp" />
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:text="预估佣金"
+                        android:visibility="gone"
+                        android:textColor="#f23468"
+                        android:textSize="11sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{item.price}"
-                        android:textStyle="bold"
-                        android:textColor="#fc5622"
-                        android:textSize="14sp" />
+                        android:gravity="center"
+                        android:text="@{@string/commission + @string/rmb + item.calcCommission()}"
+                        android:textColor="#f23468"
+                        android:textSize="11sp" />
+
+
                 </LinearLayout>
 
 
                 <TextView
-                    android:layout_width="80dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/shape_month_sale_bg"
                     android:layout_alignParentRight="true"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/shape_coupon_bg"
-                    android:gravity="center"
-                    android:textSize="12sp"
                     android:padding="2dp"
-                    android:text="@{@string/mall_coupon + item.coupon_price + @string/fix2}"
-                    android:textColor="@color/white" />
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:text="@{item.calcSalesCount()}"
+                    android:textColor="#999999"
+                    android:textSize="11sp" />
+
+
             </RelativeLayout>
 
         </LinearLayout>

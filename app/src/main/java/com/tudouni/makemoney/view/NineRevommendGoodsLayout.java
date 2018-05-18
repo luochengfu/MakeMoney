@@ -110,7 +110,8 @@ public class NineRevommendGoodsLayout extends LinearLayout implements View.OnCli
     private void initData() {
         if (mData == null) return;
         LinearLayout linearLayout;
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(itemSize, itemSize);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(itemSize, itemSize);
+        LinearLayout.LayoutParams layoutParamsPadding = new LinearLayout.LayoutParams(itemSize + margenSize * 2, itemSize);
         for (int i = 0; i < mData.size(); i++) {
             NineRecommendGoodsBean item = mData.get(i);
             if (i < 3)
@@ -119,11 +120,12 @@ public class NineRevommendGoodsLayout extends LinearLayout implements View.OnCli
                 linearLayout = mSecondContetnLy;
             else
                 linearLayout = mThurdContetnLy;
-            layoutParams.setMargins(((i % 3 == 1) ? margenSize : 0), 0, ((i % 3 == 1) ? margenSize : 0), 0);
+//            layoutParams.setMargins(((i % 3 == 1) ? margenSize : 0), 0, ((i % 3 == 1) ? margenSize : 0), 0);
             RelativeLayout view = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.item_nine_recommend_goods_layout, null);
             view.setTag(i);
             view.setOnClickListener(this);
-            view.setLayoutParams(layoutParams);
+            view.setLayoutParams((i % 3 == 1) ? layoutParamsPadding : layoutParams);
+            view.setPadding(((i % 3 == 1) ? margenSize : 0), 0, ((i % 3 == 1) ? margenSize : 0), 0);
             GlideUtil.getInstance().loadImage(context, item.getPicurl(), ((ImageView) view.getChildAt(0)), R.mipmap.ic_launcher);
             TuDouTextUtil.setTextToTextView(((TextView) ((LinearLayout) view.getChildAt(1)).getChildAt(0)), "¥" + item.getPrice());
             linearLayout.addView(view);

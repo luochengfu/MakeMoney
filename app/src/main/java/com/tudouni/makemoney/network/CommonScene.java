@@ -23,6 +23,7 @@ import com.tudouni.makemoney.model.NineRecommendBean;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.RecommendTopicBean;
 import com.tudouni.makemoney.model.RequestNineRecommendShareBean;
+import com.tudouni.makemoney.model.SavingsProfile;
 import com.tudouni.makemoney.model.SearchHistory;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.model.Withdraw;
@@ -432,6 +433,10 @@ public class CommonScene extends RetrofitUtils {
 
     public static void loadSavingsRank(int top, BaseObserver<List<EarningsRank>> observer) {
         setSubscribe(commonApi.loadSavingsRank(top), observer);
+    }
+
+    public static void loadSavingsProfile(String uid, BaseObserver<SavingsProfile> observer){
+        setSubscribe(commonApi.loadSavingsProfile(uid),observer);
     }
 
 

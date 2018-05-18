@@ -110,6 +110,8 @@ public class MyApplication extends BaseApplication implements ClipboardUtil.OnPr
         if (ClipDescription.MIMETYPE_TEXT_PLAIN.equals(mimeType)) {
             mClipStr = mClipboard.coercePrimaryClipToText().toString();
         }
+
+        FileUtils.deleteFilesInDir(FileUtils.getDownloadTemporaryPath(null));
     }
 
     /**
