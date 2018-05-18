@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.tudouni.makemoney.interfaces.NoDoubleClickListener;
 import com.tudouni.makemoney.R;
+import com.tudouni.makemoney.model.Invite;
 import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.myApplication.MyApplication;
@@ -32,6 +33,7 @@ import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.CommonUtil;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.ValidateUtil;
+import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
 import com.tudouni.makemoney.view.CenterLoadingView;
 import com.tudouni.makemoney.widget.versionUpdate.UpdateAPKUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -277,13 +279,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         mShareAPI.deleteOauth(LoginActivity.this, share_media, null);
                         if (user.getUser() == null || user.getNewer()) {
                             skipTelephoneLogin(user, "6");
-                        } else if (null == user.getUser().getPhone() || "".equals(user.getUser().getPhone())) {//老用户没有手机号码
+                        } else if (TextUtils.isEmpty(user.getUser().getPhone())) {//老用户没有手机号码
                             skipTelephoneLogin(user, "7");
                         } else {
                             saveLoginInfo(user.getUser());
-                            //防止点击第三方登录取消在点击密码登录的功能
-                            startActivity(SplashActivity.createIntent(mContext));
-                            finish();
+                            //判断有没有绑定上级
+                            if (TextUtils.isEmpty(user.getUser().getParent())) {
+                                skipTelephoneLogin(user, "8");
+                            } else {
+                                //防止点击第三方登录取消在点击密码登录的功能
+                                startActivity(SplashActivity.createIntent(mContext));
+                                finish();
+                            }
                         }
                     }
 
@@ -302,7 +309,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         intent.putExtra("type", type);
         if (user != null)
             intent.putExtra("handleToken", user.getHandleToken());
-        if (type.equals("7"))
+        if (type.equals("7") || type.equals("8"))
             intent.putExtra("loginUser", user.getUser());
         startActivity(intent);
     }

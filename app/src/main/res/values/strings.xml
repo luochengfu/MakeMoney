@@ -14,6 +14,7 @@
     <string name="input_phone_number_hint">请输入手机号</string>
     <string name="password_login_input_hint">请输入密码</string>
     <string name="vcode">验证码</string>
+    <string name="invitation_code">邀请码</string>
     <string name="login">登录</string>
     <string name="login_qq">QQ</string>
     <string name="login_weixin">微信登录</string>

@@ -136,7 +136,6 @@ public class NineRevommendGoodsLayout extends LinearLayout implements View.OnCli
     public void onClick(View v) {
         int position = (int) v.getTag();
         NineRecommendGoodsBean nineRecommendGoodsBean = mData.get(position);
-        ToastUtil.show("点击商品");
 
         Intent intent = new Intent(context, H5Activity.class);
         String url = NetConfig.getBaseTuDouNiH5Url() + "html/detail.html" + "?uid=" + MyApplication.getLoginUser().getUid()
