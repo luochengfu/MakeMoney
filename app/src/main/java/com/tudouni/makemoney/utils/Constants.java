@@ -43,11 +43,9 @@ public class Constants {
     public static final String SHARE_INVISTOR = SHARE_H5_URL;
     public static final String MYINVITATION = BASE_PRE + "invisit";
     public static final String ACCOUNT_SECURITY = BASE_PRE + "sefaty";
-    public static final String REALNAME = BASE_PRE + "realname";
     public static final String REALNAME_FINAL = BASE_PRE + "realnameFinal";
     public static final String UPLOAD_IDCARD = BASE_PRE + "idcard";
     public static final String REALNAME2 = BASE_PRE + "realname2";
-    public static final String REALNAME_TEL_BANDING = BASE_PRE + "realnameTelBanding";
     public static final String ABOUTUS = BASE_H5_URL + "mycenter/contact.html";
     public static final String h5_loginXy = BASE_H5_URL + "/tudouni/html/puser.html";
     public static final String CONTACTUS = BASE_H5_URL + "/tudouni/html/contact.html";

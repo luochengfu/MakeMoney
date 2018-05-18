@@ -4,26 +4,19 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tudouni.makemoney.BuildConfig;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.activity.BaseActivity;
-import com.tudouni.makemoney.activity.realname.RealTelBandingActivity;
 import com.tudouni.makemoney.model.BindInfo;
-import com.tudouni.makemoney.model.User;
-import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.ColorUtil;
 import com.tudouni.makemoney.utils.InjectView;
-import com.tudouni.makemoney.utils.ValidateUtil;
 import com.tudouni.makemoney.view.CenterLoadingView;
 import com.tudouni.makemoney.view.ConfirmDialog;
 

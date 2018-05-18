@@ -18,7 +18,10 @@ import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.activity.BaseActivity;
+import com.tudouni.makemoney.activity.SubmitFinishActivity;
 import com.tudouni.makemoney.activity.UserInfoActivity;
+import com.tudouni.makemoney.activity.withdrawmoney.TelAuthenticationActivity;
+import com.tudouni.makemoney.activity.withdrawmoney.WithdrawMoneyActivity;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.ColorUtil;
@@ -231,6 +234,10 @@ public class IdentificationActivity extends BaseActivity {
             @Override
             public void OnSuccess(String s) {
                 dismissLoading();
+                Intent intent = new Intent(IdentificationActivity.this, SubmitFinishActivity.class);
+                intent.putExtra("title", "认证成功");
+                intent.putExtra("msg", "身份信息已提交，请等待工作人员审核");
+                IdentificationActivity.this.startActivity(intent);
                 finish();
             }
 
