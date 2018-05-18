@@ -82,6 +82,10 @@ public class ShareWindow_v3 extends BottomPushPopupWindow<Void> implements OnCli
         initViews();
     }
 
+    public void setmShare(Share mShare) {
+        this.mShare = mShare;
+    }
+
     private void initData() {
         int icno[] = {R.mipmap.share_wx, R.mipmap.share_circle,
                 R.mipmap.share_qq, R.mipmap.share_copy,
@@ -199,7 +203,7 @@ public class ShareWindow_v3 extends BottomPushPopupWindow<Void> implements OnCli
             Uri[] uri = new Uri[imageS.size()];
             for (int i = 0; i < imageS.size(); i++)
                 uri[i] = FileUtils.getUri(context, imageS.get(i));
-            ShareUtil.shareMultiplemages(context, uri, platform, null);
+            ShareUtil.shareMultiplemages(context, uri, platform, mShare.getContent());
         } else {
             ShareUtil.shareURL2(activity, mType == Share.Type.IMAGE_POTATOES, platform, mShare, new ApiCallback<Share>() {
                 @Override

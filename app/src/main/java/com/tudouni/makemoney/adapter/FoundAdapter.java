@@ -33,6 +33,7 @@ import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
 import com.tudouni.makemoney.view.NineRevommendGoodsLayout;
 import com.tudouni.makemoney.widget.downLoad.DownloadItem;
 import com.tudouni.makemoney.widget.downLoad.DownloadManager;
+import com.tudouni.makemoney.widget.sharePart.model.Share;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -134,8 +135,9 @@ public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.FoundViewHol
                                     List<String> sharePath = new ArrayList<>();
                                     for (String url : recommendTopicBeans)
                                         sharePath.add(FileUtils.getDownloadTemporaryPath(url.substring(url.lastIndexOf("/") + 1, url.length())));
+                                    Share share = new Share(sharePath, mDatas.get(position).getText());
                                     Message message = handler.obtainMessage(Constants.GET_SHARE_IMAGE_END);
-                                    message.obj = sharePath;
+                                    message.obj = share;
                                     handler.sendMessage(message);
                                 }
                             }

@@ -155,10 +155,11 @@ public class Share implements Serializable {
         this.circleContent = circleContent;
     }
 
-    public Share(List<String> images) {
+    public Share(List<String> images, String content) {
         if (images == null || images.isEmpty()) return;
         if (this.imageS == null) this.imageS = new ArrayList<>();
         this.imageS.addAll(images);
+        this.content = content;
     }
 
     public Bitmap getMinePotatoes() {

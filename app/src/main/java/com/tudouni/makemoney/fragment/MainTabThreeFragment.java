@@ -77,9 +77,12 @@ public class MainTabThreeFragment extends BaseFragment {
                 case Constants.GET_SHARE_IMAGE_END:
                     loadingDialog.dismiss();
                     if (msg.obj == null) return;
-                    Share share = new Share((ArrayList<String>) msg.obj);
-                    if (shareWindow_v3 == null)
+                    Share share = (Share) msg.obj;
+                    if (shareWindow_v3 == null) {
                         shareWindow_v3 = new ShareWindow_v3(getActivity(), Share.Type.IMAGE_MULTIPL, share, null, null);
+                    } else {
+                        shareWindow_v3.setmShare(share);
+                    }
                     shareWindow_v3.show(getActivity());
                     break;
             }
