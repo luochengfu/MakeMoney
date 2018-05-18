@@ -65,5 +65,12 @@ public class MyEarningsViewModel extends LoadingViewModel {
         }
     }
 
+    public void finish(){
+        Activity currActivity = MyApplication.sCurrActivity;
+        if (currActivity != null) {
+            currActivity.finish();
+        }
+    }
+
 
 }

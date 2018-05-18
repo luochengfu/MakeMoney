@@ -22,6 +22,7 @@ import com.tudouni.makemoney.model.NineRecommendBean;
 import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.RecommendTopicBean;
 import com.tudouni.makemoney.model.RequestNineRecommendShareBean;
+import com.tudouni.makemoney.model.SavingsProfile;
 import com.tudouni.makemoney.model.SearchHistory;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.model.Withdraw;
@@ -398,4 +399,8 @@ public interface CommonApi {
      */
     @POST(NetConfig.NINE_RECOMMEND_SHARE_DATA)
     Observable<Result<List<String>>> getNineRecommendShareData(@Body RequestNineRecommendShareBean requestNineRecommendShareBean);
+
+
+    @GET("/zzshop/income/economizes")
+    Observable<Result<SavingsProfile>> loadSavingsProfile(@Query("uid") String uid);
 }
