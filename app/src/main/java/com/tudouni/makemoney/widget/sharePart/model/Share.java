@@ -20,7 +20,7 @@ import java.util.List;
 public class Share implements Serializable {
 
     public static final String SHARE_TITLE = "快来玩转赚赚";
-    public static final String SHARE_INVITE = "shoplite/html/invistor.html?code=%1$s&nickName=%2$s&unionid=%3$s";
+    public static final String SHARE_INVITE = "h5/userSnsBind/wechat/request?ptype=zhuanZhuan&code=%1$s&nickName=%2$s&unionid=%3$s";
     public static final String SHARE_USER = Constants.BASE_H5_URL + "/tudouni/html/ucenter.html?uid=%1$s";
     public static final String SHARE_LIVE = Constants.BASE_H5_URL + "/m/live.html?lid=%1$s&category=%2$s";
     public static final String SHARE_DYNAMIC = Constants.BASE_H5_URL + "/tudouni/html/dynamics.html?did=%1$s&type=%2$s";
@@ -203,7 +203,7 @@ public class Share implements Serializable {
      */
     public static String getShareInviteUrl() {
         try {
-            return MyApplication.appConfig.getmInviteShareQcodeDomain() + SHARE_INVITE;
+            return Constants.SHARE_H5_URL + SHARE_INVITE;
         } catch (Exception e) {
             TuDouLogUtils.e("Share", "Get Share Url Error：" + e.getMessage());
             return Constants.BASE_H5_URL + "/";

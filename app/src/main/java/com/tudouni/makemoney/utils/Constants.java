@@ -38,8 +38,9 @@ public class Constants {
 
 
     public static final String BASE_H5_URL = NetConfig.getBaseTuDouNiH5Url();
+    public static final String SHARE_H5_URL = NetConfig.getBaseShareH5Url();//分享的域名
     public static final String INVISIT_POSTER = BASE_PRE + "invisitPoster";
-    public static final String SHARE_INVISTOR = BASE_H5_URL + "/shoplite/html/invistor.html";
+    public static final String SHARE_INVISTOR = SHARE_H5_URL;
     public static final String MYINVITATION = BASE_PRE + "invisit";
     public static final String ACCOUNT_SECURITY = BASE_PRE + "sefaty";
     public static final String REALNAME = BASE_PRE + "realname";

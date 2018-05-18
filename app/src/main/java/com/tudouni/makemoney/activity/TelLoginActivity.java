@@ -513,11 +513,16 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 if (pageType.equals("2")) {//绑定手机号
                     finish();
                 } else if (pageType.equals("7")) {
-                    Intent intent = new Intent(TelLoginActivity.this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
                     saveLoginInfo(user);
-                    startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
+                    //判断有没有绑定上级
+                    if (TextUtils.isEmpty(user.getParent())) {
+                        changInputInvitationCodePage();
+                    } else {
+                        Intent intent = new Intent(TelLoginActivity.this, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
+                    }
                 }
             }
 
@@ -691,7 +696,6 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 if (TextUtils.isEmpty(user.getParent())) {
                     changInputInvitationCodePage();
                 } else {
-
                     startActivity(new Intent(TelLoginActivity.this, SplashActivity.class));
                     finish();
                 }

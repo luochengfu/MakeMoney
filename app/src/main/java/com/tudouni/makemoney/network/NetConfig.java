@@ -124,6 +124,11 @@ public class NetConfig {
 
     private static final String[] SHOPPING_BASE_URLS = {"http://uat-static-shop.tudouni.doubozhibo.com", "http://uat-static-shop.tudouni.doubozhibo.com"};
 
+    /**
+     * 土豆泥H5基础地址数组
+     */
+    private static final String[] SHARE_H5_URLS = {"https://wap.tudouni.doubozhibo.com/", "https://waptest.tudouni.doubozhibo.com/"};
+
 
     /**
      * 获取网络环境index
@@ -215,6 +220,14 @@ public class NetConfig {
     public static String getBaseTuDouNiH5Url() {
         return BASE_TUDOUNI_H5_URLS[getEnvironment()];
     }
+
+    /**
+     * 土豆泥H5基础地址，包含scheme和域名部分
+     */
+    public static String getBaseShareH5Url() {
+        return SHARE_H5_URLS[getEnvironment()];
+    }
+
 
     /**
      * 获取融云app key
