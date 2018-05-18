@@ -28,6 +28,7 @@
     <string name="removetelbandin">验证原手机号</string>
     <string name="telbandinnew">绑定新手机号</string>
     <string name="telLogin">短信验证码登录</string>
+    <string name="telPwdLogin">手机密码登录</string>
     <string name="sezhi">设置</string>
     <string name="realname">实名认证</string>
     <string name="logout">退出登录</string>

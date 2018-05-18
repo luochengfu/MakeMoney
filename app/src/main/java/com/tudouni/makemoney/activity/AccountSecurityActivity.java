@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alipay.sdk.app.AuthTask;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.model.AliAuth;
 import com.tudouni.makemoney.model.BindInfo;
@@ -19,6 +20,7 @@ import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseObserver;
+import com.tudouni.makemoney.utils.AuthResult;
 import com.tudouni.makemoney.utils.InjectView;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.view.CenterLoadingView;
@@ -116,7 +118,7 @@ public class AccountSecurityActivity extends BaseActivity implements View.OnClic
                     }
                 });
 
-//                loadPayInfo();
+                loadPayInfo();
             }
         }, 10);
     }
@@ -223,7 +225,7 @@ public class AccountSecurityActivity extends BaseActivity implements View.OnClic
                 }*/
                 break;
             case R.id.llAlipay:
-//                startAuthAlipay();
+                startAuthAlipay();
                 break;
             case R.id.ll_set:
                 if ("1".equals(MyApplication.getLoginUser().getPwd())) {//已设置过登录密码
@@ -399,7 +401,7 @@ public class AccountSecurityActivity extends BaseActivity implements View.OnClic
         });
     }
 
-    /*private void startAuthAlipay()
+    private void startAuthAlipay()
     {
         loading("认证中...");
         CommonScene.aliAuth(new BaseObserver<AliAuth>() {
@@ -410,16 +412,13 @@ public class AccountSecurityActivity extends BaseActivity implements View.OnClic
                     @Override
                     public void run() {
                         AuthTask authTask = new AuthTask(AccountSecurityActivity.this);
-                        Map<String, String> result = authTask.authV2(data.getPayInfo(), true);
+                        Map<String, String> result = authTask.authV2(aliAuth.getPayInfo(), true);
                         AuthResult authResult = new AuthResult(result, true);
                         String resultStatus = authResult.getResultStatus();
                         if ("9000".equals(resultStatus) && "200".equals(authResult.getResultCode())) {
-                            Map<String, String> param = new HashMap<>();
-                            param.put("authCode", authResult.getAuthCode());
-                            RequestUtils.sendPostRequest(Api.PAY_BIND_ALIPAY, param, ApiClass.API_CLASS_3, new ResponseCallBack<Object>() {
-
+                            CommonScene.bindAlipay(authResult.getAuthCode(), new BaseObserver<String>() {
                                 @Override
-                                public void onSuccess(final Object data) {
+                                public void OnSuccess(String s) {
                                     Message msg = new Message();
                                     msg.what = 222;
                                     msg.obj = "认证成功";
@@ -427,11 +426,10 @@ public class AccountSecurityActivity extends BaseActivity implements View.OnClic
                                 }
 
                                 @Override
-                                public void onFailure(ServiceException e) {
-                                    super.onFailure(e);
+                                public void OnFail(int code, String err) {
                                     Message msg = new Message();
                                     msg.what = 111;
-                                    msg.obj = e.getMsg();
+                                    msg.obj = err;
                                     payHandler.sendMessage(msg);
                                 }
                             });
@@ -454,7 +452,7 @@ public class AccountSecurityActivity extends BaseActivity implements View.OnClic
                 AccountSecurityActivity.this.dissLoad();
             }
         });
-    }*/
+    }
 
     private Handler payHandler = new Handler() {
 

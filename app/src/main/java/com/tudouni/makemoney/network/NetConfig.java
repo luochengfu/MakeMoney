@@ -37,7 +37,8 @@ public class NetConfig {
     public static final String PAY_STATUS = "/zzshop/auth/pay/status";
     public static final String UNBUNDTHREE = "/zzshop/auth/user/unBindThird";
     public static final String BINDACCCOUNT = "/zzshop/auth/user/bindAccount";
-    public static final String ALIAUTH = "/auth/alipay/info";
+    public static final String ALIAUTH = "/zzshop/auth/alipay/info";
+    public static final String BINDALIPAY = "/zzshop/auth/pay/bindAlipay";
 
     public static final String VERIFPWD = "/zzshop/auth/user/verifPwd";
     public static final String USERNAME_PASSWOED_LOGIN = "/zzshop/loginPwd";
@@ -122,6 +123,11 @@ public class NetConfig {
     private static final int ENVIRONMENT_DEFAULT = BuildConfig.DEBUG ? 1 : 0;
 
     private static final String[] SHOPPING_BASE_URLS = {"http://uat-static-shop.tudouni.doubozhibo.com", "http://uat-static-shop.tudouni.doubozhibo.com"};
+
+    /**
+     * 土豆泥H5基础地址数组
+     */
+    private static final String[] SHARE_H5_URLS = {"https://wap.tudouni.doubozhibo.com/", "https://waptest.tudouni.doubozhibo.com/"};
 
 
     /**
@@ -214,6 +220,14 @@ public class NetConfig {
     public static String getBaseTuDouNiH5Url() {
         return BASE_TUDOUNI_H5_URLS[getEnvironment()];
     }
+
+    /**
+     * 土豆泥H5基础地址，包含scheme和域名部分
+     */
+    public static String getBaseShareH5Url() {
+        return SHARE_H5_URLS[getEnvironment()];
+    }
+
 
     /**
      * 获取融云app key

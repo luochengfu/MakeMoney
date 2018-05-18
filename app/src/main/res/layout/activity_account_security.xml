@@ -195,8 +195,7 @@
                 android:layout_height="36dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
-                android:visibility="gone"
-                android:text="支付绑定"
+                android:text="提现绑定"
                 android:textColor="@color/color_BDBDBD"
                 android:textSize="12sp"/>
 
@@ -212,7 +211,6 @@
                 android:background="@drawable/listview"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:visibility="gone"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
@@ -228,7 +226,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical|left"
-                    android:text="支付宝"/>
+                    android:text="支付宝绑定"/>
 
                 <TextView
                     android:id="@+id/tvAlipay"

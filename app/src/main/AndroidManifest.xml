@@ -97,16 +97,8 @@
             android:label="实名认证已认证"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.realname.RealnameActivity"
-            android:label="实名认证未认证"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.realname.IdentificationActivity"
             android:label="实名认证人工认证"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.realname.RealTelBandingActivity"
-            android:label="实名认证绑定手机号"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.realname.RealnameActivity2"
@@ -123,6 +115,10 @@
         <activity
             android:name=".activity.withdrawmoney.IncomeActivity"
             android:label="提现记录界面"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SubmitFinishActivity"
+            android:label="操作完成界面"
             android:screenOrientation="portrait" />
 
         <!-- =========================APP中的 Activity End========================= -->
@@ -336,6 +332,23 @@
         <activity android:name=".activity.search.SearchActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.MyEarningsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.MySavingsActivity" android:screenOrientation="portrait"/>
+
+        <!-- =========================支付宝 Start========================= -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <!-- =========================支付宝 End========================= -->
     </application>
 
 </manifest>

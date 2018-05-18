@@ -54,7 +54,7 @@ public class DownloadManager implements OnProgressListener {
                 }
             }
         }
-        FileUtils.deleteFilesInDir(FileUtils.getDownloadTemporaryPath(null));
+//        FileUtils.deleteFilesInDir(FileUtils.getDownloadTemporaryPath(null));
         return instance;
     }
 
@@ -78,6 +78,7 @@ public class DownloadManager implements OnProgressListener {
      */
     public void addTask(List<String> items) {
         checkMap();
+        map.clear();
         if (items == null || items.size() == 0) return;
         for (String item : items) {
             DownloadItem downloadItem = new DownloadItem(item);

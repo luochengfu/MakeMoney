@@ -145,7 +145,9 @@ public interface CommonApi {
     @FormUrlEncoded
     @POST(NetConfig.PAY_CASH)
     Observable<Result<String>> payCash(@Field("type") String type,
-                                       @Field("money") String money);
+                                       @Field("money") String money,
+                                       @Field("phone") String phone,
+                                       @Field("code") String code);
 
     @FormUrlEncoded
     @POST(NetConfig.ZMXY_CALL)
@@ -181,6 +183,10 @@ public interface CommonApi {
 
     @POST(NetConfig.ALIAUTH)
     Observable<Result<AliAuth>> aliAuth();
+
+    @FormUrlEncoded
+    @POST(NetConfig.BINDALIPAY)
+    Observable<Result<String>> bindAlipay(@Field("authCode") String authCode);
 
     @FormUrlEncoded
     @POST(NetConfig.VERIFPWD)

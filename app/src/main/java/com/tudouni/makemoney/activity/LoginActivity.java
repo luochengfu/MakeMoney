@@ -284,10 +284,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         } else {
                             saveLoginInfo(user.getUser());
                             //判断有没有绑定上级
-                            if (TextUtils.isEmpty(user.getUser().getParent())) {
+                            if (TextUtils.isEmpty(user.getUser().getParent())) {//用户信息保存放在下级
                                 skipTelephoneLogin(user, "8");
                             } else {
-                                //防止点击第三方登录取消在点击密码登录的功能
                                 startActivity(SplashActivity.createIntent(mContext));
                                 finish();
                             }

@@ -119,5 +119,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         if (mDatas == null || mDatas.size() <= position) return;
         mDatas.remove(position);
         notifyItemRemoved(position);
+        notifyDataSetChanged();
     }
 }

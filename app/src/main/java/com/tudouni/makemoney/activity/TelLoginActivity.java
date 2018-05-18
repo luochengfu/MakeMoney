@@ -91,6 +91,8 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
     private int mLoginModeStatus = 2;//登录方式切换状态
     private String mPhoneNum;//手机号
 
+//    private User userPre;//临时存储接口返回的用户信息
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,8 +180,9 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
         } else if (pageType.equals("8")) {
             mInvitationCodeLy.setVisibility(View.VISIBLE);
             mLoginLayout.setVisibility(View.GONE);
-            tvLogin.setVisibility(View.GONE);
+            mOtherLoginLy.setVisibility(View.GONE);
             title_bar.setMiddleText("请输入邀请码");
+            tvLogin.setText(getResources().getString(R.string.sure));
         }
         focusAndUnFocus();
 
@@ -206,6 +209,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
         passwordLoginStatus();
         //验证码登录
         telLoginStatus();
+        invitationCodeStatus();
     }
 
     @Override
@@ -404,12 +408,15 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void OnSuccess(Result result) {
                 ToastUtil.show("绑定成功");
+                MyApplication.getLoginUser().setParent(etInvitCode.getText().toString());
+                MyApplication.saveLoginUser(MyApplication.getLoginUser());
                 startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
             }
 
             @Override
             public void OnFail(int code, String err) {
                 ToastUtil.show(err + "（" + code + "）");
+                loadingDialog.dismiss();
             }
         });
     }
@@ -506,11 +513,16 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 if (pageType.equals("2")) {//绑定手机号
                     finish();
                 } else if (pageType.equals("7")) {
-                    Intent intent = new Intent(TelLoginActivity.this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
                     saveLoginInfo(user);
-                    startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
+                    //判断有没有绑定上级
+                    if (TextUtils.isEmpty(user.getParent())) {
+                        changInputInvitationCodePage();
+                    } else {
+                        Intent intent = new Intent(TelLoginActivity.this, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
+                    }
                 }
             }
 
@@ -644,6 +656,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
         loginModeChangeView.setText(getResources().getString((mLoginModeStatus == 1) ? R.string.telLogin : R.string.tudouni_password_login_change));
         mPwdLoginLy.setVisibility((mLoginModeStatus == 1) ? View.VISIBLE : View.GONE);
         mCodeLoginLy.setVisibility((mLoginModeStatus == 1) ? View.GONE : View.VISIBLE);
+        title_bar.setMiddleText(getResources().getString(((mLoginModeStatus == 2) ? R.string.telLogin : R.string.telPwdLogin)));
     }
 
     /**
@@ -679,15 +692,6 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                     loadingDialog.dismiss();
                 }
                 saveLoginInfo(user);
-//                if ("0".equals(user.getPwd())) {//没有设置登录密码
-//                    Intent intent1 = new Intent(TelLoginActivity.this, PwdActivity.class);
-//                    intent1.putExtra("type", "1");
-//                    intent1.putExtra("user", user);
-//                    startActivity(intent1);
-//                } else {//设置了登录密码
-//                    startActivity(new Intent(TelLoginActivity.this, SplashActivity.class));
-//                    finish();
-//                }
                 //判断有没有绑定上级
                 if (TextUtils.isEmpty(user.getParent())) {
                     changInputInvitationCodePage();
@@ -695,29 +699,6 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                     startActivity(new Intent(TelLoginActivity.this, SplashActivity.class));
                     finish();
                 }
-//                CommonScene.getBind(new BaseObserver<Invite>() {
-//                    @Override
-//                    public void OnFail(int code, String err) {
-//                        if (code == 1050) {
-//                            //绑定邀请码
-//                            mInvitationCodeLy.setVisibility(View.VISIBLE);
-//                            mLoginLayout.setVisibility(View.GONE);
-//                        } else {
-//                            ToastUtil.showError("获取绑定人报错：" + err, code);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void OnSuccess(Invite invite) {
-//                        if (invite != null) {
-//                            startActivity(new Intent(TelLoginActivity.this, SplashActivity.class));
-//                            finish();
-//                        } else {//绑定邀请码
-//                            mInvitationCodeLy.setVisibility(View.VISIBLE);
-//                            mLoginLayout.setVisibility(View.GONE);
-//                        }
-//                    }
-//                });
             }
 
             @Override
@@ -740,6 +721,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
         tvLogin.setText(getResources().getString(R.string.sure));
         title_bar.setMiddleText("请输入邀请码");
         pageType = "8";
+        etInvitCode.setText("");
     }
 
 
@@ -765,15 +747,16 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
         CommonScene.passwordLogin(userName, password, Build.MODEL, Build.BRAND, new BaseObserver<User>() {
             @Override
             public void OnSuccess(User user) {
-                MyApplication.saveLoginUser(user);
                 if (null != loadingDialog) {
                     loadingDialog.dismiss();
                 }
+                MyApplication.saveLoginUser(user);
                 //判断有没有绑定上级
                 if (TextUtils.isEmpty(user.getParent())) {
                     //绑定邀请码
                     changInputInvitationCodePage();
                 } else {
+
                     Intent intent = new Intent(TelLoginActivity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);

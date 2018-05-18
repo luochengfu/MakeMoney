@@ -7,6 +7,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.multidex.MultiDex;
+import android.text.TextUtils;
 
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.view.CropImageView;
@@ -110,6 +111,8 @@ public class MyApplication extends BaseApplication implements ClipboardUtil.OnPr
         if (ClipDescription.MIMETYPE_TEXT_PLAIN.equals(mimeType)) {
             mClipStr = mClipboard.coercePrimaryClipToText().toString();
         }
+
+        FileUtils.deleteFilesInDir(FileUtils.getDownloadTemporaryPath(null));
     }
 
     /**

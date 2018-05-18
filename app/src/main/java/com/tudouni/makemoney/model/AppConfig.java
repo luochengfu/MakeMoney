@@ -20,11 +20,6 @@ public class AppConfig implements Serializable {
     @SerializedName("unvalid_invite_share_qcode_domain")
     private List<String> unvalidInviteShareQcodeDomain;//邀请分享已经失效的域名
 
-
-    public String getmInviteShareQcodeDomain() {
-        return (TextUtils.isEmpty(mInviteShareQcodeDomain)) ? (Constants.BASE_H5_URL + "/") : mInviteShareQcodeDomain;
-    }
-
     public void setmInviteShareQcodeDomain(String mInviteShareQcodeDomain) {
         this.mInviteShareQcodeDomain = mInviteShareQcodeDomain;
     }
@@ -51,7 +46,7 @@ public class AppConfig implements Serializable {
             return true;
         if (unvalidInviteShareQcodeDomain != null || !unvalidInviteShareQcodeDomain.isEmpty()) {
             for (String s : unvalidInviteShareQcodeDomain) {
-                if (url.startsWith(mInviteShareQcodeDomain)) {
+                if (url.startsWith(s)) {
                     back = true;
                     break;
                 }
