@@ -62,13 +62,11 @@ public class IncomeActivity extends BaseActivity {
             String strStatus = "提现失败";
             String strMoney = new StringBuilder("¥").append(CommonUtil.getMoney(withdraw.getAmount())).toString();
             switch (withdraw.getReviewStatus()) {
-                case "1":
+                case "0":
                     strStatus = "待审核";
-                    strMoney = "+" + strMoney;
                     break;
-                case "2":
+                case "1":
                     strStatus = "提现成功";
-                    strMoney = "+" + strMoney;
                     break;
                 default:
                     break;
@@ -83,7 +81,7 @@ public class IncomeActivity extends BaseActivity {
             TextView tvStatus = ViewHolder.get(convertView, R.id.tv_status);
             tvStatus.setText(strStatus);
 
-            if (withdraw.getReviewStatus().equals("1")) {
+            if (withdraw.getReviewStatus().equals("0")) {
                 tvMoney.setTextColor(ColorUtil.gray02());
                 tvTime.setTextColor(ColorUtil.gray02());
                 tvStatus.setTextColor(ColorUtil.gray02());
