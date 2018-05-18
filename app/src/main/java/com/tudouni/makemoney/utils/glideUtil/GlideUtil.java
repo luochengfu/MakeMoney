@@ -104,6 +104,16 @@ public class GlideUtil {
                 .into(imageView);
     }
 
+
+    @BindingAdapter("imageSrc")
+    public static void imageSrc(ImageView imageView, int imageRes) {
+        Glide.with(imageView.getContext())
+                .load(imageRes)
+                .crossFade()
+                .bitmapTransform(new GlideCircleTransform(imageView.getContext()))
+                .into(imageView);
+    }
+
     /**
      * Glide保存图片
      *
