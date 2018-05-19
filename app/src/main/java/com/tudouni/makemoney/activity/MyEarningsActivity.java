@@ -41,14 +41,7 @@ public class MyEarningsActivity extends BaseActivity {
         myEarningsBinding = DataBindingUtil.setContentView(this, R.layout.activity_my_earnings);
         mEarningsViewModel = new MyEarningsViewModel();
 
-        mEarningsViewModel.loadIncomeProfile((today, yesterday, thisMonth, lastMonth) -> {
-            if (mHeaderMyEarningsBinding != null) {
-                mHeaderMyEarningsBinding.layoutTodayEarnings.setIncome(today);
-                mHeaderMyEarningsBinding.layoutYesterdayEarnings.setIncome(yesterday);
-                mHeaderMyEarningsBinding.layoutThismonthEarnings.setIncome(thisMonth);
-                mHeaderMyEarningsBinding.layoutLastmonthEarnings.setIncome(lastMonth);
-            }
-        });
+        setProfileData();
 
         mEarningsViewModel.loadRankData(new VMResultCallback<List<EarningsRank>>() {
             @Override
@@ -67,6 +60,26 @@ public class MyEarningsActivity extends BaseActivity {
         mEarningsRankAdapter = new EarningsRankAdapter(getLayoutInflater());
         initEarningsRankRecyclerView();
 
+
+    }
+
+    private void setProfileData() {
+        mEarningsViewModel.loadIncomeProfile((today, yesterday, thisMonth, lastMonth) -> {
+            if (mHeaderMyEarningsBinding != null) {
+                mHeaderMyEarningsBinding.layoutTodayEarnings.setIncome(today);
+                mHeaderMyEarningsBinding.layoutYesterdayEarnings.setIncome(yesterday);
+                mHeaderMyEarningsBinding.layoutThismonthEarnings.setIncome(thisMonth);
+                mHeaderMyEarningsBinding.layoutLastmonthEarnings.setIncome(lastMonth);
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mEarningsViewModel != null) {
+            setProfileData();
+        }
 
     }
 

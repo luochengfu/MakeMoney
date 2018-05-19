@@ -14,7 +14,9 @@ import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.NetConfig;
 import com.tudouni.makemoney.network.rx.BaseObserver;
+import com.tudouni.makemoney.utils.TDLog;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class MyEarningsViewModel extends LoadingViewModel {
@@ -26,7 +28,21 @@ public class MyEarningsViewModel extends LoadingViewModel {
         CommonScene.loadIncomeProfile(MyApplication.getLoginUser().getUid(), new BaseObserver<MyEarnings>() {
             @Override
             public void OnSuccess(MyEarnings myEarnings) {
+
+
+                Calendar calendar1 = Calendar.getInstance();
+                calendar1.set(calendar1.get(Calendar.YEAR), calendar1.get(Calendar.MONTH), calendar1.get(Calendar.DAY_OF_MONTH),
+                        0, 0, 0);
+                long todayStart = calendar1.getTimeInMillis()/1000;
+                long currentSecond = System.currentTimeMillis()/1000;
+                TDLog.e(calendar1.getTime(),todayStart,currentSecond);
+
+
+
+
                 EarningsBean todayEarnings = new EarningsBean(myEarnings.getTodayIncome(), myEarnings.getTodayCount(), myEarnings.getTodayExpectedIncome(), EarningsBean.IncomeType.TYPE_TODAY);
+                todayEarnings.setStartTime(todayStart);
+                todayEarnings.setEndTime(currentSecond);
 
                 EarningsBean yesterdayEarnings = new EarningsBean(myEarnings.getYesterdayIncome(), myEarnings.getYesterdayCount(), myEarnings.getYesterdayExpectedIncome(), EarningsBean.IncomeType.TYPE_YESTERDAY);
 
