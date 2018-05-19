@@ -3,6 +3,7 @@ package com.tudouni.makemoney.viewModel;
 import android.app.Activity;
 import android.content.Intent;
 import android.databinding.ObservableField;
+import android.databinding.ObservableInt;
 
 import com.tudouni.makemoney.activity.H5Activity;
 import com.tudouni.makemoney.activity.MyEarningsActivity;
@@ -26,6 +27,7 @@ import java.util.Locale;
 public class MyEarningsViewModel extends LoadingViewModel {
 
     public ObservableField<MyEarnings> earnings = new ObservableField<>();
+    public ObservableField<String> mineRankInfo = new ObservableField<>();
 
 
     public void loadIncomeProfile(MyEarningsActivity.IncomeDataCallback callback) {
@@ -93,6 +95,20 @@ public class MyEarningsViewModel extends LoadingViewModel {
             public void OnSuccess(List<EarningsRank> myEarnings) {
                 if (callback != null) {
                     callback.onSuccess(myEarnings);
+                    if (myEarnings != null) {
+                        int mineRank = 0;
+                        for (int i = 0; i < myEarnings.size(); i++) {
+                            String uid = myEarnings.get(i).getUid();
+                            if (uid != null && uid.equals(MyApplication.getLoginUser().getUid())) {
+                                mineRank = i + 1;
+                            }
+                        }
+                        if (mineRank <= 100 && mineRank > 0) {
+                            mineRankInfo.set("我的排名：" + mineRank);
+                        }else{
+                            mineRankInfo.set("您的排名未上榜，仍需努力");
+                        }
+                    }
                 }
             }
         });

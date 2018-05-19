@@ -200,7 +200,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="37dp"
-                android:text="您的排名未上榜，仍需努力"
+                android:text="@{savings.mineRankInfo}"
                 android:textColor="#1a9bfc"
                 android:textSize="12sp" />
 

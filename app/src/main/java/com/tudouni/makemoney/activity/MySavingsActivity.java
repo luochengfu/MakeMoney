@@ -13,6 +13,7 @@ import com.tudouni.makemoney.model.EarningsRank;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.viewModel.SavingsViewModel;
+import com.tudouni.makemoney.viewModel.VMResultCallback;
 
 import java.util.List;
 
@@ -35,15 +36,21 @@ public class MySavingsActivity extends BaseActivity {
         lRecyclerViewAdapter.addHeaderView(headerSavingsBinding.getRoot());
 
 
-        CommonScene.loadSavingsRank(100, new BaseObserver<List<EarningsRank>>() {
-            @Override
-            public void OnSuccess(List<EarningsRank> earningsRanks) {
-                earningsRankAdapter.replaceData(earningsRanks);
-            }
-        });
+
 
         SavingsViewModel savingsViewModel = new SavingsViewModel();
         savingsViewModel.loadSavings();
+        savingsViewModel.loadSavingsRank(new VMResultCallback<List<EarningsRank>>() {
+            @Override
+            public void onSuccess(List<EarningsRank> data) {
+                earningsRankAdapter.replaceData(data);
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
 
         headerSavingsBinding.setSavings(savingsViewModel);
 
