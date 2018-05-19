@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MyEarningsViewModel extends LoadingViewModel {
 
@@ -39,7 +40,6 @@ public class MyEarningsViewModel extends LoadingViewModel {
                         0, 0, 0);
                 long todayStart = calendar1.getTimeInMillis() / 1000;
                 long currentSecond = System.currentTimeMillis() / 1000;
-                TDLog.e(calendar1.getTime(), todayStart, currentSecond, currDayOfMonth, currMonth);
                 long yesterdayStart = todayStart - 24 * 60 * 60;
                 long yesterdayEnd = todayStart - 1;
                 long currMonthStart = todayStart - (currDayOfMonth - 1) * 24 * 60 * 60;
@@ -77,24 +77,14 @@ public class MyEarningsViewModel extends LoadingViewModel {
                 if (callback != null) {
                     callback.onSuccess(todayEarnings, yesterdayEarnings, thisMonthEarnings, lastMonthEarnings);
                 }
-
-
             }
         });
     }
 
 
-    public Date transForDate(long ms) {
-        long msl = ms * 1000;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date temp = null;
-        try {
-            String str = sdf.format(msl);
-            temp = sdf.parse(str);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return temp;
+    private String transForDate(long timeInSecond) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+        return sdf.format(timeInSecond * 1000);
     }
 
     public void loadRankData(VMResultCallback<List<EarningsRank>> callback) {
