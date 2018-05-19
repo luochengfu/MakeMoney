@@ -133,7 +133,7 @@ public class RealnameActivity2 extends BaseActivity implements ZMCertificationLi
             public void OnSuccess(Zma data) {
                 mZma = data;
                 //为了避免第三方调回来的时候  mZma 可能有误，所以存一份在本地，有效时常是60
-                ACache.getInstance().put("ZIMAINFO", data, 60);
+                ACache.getInstance().put("ZIMAINFO", data, 600);
                 dissLoad();
                 //data.getBizNO,业务串号
                 //MERCHANTID 商户号
@@ -165,12 +165,12 @@ public class RealnameActivity2 extends BaseActivity implements ZMCertificationLi
     public void dissLoad() {
         if (loading != null) {
             loading.dismiss();
+            loading = null;
         }
     }
 
     @Override
     public void onFinish(boolean isCanceled, boolean isPassed, int errorCode) {
-        zmCertification.setZMCertificationListener(null);
         if (isCanceled) {
 
         }
@@ -186,9 +186,9 @@ public class RealnameActivity2 extends BaseActivity implements ZMCertificationLi
                     }
                 }
 
-                CommonScene.genCertUrl(idNumber, realname, mZma.getBizNo(), new BaseObserver<Zma>() {
+                CommonScene.zmxyCall(idNumber, realname, mZma.getBizNo(), new BaseObserver<String>() {
                     @Override
-                    public void OnSuccess(Zma data) {
+                    public void OnSuccess(String s) {
                         User user = MyApplication.getLoginUser();
                         user.setRole("1");
                         user.setIdNumber(idNumber);
@@ -200,11 +200,11 @@ public class RealnameActivity2 extends BaseActivity implements ZMCertificationLi
 
                     @Override
                     public void OnFail(int code, String err) {
-                        dissLoad();
                         User user = MyApplication.getLoginUser();
                         user.setZma(true);
                         MyApplication.saveLoginUser(user);
                         super.OnFail(code, err);
+                        dissLoad();
                     }
                 });
             } else {
@@ -214,5 +214,11 @@ public class RealnameActivity2 extends BaseActivity implements ZMCertificationLi
             }
         }
         Log.w("ceshi", "onFinish+++ isPassed = " + isPassed + ", error = " + errorCode);
+    }
+
+    @Override
+    protected void onDestroy() {
+        zmCertification.setZMCertificationListener(null);
+        super.onDestroy();
     }
 }

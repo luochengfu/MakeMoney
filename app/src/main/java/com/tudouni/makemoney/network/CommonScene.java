@@ -116,12 +116,15 @@ public class CommonScene extends RetrofitUtils {
     }
 
     /**
-     * 芝麻认证
+     * 芝麻认证（调芝麻接口前）
      */
     public static void genCertUrl(String idNumber, String realname, String authFaceType, BaseObserver<Zma> observer) {
         setSubscribe(commonApi.genCertUrl(idNumber, realname, authFaceType), observer);
     }
 
+    /**
+     * 芝麻认证（调芝麻接口后）
+     */
     public static void zmxyCall(String idNumber, String realname, String bizNo, BaseObserver<String> observer) {
         setSubscribe(commonApi.zmxyCall(idNumber, realname, bizNo), observer);
     }
