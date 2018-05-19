@@ -42,11 +42,14 @@ public class AppConfig implements Serializable {
     public boolean isShareInvistor(String url) {
         if (TextUtils.isEmpty(url)) return false;
         boolean back = false;
-        if (url.startsWith(mInviteShareQcodeDomain) || url.startsWith(Constants.SHARE_INVISTOR))
-            return true;
+        if (url.startsWith(mInviteShareQcodeDomain) || url.startsWith(Constants.SHARE_INVISTOR)) {
+            if (url.contains(Constants.OLD_INVISTOR) || url.contains(Constants.INVISTOR)) {
+                return true;
+            }
+        }
         if (unvalidInviteShareQcodeDomain != null || !unvalidInviteShareQcodeDomain.isEmpty()) {
             for (String s : unvalidInviteShareQcodeDomain) {
-                if (url.startsWith(s)) {
+                if (url.startsWith(s) && (url.contains(Constants.OLD_INVISTOR) || url.contains(Constants.INVISTOR))) {
                     back = true;
                     break;
                 }

@@ -41,6 +41,8 @@ public class Constants {
     public static final String SHARE_H5_URL = NetConfig.getBaseShareH5Url();//分享的域名
     public static final String INVISIT_POSTER = BASE_PRE + "invisitPoster";
     public static final String SHARE_INVISTOR = SHARE_H5_URL;
+    public static final String INVISTOR = "h5/userSnsBind/wechat/request";
+    public static final String OLD_INVISTOR = "/shoplite/html/invistor.html";
     public static final String MYINVITATION = BASE_PRE + "invisit";
     public static final String ACCOUNT_SECURITY = BASE_PRE + "sefaty";
     public static final String REALNAME_FINAL = BASE_PRE + "realnameFinal";

@@ -45,6 +45,7 @@ public class UserInfoHelper {
         editor.putString("bindPhoneStatus", user.getBindPhoneStatus());
         editor.putString("unionid", user.getUnionid());
         editor.putString("pwd", user.getPwd());
+        editor.putString("parent", user.getParent());
 
         editor.commit();
     }
@@ -58,7 +59,7 @@ public class UserInfoHelper {
         mUser.setGrade(sharedPreferences.getString("grade", ""));
         mUser.setNickName(sharedPreferences.getString("nickName", ""));
         mUser.setPhoto(sharedPreferences.getString("photo", ""));
-        mUser.setRole(sharedPreferences.getString("role",""));
+        mUser.setRole(sharedPreferences.getString("role", ""));
         mUser.setSex(sharedPreferences.getString("sex", ""));
         mUser.setSignature(sharedPreferences.getString("signature", ""));
         mUser.setToken(sharedPreferences.getString("token", ""));
@@ -89,6 +90,7 @@ public class UserInfoHelper {
         mUser.setUnionid(sharedPreferences.getString("unionid", ""));
         mUser.setBindPhoneStatus(sharedPreferences.getString("pwd", ""));
         mUser.setSetAlias(sharedPreferences.getBoolean("setAlias", false));
+        mUser.setParent(sharedPreferences.getString("parent", null));
         return mUser;
     }
 
@@ -138,6 +140,7 @@ public class UserInfoHelper {
         editor.putString("unionid", "");
         editor.putString("pwd", "");
         editor.putBoolean("setAlias", false);
+        editor.putString("parent", "");
         editor.commit();
 
     }

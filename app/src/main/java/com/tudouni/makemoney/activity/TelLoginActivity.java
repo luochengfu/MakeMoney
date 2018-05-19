@@ -410,7 +410,8 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 ToastUtil.show("绑定成功");
                 MyApplication.getLoginUser().setParent(etInvitCode.getText().toString());
                 MyApplication.saveLoginUser(MyApplication.getLoginUser());
-                startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
+
+                goMainPage();
             }
 
             @Override
@@ -419,6 +420,14 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 loadingDialog.dismiss();
             }
         });
+    }
+
+    private void goMainPage() {
+        Intent intent = new Intent(TelLoginActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
+        finish();
     }
 
     /**
@@ -696,8 +705,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 if (TextUtils.isEmpty(user.getParent())) {
                     changInputInvitationCodePage();
                 } else {
-                    startActivity(new Intent(TelLoginActivity.this, SplashActivity.class));
-                    finish();
+                    goMainPage();
                 }
             }
 
@@ -756,13 +764,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                     //绑定邀请码
                     changInputInvitationCodePage();
                 } else {
-
-                    Intent intent = new Intent(TelLoginActivity.this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-
-                    startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
-                    finish();
+                    goMainPage();
                 }
 //                CommonScene.getBind(new BaseObserver<Invite>() {
 //                    @Override

@@ -67,14 +67,14 @@ public class TelAuthenticationActivity extends BaseActivity {
             if (null == phoneNum) {
                 Toast.makeText(TelAuthenticationActivity.this,
                         "没有正确手机号码",
-                        Toast.LENGTH_LONG);
+                        Toast.LENGTH_LONG).show();
                 return;
             }
             String phoneCode = etCode.getText().toString().trim();
             if (TextUtils.isEmpty(phoneCode)) {
                 Toast.makeText(TelAuthenticationActivity.this,
                         "请输入短信验证码",
-                        Toast.LENGTH_LONG);
+                        Toast.LENGTH_LONG).show();
                 return;
             }
 
