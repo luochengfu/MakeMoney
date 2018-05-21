@@ -289,7 +289,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         mShareAPI.deleteOauth(LoginActivity.this, share_media, null);
                         if (user.getUser() == null || user.getNewer()) {
                             skipTelephoneLogin(user, "6");
-                        } else if (TextUtils.isEmpty(user.getUser().getPhone())) {//老用户没有手机号码
+                        } else if (!TextUtils.isEmpty(user.getUser().getToken()) && TextUtils.isEmpty(user.getUser().getPhone())) {//老用户没有手机号码
                             skipTelephoneLogin(user, "7");
                         } else {
                             saveLoginInfo(user.getUser());
