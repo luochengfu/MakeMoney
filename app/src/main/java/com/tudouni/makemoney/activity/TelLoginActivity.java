@@ -16,17 +16,22 @@ import android.widget.TextView;
 
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.interfaces.NoDoubleClickListener;
+import com.tudouni.makemoney.model.FinishLoginActivity;
 import com.tudouni.makemoney.model.Invite;
+import com.tudouni.makemoney.model.LogOut;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.Result;
 import com.tudouni.makemoney.network.rx.BaseObserver;
+import com.tudouni.makemoney.utils.Constants;
 import com.tudouni.makemoney.utils.InjectView;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.ValidateUtil;
 import com.tudouni.makemoney.view.CenterLoadingView;
 import com.tudouni.makemoney.view.MyTitleBar;
+
+import org.simple.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -423,9 +428,10 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void goMainPage() {
-        Intent intent = new Intent(TelLoginActivity.this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+//        Intent intent = new Intent(TelLoginActivity.this, LoginActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        startActivity(intent);
+        EventBus.getDefault().post(new FinishLoginActivity(), Constants.EVENT_TAG_FINSISH_LOGIN_ACTIVITY);
         startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
         finish();
     }
@@ -527,9 +533,10 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                     if (TextUtils.isEmpty(user.getParent())) {
                         changInputInvitationCodePage();
                     } else {
-                        Intent intent = new Intent(TelLoginActivity.this, LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+//                        Intent intent = new Intent(TelLoginActivity.this, LoginActivity.class);
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        startActivity(intent);
+                        EventBus.getDefault().post(Constants.EVENT_TAG_FINSISH_LOGIN_ACTIVITY);
                         startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
                     }
                 }
