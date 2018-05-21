@@ -261,16 +261,17 @@ public class MyApplication extends BaseApplication implements ClipboardUtil.OnPr
 
             if (ClipDescription.MIMETYPE_TEXT_PLAIN.equals(mimeType) || ClipDescription.MIMETYPE_TEXT_HTML.equals(mimeType)) {
                 try {
-                    if (mClipStr != null && !mClipStr.equals("") && mClipStr.trim().length() > 6 && !ValidateUtil.isMobileNO(mClipStr) && mClipStr.startsWith("#tdn")) {
-                        String userCode = mClipStr.substring(4, mClipStr.lastIndexOf("#tdn"));
-                        ClipboardUtil.getInstance().copyText("", "");
-                        mClipStr = "";
-                        BindInvitationUtil.getBindInvitationUseInfo(userCode);
-                    /*Intent intent = new Intent(getContext(), BindInvitationCodeActivity.class);
-                    intent.putExtra("userCode", userCode);
-                    activity.startActivity(intent);*/
-
-                    } else if (mClipStr != null && !mClipStr.equals("") && mClipStr.trim().length() > 15 && !PatternUtil.matchClipStr(mClipStr.trim()) &&
+//                    if (mClipStr != null && !mClipStr.equals("") && mClipStr.trim().length() > 6 && !ValidateUtil.isMobileNO(mClipStr) && mClipStr.startsWith("#tdn")) {
+//                        String userCode = mClipStr.substring(4, mClipStr.lastIndexOf("#tdn"));
+//                        ClipboardUtil.getInstance().copyText("", "");
+//                        mClipStr = "";
+//                        BindInvitationUtil.getBindInvitationUseInfo(userCode);
+//                    /*Intent intent = new Intent(getContext(), BindInvitationCodeActivity.class);
+//                    intent.putExtra("userCode", userCode);
+//                    activity.startActivity(intent);*/
+//
+//                    } else
+                    if (mClipStr != null && !mClipStr.equals("") && mClipStr.trim().length() > 15 && !PatternUtil.matchClipStr(mClipStr.trim()) &&
                             !PatternUtil.matchURL(mClipStr.trim()) && !ValidateUtil.isMobileNO(mClipStr) && !mClipStr.startsWith("#bind") && !mClipStr.contains("邀请您加入赚赚")) {
                         EventBus.getDefault().post(mClipStr, "search_good_action");
                        /* Intent intent = new Intent(getContext(), SearchGoodActivity.class);
