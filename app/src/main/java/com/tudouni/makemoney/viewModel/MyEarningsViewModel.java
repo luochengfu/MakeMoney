@@ -38,6 +38,7 @@ public class MyEarningsViewModel extends LoadingViewModel {
                 int currDayOfMonth = calendar1.get(Calendar.DAY_OF_MONTH);
                 int currMonth = calendar1.get(Calendar.MONTH);
                 int currYear = calendar1.get(Calendar.YEAR);
+                TDLog.e(myEarnings);
                 calendar1.set(calendar1.get(Calendar.YEAR), calendar1.get(Calendar.MONTH), calendar1.get(Calendar.DAY_OF_MONTH),
                         0, 0, 0);
                 long todayStart = calendar1.getTimeInMillis() / 1000;
@@ -67,9 +68,10 @@ public class MyEarningsViewModel extends LoadingViewModel {
                 yesterdayEarnings.setStartTime(yesterdayStart);
                 yesterdayEarnings.setEndTime(yesterdayEnd);
 
-                EarningsBean thisMonthEarnings = new EarningsBean(myEarnings.getLastMonthIncome(), myEarnings.getLastMonthCount(), myEarnings.getLastMonthExpectedIncome(), EarningsBean.IncomeType.TYPE_THIS_MONTH);
+                EarningsBean thisMonthEarnings = new EarningsBean(myEarnings.getThisMonthIncome(), myEarnings.getThisMonthCount(), myEarnings.getThisMonthExpectedIncome(), EarningsBean.IncomeType.TYPE_THIS_MONTH);
                 thisMonthEarnings.setStartTime(currMonthStart);
                 thisMonthEarnings.setEndTime(currMonthEnd);
+                TDLog.e(thisMonthEarnings);
 
                 EarningsBean lastMonthEarnings = new EarningsBean(myEarnings.getLastMonthIncome(), myEarnings.getLastMonthCount(), myEarnings.getLastMonthExpectedIncome(), EarningsBean.IncomeType.TYPE_LAST_MONTH);
                 lastMonthEarnings.setStartTime(lastMonthStart);

@@ -77,14 +77,7 @@ public class EarningsBean {
         this.expectedIncome = expectedIncome;
     }
 
-    @Override
-    public String toString() {
-        return "EarningsBean{" +
-                "income=" + income +
-                ", orderCount=" + orderCount +
-                ", expectedIncome=" + expectedIncome +
-                '}';
-    }
+
 
     public interface IncomeType{
         int TYPE_TODAY = 1;
@@ -140,4 +133,15 @@ public class EarningsBean {
         }
     }
 
+    @Override
+    public String toString() {
+        return "EarningsBean{" +
+                "income=" + income +
+                ", orderCount=" + orderCount +
+                ", expectedIncome=" + expectedIncome +
+                ", incomeType=" + incomeType +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                '}';
+    }
 }
