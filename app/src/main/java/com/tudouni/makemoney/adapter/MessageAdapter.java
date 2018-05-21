@@ -2,6 +2,10 @@ package com.tudouni.makemoney.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +18,7 @@ import com.tudouni.makemoney.utils.TimeUtil;
 import com.tudouni.makemoney.utils.TuDouLogUtils;
 import com.tudouni.makemoney.utils.TuDouTextUtil;
 import com.tudouni.makemoney.view.BreakTextView;
+import com.tudouni.makemoney.view.MyTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +48,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         MineMessage itemBean = mDatas.get(position);
         holder.mIcon.setImageResource(itemBean.getShowIcon());
         TuDouTextUtil.setTextToTextView(holder.mTvTitle, itemBean.getTitle());
-//        TuDouTextUtil.setTextToTextView(holder.mMessageContent, itemBean.getContent());
-        TuDouTextUtil.setTextToTextView(holder.mMessageContent, ToSBC(itemBean.getContent()));
+        TuDouTextUtil.setTextToTextView(holder.mMessageContent, itemBean.getContent());
         try {
             TuDouTextUtil.setTextToTextView(holder.mTvTime,
                     TimeUtil.formatDisplayTime(TimeUtil.longToString(itemBean.getTime(), "yyyy-MM-dd HH:mm:ss"),
@@ -91,14 +95,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         public ImageView mIcon;
         public TextView mTvTitle;
         public TextView mTvTime;
-        public TextView mMessageContent;
+        public MyTextView mMessageContent;
 
         public MessageViewHolder(View itemView) {
             super(itemView);
             this.mIcon = (ImageView) itemView.findViewById(R.id.iteam_icon);
             this.mTvTitle = (TextView) itemView.findViewById(R.id.tv_title);
             this.mTvTime = (TextView) itemView.findViewById(R.id.tv_date);
-            this.mMessageContent = (TextView) itemView.findViewById(R.id.tv_message_content);
+            this.mMessageContent = (MyTextView) itemView.findViewById(R.id.tv_message_content);
         }
     }
 
@@ -117,24 +121,5 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         mDatas.remove(position);
         notifyItemRemoved(position);
         notifyDataSetChanged();
-    }
-
-    /**
-     * 半角转全角
-     *
-     * @param input String.
-     * @return 全角字符串.
-     */
-    public static String ToSBC(String input) {
-        char c[] = input.toCharArray();
-        for (int i = 0; i < c.length; i++) {
-            if (c[i] == ' ') {
-                c[i] = '\u3000';
-            } else if (c[i] < '\177') {
-                c[i] = (char) (c[i] + 65248);
-
-            }
-        }
-        return new String(c);
     }
 }
