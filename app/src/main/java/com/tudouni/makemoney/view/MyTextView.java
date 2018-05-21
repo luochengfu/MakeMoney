@@ -21,7 +21,7 @@ public class MyTextView extends android.support.v7.widget.AppCompatTextView {
 
     private int mWidth; //控件宽度
     private int mHeight; //控件高度
-    private static String mContent = ""; //textview中的内容 如果不是static的话，xml里面text无法同步
+    private String mContent = ""; //textview中的内容 如果不是static的话，xml里面text无法同步
     private int mContentWidth; // 内容宽度
     private ArrayList<FGSpan> fgSpans = new ArrayList<>(); // 存放所有ForegroundSpan
     private ArrayList<RLSpan> rlSpans = new ArrayList<>(); //存放所有的RelativeSizeSpan
@@ -64,8 +64,8 @@ public class MyTextView extends android.support.v7.widget.AppCompatTextView {
         paint.getTextBounds(mContent, 0, mContent.length(), textBound);
         int height = (int) (paint.getFontMetrics().bottom - paint.getFontMetrics().top);
         mContentWidth = mWidth - getPaddingLeft() - getPaddingRight();
-
-        mHeight = height * Math.round(textBound.width() / (float) mContentWidth);
+        float s = textBound.width();
+        mHeight = (int) (height * Math.ceil(s / (double) mContentWidth));
 //        setMeasuredDimension(mWidth, heightMeasureSpec);
         setMeasuredDimension(mWidth, mHeight);
     }
