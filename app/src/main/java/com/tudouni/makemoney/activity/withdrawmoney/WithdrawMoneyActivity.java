@@ -17,6 +17,7 @@ import com.tudouni.makemoney.BuildConfig;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.activity.BaseActivity;
 import com.tudouni.makemoney.activity.realname.RealnameActivity2;
+import com.tudouni.makemoney.model.PayBindingInfo;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.CommonScene;
@@ -45,6 +46,9 @@ public class WithdrawMoneyActivity extends BaseActivity {
 
     private double allNumber;
     private String payRate;
+
+    private double minNubmer;   // 提现最小金额限制
+    private double maxNubmer;   // 提现最大金额限制
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,8 +120,8 @@ public class WithdrawMoneyActivity extends BaseActivity {
             try {
                 String moneyNumber = etMoneyNumber.getText().toString().trim();
                 double doubleNumber = Double.parseDouble(moneyNumber);
-                if (doubleNumber < 10.0) {
-                    Toast.makeText(WithdrawMoneyActivity.this, "提现金额应该大于10元", Toast.LENGTH_SHORT).show();
+                if (doubleNumber < minNubmer || doubleNumber > maxNubmer) {
+                    Toast.makeText(WithdrawMoneyActivity.this, "提现金额范围为" + minNubmer + "到" + maxNubmer + "元", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -142,6 +146,14 @@ public class WithdrawMoneyActivity extends BaseActivity {
             public void OnFail(int code, String err) {
                 Toast.makeText(WithdrawMoneyActivity.this, "获取手续费率失败，不能够提现", Toast.LENGTH_SHORT).show();
                 super.OnFail(code, err);
+            }
+        });
+
+        CommonScene.payStatus(new BaseObserver<PayBindingInfo>() {
+            @Override
+            public void OnSuccess(PayBindingInfo payBindingInfo) {
+                minNubmer = payBindingInfo.getAlipayMinNumber();
+                maxNubmer = payBindingInfo.getAlipayMaxNumber();
             }
         });
     }
