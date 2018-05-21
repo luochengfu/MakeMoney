@@ -22,13 +22,13 @@
     <string name="tudouni_password_login_change">密码登录</string>
     <string name="telbandin">绑定手机号</string>
     <string name="verification">验证</string>
-    <string name="pass_word">密 码</string>
+    <string name="pass_word">密  码</string>
     <string name="find_passsword_hint">找回密码</string>
     <string name="next_step">下一步</string>
     <string name="removetelbandin">验证原手机号</string>
     <string name="telbandinnew">绑定新手机号</string>
-    <string name="telLogin">短信验证码登录</string>
-    <string name="telPwdLogin">手机密码登录</string>
+    <string name="telLogin">手机验证码登录</string>
+    <string name="telPwdLogin">密码登录</string>
     <string name="sezhi">设置</string>
     <string name="realname">实名认证</string>
     <string name="logout">退出登录</string>

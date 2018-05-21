@@ -673,6 +673,12 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
         mPwdLoginLy.setVisibility((mLoginModeStatus == 1) ? View.VISIBLE : View.GONE);
         mCodeLoginLy.setVisibility((mLoginModeStatus == 1) ? View.GONE : View.VISIBLE);
         title_bar.setMiddleText(getResources().getString(((mLoginModeStatus == 2) ? R.string.telLogin : R.string.telPwdLogin)));
+
+        if ("获取验证码".equals(tvCode.getText())) {
+            mCodeBtnStatus = true;
+            enableTvCode();
+        } else
+            disenableTvCode();
     }
 
     /**
@@ -974,13 +980,13 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 protected void onProgressUpdate(Object... values) {
                     super.onProgressUpdate(values);
                     if (values.length > 0 && values[0] != null) {
-                        if ("剩余59秒".equals(values[0])) {
+                        if ("59".equals(values[0])) {
                             disenableTvCode();
                         } else if ("获取验证码".equals(values[0])) {
                             mCodeBtnStatus = true;
                             enableTvCode();
                         }
-                        tvCode.setText(values[0].toString());
+                        tvCode.setText(values[0].toString() + (("获取验证码".equals(values[0])) ? "" : "秒后重试"));
                     }
                 }
             }.execute();
