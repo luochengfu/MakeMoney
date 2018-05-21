@@ -281,45 +281,46 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private BindInvitationCodeDialog dialogCode;
 
     @Subscriber(tag = "bind_code_action", mode = ThreadMode.MAIN)
-    private void bindCodeAction(BindUserBean bindUserBean)
-    {
-        if(MyApplication.sCurrActivity.getClass().getName().startsWith("com.tudouni") && !(MyApplication.sCurrActivity instanceof SearchGoodActivity) && !(MyApplication.sCurrActivity instanceof LoginActivity) &&
+    private void bindCodeAction(BindUserBean bindUserBean) {
+        if (MyApplication.sCurrActivity.getClass().getName().startsWith("com.tudouni") && !(MyApplication.sCurrActivity instanceof SearchGoodActivity) && !(MyApplication.sCurrActivity instanceof LoginActivity) &&
                 !(MyApplication.sCurrActivity instanceof TelLoginActivity) && !(MyApplication.sCurrActivity instanceof PwdActivity) &&
                 !(MyApplication.sCurrActivity instanceof SplashActivity) && !(MyApplication.sCurrActivity instanceof BindInvitationCodeActivity)) {
-            try{
-                if(dialogCode != null && dialogCode.isShowing()) {
+            try {
+                if (dialogCode != null && dialogCode.isShowing()) {
                     dialogCode.dismiss();
                 }
                 dialogCode = new BindInvitationCodeDialog(MyApplication.sCurrActivity, bindUserBean, false);
                 dialogCode.show();
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
         }
     }
 
     private SearchGoodDialog dialog = null;
+
     @Subscriber(tag = "search_good_action", mode = ThreadMode.MAIN)
-    private void searchGoodAction(String url)
-    {
-        if(MyApplication.sCurrActivity.getClass().getName().startsWith("com.tudouni") && !(MyApplication.sCurrActivity instanceof SearchGoodActivity) && !(MyApplication.sCurrActivity instanceof LoginActivity) &&
+    private void searchGoodAction(String url) {
+        if (MyApplication.sCurrActivity.getClass().getName().startsWith("com.tudouni") && !(MyApplication.sCurrActivity instanceof SearchGoodActivity) && !(MyApplication.sCurrActivity instanceof LoginActivity) &&
                 !(MyApplication.sCurrActivity instanceof TelLoginActivity) && !(MyApplication.sCurrActivity instanceof PwdActivity) &&
                 !(MyApplication.sCurrActivity instanceof SplashActivity) && !(MyApplication.sCurrActivity instanceof BindInvitationCodeActivity)) {
             try {
                 String searchStr = "";
-                if(dialog != null && dialog.isShowing()) {
-                    if(dialog.getDialogContext() != MyApplication.sCurrActivity){
+                if (dialog != null && dialog.isShowing()) {
+                    if (dialog.getDialogContext() != MyApplication.sCurrActivity) {
                         dialog.dismiss();
                     } else
                         return;
                 }
 
 
-                if(null != url || !"".equals(url)) {
+                if (null != url || !"".equals(url)) {
                     searchStr = url;
                 }
 
                 dialog = new SearchGoodDialog(MyApplication.sCurrActivity, searchStr, false);
                 dialog.show();
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
         }
     }
 
@@ -337,12 +338,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      * 退出登录
      */
     private void doLogOut() {
-//        try {
-//            finish();
-//            MyApplication.logout();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            finish();
+            MyApplication.logout();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         ForwardUtils.target(this, Constants.LOGIN);
     }
 
