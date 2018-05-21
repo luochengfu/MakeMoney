@@ -48,7 +48,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         MineMessage itemBean = mDatas.get(position);
         holder.mIcon.setImageResource(itemBean.getShowIcon());
         TuDouTextUtil.setTextToTextView(holder.mTvTitle, itemBean.getTitle());
-        TuDouTextUtil.setTextToTextView(holder.mMessageContent, itemBean.getContent());
+//        TuDouTextUtil.setTextToTextView(holder.mMessageContent, itemBean.getContent());
+        ((MyTextView)holder.mMessageContent).setText(itemBean.getContent());
         try {
             TuDouTextUtil.setTextToTextView(holder.mTvTime,
                     TimeUtil.formatDisplayTime(TimeUtil.longToString(itemBean.getTime(), "yyyy-MM-dd HH:mm:ss"),
