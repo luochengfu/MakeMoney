@@ -19,6 +19,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.tudouni.makemoney.BuildConfig;
 import com.tudouni.makemoney.R;
@@ -33,8 +34,11 @@ import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.WVJBWebViewClient;
 import com.tudouni.makemoney.utils.base.AppUtils;
 import com.tudouni.makemoney.view.MyTitleBar;
+
 import org.simple.eventbus.EventBus;
+
 import java.util.List;
+
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
@@ -132,8 +136,7 @@ public class H5Activity extends BaseActivity implements
         if ("#".equals(mDefaultTitle)) {
             title_bar.setHeadVisibility(View.GONE);
         }
-        WebChromeClient webChromeClient = new WebChromeClient()
-        {
+        WebChromeClient webChromeClient = new WebChromeClient() {
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 if (TextUtils.isEmpty(mDefaultTitle)) {
@@ -177,7 +180,7 @@ public class H5Activity extends BaseActivity implements
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
-        webViewClient = new H5WebViewClient(this,payHandler,(BridgeWebView) webview);
+        webViewClient = new H5WebViewClient(this, payHandler, (BridgeWebView) webview);
         webViewClient.enableLogging();
         webview.setWebViewClient(webViewClient);
 
@@ -217,7 +220,7 @@ public class H5Activity extends BaseActivity implements
             title_bar.setOnRightClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String url = Constants.h5_bindsearch + "?unionid="+MyApplication.getLoginUser().getUnionid() + "&token="+MyApplication.getLoginUser().getToken()+"&uid="+MyApplication.getLoginUser().getUid();
+                    String url = Constants.h5_bindsearch + "?unionid=" + MyApplication.getLoginUser().getUnionid() + "&token=" + MyApplication.getLoginUser().getToken() + "&uid=" + MyApplication.getLoginUser().getUid();
                     ForwardUtils.target(H5Activity.this, url);
                 }
             });

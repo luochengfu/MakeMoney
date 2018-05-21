@@ -1,7 +1,6 @@
 package com.tudouni.makemoney.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Icon;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,13 +10,10 @@ import android.widget.TextView;
 
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.model.MineMessage;
-import com.tudouni.makemoney.model.RecommendTopicBean;
 import com.tudouni.makemoney.utils.TimeUtil;
 import com.tudouni.makemoney.utils.TuDouLogUtils;
 import com.tudouni.makemoney.utils.TuDouTextUtil;
-import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
-
-import org.w3c.dom.Text;
+import com.tudouni.makemoney.view.BreakTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +43,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         MineMessage itemBean = mDatas.get(position);
         holder.mIcon.setImageResource(itemBean.getShowIcon());
         TuDouTextUtil.setTextToTextView(holder.mTvTitle, itemBean.getTitle());
-        TuDouTextUtil.setTextToTextView(holder.mMessageContent, itemBean.getContent());
+//        TuDouTextUtil.setTextToTextView(holder.mMessageContent, itemBean.getContent());
+        TuDouTextUtil.setTextToTextView(holder.mMessageContent, ToSBC(itemBean.getContent()));
         try {
             TuDouTextUtil.setTextToTextView(holder.mTvTime,
                     TimeUtil.formatDisplayTime(TimeUtil.longToString(itemBean.getTime(), "yyyy-MM-dd HH:mm:ss"),
@@ -120,5 +117,24 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         mDatas.remove(position);
         notifyItemRemoved(position);
         notifyDataSetChanged();
+    }
+
+    /**
+     * 半角转全角
+     *
+     * @param input String.
+     * @return 全角字符串.
+     */
+    public static String ToSBC(String input) {
+        char c[] = input.toCharArray();
+        for (int i = 0; i < c.length; i++) {
+            if (c[i] == ' ') {
+                c[i] = '\u3000';
+            } else if (c[i] < '\177') {
+                c[i] = (char) (c[i] + 65248);
+
+            }
+        }
+        return new String(c);
     }
 }

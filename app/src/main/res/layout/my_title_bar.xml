@@ -9,8 +9,8 @@
         android:id="@+id/status_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:background="@drawable/shape_mall_title_bg"/>
+        android:background="@drawable/shape_mall_title_bg"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/head"
@@ -50,11 +50,12 @@
             android:id="@+id/tv_middle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/right_layer_two"
+            android:layout_toRightOf="@+id/rl_back_layer"
             android:ellipsize="end"
-            android:maxLines="1"
             android:gravity="center"
-            android:layout_marginLeft="80dp"
+            android:maxLines="1"
             android:textColor="@color/color_333333"
             android:textSize="16sp"
             tools:text="Title" />
