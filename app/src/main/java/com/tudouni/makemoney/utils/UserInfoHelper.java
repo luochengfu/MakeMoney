@@ -26,6 +26,7 @@ public class UserInfoHelper {
         editor.putString("token", user.getToken());
         editor.putString("uid", user.getUid());
         editor.putString("phone", user.getPhone());
+        editor.putString("role", user.getRole());
         editor.putString("invistCode", user.getInvistCode());
         editor.putString("unumber", user.getUnumber());
         editor.putString("gradeName", user.getGradeName());
