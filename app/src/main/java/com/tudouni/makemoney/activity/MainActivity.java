@@ -337,12 +337,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      * 退出登录
      */
     private void doLogOut() {
-        try {
-            finish();
-            MyApplication.logout();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            finish();
+//            MyApplication.logout();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         ForwardUtils.target(this, Constants.LOGIN);
     }
 

@@ -3,14 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:background="@drawable/listview"
-    android:gravity="center_vertical"
     android:orientation="horizontal"
     android:padding="@dimen/dp_10">
 
     <ImageView
         android:id="@+id/iteam_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:scaleType="fitXY"
         android:src="@mipmap/ic_arrow_red" />
 
     <LinearLayout
@@ -50,8 +51,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:ellipsize="end"
-            android:singleLine="true"
             android:text="通知内容内容内容内容内容..."
             android:textColor="#C2C2C2"
             android:textSize="13sp" />

@@ -22,7 +22,9 @@ import android.widget.Toast;
 
 import com.tudouni.makemoney.interfaces.NoDoubleClickListener;
 import com.tudouni.makemoney.R;
+import com.tudouni.makemoney.model.FinishLoginActivity;
 import com.tudouni.makemoney.model.Invite;
+import com.tudouni.makemoney.model.LogOut;
 import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.myApplication.MyApplication;
@@ -31,15 +33,21 @@ import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.NetConfig;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.CommonUtil;
+import com.tudouni.makemoney.utils.Constants;
 import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.ValidateUtil;
 import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
 import com.tudouni.makemoney.view.CenterLoadingView;
+import com.tudouni.makemoney.view.Tip_dialog;
 import com.tudouni.makemoney.widget.versionUpdate.UpdateAPKUtil;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+
+import org.simple.eventbus.EventBus;
+import org.simple.eventbus.Subscriber;
+import org.simple.eventbus.ThreadMode;
 
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -70,6 +78,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        EventBus.getDefault().register(this);
         permissionCheck();
         mShareAPI = UMShareAPI.get(this);
         initView();
@@ -121,6 +130,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onDestroy();
         //TODO 有bug，没有释放引用，Activity依然驻留内存
         mShareAPI.release();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
@@ -428,11 +438,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
           }
       });
   }*/
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        if (0 != (Intent.FLAG_ACTIVITY_CLEAR_TOP & intent.getFlags())) {
-            finish();
-        }
+
+
+    @Subscriber(tag = Constants.EVENT_TAG_FINSISH_LOGIN_ACTIVITY, mode = ThreadMode.MAIN)
+    private void finishActivity(FinishLoginActivity o) {
+        finish();
     }
 }

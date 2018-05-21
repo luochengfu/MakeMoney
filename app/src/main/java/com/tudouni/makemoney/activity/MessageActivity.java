@@ -1,5 +1,6 @@
 package com.tudouni.makemoney.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -110,7 +111,7 @@ public class MessageActivity extends AppCompatActivity {
                         ForwardUtils.target(MessageActivity.this, Constants.h5_mall_grade + para);
                         break;
                     case 3:
-                        ForwardUtils.target(MessageActivity.this, Constants.h5_makemoney + para);
+                        startActivity(new Intent(MessageActivity.this, MyEarningsActivity.class));
                         break;
                 }
             }
