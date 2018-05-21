@@ -89,7 +89,7 @@ public class ShareUtil {
         } else {
             UMImage umImage = new UMImage(activity, share.getMinePotatoes());
             umImage.setTitle(share.getTitle());
-            umImage.setThumb(new UMImage(activity, R.mipmap.ic_launcher));
+            umImage.setThumb(umImage);
             umImage.setDescription(share.getContent());
             shareAction.withMedia(umImage);
         }

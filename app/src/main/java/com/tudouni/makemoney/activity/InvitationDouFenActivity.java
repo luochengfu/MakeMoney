@@ -107,7 +107,9 @@ public class InvitationDouFenActivity extends BaseActivity implements View.OnCli
                 MobclickAgent.onEvent(this, "me_indfshare2");
                 if (mPotatoesBitmap == null && mPotatoesBitmap.isRecycled())
                     startRequest();
-                new ShareWindow_v3(this, Share.Type.IMAGE_POTATOES, Share.obtain(Share.Type.IMAGE_POTATOES, mPotatoesBitmap), null, null).show(this);
+                Share share = Share.obtain(Share.Type.IMAGE_POTATOES, mPotatoesBitmap);
+                share.setCanShareToQQ(false);
+                new ShareWindow_v3(this, Share.Type.IMAGE_POTATOES, share, null, null).show(this);
 //                shareWindow_v2.showPotatesLy();
 //                shareWindow_v2.show(this);
                 break;

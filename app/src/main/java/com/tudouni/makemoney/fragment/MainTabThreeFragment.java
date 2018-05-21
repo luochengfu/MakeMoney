@@ -104,6 +104,7 @@ public class MainTabThreeFragment extends BaseFragment {
     protected void initData() {
         title_bar.setMiddleText("发现");
         title_bar.setLeftVisible(View.GONE);
+        title_bar.setRightVisible(View.GONE);
         initBanner();
         initAdapter();
         getBanner();

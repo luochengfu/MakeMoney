@@ -83,6 +83,7 @@ public class Share implements Serializable {
     private String targetId;
     private Bitmap minePotatoes;//海报
     private List<String> imageS = null;
+    private boolean canShareToQQ = true;
 
     public String getContent() {
         return content;
@@ -139,6 +140,15 @@ public class Share implements Serializable {
     public void setTargetId(String targetId) {
         this.targetId = targetId;
     }
+
+    public boolean isCanShareToQQ() {
+        return canShareToQQ;
+    }
+
+    public void setCanShareToQQ(boolean canShareToQQ) {
+        this.canShareToQQ = canShareToQQ;
+    }
+
 
     public Share() {
     }

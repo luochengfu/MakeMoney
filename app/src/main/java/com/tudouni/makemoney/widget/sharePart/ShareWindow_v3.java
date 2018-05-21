@@ -97,7 +97,7 @@ public class ShareWindow_v3 extends BottomPushPopupWindow<Void> implements OnCli
             invalidPosition.add(7);
         }
         if (mType != null && (mType == Share.Type.IMAGE_POTATOES || mType == Share.Type.IMAGE_MULTIPL)) {
-            if (mType == Share.Type.IMAGE_POTATOES)
+            if (mType == Share.Type.IMAGE_POTATOES & !mShare.isCanShareToQQ())
                 invalidPosition.add(2);
             invalidPosition.add(3);
             invalidPosition.add(4);
