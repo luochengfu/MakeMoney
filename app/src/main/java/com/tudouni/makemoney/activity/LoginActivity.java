@@ -290,6 +290,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         if (user.getUser() == null || user.getNewer()) {
                             skipTelephoneLogin(user, "6");
                         } else if (!TextUtils.isEmpty(user.getUser().getToken()) && TextUtils.isEmpty(user.getUser().getPhone())) {//老用户没有手机号码
+                            saveLoginInfo(user.getUser());
                             skipTelephoneLogin(user, "7");
                         } else {
                             saveLoginInfo(user.getUser());

@@ -35,8 +35,7 @@ import java.util.List;
  * Created by Administrator on 2018/5/2 0002.
  */
 
-public class SearchGoodDialog extends Dialog implements View.OnClickListener
-{
+public class SearchGoodDialog extends Dialog implements View.OnClickListener {
     private Context mContext;
     private LinearLayout parentLayout;
     private RelativeLayout imgLayout;
@@ -88,11 +87,11 @@ public class SearchGoodDialog extends Dialog implements View.OnClickListener
 
 
         int popWidth = (ScreenUtils.getScreenWidth(mContext) * 7) / 10;
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(popWidth,RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(popWidth, RelativeLayout.LayoutParams.WRAP_CONTENT);
         parentLayout.setLayoutParams(params);
 
         int imgHeight = popWidth * 83 / 218;
-        LinearLayout.LayoutParams imgParams = new LinearLayout.LayoutParams(popWidth,imgHeight);
+        LinearLayout.LayoutParams imgParams = new LinearLayout.LayoutParams(popWidth, imgHeight);
         imgLayout.setLayoutParams(imgParams);
     }
 
@@ -101,19 +100,21 @@ public class SearchGoodDialog extends Dialog implements View.OnClickListener
         switch (v.getId()) {
             case R.id.tvNo:
                 MyApplication.mClipStr = "";
-                ClipboardUtil.getInstance().copyText("","");
+                ClipboardUtil.getInstance().copyText("", "");
                 dismiss();
                 break;
             case R.id.tvYes:
                 try {
                     saveSearchHistory(searchStr);
-                    String url = NetConfig.getBaseTuDouNiH5Url() + "html/resultlist.html?unionid=" + MyApplication.getLoginUser().getUnionid()+"&search=" + URLEncoder.encode(searchStr,"utf-8").replaceAll("\\+",  "%20");
+//                    String url = NetConfig.getBaseTuDouNiH5Url() + "html/resultlist.html?unionid=" + MyApplication.getLoginUser().getUnionid()+"&search=" + URLEncoder.encode(searchStr,"utf-8").replaceAll("\\+",  "%20");
+                    String url = NetConfig.getBaseTuDouNiH5Url() + "html/resultlist.html?unionid=" + MyApplication.getLoginUser().getUnionid() + "&search=" + searchStr;
                     Intent intent = new Intent(mContext, H5Activity.class);
-                    intent.putExtra("titleStatus",1);
+                    intent.putExtra("titleStatus", 1);
                     intent.putExtra("url", url);
                     mContext.startActivity(intent);
-                } catch (Exception e){}
-                ClipboardUtil.getInstance().copyText("","");
+                } catch (Exception e) {
+                }
+                ClipboardUtil.getInstance().copyText("", "");
                 MyApplication.mClipStr = "";
                 dismiss();
                 break;
@@ -123,7 +124,7 @@ public class SearchGoodDialog extends Dialog implements View.OnClickListener
     @Override
     public void dismiss() {
         super.dismiss();
-        ClipboardUtil.getInstance().copyText("","");
+        ClipboardUtil.getInstance().copyText("", "");
         MyApplication.mClipStr = "";
     }
 
@@ -131,10 +132,10 @@ public class SearchGoodDialog extends Dialog implements View.OnClickListener
      * 保存搜索记录
      */
     private void saveSearchHistory(String search) {
-        if(mGson == null)
+        if (mGson == null)
             mGson = new Gson();
 
-        if(mSearchhistory == null)
+        if (mSearchhistory == null)
             mSearchhistory = new ArrayList<>();
 
         String searchHistoryJson = SPUtil.getString(mContext, "search_history");
@@ -148,7 +149,7 @@ public class SearchGoodDialog extends Dialog implements View.OnClickListener
         JsonArray searchArr = parser.parse(searchHistoryJson).getAsJsonArray();
         for (JsonElement item : searchArr) {
             String itemStr = mGson.fromJson(item, String.class);
-            if(search.equals(itemStr))
+            if (search.equals(itemStr))
                 return;
             mSearchhistory.add(itemStr);
         }
