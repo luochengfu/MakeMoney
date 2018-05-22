@@ -127,7 +127,7 @@ public class NetConfig {
     /**
      * 土豆泥H5基础地址数组
      */
-    private static final String[] SHARE_H5_URLS = {"https://wap.tudouni.doubozhibo.com/", "https://waptest.tudouni.doubozhibo.com/"};
+    private static final String[] SHARE_H5_URLS = {"https://h5.tudouni.doubozhibo.com/navigatorBizWap/", "https://waptest.tudouni.doubozhibo.com/"};
 
 
     /**
