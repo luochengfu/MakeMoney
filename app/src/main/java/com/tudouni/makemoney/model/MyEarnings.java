@@ -1,6 +1,12 @@
 package com.tudouni.makemoney.model;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.databinding.BaseObservable;
+
+import com.tudouni.makemoney.activity.H5Activity;
+import com.tudouni.makemoney.myApplication.MyApplication;
+import com.tudouni.makemoney.network.NetConfig;
 
 public class MyEarnings extends BaseObservable{
     /**
@@ -360,4 +366,6 @@ public class MyEarnings extends BaseObservable{
     public String getIncomeStr(){
         return "累计收益：￥" + this.income;
     }
+
+
 }

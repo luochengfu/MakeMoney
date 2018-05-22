@@ -60,20 +60,20 @@ public class MyEarningsViewModel extends LoadingViewModel {
                 TDLog.e(maxDayOfThisMonth, transForDate(todayStart), transForDate(currentSecond), transForDate(yesterdayStart), transForDate(yesterdayEnd), transForDate(currMonthStart), transForDate(currMonthEnd), transForDate(lastMonthStart), transForDate(lastMonthEnd));
 
 
-                EarningsBean todayEarnings = new EarningsBean(myEarnings.getTodayIncome(), myEarnings.getTodayCount(), myEarnings.getTodayExpectedIncome(), EarningsBean.IncomeType.TYPE_TODAY);
+                EarningsBean todayEarnings = new EarningsBean(myEarnings.getTodayIncome(), myEarnings.getTodayCount(), myEarnings.getTodayExpectedIncome(), EarningsBean.IncomeType.TYPE_TODAY,myEarnings.getTodayExpectedCount());
                 todayEarnings.setStartTime(todayStart);
                 todayEarnings.setEndTime(currentSecond);
 
-                EarningsBean yesterdayEarnings = new EarningsBean(myEarnings.getYesterdayIncome(), myEarnings.getYesterdayCount(), myEarnings.getYesterdayExpectedIncome(), EarningsBean.IncomeType.TYPE_YESTERDAY);
+                EarningsBean yesterdayEarnings = new EarningsBean(myEarnings.getYesterdayIncome(), myEarnings.getYesterdayCount(), myEarnings.getYesterdayExpectedIncome(), EarningsBean.IncomeType.TYPE_YESTERDAY,myEarnings.getYesterdayExpectedCount());
                 yesterdayEarnings.setStartTime(yesterdayStart);
                 yesterdayEarnings.setEndTime(yesterdayEnd);
 
-                EarningsBean thisMonthEarnings = new EarningsBean(myEarnings.getThisMonthIncome(), myEarnings.getThisMonthCount(), myEarnings.getThisMonthExpectedIncome(), EarningsBean.IncomeType.TYPE_THIS_MONTH);
+                EarningsBean thisMonthEarnings = new EarningsBean(myEarnings.getThisMonthIncome(), myEarnings.getThisMonthCount(), myEarnings.getThisMonthExpectedIncome(), EarningsBean.IncomeType.TYPE_THIS_MONTH,myEarnings.getThisMonthExpectedCount());
                 thisMonthEarnings.setStartTime(currMonthStart);
                 thisMonthEarnings.setEndTime(currMonthEnd);
                 TDLog.e(thisMonthEarnings);
 
-                EarningsBean lastMonthEarnings = new EarningsBean(myEarnings.getLastMonthIncome(), myEarnings.getLastMonthCount(), myEarnings.getLastMonthExpectedIncome(), EarningsBean.IncomeType.TYPE_LAST_MONTH);
+                EarningsBean lastMonthEarnings = new EarningsBean(myEarnings.getLastMonthIncome(), myEarnings.getLastMonthCount(), myEarnings.getLastMonthExpectedIncome(), EarningsBean.IncomeType.TYPE_LAST_MONTH,myEarnings.getLastMonthExpectedCount());
                 lastMonthEarnings.setStartTime(lastMonthStart);
                 lastMonthEarnings.setEndTime(lastMonthEnd);
 
