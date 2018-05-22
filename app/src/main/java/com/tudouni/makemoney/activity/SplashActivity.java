@@ -77,7 +77,7 @@ public class SplashActivity extends Activity {
      * @return
      */
     private boolean isToLoginPage() {
-        return null == MyApplication.getLoginUser() || CommonUtil.isNetworkAvailable(mContext) || TextUtils.isEmpty(MyApplication.getLoginUser().getParent()) || TextUtils.isEmpty(MyApplication.getLoginUser().getToken());
+        return null == MyApplication.getLoginUser() || !CommonUtil.isNetworkAvailable(mContext) || TextUtils.isEmpty(MyApplication.getLoginUser().getParent()) || TextUtils.isEmpty(MyApplication.getLoginUser().getToken());
     }
 
     public static Intent createIntent(Context context) {

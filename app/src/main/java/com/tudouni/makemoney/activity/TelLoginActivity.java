@@ -925,7 +925,12 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
 
             @Override
             public void afterTextChanged(Editable s) {
-                changeLoginStata(true, s.toString());
+                String invitCode = s.toString();
+                if (invitCode.length() > 0 && !invitCode.startsWith("0")) {
+                    enableTvLogin();
+                } else {
+                    disenableTvLogin();
+                }
             }
         });
 
