@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.PermissionChecker;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -60,7 +61,7 @@ import java.util.concurrent.Executors;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private final String TAG = "LoginActivity";
-
+    private final int PERMISSION_REQUEST_CODE = 125;
     private Context mContext = this;
     private LinearLayout iv_WechatLogin, iv_QqLogin, tv_phone_login;
 
@@ -84,7 +85,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         EventBus.getDefault().register(this);
-        permissionCheck();
+        initPermissions();
         mShareAPI = UMShareAPI.get(this);
         initView();
         initDatas();
@@ -351,6 +352,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void onBackPressed() {
         super.onBackPressed();
         mActivityStatus = false;
+    }
+
+
+    /**
+     * 初始化权限
+     */
+    private void initPermissions() {
+        if (!permissionCheck()) {
+            if (Build.VERSION.SDK_INT >= 23) {
+                ActivityCompat.requestPermissions(this, permissionManifest,
+                        PERMISSION_REQUEST_CODE);
+            }
+        }
     }
 
     /**

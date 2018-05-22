@@ -21,24 +21,9 @@ import com.umeng.socialize.UMShareAPI;
 
 
 public class SplashActivity extends Activity {
-    private final int PERMISSION_REQUEST_CODE = 124;
     private Context mContext;
     private Handler mHandler = new Handler();
     private int WAIT_TIME = 2; //单位秒
-    private final String[] permissionManifest = {
-            Manifest.permission.CAMERA,
-            Manifest.permission.RECORD_AUDIO,
-            Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE
-    };
-    private final int[] noPermissionTip = {
-            R.string.no_camera_permission,
-            R.string.no_record_audio_permission,
-            R.string.no_read_phone_state_permission,
-            R.string.no_write_external_storage_permission,
-            R.string.no_read_external_storage_permission
-    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,7 +33,6 @@ public class SplashActivity extends Activity {
             return;
         }
         setContentView(R.layout.activity_splash);
-        initPermissions();
         setTitle("启动页");
         mContext = this;
         initView();
@@ -83,14 +67,17 @@ public class SplashActivity extends Activity {
 
     private void nextPage() {
         //没有上级跳转到登录界面
-        if (null != MyApplication.getLoginUser() && CommonUtil.isNetworkAvailable(mContext) && !TextUtils.isEmpty(MyApplication.getLoginUser().getParent())) {
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
-            finish();
-        } else {  //跳转到登录
-            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-            finish();
-            return;
-        }
+        startActivity(new Intent(SplashActivity.this, ((isToLoginPage()) ? LoginActivity.class : MainActivity.class)));
+        finish();
+    }
+
+    /**
+     * 用户参数是否正常，异常重新登录  zp
+     *
+     * @return
+     */
+    private boolean isToLoginPage() {
+        return null == MyApplication.getLoginUser() || CommonUtil.isNetworkAvailable(mContext) || TextUtils.isEmpty(MyApplication.getLoginUser().getParent()) || TextUtils.isEmpty(MyApplication.getLoginUser().getToken());
     }
 
     public static Intent createIntent(Context context) {
@@ -109,42 +96,4 @@ public class SplashActivity extends Activity {
         super.onPause();
         MobclickAgent.onPause(this);
     }
-
-    /**
-     * 初始化权限
-     */
-    private void initPermissions() {
-        if (!permissionCheck()) {
-            if (Build.VERSION.SDK_INT >= 23) {
-                ActivityCompat.requestPermissions(this, permissionManifest,
-                        PERMISSION_REQUEST_CODE);
-            }
-        }
-    }
-
-    /**
-     * 权限检查（适配6.0以上手机）
-     */
-    private boolean permissionCheck() {
-        int permissionCheck = PackageManager.PERMISSION_GRANTED;
-        String permission;
-        for (int i = 0; i < permissionManifest.length; i++) {
-            permission = permissionManifest[i];
-            if (PermissionChecker.checkSelfPermission(this, permission)
-                    != PackageManager.PERMISSION_GRANTED) {
-                permissionCheck = PackageManager.PERMISSION_DENIED;
-            }
-        }
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
 }
