@@ -9,17 +9,21 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.PermissionChecker;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tudouni.makemoney.BuildConfig;
 import com.tudouni.makemoney.interfaces.NoDoubleClickListener;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.model.FinishLoginActivity;
@@ -39,6 +43,7 @@ import com.tudouni.makemoney.utils.ValidateUtil;
 import com.tudouni.makemoney.utils.glideUtil.GlideUtil;
 import com.tudouni.makemoney.view.CenterLoadingView;
 import com.tudouni.makemoney.view.Tip_dialog;
+import com.tudouni.makemoney.widget.dialog.MenuDialog;
 import com.tudouni.makemoney.widget.versionUpdate.UpdateAPKUtil;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMAuthListener;
@@ -48,6 +53,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
 import org.simple.eventbus.ThreadMode;
+import org.xutils.common.util.LogUtil;
 
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -55,7 +61,7 @@ import java.util.concurrent.Executors;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private final String TAG = "LoginActivity";
-
+    private final int PERMISSION_REQUEST_CODE = 125;
     private Context mContext = this;
     private LinearLayout iv_WechatLogin, iv_QqLogin, tv_phone_login;
 
@@ -79,7 +85,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         EventBus.getDefault().register(this);
-        permissionCheck();
+        initPermissions();
         mShareAPI = UMShareAPI.get(this);
         initView();
         initDatas();
@@ -153,6 +159,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         /*if (App.appConfig.isMaintain()) {
             new MaintinDialog(this, App.appConfig.getShutdownMaintainMsg()).show();
         }*/
+
+        initEnvironmentButton();
         noDoubleClick();
     }
 
@@ -162,6 +170,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         String statisticsType = null;
         switch (v.getId()) {
             case R.id.tv_phone_login:
+                MyApplication.logout();
                 skipTelephoneLogin(null, "1");
                 break;
         }
@@ -195,6 +204,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
     private void login(final SHARE_MEDIA platform) {
+        MyApplication.logout();
         if (null == loadingDialog) {
             loadingDialog = new CenterLoadingView(LoginActivity.this);
         }
@@ -289,7 +299,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         mShareAPI.deleteOauth(LoginActivity.this, share_media, null);
                         if (user.getUser() == null || user.getNewer()) {
                             skipTelephoneLogin(user, "6");
-                        } else if (TextUtils.isEmpty(user.getUser().getPhone())) {//老用户没有手机号码
+                        } else if (!TextUtils.isEmpty(user.getUser().getToken()) && TextUtils.isEmpty(user.getUser().getPhone())) {//老用户没有手机号码
+                            saveLoginInfo(user.getUser());
                             skipTelephoneLogin(user, "7");
                         } else {
                             saveLoginInfo(user.getUser());
@@ -343,6 +354,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         mActivityStatus = false;
     }
 
+
+    /**
+     * 初始化权限
+     */
+    private void initPermissions() {
+        if (!permissionCheck()) {
+            if (Build.VERSION.SDK_INT >= 23) {
+                ActivityCompat.requestPermissions(this, permissionManifest,
+                        PERMISSION_REQUEST_CODE);
+            }
+        }
+    }
+
     /**
      * 权限检查（适配6.0以上手机）
      */
@@ -364,80 +388,78 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
 
-    /* private void initEnvironmentButton() {
-      final Button button = (Button) findViewById(R.id.btn_net_env);
-      final Runnable setBtnText = new Runnable() {
-          @Override
-          public void run() {
-              button.setText("网络环境：" + NetConfig.getEnvironmentName() + "\n(点击以修改。测试用，正式发布会删除)");
-          }
-      };
-      button.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              new MenuDialog(v.getContext()).setMenuText(NetConfig.ENVIRONMENT_NAMES)
-                      .setOnItemClickListener(new MenuDialog.OnItemClickListener() {
-                          @Override
-                          public void onItemClick(MenuDialog dialog, int index) {
-                              NetConfig.setEnvironment(index);
-                              setBtnText.run();
-                              Tip_dialog tip_dialog = new Tip_dialog(dialog.getContext(), "网络环境已设置为：[" + NetConfig.getEnvironmentName() +
-                                      "]");
-                              tip_dialog.setCancelable(false);
-                              tip_dialog.setCanceledOnTouchOutside(false);
-                              tip_dialog.setLinstener(new Tip_dialog.BtnClickLinstener() {
-                                  @Override
-                                  public void clickOk() {
-                                      if(App.sCurrActivity != null){
-                                          App.sCurrActivity.finish();
-                                      }
-                                      System.exit(0);
-                                  }
+    private void initEnvironmentButton() {
+        final Button button = (Button) findViewById(R.id.btn_net_env);
+        final Runnable setBtnText = new Runnable() {
+            @Override
+            public void run() {
+                button.setText("网络环境：" + NetConfig.getEnvironmentName() + "\n(点击以修改。测试用，正式发布会删除)");
+            }
+        };
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new MenuDialog(v.getContext()).setMenuText(NetConfig.ENVIRONMENT_NAMES)
+                        .setOnItemClickListener(new MenuDialog.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(MenuDialog dialog, int index) {
+                                NetConfig.setEnvironment(index);
+                                setBtnText.run();
+                                Tip_dialog tip_dialog = new Tip_dialog(dialog.getContext(), "网络环境已设置为：[" + NetConfig.getEnvironmentName() +
+                                        "]");
+                                tip_dialog.setCancelable(false);
+                                tip_dialog.setCanceledOnTouchOutside(false);
+                                tip_dialog.setLinstener(new Tip_dialog.BtnClickLinstener() {
+                                    @Override
+                                    public void clickOk() {
+                                        if (MyApplication.sCurrActivity != null) {
+                                            MyApplication.sCurrActivity.finish();
+                                        }
+                                        System.exit(0);
+                                    }
 
-                                  @Override
-                                  public void clickCancel() {
+                                    @Override
+                                    public void clickCancel() {
 
-                                  }
-                              });
-                              tip_dialog.show();
-                          }
-                      }).show();
-          }
-      });
-      setBtnText.run();
-      if (!"release".equals(BuildConfig.BUILD_TYPE)) {
-          button.setVisibility(View.VISIBLE);
-      }
+                                    }
+                                });
+                                tip_dialog.show();
+                            }
+                        }).show();
+            }
+        });
+        setBtnText.run();
+        if (!"release".equals(BuildConfig.BUILD_TYPE)) {
+            button.setVisibility(View.VISIBLE);
+        }
 
-      // 秘籍：背景区域点击“上上下下左右左右BABA”显示网络环境按钮及开启Log。触碰点靠近外框为“上下左右”，触碰点x方向不那么靠边时按左右为“AB”
-      final int[] asx = {3, 5, 6, 4}; // L,A,B,R
-      final int[] asy = {1, 0, 0, 2}; // U,*,*,D
-      View view = findViewById(R.id.activity_login);
-      view.setTag(0L);
-      view.setOnTouchListener(new View.OnTouchListener() {
-          @Override
-          public boolean onTouch(View v, MotionEvent event) {
-              if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                  int[] loc = new int[2];
-                  v.getLocationOnScreen(loc);
-                  float px = (event.getRawX() - loc[0]) / v.getWidth();       // persent
-                  float py = (event.getRawY() - loc[1]) / v.getHeight();
-                  int qx = Math.min(Math.max((int) (px * 4), 0), asx.length); // quarter
-                  int qy = Math.min(Math.max((int) (py * 4), 0), asy.length);
-                  int action = asy[qy] > 0 ? asy[qy] : asx[qx];               // action this time
-                  long actions = (Long) v.getTag();
-                  actions = ((actions << 4) | action) & 0xffffffffffffL;      // actions queue
-                  v.setTag(actions);
-                  if (actions == 0x112234346565L) { // UUDDLRLRBABA
-                      button.setVisibility(View.VISIBLE);
-                      LogUtil.setLogLevel(LogUtil.VERBOSE);
-                      ToastUtils.showToast(v.getContext(), "Log已开启");
-                  }
-              }
-              return false;
-          }
-      });
-  }*/
+        // 秘籍：背景区域点击“上上下下左右左右BABA”显示网络环境按钮及开启Log。触碰点靠近外框为“上下左右”，触碰点x方向不那么靠边时按左右为“AB”
+//        final int[] asx = {3, 5, 6, 4}; // L,A,B,R
+//        final int[] asy = {1, 0, 0, 2}; // U,*,*,D
+//        View view = findViewById(R.id.activity_login);
+//        view.setTag(0L);
+//        view.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//                    int[] loc = new int[2];
+//                    v.getLocationOnScreen(loc);
+//                    float px = (event.getRawX() - loc[0]) / v.getWidth();       // persent
+//                    float py = (event.getRawY() - loc[1]) / v.getHeight();
+//                    int qx = Math.min(Math.max((int) (px * 4), 0), asx.length); // quarter
+//                    int qy = Math.min(Math.max((int) (py * 4), 0), asy.length);
+//                    int action = asy[qy] > 0 ? asy[qy] : asx[qx];               // action this time
+//                    long actions = (Long) v.getTag();
+//                    actions = ((actions << 4) | action) & 0xffffffffffffL;      // actions queue
+//                    v.setTag(actions);
+//                    if (actions == 0x112234346565L) { // UUDDLRLRBABA
+//                        button.setVisibility(View.VISIBLE);
+//                    }
+//                }
+//                return false;
+//            }
+//        });
+    }
 
 
     @Subscriber(tag = Constants.EVENT_TAG_FINSISH_LOGIN_ACTIVITY, mode = ThreadMode.MAIN)

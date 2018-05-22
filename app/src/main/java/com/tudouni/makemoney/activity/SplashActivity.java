@@ -1,21 +1,26 @@
 package com.tudouni.makemoney.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.PermissionChecker;
 import android.text.TextUtils;
 
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.utils.CommonUtil;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.UMShareAPI;
 
 
 public class SplashActivity extends Activity {
-
     private Context mContext;
     private Handler mHandler = new Handler();
     private int WAIT_TIME = 2; //单位秒
@@ -62,14 +67,17 @@ public class SplashActivity extends Activity {
 
     private void nextPage() {
         //没有上级跳转到登录界面
-        if (null != MyApplication.getLoginUser() && CommonUtil.isNetworkAvailable(mContext) && !TextUtils.isEmpty(MyApplication.getLoginUser().getParent())) {
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
-            finish();
-        } else {  //跳转到登录
-            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-            finish();
-            return;
-        }
+        startActivity(new Intent(SplashActivity.this, ((isToLoginPage()) ? LoginActivity.class : MainActivity.class)));
+        finish();
+    }
+
+    /**
+     * 用户参数是否正常，异常重新登录  zp
+     *
+     * @return
+     */
+    private boolean isToLoginPage() {
+        return null == MyApplication.getLoginUser() || !CommonUtil.isNetworkAvailable(mContext) || TextUtils.isEmpty(MyApplication.getLoginUser().getParent()) || TextUtils.isEmpty(MyApplication.getLoginUser().getToken());
     }
 
     public static Intent createIntent(Context context) {
