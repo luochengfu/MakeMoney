@@ -15,6 +15,15 @@ public class EarningsBean {
     private int incomeType;
     private long startTime;
     private long endTime;
+    private int expectedCount;
+
+    public int getExpectedCount() {
+        return expectedCount;
+    }
+
+    public void setExpectedCount(int expectedCount) {
+        this.expectedCount = expectedCount;
+    }
 
     public int getIncomeType() {
         return incomeType;
@@ -51,6 +60,14 @@ public class EarningsBean {
         this.orderCount = orderCount;
         this.expectedIncome = expectedIncome;
         this.incomeType = incomeType;
+    }
+
+    public EarningsBean(double income, int orderCount, double expectedIncome, int incomeType, int expectedCount) {
+        this.income = income;
+        this.orderCount = orderCount;
+        this.expectedIncome = expectedIncome;
+        this.incomeType = incomeType;
+        this.expectedCount = expectedCount;
     }
 
     public double getIncome() {
@@ -128,7 +145,7 @@ public class EarningsBean {
         Activity currActivity = MyApplication.sCurrActivity;
         if (currActivity != null) {
             Intent intent = new Intent(currActivity,H5Activity.class);
-            intent.putExtra("url", NetConfig.getBaseTuDouNiH5Url() + "mycenter/order.html?startTime=" + getStartTime() + "&endTime=" + getEndTime() + "&unionid=" + MyApplication.getLoginUser().getUnionid());
+            intent.putExtra("url", NetConfig.getBaseTuDouNiH5Url() + "mycenter/order.html?startTime=" + getStartTime() + "&endTime=" + getEndTime() + "&unionid=" + MyApplication.getLoginUser().getUnionid() + "&status=1");
             currActivity.startActivity(intent);
         }
     }

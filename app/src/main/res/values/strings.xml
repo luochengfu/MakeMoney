@@ -48,6 +48,10 @@
     <string name="tb_price">淘宝价 ￥</string>
     <string name="month_sale_count">月销</string>
     <string name="commission">预估佣金</string>
+    <string name="pay_order">付款订单</string>
+    <string name="deal_order">结算订单</string>
+    <string name="expect_order">预估订单</string>
+    <string name="expect_income">预估收益</string>
     <string name="rmb">￥</string>
     <string name="fix2">.00</string>
 

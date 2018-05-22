@@ -63,7 +63,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{String.valueOf(income.orderCount)}"
+                    android:text="@{String.valueOf(income.expectedCount)}"
                     android:textColor="#ff6060"
                     android:textSize="18sp" />
 
@@ -71,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="订单数量"
+                    android:text="@{income.incomeType == 4 ? @string/expect_order : @string/pay_order}"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -87,7 +87,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{income.getFormatterIncome(income.expectedIncome)}"
+                    android:text="@{income.incomeType == 4 ? String.valueOf(income.orderCount) : income.getFormatterIncome(income.expectedIncome)}"
                     android:textColor="#ff6060"
                     android:textSize="18sp" />
 
@@ -95,7 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="预估收益"
+                    android:text="@{income.incomeType == 4 ? @string/deal_order : @string/expect_income}"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
             </LinearLayout>
