@@ -233,6 +233,9 @@ public class MyApplication extends BaseApplication implements ClipboardUtil.OnPr
         return mLoginUser;
     }
 
+    /**
+     * 退出登录并且清楚之前登陆者的信息 zp
+     */
     public static void logout() {
         mLoginUser = null;
         UserInfoHelper.clearLoginUser(sContext);
