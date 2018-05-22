@@ -1,31 +1,23 @@
 package com.tudouni.makemoney.activity.withdrawmoney;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
-import android.text.TextWatcher;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tudouni.makemoney.BuildConfig;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.activity.BaseActivity;
-import com.tudouni.makemoney.activity.realname.RealnameActivity2;
 import com.tudouni.makemoney.model.PayBindingInfo;
-import com.tudouni.makemoney.model.User;
-import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseObserver;
-import com.tudouni.makemoney.utils.Constants;
-import com.tudouni.makemoney.utils.ForwardUtils;
 import com.tudouni.makemoney.utils.InjectView;
-import com.tudouni.makemoney.view.MyTitleBar;
 
 import java.text.DecimalFormat;
 import java.util.Timer;
@@ -70,10 +62,9 @@ public class WithdrawMoneyActivity extends BaseActivity {
         initData();
     }
 
+    @SuppressLint("SetTextI18n")
     private void initview() {
-        /**
-         * 限制只能输入金额
-         */
+        //限制只能输入金额
         class InputMoney implements InputFilter {
 
             @Override
@@ -102,34 +93,48 @@ public class WithdrawMoneyActivity extends BaseActivity {
                        {
                            public void run()
                            {
-                               InputMethodManager inputManager = (InputMethodManager)etMoneyNumber.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                               inputManager.showSoftInput(etMoneyNumber, 0);
+                               try {
+                                   InputMethodManager inputManager = (InputMethodManager)etMoneyNumber.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                                   inputManager.showSoftInput(etMoneyNumber, 0);
+                               } catch (Exception ignored) {}
                            }
                        },
                 200);
 
         tvMaxNumber.setText("可提现金额" + allNumber + "元");
 
-        tvAllNumber.setOnClickListener(view -> {
-            DecimalFormat df = new DecimalFormat("##.##");
-            etMoneyNumber.setText(df.format(allNumber));
-            etMoneyNumber.setSelection(etMoneyNumber.getText().length());
+        tvAllNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    DecimalFormat df = new DecimalFormat("##.##");
+                    etMoneyNumber.setText(df.format(allNumber));
+                    etMoneyNumber.setSelection(etMoneyNumber.getText().length());
+                } catch (Exception ignored) {}
+            }
         });
 
-        tvNextStep.setOnClickListener(view -> {
-            try {
-                String moneyNumber = etMoneyNumber.getText().toString().trim();
-                double doubleNumber = Double.parseDouble(moneyNumber);
-                if (doubleNumber < minNubmer || doubleNumber > maxNubmer) {
-                    Toast.makeText(WithdrawMoneyActivity.this, "提现金额范围为" + minNubmer + "到" + maxNubmer + "元", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+        tvNextStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    String moneyNumber = etMoneyNumber.getText().toString().trim();
+                    double doubleNumber = Double.parseDouble(moneyNumber);
+                    if (doubleNumber > allNumber) {
+                        Toast.makeText(WithdrawMoneyActivity.this, "输入金额超过了可提现金额", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if (doubleNumber < minNubmer || doubleNumber > maxNubmer) {
+                        Toast.makeText(WithdrawMoneyActivity.this, "提现金额范围为" + (int)minNubmer + "-" + (int)maxNubmer + "元", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
-                Intent intent = new Intent(WithdrawMoneyActivity.this, TelAuthenticationActivity.class);
-                intent.putExtra("moneyNumber", moneyNumber);
-                WithdrawMoneyActivity.this.startActivity(intent);
-                finish();
-            } catch (Exception e) {}
+                    Intent intent = new Intent(WithdrawMoneyActivity.this, TelAuthenticationActivity.class);
+                    intent.putExtra("moneyNumber", moneyNumber);
+                    WithdrawMoneyActivity.this.startActivity(intent);
+                    finish();
+                } catch (Exception ignored) {}
+            }
         });
     }
 
