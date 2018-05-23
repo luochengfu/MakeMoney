@@ -54,6 +54,7 @@ public class User implements Serializable {
     private String pwd;
     private boolean setAlias;//是否设置过别名
     private String parent;//绑定的上级id
+    private boolean skipping = false;//是否可以跳过绑定邀请码
 
     public int getSeq() {
         return seq;
@@ -385,6 +386,14 @@ public class User implements Serializable {
         this.parent = parent;
     }
 
+    public boolean isSkipping() {
+        return skipping;
+    }
+
+    public void setSkipping(boolean skipping) {
+        this.skipping = skipping;
+    }
+
     /**
      * 刷新用户接口数据
      *
@@ -420,5 +429,6 @@ public class User implements Serializable {
         setUid(userNewInfo.getUid());
         setUnumber(userNewInfo.getUnumber());
         setParent(userNewInfo.getParent());
+        setSkipping(userNewInfo.isSkipping());
     }
 }
