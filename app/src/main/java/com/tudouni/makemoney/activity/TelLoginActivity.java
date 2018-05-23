@@ -390,9 +390,12 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 if (null != loadingDialog) {
                     loadingDialog.dismiss();
                 }
-
                 saveLoginInfo(user);
-                startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
+                //判断有没有绑定上级
+                if (user.isSkipping())
+                    goMainPage();
+                else
+                    changInputInvitationCodePage();
             }
 
             @Override
@@ -530,15 +533,10 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 } else if (pageType.equals("7")) {
                     saveLoginInfo(user);
                     //判断有没有绑定上级
-                    if (TextUtils.isEmpty(user.getParent())) {
+                    if (user.isSkipping())
+                        goMainPage();
+                    else
                         changInputInvitationCodePage();
-                    } else {
-//                        Intent intent = new Intent(TelLoginActivity.this, LoginActivity.class);
-//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                        startActivity(intent);
-                        EventBus.getDefault().post(Constants.EVENT_TAG_FINSISH_LOGIN_ACTIVITY);
-                        startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
-                    }
                 }
             }
 
@@ -691,7 +689,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
     }
 
     /**
-     * 验证码登录
+     * 验证码登录，要检测是否需要绑定邀请码
      */
     private void codeSubmit() {
         String phone = etTelNumberTypeForCode.getText().toString();
@@ -715,10 +713,10 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 }
                 saveLoginInfo(user);
                 //判断有没有绑定上级
-                if (TextUtils.isEmpty(user.getParent())) {
-                    changInputInvitationCodePage();
-                } else {
+                if (user.isSkipping()) {
                     goMainPage();
+                } else {
+                    changInputInvitationCodePage();
                 }
             }
 
@@ -747,7 +745,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
 
 
     /**
-     * 密码登录
+     * 密码登录，老用户不需要绑定邀请码
      */
     private void passwordSubmit() {
         String userName = mPhoneNumberInputTypeForPwd.getText().toString();
@@ -773,39 +771,10 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 }
                 MyApplication.saveLoginUser(user);
                 //判断有没有绑定上级
-                if (TextUtils.isEmpty(user.getParent())) {
-                    //绑定邀请码
-                    changInputInvitationCodePage();
-                } else {
+                if (user.isSkipping())
                     goMainPage();
-                }
-//                CommonScene.getBind(new BaseObserver<Invite>() {
-//                    @Override
-//                    public void OnFail(int code, String err) {
-//                        if (code == 1050) {
-//                            //绑定邀请码
-//                            mInvitationCodeLy.setVisibility(View.VISIBLE);
-//                            mLoginLayout.setVisibility(View.GONE);
-//                        } else {
-//                            ToastUtil.showError("获取绑定人报错：" + err, code);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void OnSuccess(Invite invite) {
-//                        if (invite != null) {
-//                            Intent intent = new Intent(TelLoginActivity.this, LoginActivity.class);
-//                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                            startActivity(intent);
-//
-//                            startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
-//                            finish();
-//                        } else {//绑定邀请码
-//                            mInvitationCodeLy.setVisibility(View.VISIBLE);
-//                            mLoginLayout.setVisibility(View.GONE);
-//                        }
-//                    }
-//                });
+                else
+                    changInputInvitationCodePage();
             }
 
             @Override

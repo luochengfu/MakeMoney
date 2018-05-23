@@ -136,6 +136,12 @@ public class H5Activity extends BaseActivity implements
         if ("#".equals(mDefaultTitle)) {
             title_bar.setHeadVisibility(View.GONE);
         }
+        title_bar.setOnLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         WebChromeClient webChromeClient = new WebChromeClient() {
             @Override
             public void onReceivedTitle(WebView view, String title) {
@@ -308,6 +314,8 @@ public class H5Activity extends BaseActivity implements
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        if (webview != null)
+            webview.destroy();
     }
 
     private boolean syncCookie() {

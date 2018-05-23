@@ -47,6 +47,7 @@ public class UserInfoHelper {
         editor.putString("unionid", user.getUnionid());
         editor.putString("pwd", user.getPwd());
         editor.putString("parent", user.getParent());
+        editor.putBoolean("skipping", user.isSkipping());
 
         editor.commit();
     }
@@ -92,6 +93,7 @@ public class UserInfoHelper {
         mUser.setBindPhoneStatus(sharedPreferences.getString("pwd", ""));
         mUser.setSetAlias(sharedPreferences.getBoolean("setAlias", false));
         mUser.setParent(sharedPreferences.getString("parent", null));
+        mUser.setSkipping(sharedPreferences.getBoolean("skipping", false));
         return mUser;
     }
 
@@ -142,6 +144,7 @@ public class UserInfoHelper {
         editor.putString("pwd", "");
         editor.putBoolean("setAlias", false);
         editor.putString("parent", "");
+        editor.putBoolean("skipping", false);
         editor.commit();
 
     }
