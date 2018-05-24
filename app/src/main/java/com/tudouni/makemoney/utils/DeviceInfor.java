@@ -42,19 +42,17 @@ public class DeviceInfor {
                 String sn = tm.getSimSerialNumber();
                 if (!isEmpty(sn))
                     deviceId.append(sn);
+            } else {//没有权限的状态
+                //如果上面都没有， 则生成一个id：随机码
+                String uuid = getUUID(context);
+                if (!isEmpty(uuid)) {
+                    deviceId.append("id");
+                    deviceId.append(uuid);
+                    Log.e("gDeviceInfor ", deviceId.toString());
+                    return deviceId.toString();
+                }
             }
-
-            if (!TextUtils.isEmpty(deviceId))
-                return deviceId.toString();
-
-            //如果上面都没有， 则生成一个id：随机码
-            String uuid = getUUID(context);
-            if (!isEmpty(uuid)) {
-                deviceId.append("id");
-                deviceId.append(uuid);
-                Log.e("gDeviceInfor ", deviceId.toString());
-                return deviceId.toString();
-            }
+            return deviceId.toString();
         } catch (Exception e) {
             Log.e("DeviceInfor", "Get DeviceId Error " + e.getMessage());
             deviceId.append("id").append(getUUID(context));
