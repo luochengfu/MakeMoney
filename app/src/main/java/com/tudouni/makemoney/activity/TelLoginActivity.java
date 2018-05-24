@@ -417,6 +417,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
             public void OnSuccess(Result result) {
                 ToastUtil.show("绑定成功");
                 MyApplication.getLoginUser().setParent(etInvitCode.getText().toString());
+                MyApplication.getLoginUser().setSkipping(true);
                 MyApplication.saveLoginUser(MyApplication.getLoginUser());
 
                 goMainPage();
