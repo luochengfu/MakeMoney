@@ -645,6 +645,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
                 mCodeBtnStatus = false;
                 myThread = new MyThread();
                 myThread.run();
+                ToastUtil.show("验证码发送成功");
             }
 
             @Override
