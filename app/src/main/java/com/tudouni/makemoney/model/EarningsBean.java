@@ -7,6 +7,7 @@ import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.activity.H5Activity;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.NetConfig;
+import com.tudouni.makemoney.utils.TDLog;
 
 public class EarningsBean {
     private double income;
@@ -134,10 +135,20 @@ public class EarningsBean {
     }
 
     public String getFormatterIncome(double income){
+        if (this.income > 9999) {
+            int w = (int) (this.income / 10000);
+            return "￥" + w + "万";
+        }
+        TDLog.e("￥" + this.income);
+        return "￥" + this.income;
+    }
+
+    public String getFormatterExpectedIncome(double income){
         if (this.expectedIncome > 9999) {
             int w = (int) (this.expectedIncome / 10000);
             return "￥" + w + "万";
         }
+        TDLog.e("￥" + this.expectedIncome);
         return "￥" + this.expectedIncome;
     }
 
