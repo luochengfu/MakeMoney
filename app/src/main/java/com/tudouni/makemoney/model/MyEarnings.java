@@ -364,7 +364,7 @@ public class MyEarnings extends BaseObservable{
     }
 
     public String getIncomeStr(){
-        return "累计收益：￥" + this.income;
+        return "累计收益：￥" + this.settledIncome;
     }
 
 
