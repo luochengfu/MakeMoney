@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.tudouni.makemoney.R;
 import com.tudouni.makemoney.activity.H5Activity;
+import com.tudouni.makemoney.activity.LoginActivity;
 import com.tudouni.makemoney.activity.MessageActivity;
 import com.tudouni.makemoney.activity.search.SearchActivity;
 import com.tudouni.makemoney.databinding.FragmentMallBinding;
@@ -91,7 +92,7 @@ public class MallFragment extends BaseFragment {
         mRecommendGoodItemAdapter = new RecommendGoodItemAdapter(getActivity().getLayoutInflater());
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mRecommendGoodItemAdapter);
         mMallBinding.lrvHome.setAdapter(mLRecyclerViewAdapter);
-        mMallBinding.lrvHome.setOnRefreshListener(()->{
+        mMallBinding.lrvHome.setOnRefreshListener(() -> {
             mCurrentPage = 1;
             loadMallData();
         });
@@ -112,12 +113,12 @@ public class MallFragment extends BaseFragment {
 
         mMallBinding.tvSearchBar.setOnClickListener(l -> startActivity(new Intent(getActivity(), SearchActivity.class)));
 
-        mMallBinding.ivMsg.setOnClickListener(l -> startActivity(new Intent(getActivity(), MessageActivity.class)));
+        mMallBinding.ivMsg.setOnClickListener(l -> startActivity(new Intent(getActivity(), ((MyApplication.needToLogin()) ? LoginActivity.class : MessageActivity.class))));
     }
 
     private void loadMore() {
         mCurrentPage++;
-        loadRecommendGood(mCurrentPage,Constants.DEFAULT_PAGE_SIZE);
+        loadRecommendGood(mCurrentPage, Constants.DEFAULT_PAGE_SIZE);
     }
 
     @Override
@@ -129,7 +130,7 @@ public class MallFragment extends BaseFragment {
         loadBannerData();
         loadMallAlbum();
         loadSelfGood();
-        loadRecommendGood(mCurrentPage,Constants.DEFAULT_PAGE_SIZE);
+        loadRecommendGood(mCurrentPage, Constants.DEFAULT_PAGE_SIZE);
     }
 
     private void loadSelfGood() {
@@ -159,32 +160,32 @@ public class MallFragment extends BaseFragment {
         }
     }
 
-    private void loadRecommendGood(int page,int pageSize) {
+    private void loadRecommendGood(int page, int pageSize) {
         if (mMallViewModel != null) {
             mMallViewModel.loadRecommendGoodData(new VMResultCallback<List<MallGoodItem>>() {
                 @Override
                 public void onSuccess(List<MallGoodItem> data) {
-                        if (mRecommendGoodItemAdapter != null) {
-                            if (page == 1) {
-                                mRecommendGoodItemAdapter.replaceData(data);
-                            }else{
-                                mRecommendGoodItemAdapter.addData(data);
-                                if (data.size() < Constants.DEFAULT_PAGE_SIZE) {
-                                    mMallBinding.lrvHome.setNoMore(true);
-                                }
+                    if (mRecommendGoodItemAdapter != null) {
+                        if (page == 1) {
+                            mRecommendGoodItemAdapter.replaceData(data);
+                        } else {
+                            mRecommendGoodItemAdapter.addData(data);
+                            if (data.size() < Constants.DEFAULT_PAGE_SIZE) {
+                                mMallBinding.lrvHome.setNoMore(true);
                             }
-                            mMallBinding.lrvHome.refreshComplete(Constants.DEFAULT_PAGE_SIZE);
                         }
+                        mMallBinding.lrvHome.refreshComplete(Constants.DEFAULT_PAGE_SIZE);
+                    }
                 }
 
                 @Override
                 public void onFailure() {
                     if (page != 1) {
-                        mCurrentPage --;
+                        mCurrentPage--;
                     }
                     mMallBinding.lrvHome.refreshComplete(Constants.DEFAULT_PAGE_SIZE);
                 }
-            },page,pageSize);
+            }, page, pageSize);
         }
     }
 
@@ -209,7 +210,7 @@ public class MallFragment extends BaseFragment {
             mMallViewModel.loadMallBannerData(new VMResultCallback<List<MallAlbumModel>>() {
                 @Override
                 public void onSuccess(List<MallAlbumModel> data) {
-                    if(null == data || data.size() == 0)
+                    if (null == data || data.size() == 0)
                         return;
                     TDLog.e(data);
                     mBannerData = data;
@@ -243,21 +244,20 @@ public class MallFragment extends BaseFragment {
             startActivity(intent);
         });
 
-        mMallHeaderViewBinding.mzMallBanner.setIndicatorRes(R.mipmap.banner_white_icon,R.mipmap.banner_red_icon);
+        mMallHeaderViewBinding.mzMallBanner.setIndicatorRes(R.mipmap.banner_white_icon, R.mipmap.banner_red_icon);
         mMallHeaderViewBinding.mzMallBanner.setBannerPageClickListener((view, i) -> {
-            TDLog.e("onBannerPageClick",i);
+            TDLog.e("onBannerPageClick", i);
             Intent intent = new Intent(getActivity(), H5Activity.class);
             MallAlbumModel bean = mBannerData.get(i);
             String itemId = bean.getItemId();
-            if(null == itemId || "".equals(itemId))
-            {
+            if (null == itemId || "".equals(itemId)) {
                 intent.putExtra("url", mBannerData.get(i).getUrl() == null ? "" : mBannerData.get(i).getUrl());
             } else {
                 String url = NetConfig.getBaseTuDouNiH5Url() + "html/detail.html" + "?uid=" + MyApplication.getLoginUser().getUid()
                         + "&token=" + MyApplication.getLoginUser().getToken() + "&unionid=" +
                         MyApplication.getLoginUser().getUnionid() + "&itemid=" + itemId
                         + "&source=tm";
-                intent.putExtra("url",url);
+                intent.putExtra("url", url);
             }
 
             startActivity(intent);

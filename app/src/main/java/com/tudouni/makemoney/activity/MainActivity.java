@@ -338,13 +338,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      * 退出登录
      */
     private void doLogOut() {
-        try {
-            finish();
-            MyApplication.logout();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        ForwardUtils.target(this, Constants.LOGIN);
+//        try {
+//            finish();
+//            MyApplication.logout();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        ForwardUtils.target(this, Constants.LOGIN);
+        MyApplication.logout();
+        setTabSelection(0);
     }
 
     @Override
@@ -363,6 +365,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 setTabSelection(2);
                 break;
             case R.id.tab4://我的
+                if (MyApplication.needToLogin())
+                    ForwardUtils.target(MainActivity.this, Constants.NEW_LOGIN);
                 MobclickAgent.onEvent(this, "hp_me");
                 setTabSelection(3);
                 break;

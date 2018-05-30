@@ -27,6 +27,7 @@ import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.BindInvitationUtil;
 import com.tudouni.makemoney.utils.ClipboardUtil;
+import com.tudouni.makemoney.utils.CommonUtil;
 import com.tudouni.makemoney.utils.DBLifecycleHandler;
 import com.tudouni.makemoney.utils.PatternUtil;
 import com.tudouni.makemoney.utils.UserInfoHelper;
@@ -223,14 +224,24 @@ public class MyApplication extends BaseApplication implements ClipboardUtil.OnPr
     }
 
     public static User getLoginUser() {
-        if (mLoginUser == null) {
-            User mUser = UserInfoHelper.getUserDatas(sContext);
-            if (null != mUser.getToken() && !"".equals(mUser.getToken())) {
-                mLoginUser = mUser;
-            }
-        }
-
+//        if (mLoginUser == null) {
+//            User mUser = UserInfoHelper.getUserDatas(sContext);
+//            if (null != mUser.getToken() && !"".equals(mUser.getToken())) {
+//                mLoginUser = mUser;
+//            }
+//        }
+        mLoginUser = UserInfoHelper.getUserDatas(sContext);
         return mLoginUser;
+    }
+
+
+    /**
+     * 是否是需要登录 zp
+     *
+     * @return true 需要登录 false不需要登录
+     */
+    public static boolean needToLogin() {
+        return null == MyApplication.getLoginUser() || !CommonUtil.isNetworkAvailable(MyApplication.getContext()) || !MyApplication.getLoginUser().isSkipping() || TextUtils.isEmpty(MyApplication.getLoginUser().getToken());
     }
 
     /**

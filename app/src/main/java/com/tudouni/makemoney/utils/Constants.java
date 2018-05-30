@@ -35,6 +35,7 @@ public class Constants {
     public static final String BASE_PRE = "tudouni://tudouni/";
     public static final String SETTING = BASE_PRE + "setting";
     public static final String LOGIN = BASE_PRE + "login";
+    public static final String NEW_LOGIN = "toLogin";
 
 
     public static final String BASE_H5_URL = NetConfig.getBaseTuDouNiH5Url();

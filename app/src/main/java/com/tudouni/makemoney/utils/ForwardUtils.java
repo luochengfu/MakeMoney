@@ -74,7 +74,7 @@ public class ForwardUtils {
             } else if (url.equals(Constants.NATIVE_INCOME)) {
                 Intent intent = new Intent(oriActivity, IncomeActivity.class);
                 toIntent(oriActivity, url, intent);
-            } else if (url.startsWith(Constants.LOGIN)) {
+            } else if (url.startsWith(Constants.LOGIN) || url.startsWith(Constants.NEW_LOGIN)) {
                 Intent intent = new Intent(oriActivity, LoginActivity.class);
                 toIntent(oriActivity, url, intent);
                 oriActivity.finish();

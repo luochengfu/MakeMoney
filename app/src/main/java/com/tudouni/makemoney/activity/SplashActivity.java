@@ -35,7 +35,6 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.activity_splash);
         setTitle("启动页");
         mContext = this;
-        initView();
         initData();
     }
 
@@ -45,13 +44,6 @@ public class SplashActivity extends Activity {
     private void initData() {
         setPageShow();
     }
-
-    /**
-     * 初始化视图
-     */
-    private void initView() {
-    }
-
 
     /**
      * 展示当前界面的内容
@@ -67,7 +59,8 @@ public class SplashActivity extends Activity {
 
     private void nextPage() {
         //没有上级跳转到登录界面
-        startActivity(new Intent(SplashActivity.this, ((isToLoginPage()) ? LoginActivity.class : MainActivity.class)));
+//        startActivity(new Intent(SplashActivity.this, ((isToLoginPage()) ? LoginActivity.class : MainActivity.class)));
+        startActivity(new Intent(SplashActivity.this, MainActivity.class));
         finish();
     }
 

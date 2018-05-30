@@ -161,6 +161,7 @@ public class CommonScene extends RetrofitUtils {
      * 获取用户数据接口
      */
     public static void getUserInfo(BaseObserver<User> observer) {
+        if (MyApplication.needToLogin()) return;
         setSubscribe(commonApi.getUserInfo(), observer);
     }
 
@@ -333,7 +334,7 @@ public class CommonScene extends RetrofitUtils {
      * 我的账本
      */
     public static void getMineTicketBook(BaseObserver<AgentInfo> observer) {
-        if (MyApplication.getLoginUser() == null) return;
+        if (MyApplication.needToLogin()) return;
         setSubscribe(commonApi.getMineTicketBook(MyApplication.getLoginUser().getUid()), observer);
     }
 
@@ -385,7 +386,7 @@ public class CommonScene extends RetrofitUtils {
      * @param observer
      */
     public static void isThereUnreadMsg(BaseObserver<MessageResponsBean> observer) {
-        if (MyApplication.getLoginUser() == null) return;
+        if (MyApplication.needToLogin()) return;
         setSubscribe(commonApi.isThereUnreadMsg(MyApplication.getLoginUser().getUid()), observer);
     }
 
@@ -446,17 +447,13 @@ public class CommonScene extends RetrofitUtils {
         setSubscribe(commonApi.loadSavingsRank(top), observer);
     }
 
-    public static void loadSavingsProfile(String uid, BaseObserver<SavingsProfile> observer){
-        setSubscribe(commonApi.loadSavingsProfile(uid),observer);
+    public static void loadSavingsProfile(String uid, BaseObserver<SavingsProfile> observer) {
+        setSubscribe(commonApi.loadSavingsProfile(uid), observer);
     }
 
-    public static void checkBindAlipay(String uid, BaseObserver<BindPayInfo> observer){
-        setSubscribe(commonApi.checkBindAlipay(uid,MyApplication.getLoginUser().getToken()),observer);
+    public static void checkBindAlipay(String uid, BaseObserver<BindPayInfo> observer) {
+        setSubscribe(commonApi.checkBindAlipay(uid, MyApplication.getLoginUser().getToken()), observer);
     }
-
-
-
-
 
 
 }
