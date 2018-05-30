@@ -1,6 +1,7 @@
 package com.tudouni.makemoney.activity;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,11 +10,13 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.PermissionChecker;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.transition.Slide;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -80,8 +83,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private String mPhoneNum;
     private boolean mActivityStatus;
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setEnterTransition(new Slide().setDuration(2000));
+        getWindow().setExitTransition(new Slide().setDuration(2000));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         EventBus.getDefault().register(this);
@@ -308,7 +314,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             if (!user.getUser().isSkipping()) {//用户信息保存放在下级
                                 skipTelephoneLogin(user, "8");
                             } else {
-                                startActivity(SplashActivity.createIntent(mContext));
+//                                startActivity(SplashActivity.createIntent(mContext));
                                 finish();
                             }
                         }

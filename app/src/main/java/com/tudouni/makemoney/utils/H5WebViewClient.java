@@ -127,7 +127,6 @@ public class H5WebViewClient extends WVJBWebViewClient {
         getUserInfo();
         getUserAgent();
         getMetaInfo();
-        login();
         logout();
         closeWebView();
         getDeviceInfo();

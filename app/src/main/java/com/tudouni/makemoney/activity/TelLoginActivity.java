@@ -436,7 +436,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
 //        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //        startActivity(intent);
         EventBus.getDefault().post(new FinishLoginActivity(), Constants.EVENT_TAG_FINSISH_LOGIN_ACTIVITY);
-        startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
+//        startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
         finish();
     }
 
