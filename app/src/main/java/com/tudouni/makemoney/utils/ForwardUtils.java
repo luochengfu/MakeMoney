@@ -77,7 +77,6 @@ public class ForwardUtils {
             } else if (url.startsWith(Constants.LOGIN) || url.startsWith(Constants.NEW_LOGIN)) {
                 Intent intent = new Intent(oriActivity, LoginActivity.class);
                 toIntent(oriActivity, url, intent);
-                oriActivity.finish();
             } else if (url.startsWith(Constants.USERINFO)) { //编辑用户资料
                 Intent intent = new Intent(oriActivity, UserInfoActivity.class);
                 toIntent(oriActivity, url, intent);

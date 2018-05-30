@@ -34,6 +34,7 @@ import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.NetConfig;
 import com.tudouni.makemoney.utils.base.AppUtils;
+import com.tudouni.makemoney.utils.base.FileUtils;
 import com.tudouni.makemoney.view.CenterLoadingView;
 import com.tudouni.makemoney.widget.sharePart.ShareWindow_v3;
 import com.tudouni.makemoney.widget.sharePart.model.Share;
@@ -50,8 +51,7 @@ import java.util.Map;
  * Created by Administrator on 2018/4/9 0009.
  */
 
-public class H5WebViewClient extends WVJBWebViewClient
-{
+public class H5WebViewClient extends WVJBWebViewClient {
     private Activity mActivity;
     private Handler payHandler;
     private CenterLoadingView loading;
@@ -139,6 +139,8 @@ public class H5WebViewClient extends WVJBWebViewClient
         setTabIndex();
 
         enableLogging();
+
+        toLogin();
     }
 
     /**
@@ -230,11 +232,12 @@ public class H5WebViewClient extends WVJBWebViewClient
             }
         });
     }
+
     /**
      * 跳转
      */
     private void jump() {
-       webview.registerHandler("jumpPage", new BridgeHandler() {
+        webview.registerHandler("jumpPage", new BridgeHandler() {
 
             @Override
             public void handler(String data, CallBackFunction callback) {
@@ -248,20 +251,20 @@ public class H5WebViewClient extends WVJBWebViewClient
                         } catch (Exception e) {
                             refreshStatus = "0";
                         }
-                        if(url.contains("?")){
-                            url = url + "&unionid="+MyApplication.getLoginUser().getUnionid() + "&token="+MyApplication.getLoginUser().getToken()+"&uid="+MyApplication.getLoginUser().getUid();
+                        if (url.contains("?")) {
+                            url = url + "&unionid=" + MyApplication.getLoginUser().getUnionid() + "&token=" + MyApplication.getLoginUser().getToken() + "&uid=" + MyApplication.getLoginUser().getUid();
                         } else {
-                            url = url + "?unionid="+MyApplication.getLoginUser().getUnionid() + "&token="+MyApplication.getLoginUser().getToken()+"&uid="+MyApplication.getLoginUser().getUid();
+                            url = url + "?unionid=" + MyApplication.getLoginUser().getUnionid() + "&token=" + MyApplication.getLoginUser().getToken() + "&uid=" + MyApplication.getLoginUser().getUid();
                         }
-                        if(url.startsWith("tudouni://tudouni/home") || url.startsWith("\"tudouni://tudouni/back\"")) {
+                        if (url.startsWith("tudouni://tudouni/home") || url.startsWith("\"tudouni://tudouni/back\"")) {
                             mActivity.finish();
-                        } else if(url.startsWith(NetConfig.getBaseTuDouNiH5Url()) && refreshStatus.equals("1")){
+                        } else if (url.startsWith(NetConfig.getBaseTuDouNiH5Url()) && refreshStatus.equals("1")) {
                             Intent intent = new Intent(mActivity, WebvewRefreshActivity.class);
                             intent.putExtra("url", url);
-                            if(url.contains("/shopHome/sousuo.html")) {
-                                intent.putExtra("titleStatus",0);
+                            if (url.contains("/shopHome/sousuo.html")) {
+                                intent.putExtra("titleStatus", 0);
                             } else {
-                                intent.putExtra("titleStatus",1);
+                                intent.putExtra("titleStatus", 1);
                             }
                             mActivity.startActivity(intent);
                         } else {
@@ -278,6 +281,7 @@ public class H5WebViewClient extends WVJBWebViewClient
 
         });
     }
+
     /**
      * 分享
      */
@@ -295,14 +299,16 @@ public class H5WebViewClient extends WVJBWebViewClient
                     String content = "";
                     try {
                         content = ja.getString("content");
-                    }catch (Exception e){}
+                    } catch (Exception e) {
+                    }
 
                     boolean sharekg = false;
                     try {
                         sharekg = ja.getBoolean("sharekg");
-                    } catch (Exception e){}
+                    } catch (Exception e) {
+                    }
 
-                    if(sharekg) {
+                    if (sharekg) {
 //                            Bitmap bitmap = getBitmapFromByte(decode(img));
                         try {
                             Glide.with(mActivity).load(img).asBitmap().toBytes().into(new SimpleTarget<byte[]>() {
@@ -337,6 +343,7 @@ public class H5WebViewClient extends WVJBWebViewClient
             }
         });
     }
+
     /**
      * 拷贝
      */
@@ -359,6 +366,7 @@ public class H5WebViewClient extends WVJBWebViewClient
             }
         });
     }
+
     /**
      * 获取设备信息
      */
@@ -372,6 +380,7 @@ public class H5WebViewClient extends WVJBWebViewClient
             }
         });
     }
+
     /**
      * 关闭webview
      */
@@ -392,6 +401,7 @@ public class H5WebViewClient extends WVJBWebViewClient
             }
         });
     }
+
     /**
      * 退出
      */
@@ -515,8 +525,7 @@ public class H5WebViewClient extends WVJBWebViewClient
     }
 
     private void openTaobaoShopping(String url) {
-        if (AppUtils.checkPackage(mActivity, "com.taobao.taobao"))
-        {
+        if (AppUtils.checkPackage(mActivity, "com.taobao.taobao")) {
             Intent intent = new Intent();
             intent.setAction("android.intent.action.VIEW");
             Uri uri = Uri.parse(url);
@@ -524,17 +533,17 @@ public class H5WebViewClient extends WVJBWebViewClient
             mActivity.startActivity(intent);
         } else {
             Intent intent = new Intent();
-            intent.setClass(mActivity,H5Activity.class);
-            intent.putExtra("url",url);
+            intent.setClass(mActivity, H5Activity.class);
+            intent.putExtra("url", url);
             mActivity.startActivity(intent);
         }
     }
 
-    public Bitmap getBitmapFromByte(byte[] temp){   //将二进制转化为bitmap
-        if(temp != null){
+    public Bitmap getBitmapFromByte(byte[] temp) {   //将二进制转化为bitmap
+        if (temp != null) {
             Bitmap bitmap = BitmapFactory.decodeByteArray(temp, 0, temp.length);
             return bitmap;
-        }else{
+        } else {
             return null;
         }
     }
@@ -542,7 +551,7 @@ public class H5WebViewClient extends WVJBWebViewClient
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
-        if(mListner != null) {
+        if (mListner != null) {
             mListner.action();
         }
     }
@@ -569,7 +578,7 @@ public class H5WebViewClient extends WVJBWebViewClient
             return true;
         }
 
-        if(url.startsWith(NetConfig.getBaseTuDouNiH5Url())) {
+        if (url.startsWith(NetConfig.getBaseTuDouNiH5Url())) {
             Intent intent = new Intent(mActivity, WebvewRefreshActivity.class);
             intent.putExtra("url", url);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -578,4 +587,19 @@ public class H5WebViewClient extends WVJBWebViewClient
 
         return super.shouldOverrideUrlLoading(view, url);
     }
+
+    private void toLogin() {
+        webview.registerHandler(Constants.NEW_LOGIN, new BridgeHandler() {
+
+            @Override
+            public void handler(String data, CallBackFunction callback) {
+                try {
+                    ForwardUtils.target(mActivity, Constants.NEW_LOGIN);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
 }

@@ -365,10 +365,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 setTabSelection(2);
                 break;
             case R.id.tab4://我的
-                if (MyApplication.needToLogin())
+                if (MyApplication.needToLogin()) {
                     ForwardUtils.target(MainActivity.this, Constants.NEW_LOGIN);
-                MobclickAgent.onEvent(this, "hp_me");
-                setTabSelection(3);
+                } else {
+                    MobclickAgent.onEvent(this, "hp_me");
+                    setTabSelection(3);
+                }
                 break;
         }
     }

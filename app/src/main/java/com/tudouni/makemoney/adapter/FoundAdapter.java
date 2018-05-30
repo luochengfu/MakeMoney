@@ -1,5 +1,6 @@
 package com.tudouni.makemoney.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -16,14 +17,17 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.tudouni.makemoney.R;
+import com.tudouni.makemoney.activity.MainActivity;
 import com.tudouni.makemoney.interfaces.DownFileCallBack;
 import com.tudouni.makemoney.model.NineRecommendBean;
 import com.tudouni.makemoney.model.NineRecommendGoodsBean;
 import com.tudouni.makemoney.model.RecommendTopicBean;
+import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.CommonScene;
 import com.tudouni.makemoney.network.rx.BaseObserver;
 import com.tudouni.makemoney.utils.Constants;
 import com.tudouni.makemoney.utils.CornersTransform;
+import com.tudouni.makemoney.utils.ForwardUtils;
 import com.tudouni.makemoney.utils.ScreenUtils;
 import com.tudouni.makemoney.utils.TimeUtil;
 import com.tudouni.makemoney.utils.ToastUtil;
@@ -119,6 +123,10 @@ public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.FoundViewHol
      * 分享
      */
     private void doShaer(int position) {
+        if (MyApplication.needToLogin()) {
+            ForwardUtils.target((Activity) mContext, Constants.NEW_LOGIN);
+            return;
+        }
         NineRecommendBean nineRecommendBean = getData(position);
         if (nineRecommendBean == null) return;
         if (handler != null)
