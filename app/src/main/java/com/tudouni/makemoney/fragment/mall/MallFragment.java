@@ -101,10 +101,11 @@ public class MallFragment extends BaseFragment {
 
         mRecommendGoodItemAdapter.setOnItemClickListener((position, itemData) -> {
             Intent intent = new Intent(getActivity(), H5Activity.class);
-            String url = NetConfig.getBaseTuDouNiH5Url() + "html/detail.html" + "?uid=" + MyApplication.getLoginUser().getUid()
-                    + "&token=" + MyApplication.getLoginUser().getToken() + "&unionid=" +
-                    MyApplication.getLoginUser().getUnionid() + "&itemid=" + itemData.getItem_id()
-                    + "&source=" + itemData.getSource();
+//            String url = NetConfig.getBaseTuDouNiH5Url() + "html/detail.html" + "?uid=" + MyApplication.getLoginUser().getUid()
+//                    + "&token=" + MyApplication.getLoginUser().getToken() + "&unionid=" +
+//                    MyApplication.getLoginUser().getUnionid() + "&itemid=" + itemData.getItem_id()
+//                    + "&source=" + itemData.getSource();
+            String url = NetConfig.getBaseTuDouNiH5Url() + "html/detail.html" + "?itemid=" + itemData.getItem_id() + "&source=" + itemData.getSource();
             intent.putExtra("url", url);
             TDLog.e(url);
             startActivity(intent);
@@ -253,10 +254,11 @@ public class MallFragment extends BaseFragment {
             if (null == itemId || "".equals(itemId)) {
                 intent.putExtra("url", mBannerData.get(i).getUrl() == null ? "" : mBannerData.get(i).getUrl());
             } else {
-                String url = NetConfig.getBaseTuDouNiH5Url() + "html/detail.html" + "?uid=" + MyApplication.getLoginUser().getUid()
-                        + "&token=" + MyApplication.getLoginUser().getToken() + "&unionid=" +
-                        MyApplication.getLoginUser().getUnionid() + "&itemid=" + itemId
-                        + "&source=tm";
+//                String url = NetConfig.getBaseTuDouNiH5Url() + "html/detail.html" + "?uid=" + MyApplication.getLoginUser().getUid()
+//                        + "&token=" + MyApplication.getLoginUser().getToken() + "&unionid=" +
+//                        MyApplication.getLoginUser().getUnionid() + "&itemid=" + itemId
+//                        + "&source=tm";
+                String url = NetConfig.getBaseTuDouNiH5Url() + "html/detail.html" + "?itemid=" + itemId + "&source=tm";
                 intent.putExtra("url", url);
             }
 

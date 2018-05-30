@@ -83,7 +83,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private String mPhoneNum;
     private boolean mActivityStatus;
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setEnterTransition(new Slide().setDuration(2000));
@@ -315,6 +315,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                 skipTelephoneLogin(user, "8");
                             } else {
 //                                startActivity(SplashActivity.createIntent(mContext));
+                                EventBus.getDefault().post(new LoginBean(), Constants.LOGIN_SUCESS_RELOAD_PAGE);
                                 finish();
                             }
                         }

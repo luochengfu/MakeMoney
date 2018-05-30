@@ -140,10 +140,7 @@ public class NineRevommendGoodsLayout extends LinearLayout implements View.OnCli
         NineRecommendGoodsBean nineRecommendGoodsBean = mData.get(position);
 
         Intent intent = new Intent(context, H5Activity.class);
-        String url = NetConfig.getBaseTuDouNiH5Url() + "html/detail.html" + "?uid=" + MyApplication.getLoginUser().getUid()
-                + "&token=" + MyApplication.getLoginUser().getToken() + "&unionid=" +
-                MyApplication.getLoginUser().getUnionid() + "&itemid=" + nineRecommendGoodsBean.getItemid()
-                + "&source=" + nineRecommendGoodsBean.getSource();
+        String url = NetConfig.getBaseTuDouNiH5Url() + "html/detail.html" + "?itemid=" + nineRecommendGoodsBean.getItemid() + "&source=" + nineRecommendGoodsBean.getSource();
         intent.putExtra("url", url);
         TDLog.e(url);
         context.startActivity(intent);

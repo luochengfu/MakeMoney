@@ -19,6 +19,7 @@ import com.tudouni.makemoney.interfaces.NoDoubleClickListener;
 import com.tudouni.makemoney.model.FinishLoginActivity;
 import com.tudouni.makemoney.model.Invite;
 import com.tudouni.makemoney.model.LogOut;
+import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.model.User;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.network.CommonScene;
@@ -436,6 +437,7 @@ public class TelLoginActivity extends BaseActivity implements View.OnClickListen
 //        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //        startActivity(intent);
         EventBus.getDefault().post(new FinishLoginActivity(), Constants.EVENT_TAG_FINSISH_LOGIN_ACTIVITY);
+        EventBus.getDefault().post(new LoginBean(), Constants.LOGIN_SUCESS_RELOAD_PAGE);
 //        startActivityForResult(SplashActivity.createIntent(mContext), 0x200);
         finish();
     }

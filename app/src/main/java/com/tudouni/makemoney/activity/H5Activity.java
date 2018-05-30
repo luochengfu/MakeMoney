@@ -23,6 +23,8 @@ import android.widget.Toast;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.tudouni.makemoney.BuildConfig;
 import com.tudouni.makemoney.R;
+import com.tudouni.makemoney.model.LogOut;
+import com.tudouni.makemoney.model.LoginBean;
 import com.tudouni.makemoney.myApplication.MyApplication;
 import com.tudouni.makemoney.utils.AndroidBug5497Workaround;
 import com.tudouni.makemoney.utils.Constants;
@@ -34,8 +36,11 @@ import com.tudouni.makemoney.utils.ToastUtil;
 import com.tudouni.makemoney.utils.WVJBWebViewClient;
 import com.tudouni.makemoney.utils.base.AppUtils;
 import com.tudouni.makemoney.view.MyTitleBar;
+import com.tudouni.makemoney.view.Tip_dialog;
 
 import org.simple.eventbus.EventBus;
+import org.simple.eventbus.Subscriber;
+import org.simple.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -203,15 +208,8 @@ public class H5Activity extends BaseActivity implements
         if (url != null && url.toLowerCase().startsWith("taobao")) {
             url = "https" + url.substring(6);
         }
-
         //如果是登录状态加上token 和 uid
-        if (MyApplication.getLoginUser() != null) {
-            if (url != null && url.contains("?")) {
-                url = url + "&token=" + MyApplication.getLoginUser().getToken() + "&uid=" + MyApplication.getLoginUser().getUid() + "&tdid=" + MyApplication.getLoginUser().getUnumber();
-            } else {
-                url = url + "?token=" + MyApplication.getLoginUser().getToken() + "&uid=" + MyApplication.getLoginUser().getUid() + "&tdid=" + MyApplication.getLoginUser().getUnumber();
-            }
-        }
+        addParameters();
         syncCookie();
         webview.loadUrl(url);
 
@@ -328,5 +326,39 @@ public class H5Activity extends BaseActivity implements
             cookieSyncManager.sync();
         }
         return !TextUtils.isEmpty(newCookie);
+    }
+
+    @Subscriber(tag = Constants.LOGIN_SUCESS_RELOAD_PAGE)
+    private void logout(final LoginBean loginBean) {
+        ForwardUtils.target(H5Activity.this, getIntent().getStringExtra("url"));
+        finish();
+    }
+
+    /**
+     * 给请求的uir添加必要参数
+     */
+    private void addParameters() {
+        if (MyApplication.getLoginUser() != null) {
+            if (url.contains("token=&")) {
+                url = url.replace("token=&", "token=" + MyApplication.getLoginUser().getToken() + "&");
+            } else {
+                url = url + (url.contains("?") ? "&" : "?") + "token=" + MyApplication.getLoginUser().getToken();
+            }
+            if (url.contains("uid=&")) {
+                url = url.replace("uid=&", "uid=" + MyApplication.getLoginUser().getUid() + "&");
+            } else {
+                url = url + (url.contains("?") ? "&" : "?") + "uid=" + MyApplication.getLoginUser().getUid();
+            }
+            if (url.contains("tdid=&")) {
+                url = url.replace("tdid=&", "tdid=" + MyApplication.getLoginUser().getUnumber() + "&");
+            } else {
+                url = url + (url.contains("?") ? "&" : "?") + "tdid=" + MyApplication.getLoginUser().getUnumber();
+            }
+            if (url.contains("unionid=&")) {
+                url = url.replace("unionid=&", "unionid=" + MyApplication.getLoginUser().getUnionid() + "&");
+            } else {
+                url = url + (url.contains("?") ? "&" : "?") + "unionid=" + MyApplication.getLoginUser().getUnionid();
+            }
+        }
     }
 }

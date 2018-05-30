@@ -88,6 +88,7 @@ public class Constants {
     public static final int GET_SHARE_IMAGE_START = 111;//获取图片分享开始
     public static final int GET_SHARE_IMAGE_END = 112;// 获取图片分享结束
     public static final String EVENT_TAG_FINSISH_LOGIN_ACTIVITY = "finsish_login_activity";
+    public static final String LOGIN_SUCESS_RELOAD_PAGE = "loginSucessReloadPage";
 
 
 }
