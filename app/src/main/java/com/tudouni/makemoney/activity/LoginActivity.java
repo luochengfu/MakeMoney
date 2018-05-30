@@ -83,11 +83,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private String mPhoneNum;
     private boolean mActivityStatus;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getWindow().setEnterTransition(new Slide().setDuration(2000));
-        getWindow().setExitTransition(new Slide().setDuration(2000));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         EventBus.getDefault().register(this);
@@ -152,6 +149,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         tv_phone_login.setOnClickListener(this);
         buttomTV = (LinearLayout) findViewById(R.id.xy);
         mTaghint = (TextView) findViewById(R.id.activity_login_tv);
+        findViewById(R.id.im_close).setOnClickListener(this);
     }
 
     private void initDatas() {
@@ -178,6 +176,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             case R.id.tv_phone_login:
                 MyApplication.logout();
                 skipTelephoneLogin(null, "1");
+                break;
+            case R.id.im_close:
+                finish();
                 break;
         }
 
@@ -357,8 +358,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+//        super.onBackPressed();
         mActivityStatus = false;
+        finish();
     }
 
 

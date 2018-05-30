@@ -239,6 +239,18 @@
         <!--<item name="android:windowIsTranslucent">true</item>-->
     </style>
 
+    <style name="AnimationUpInDownOutTheme" parent="MyAppTheme">
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="AnimationActivity" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/up_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/down_out</item>
+    </style>
+
     <style name="black_15_style">
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/color_333333</item>

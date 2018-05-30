@@ -8,8 +8,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.transition.Slide;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
@@ -112,6 +114,8 @@ public class H5Activity extends BaseActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        getWindow().setEnterTransition(new Slide().setDuration(300));
+//        getWindow().setExitTransition(new Slide().setDuration(300));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_h5);
 
