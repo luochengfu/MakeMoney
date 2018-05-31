@@ -128,21 +128,21 @@ public class InvitationDouFenActivity extends BaseActivity implements View.OnCli
     private void startRequest() {
         mPotatoesBitmap = BitMapUtils.createPotatoesBitMap(this);
         mImPotatoes.setImageBitmap(mPotatoesBitmap);
-        CommonScene.getBind(new BaseObserver<Invite>() {
-            @Override
-            public void OnFail(int code, String err) {
-                mLyInvitationInfo.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void OnSuccess(Invite invite) {
-                if (invite == null) return;
-                mLyInvitationInfo.setVisibility((invite == null) ? View.GONE : View.VISIBLE);
-                GlideUtil.getInstance().loadImage(InvitationDouFenActivity.this, invite.getPhoto(), iv_picture, R.mipmap.default_head2);
-                mTvTime.setText(invite.getInviteTime());
-                mTvInvCode.setText(invite.getInviteCode());
-            }
-        });
+//        CommonScene.getBind(new BaseObserver<Invite>() {
+//            @Override
+//            public void OnFail(int code, String err) {
+//                mLyInvitationInfo.setVisibility(View.GONE);
+//            }
+//
+//            @Override
+//            public void OnSuccess(Invite invite) {
+//                if (invite == null) return;
+//                mLyInvitationInfo.setVisibility((invite == null) ? View.GONE : View.VISIBLE);
+//                GlideUtil.getInstance().loadImage(InvitationDouFenActivity.this, invite.getPhoto(), iv_picture, R.mipmap.default_head2);
+//                mTvTime.setText(invite.getInviteTime());
+//                mTvInvCode.setText(invite.getInviteCode());
+//            }
+//        });
     }
 
     /**
