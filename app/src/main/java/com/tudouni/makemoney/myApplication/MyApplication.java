@@ -230,7 +230,9 @@ public class MyApplication extends BaseApplication implements ClipboardUtil.OnPr
 //                mLoginUser = mUser;
 //            }
 //        }
-        mLoginUser = UserInfoHelper.getUserDatas(sContext);
+        if (mLoginUser == null) {
+            mLoginUser = UserInfoHelper.getUserDatas(sContext);
+        }
         return mLoginUser;
     }
 

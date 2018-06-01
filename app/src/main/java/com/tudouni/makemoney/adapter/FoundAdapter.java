@@ -155,7 +155,7 @@ public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.FoundViewHol
 
                     @Override
                     public void OnFail(int code, String err) {
-                        ToastUtil.showError("获取分享地址：" + err, code);
+                        ToastUtil.show("商品失效！");
                         if (handler != null)
                             handler.sendEmptyMessage(Constants.GET_SHARE_IMAGE_END);
                     }
